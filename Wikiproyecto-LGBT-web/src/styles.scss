@@ -1,0 +1,59 @@
+/* You can add global styles to this file, and also import other style files */
+
+$white: #ffffff;
+
+$theme-colors: (
+    "light": #ffe3ea,
+    "dark": #A8284A,
+    "primary": #b3efff,
+    "secondary": #ffc0cf,
+    "info": #ffb65c,
+    "success": #54de7d,
+    "warning": #fff574,
+    "danger": #fa7c7c,
+);
+
+$font-family-sans-serif: "Lexend Mega", sans-serif;
+
+/* Importing Bootstrap SCSS file. */
+@import 'bootstrap/scss/bootstrap';
+
+button.btn {
+    font-weight: bold;
+    font-size: 90%;
+    box-shadow: black 4px 4px 0px;
+    letter-spacing: -0.1rem;
+    margin: 0.5em;
+    border: solid black 3px;
+}
+
+button.btn:hover {
+    box-shadow: inset;
+    border: solid black 3px;
+}
+
+.accordion {
+    margin: 10em;
+    border: solid black 3px;
+    border-radius: 10px;
+    box-shadow: black 4px 4px 0px;
+}
+
+.accordion-button {
+    font-weight: bold;
+    letter-spacing: -0.1rem;
+    border: solid black 3px;
+    border-radius: 10px;
+}
+
+.accordion-button:focus {
+    box-shadow: none;
+}
+
+.accordion-header:focus {
+    border: none;
+}
+
+.accordion-body {
+    font-family: "Lexend", sans-serif;
+}
