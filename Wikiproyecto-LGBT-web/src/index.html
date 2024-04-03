@@ -15,6 +15,13 @@
 
 <body>
   <app-root></app-root>
+
+  <script type="module">
+    import { Toast } from "../node_modules/bootstrap/dist/js/bootstrap.esm.min.js"
+
+    Array.from(document.querySelectorAll('.toast'))
+      .forEach(toastNode => new Toast(toastNode))
+  </script>
 </body>
 
 </html>

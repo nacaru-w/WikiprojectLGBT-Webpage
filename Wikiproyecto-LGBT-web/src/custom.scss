@@ -1,0 +1,84 @@
+// Required
+@use 'sass:color';
+// 1. Include functions first (so you can manipulate colors, SVGs, calc, etc)
+@import "../node_modules/bootstrap/scss/functions";
+
+// 2. Include any default variable overrides here
+$white: #ffffff;
+$light: #ffe3ea;
+$dark: #A8284A;
+$primary: #b3efff;
+$secondary: #ffc0cf;
+$info: #ffb65c;
+$success: #54de7d;
+$warning: #fff574;
+$danger: #fa7c7c;
+
+$dark-primary: color.adjust($primary, $lightness: -35%); // Darker shade of blue
+$dark-secondary: color.adjust($secondary, $lightness: -35%); // Darker shade of pink
+$dark-info: color.adjust($info, $lightness: -35%); // Darker shade of orange
+$dark-success: color.adjust($success, $lightness: -35%); // Darker shade of green
+$dark-warning: color.adjust($warning, $lightness: -35%); // Darker shade of yellow
+$dark-danger: color.adjust($danger, $lightness: -35%); // Darker shade of red
+
+$deep-dark-primary: color.adjust($primary, $lightness: -55%); // Darker shade of blue
+$deep-dark-secondary: color.adjust($secondary, $lightness: -55%); // Darker shade of pink
+$deep-dark-info: color.adjust($info, $lightness: -55%); // Darker shade of orange
+$deep-dark-success: color.adjust($success, $lightness: -55%); // Darker shade of green
+$deep-dark-warning: color.adjust($warning, $lightness: -55%); // Darker shade of yellow
+$deep-dark-danger: color.adjust($danger, $lightness: -55%); // Darker shade of red
+
+$almost-black-primary: color.adjust($primary, $lightness: -75%);
+
+$theme-colors: (
+    "light": $light,
+    "dark": $dark,
+    "primary": $primary,
+    "secondary": $secondary,
+    "info": $info,
+    "success": $success,
+    "warning": $warning,
+    "danger": $danger,
+);
+
+$font-family-sans-serif: "Lexend Mega", sans-serif;
+
+// 3. Include remainder of required Bootstrap stylesheets (including any separate color mode stylesheets)
+@import "../node_modules/bootstrap/scss/variables";
+@import "../node_modules/bootstrap/scss/variables-dark";
+
+// 4. Include any default map overrides here
+// Generate contextual modifier classes for colorizing the alert
+@each $state in map-keys($theme-colors) {
+    .alert-#{$state} {
+        --#{$prefix}alert-color: var(--#{$prefix}#{$state}-text-emphasis);
+        --#{$prefix}alert-bg: var(--#{$prefix}#{$state}-bg-subtle);
+        --#{$prefix}alert-border-color: var(--#{$prefix}#{$state}-border-subtle);
+        --#{$prefix}alert-link-color: var(--#{$prefix}#{$state}-text-emphasis);
+    }
+}
+
+
+// 5. Include remainder of required parts
+@import "../node_modules/bootstrap/scss/maps";
+@import "../node_modules/bootstrap/scss/mixins";
+@import "../node_modules/bootstrap/scss/root";
+
+// 6. Optionally include any other parts as needed
+@import "../node_modules/bootstrap/scss/utilities";
+@import "../node_modules/bootstrap/scss/reboot";
+@import "../node_modules/bootstrap/scss/type";
+@import "../node_modules/bootstrap/scss/images";
+@import "../node_modules/bootstrap/scss/containers";
+@import "../node_modules/bootstrap/scss/grid";
+@import "../node_modules/bootstrap/scss/helpers";
+@import "../node_modules/bootstrap/scss/buttons";
+@import "../node_modules/bootstrap/scss/accordion";
+@import "../node_modules/bootstrap/scss/alert";
+@import "../node_modules/bootstrap/scss/transitions";
+@import "../node_modules/bootstrap/scss/dropdown";
+
+// 7. Optionally include utilities API last to generate classes based on the Sass map in `_utilities.scss`
+@import "../node_modules/bootstrap/scss/utilities/api";
+
+// 8. Add additional custom code here

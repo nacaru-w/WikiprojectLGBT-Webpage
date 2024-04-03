@@ -1,22 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-
-$white: #ffffff;
-
-$theme-colors: (
-    "light": #ffe3ea,
-    "dark": #A8284A,
-    "primary": #b3efff,
-    "secondary": #ffc0cf,
-    "info": #ffb65c,
-    "success": #54de7d,
-    "warning": #fff574,
-    "danger": #fa7c7c,
-);
-
-$font-family-sans-serif: "Lexend Mega", sans-serif;
-
-/* Importing Bootstrap SCSS file. */
-@import 'bootstrap/scss/bootstrap';
+@import "./custom.scss";
 
 button.btn {
     font-weight: bold;
@@ -56,4 +39,46 @@ button.btn:hover {
 
 .accordion-body {
     font-family: "Lexend", sans-serif;
+}
+
+.alert {
+    width: min(500px, 95%);
+    font-family: "Lexend", sans-serif;
+    margin: 1em auto;
+    border: solid black 3px;
+    border-radius: 10px;
+    color: black;
+    box-shadow: black 4px 4px 0px;
+}
+
+.dropdown {
+    .dropdown-menu {
+        border: solid black 3px;
+        box-shadow: black 4px 4px 0px;
+
+        .dropdown-item {
+            letter-spacing: -0.1rem;
+            font-size: 0.9em;
+        }
+
+    }
+
+    .dropdown-toggle.show {
+        border-color: black;
+    }
+
+    .dropdown-toggle.btn-outline-primary {
+        background-color: $almost-black-primary;
+    }
+
+    .dropdown-toggle.btn-outline-primary:hover,
+    .dropdown-toggle.btn-outline-primary.show {
+        color: $dark-primary;
+    }
+
+    .dropdown-toggle.btn-outline-secondary {
+        color: black;
+    }
+
+
 }
