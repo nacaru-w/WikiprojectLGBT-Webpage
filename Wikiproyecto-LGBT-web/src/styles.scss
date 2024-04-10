@@ -15,8 +15,40 @@ button.btn:hover {
     border: solid black 3px;
 }
 
+.carousel-inner {
+    width: min(95%, 900px);
+    height: min(95%, 400px);
+    margin: 0 auto;
+    border-radius: 40px;
+    border: solid black 4px;
+    box-shadow: black 6px 6px 0px;
+
+    .img-wrapper {
+
+        overflow: hidden;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+
+    .carousel-caption {
+        color: black;
+        font-weight: bold;
+    }
+
+
+}
+
+.carousel+hr {
+    border-top: none;
+}
+
 .accordion {
-    margin: 10em;
+    width: min(95%, 700px);
+    margin: 0 auto;
     border: solid black 3px;
     border-radius: 10px;
     box-shadow: black 4px 4px 0px;
