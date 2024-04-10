@@ -39,7 +39,6 @@ button.btn:hover {
         font-weight: bold;
     }
 
-
 }
 
 .carousel+hr {
@@ -70,12 +69,12 @@ button.btn:hover {
 }
 
 .accordion-body {
-    font-family: "Lexend", sans-serif;
+    font-family: $body-font;
 }
 
 .alert {
     width: min(500px, 95%);
-    font-family: "Lexend", sans-serif;
+    font-family: $body-font;
     margin: 1em auto;
     border: solid black 3px;
     border-radius: 10px;
@@ -112,5 +111,41 @@ button.btn:hover {
         color: black;
     }
 
+}
+
+form {
+    width: min(95%, 800px);
+    margin: 0 auto;
+    border: solid black 3px;
+    box-shadow: black 4px 4px 0px;
+    border-radius: 20px;
+    padding: 1.5em;
+    background-color: $light;
+
+    .form-check-input,
+    .form-check-input:checked,
+    .form-check-input:focus {
+        border: solid black 2px;
+        box-shadow: black 1px 1px 0px;
+    }
+
+    .form-box,
+    .form-box:focus {
+        border: solid black 2px;
+        box-shadow: black 1px 1px 0px;
+    }
+
+    .form-box:focus {
+        background-color: $primary;
+    }
+
+    .form-text {
+        font-family: $body-font;
+    }
+
+    label,
+    select {
+        letter-spacing: -0.1rem;
+    }
 
 }
