@@ -115,12 +115,13 @@ button.btn:hover {
 
 form {
     width: min(95%, 800px);
-    margin: 0 auto;
+    margin: 0.5em auto;
     border: solid black 3px;
     box-shadow: black 4px 4px 0px;
     border-radius: 20px;
     padding: 1.5em;
     background-color: $light;
+    font-family: $body-font;
 
     .form-check-input,
     .form-check-input:checked,
@@ -143,9 +144,13 @@ form {
         font-family: $body-font;
     }
 
-    label,
-    select {
-        letter-spacing: -0.1rem;
+    .form-label {
+        font-family: $font-family-sans-serif;
+        letter-spacing: -0.1em;
+    }
+
+    .btn {
+        font-family: $font-family-sans-serif;
     }
 
 }
