@@ -1,6 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
 @import "./custom.scss";
 
+body {
+    background-image: url('./assets/imgs/background_dot.svg');
+    background-color: whitesmoke;
+    background-repeat: repeat;
+}
+
 button.btn {
     font-weight: bold;
     font-size: 90%;
