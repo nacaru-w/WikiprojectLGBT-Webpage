@@ -200,7 +200,6 @@ form {
         flex-direction: row;
 
         .author-and-thumb {
-
             display: flex;
             flex-direction: column;
             margin-inline: 1em;
@@ -257,6 +256,36 @@ form {
             }
 
         }
+    }
+
+}
+
+.list-group {
+    width: min(95%, 300px);
+    margin: 2em auto;
+    box-shadow: black 4px 4px 0px;
+    border-radius: 20px;
+    letter-spacing: -0.1em;
+    background-color: black;
+
+    a,
+    a.active {
+        color: black;
+        border: solid black 3px;
+    }
+
+    a:hover {
+        background-color: $light;
+    }
+
+    a.active:hover {
+        background-color: $light;
+        box-shadow: black 0px 0px 0px 2px;
+        box-shadow: none;
+    }
+
+    a.disabled {
+        background-color: $gray-lighter;
     }
 
 }
