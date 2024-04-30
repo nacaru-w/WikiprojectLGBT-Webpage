@@ -1,22 +1,102 @@
 /* You can add global styles to this file, and also import other style files */
-@import "./custom.scss";
+@import "./custom";
 
 body {
     background-image: url('./assets/imgs/background_dot.svg');
-    background-color: whitesmoke;
+    background-color: $body-background;
     background-repeat: repeat;
 }
 
-button.btn {
+.navbar {
+    border-bottom: solid black 3px;
+    background-color: $light !important;
+
+    .brand-icon-and-title {
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+
+        .barba-icon-container {
+            width: 2em;
+            height: auto;
+        }
+
+        .navbar-title {
+            display: flex;
+            flex-direction: column;
+        }
+    }
+
+    .navbar-toggler {
+        border: solid black 3px;
+        color: black;
+        background-color: $info;
+    }
+
+    .navbar-options {
+        justify-content: center;
+        letter-spacing: -0.1em;
+
+        .navbar-nav {
+            font-weight: bold;
+            width: 90%;
+            justify-content: space-evenly;
+        }
+
+    }
+
+    a {
+        color: black;
+    }
+
+    li>a {
+        position: relative;
+    }
+
+    /* Fade in */
+    li>a::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 0.2em;
+        background-color: $danger;
+        opacity: 0;
+        transition: opacity 300ms, transform 300ms;
+    }
+
+    a:hover::after,
+    a:focus::after {
+        opacity: 1;
+        transform: translate3d(0, 0.2em, 0);
+    }
+
+    /* Scale from center */
+    a::after {
+        opacity: 1;
+        transform: scale(0);
+        transform-origin: center;
+    }
+
+    a:hover::after,
+    a:focus::after {
+        transform: scale(1);
+    }
+
+}
+
+.btn {
     font-weight: bold;
     font-size: 90%;
-    box-shadow: black 4px 4px 0px;
+    box-shadow: black 4px 4px;
     letter-spacing: -0.1rem;
     margin: 0.5em;
     border: solid black 3px;
+    font-family: $font-family-sans-serif;
 }
 
-button.btn:hover {
+.btn:hover {
     box-shadow: inset;
     border: solid black 3px;
 }
@@ -27,10 +107,9 @@ button.btn:hover {
     margin: 0 auto;
     border-radius: 40px;
     border: solid black 4px;
-    box-shadow: black 6px 6px 0px;
+    box-shadow: black 6px 6px;
 
     .img-wrapper {
-
         overflow: hidden;
 
         img {
@@ -56,7 +135,7 @@ button.btn:hover {
     margin: 0 auto;
     border: solid black 3px;
     border-radius: 10px;
-    box-shadow: black 4px 4px 0px;
+    box-shadow: black 4px 4px;
 }
 
 .accordion-button {
@@ -85,13 +164,13 @@ button.btn:hover {
     border: solid black 3px;
     border-radius: 10px;
     color: black;
-    box-shadow: black 4px 4px 0px;
+    box-shadow: black 4px 4px;
 }
 
 .dropdown {
     .dropdown-menu {
         border: solid black 3px;
-        box-shadow: black 4px 4px 0px;
+        box-shadow: black 4px 4px;
 
         .dropdown-item {
             letter-spacing: -0.1rem;
@@ -129,7 +208,7 @@ form {
     width: min(95%, 800px);
     margin: 0.5em auto;
     border: solid black 3px;
-    box-shadow: black 4px 4px 0px;
+    box-shadow: black 4px 4px;
     border-radius: 20px;
     padding: 1.5em;
     background-color: $light;
@@ -145,13 +224,13 @@ form {
     .form-check-input:checked,
     .form-check-input:focus {
         border: solid black 2px;
-        box-shadow: black 1px 1px 0px;
+        box-shadow: black 1px 1px;
     }
 
     .form-box,
     .form-box:focus {
         border: solid black 2px;
-        box-shadow: black 1px 1px 0px;
+        box-shadow: black 1px 1px;
     }
 
     .form-box:focus {
@@ -167,15 +246,11 @@ form {
         letter-spacing: -0.1em;
     }
 
-    .btn {
-        font-family: $font-family-sans-serif;
-    }
-
 }
 
 .blog-post {
     border: solid black 3px;
-    box-shadow: black 4px 4px 0px;
+    box-shadow: black 4px 4px;
     width: min(95%, 900px);
     padding: 1em 1.5em;
     margin: 1em auto;
@@ -187,7 +262,7 @@ form {
         text-align: center;
         border: solid black 3px;
         border-radius: 15px;
-        box-shadow: black 2px 2px 0px;
+        box-shadow: black 2px 2px;
         width: fit-content;
         padding: 0.4em 1.25em;
         margin: 1em auto;
@@ -224,7 +299,7 @@ form {
             width: 2.75em;
             height: 2.75em;
             border: solid black 2px;
-            box-shadow: black 1px 1px 0px;
+            box-shadow: black 1px 1px;
             border-radius: 50%;
             background-color: $light;
             justify-self: center;
@@ -241,7 +316,6 @@ form {
     .post-content {
         font-family: $body-font;
         margin-block: 2em;
-        margin-inline: 2em;
 
         .post-img-container {
             border: dashed black 3px;
@@ -263,7 +337,7 @@ form {
 .list-group {
     width: min(95%, 300px);
     margin: 2em auto;
-    box-shadow: black 4px 4px 0px;
+    box-shadow: black 4px 4px;
     border-radius: 20px;
     letter-spacing: -0.1em;
     background-color: black;
@@ -280,7 +354,7 @@ form {
 
     a.active:hover {
         background-color: $light;
-        box-shadow: black 0px 0px 0px 2px;
+        box-shadow: black 2px;
         box-shadow: none;
     }
 
@@ -288,4 +362,119 @@ form {
         background-color: $gray-lighter;
     }
 
+}
+
+.modal-content {
+    border: solid black 3px;
+    box-shadow: black 4px 4px;
+    background-image: url('./assets/imgs/background_dot.svg');
+    background-color: $light;
+    background-repeat: repeat;
+
+    .modal-header {
+        letter-spacing: -0.1em;
+    }
+
+    .modal-body {
+        font-family: $body-font;
+        border-block: solid black 3px;
+        background-image: none;
+        background-color: $body-background;
+    }
+
+}
+
+.btn-close {
+    fill: black;
+    opacity: 100%;
+    border: solid black 2px;
+    padding: none;
+    background-color: $gray-lighter;
+    box-shadow: black 2px 2px;
+}
+
+.card {
+    border: solid black 2px;
+    box-shadow: black 4px 4px;
+    border-radius: 10px;
+    margin: 2em auto;
+    background-color: $light;
+
+    .card-img-top {
+        padding: 2em;
+    }
+
+    .card-title {
+        letter-spacing: -0.1em;
+    }
+
+    .card-text {
+        font-family: $body-font;
+    }
+
+}
+
+.scrollspy {
+    width: min(1000px, 95%);
+    margin: 2em auto;
+    border: solid black 3px;
+    border-radius: 20px;
+    box-shadow: black 4px 4px;
+    padding: 3em;
+    background-color: $light;
+
+    a.nav-link {
+        letter-spacing: -0.1em;
+        color: black;
+        margin: 0.25em;
+    }
+
+    a.nav-link.active {
+        color: black;
+    }
+
+    h4,
+    h5 {
+        letter-spacing: -0.1em;
+    }
+
+    p {
+        font-family: $body-font;
+    }
+
+}
+
+@media screen and (orientation: portrait) {
+
+    .post-content {
+        margin-inline: none;
+    }
+
+    .scrollspy {
+        padding: 1em;
+    }
+
+    .scrollspy>div {
+        display: flex;
+        flex-direction: column;
+
+        .scrollspy-navmenu-container {
+            width: 100%;
+            padding-bottom: 1em;
+
+            .nav-pills {
+                flex-direction: row !important;
+            }
+
+            .nav-link {
+                align-self: center;
+            }
+
+        }
+
+        .scrollspy-textbox-container {
+            width: 100%;
+        }
+
+    }
 }
