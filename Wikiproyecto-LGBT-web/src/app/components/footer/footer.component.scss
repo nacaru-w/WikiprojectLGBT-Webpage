@@ -1,0 +1,127 @@
+@use '_variables';
+
+.footer {
+    background-image: linear-gradient(135deg, variables.$body-background 50%, transparent 50%), linear-gradient(225deg, variables.$body-background 50%, transparent 50%), linear-gradient(45deg, variables.$light 50%, transparent 50%), linear-gradient(-45deg, variables.$light 50%, transparent 50%);
+    background-size: 2rem 2rem;
+    background-repeat: repeat-x;
+    padding-top: 6rem;
+    padding-bottom: 4rem;
+    background-color: variables.$light;
+    color: black;
+
+    .footer-container {
+
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        flex-wrap: wrap;
+        width: min(1000px, 95%);
+        margin: 0 auto;
+
+        .footer-left {
+            display: flex;
+            width: 25em;
+            flex-grow: 1;
+            justify-content: center;
+            align-content: center;
+            gap: 5%;
+
+            .link-list>ul {
+                list-style-type: none;
+                padding-left: 0;
+
+                a {
+                    color: black;
+                }
+
+                .list-item {
+                    font-family: variables.$body-font;
+                    width: fit-content;
+                    position: relative;
+
+                    a {
+                        text-decoration: none;
+                    }
+
+                    /* Fade in */
+                    a::after {
+                        content: '';
+                        position: absolute;
+                        bottom: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 0.15em;
+                        background-color: variables.$danger;
+                        opacity: 0;
+                        transition: opacity 300ms, transform 300ms;
+                    }
+
+                    a:hover::after,
+                    a:focus::after {
+                        opacity: 1;
+                        transform: translate3d(0, 0.2em, 0);
+                    }
+
+                    /* Scale from center */
+                    a::after {
+                        opacity: 1;
+                        transform: scale(0);
+                        transform-origin: center;
+                    }
+
+                    a:hover::after,
+                    a:focus::after {
+                        transform: scale(1);
+                    }
+                }
+
+            }
+
+
+        }
+
+        .footer-right {
+            width: 10em;
+            flex-grow: 1;
+
+            div.social-media-icons {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                align-items: center;
+                gap: 0.5em;
+
+                .icon-container {
+                    width: 2em;
+                    height: auto;
+
+                    a {
+                        width: 90%;
+                        height: 90%;
+
+                        img {
+                            cursor: pointer;
+                            margin: 0 0.5em;
+                            width: 90%;
+                            height: 90%;
+                            opacity: 1;
+                            transition: opacity 0.3s ease;
+                        }
+
+                        img:hover {
+                            opacity: 50%;
+                        }
+                    }
+
+
+                }
+
+
+
+            }
+
+
+        }
+
+    }
+}
