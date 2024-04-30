@@ -1,13 +1,15 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { NgbAccordionModule, NgbCarouselConfig, NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbAccordionModule, NgbCarouselConfig, NgbCarouselModule, NgbCollapse, NgbScrollSpyModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+import { FooterComponent } from './components/footer/footer.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NgbAccordionModule, NgbAlertModule, NgbDropdownModule, NgbCarouselModule],
+  imports: [FooterComponent, RouterOutlet, NgbAccordionModule, NgbAlertModule, NgbDropdownModule, NgbCarouselModule, NgbScrollSpyModule, CommonModule, NgbCollapse],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   providers: [NgbCarouselConfig]
@@ -22,9 +24,13 @@ export class AppComponent {
     './../assets/imgs/WP20Symbols_2004_aktenzeichen_rectangle.svg',
   ];
 
+  isMenuCollapsed = true;
+
   constructor(config: NgbCarouselConfig) {
     config.showNavigationArrows = true;
     config.showNavigationIndicators = true;
   }
+
+
 
 }
