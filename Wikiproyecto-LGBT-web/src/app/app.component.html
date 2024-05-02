@@ -9,47 +9,6 @@
 <button type="button" class="btn btn-danger">Danger</button>
 <button type="button" class="btn btn-success">Success</button>
 
-@if (images) {
-<ngb-carousel [showNavigationArrows]="showNavigationArrows" [showNavigationIndicators]="showNavigationIndicators">
-  @for (image of images; track image) {
-  <ng-template ngbSlide>
-    <div class="img-wrapper">
-      <img [src]="image" alt="Random slide" />
-    </div>
-    <div class="carousel-caption">
-      @switch (images.indexOf(image)) {
-      @case (0) {
-      <h3>Make diversity more visible</h3>
-      <p>Pitch in by adding info to a global encyclopedia</p>
-      }
-      @case (1) {
-      <h3>Watch and protect </h3>
-      <p>LGBT+ articles are commonly exposed to vandalism</p>
-      }
-      @case (2) {
-      <h3>Join our community</h3>
-      <p>Anyone can edit Wikipedia, we'll help you learn</p>
-      }
-      }
-
-    </div>
-  </ng-template>
-  }
-</ngb-carousel>
-}
-
-<hr />
-
-<div class="btn-group" role="group" aria-label="Carousel toggle controls">
-  <button type="button" (click)="showNavigationArrows = !showNavigationArrows" class="btn btn-outline-dark btn-sm">
-    Toggle navigation arrows
-  </button>
-  <button type="button" (click)="showNavigationIndicators = !showNavigationIndicators"
-    class="btn btn-outline-dark btn-sm">
-    Toggle navigation indicators
-  </button>
-</div>
-
 <div ngbAccordion>
   <div ngbAccordionItem>
     <h2 ngbAccordionHeader>
@@ -160,98 +119,6 @@
         </div>
       </div>
     </div>
-  </div>
-</div>
-
-<form>
-  <div class="mb-3">
-    <label for="exampleInputEmail1" class="form-label">Email address</label>
-    <input type="email" class="form-box form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-  </div>
-  <div class="mb-3">
-    <select class="form-box form-select" aria-label="Default select example">
-      <option class="dropdown-item" selected>Open this select menu</option>
-      <option class="dropdown-item" value="1">One</option>
-      <option class="dropdown-item" value="2">Two</option>
-      <option class="dropdown-item" value="3">Three</option>
-    </select>
-  </div>
-  <div class="form-check mb-3">
-    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-    <label class="form-check-label" for="flexCheckDefault">
-      Default checkbox
-    </label>
-  </div>
-  <div class="form-check mb-3">
-    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
-    <label class="form-check-label" for="flexCheckChecked">
-      Checked checkbox
-    </label>
-  </div>
-  <div class="form-check mb-3">
-    <input class="form-check-input" type="radio" value="" id="flexRadioDefault1">
-    <label class="form-check-label" for="flexRadioDefault1">
-      Default radio
-    </label>
-  </div>
-  <div class="form-check mb-3">
-    <input class="form-check-input" type="radio" value="" id="flexRadioDefault1" checked>
-    <label class="form-check-label" for="flexRadioDefault2">
-      Default checked radio
-    </label>
-  </div>
-  <div class="form-check form-switch mb-3">
-    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
-    <label class="form-check-label" for="flexSwitchCheckDefault">Default switch checkbox input</label>
-  </div>
-  <div class="form-check form-switch mb-3">
-    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
-    <label class="form-check-label" for="flexSwitchCheckChecked">Checked switch checkbox input</label>
-  </div>
-
-  <div class="mb-3">
-    <label for="exampleInputPassword1" class="form-label">Password</label>
-    <input type="password" class="form-box form-control" id="exampleInputPassword1">
-  </div>
-  <div class="mb-3 form-check">
-    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-    <label class="form-check-label" for="exampleCheck1">Check me out</label>
-  </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
-</form>
-
-<div class="blog-post">
-  <h2>Título</h2>
-  <div class="post-info">
-    <div class="thumb-img-container">
-      <img src="./../assets/imgs/Barba-wikiproyecto-lgbt.svg" alt="Título" class="post-image">
-    </div>
-    <div class="author-and-thumb">
-
-      <span class="author">por <span class="author-name">Autor</span></span>
-      <span class="date">1/1/2024</span>
-    </div>
-
-
-  </div>
-  <div class="post-content">
-    <p>
-      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quae non porro ipsum aut reprehenderit deserunt, beatae
-      aliquam alias totam, quaerat amet obcaecati molestiae quidem nisi doloribus in molestias, odio vel.
-    </p>
-    <div class="post-img-container">
-      <img src="./../assets/imgs/Wikimedia_Diversity_banner.svg" alt="Banner">
-    </div>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum quisquam et mollitia, ex velit deleniti repellendus
-      voluptatem quis pariatur nisi atque molestiae quaerat accusantium dolores odit! Architecto ipsum eum ex!
-    </p>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque ducimus quas asperiores totam tempora, corporis
-      libero iusto? Omnis ipsam deserunt eius, fugit excepturi dolores vero. Voluptatibus libero obcaecati voluptatem
-      distinctio!
-    </p>
   </div>
 </div>
 
@@ -377,7 +244,5 @@
     </div>
   </div>
 </div>
-
-<app-footer></app-footer>
-
 <router-outlet />
+<app-footer></app-footer>

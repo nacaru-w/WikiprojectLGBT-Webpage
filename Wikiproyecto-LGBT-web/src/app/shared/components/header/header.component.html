@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary mb-3">
     <div class="container-fluid">
-        <div class="brand-icon-and-title">
+        <div class="brand-icon-and-title" (click)="navigate('/home')">
             <a class="navbar-brand">
                 <div class="barba-icon-container"><img src="./../assets/imgs/Barba-wikiproyecto-lgbt.svg" alt=""></div>
             </a>
@@ -17,10 +17,10 @@
             <ul class="navbar-nav">
                 <li class="nav-item active">
                     <!-- Step 4: Close the menu when a link is clicked. -->
-                    <a class="nav-link" (click)="isMenuCollapsed = true">Features</a>
+                    <a class="nav-link" href="/blog" (click)="isMenuCollapsed = true">Blog</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" (click)="isMenuCollapsed = true">Examples</a>
+                    <a class="nav-link" href="/form" (click)="isMenuCollapsed = true">Form</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" (click)="isMenuCollapsed = true">About</a>

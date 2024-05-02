@@ -17,21 +17,5 @@ import { HeaderComponent } from './shared/components/header/header.component';
 })
 export class AppComponent {
   title = 'Wikiproyecto-LGBT-web';
-  showNavigationArrows = false;
-  showNavigationIndicators = false;
-  images: string[] = [
-    './../assets/imgs/Wikipedia_20_pink_star.svg',
-    './../assets/imgs/Wikipedia_tucan.svg',
-    './../assets/imgs/WP20Symbols_2004_aktenzeichen_rectangle.svg',
-  ];
-
-  isMenuCollapsed = true;
-
-  constructor(config: NgbCarouselConfig) {
-    config.showNavigationArrows = true;
-    config.showNavigationIndicators = true;
-  }
-
-
 
 }
