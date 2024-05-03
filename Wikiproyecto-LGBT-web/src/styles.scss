@@ -125,50 +125,6 @@ body {
 
 }
 
-form {
-    width: min(95%, 800px);
-    margin: 0.5em auto;
-    border: solid black 3px;
-    box-shadow: black 4px 4px;
-    border-radius: 20px;
-    padding: 1.5em;
-    background-color: $light;
-    font-family: $body-font;
-
-    select {
-        .dropdown-item {
-            font-family: $font-family-sans-serif;
-        }
-    }
-
-    .form-check-input,
-    .form-check-input:checked,
-    .form-check-input:focus {
-        border: solid black 2px;
-        box-shadow: black 1px 1px;
-    }
-
-    .form-box,
-    .form-box:focus {
-        border: solid black 2px;
-        box-shadow: black 1px 1px;
-    }
-
-    .form-box:focus {
-        background-color: $primary;
-    }
-
-    .form-text {
-        font-family: $body-font;
-    }
-
-    .form-label {
-        font-family: $font-family-sans-serif;
-        letter-spacing: -0.1em;
-    }
-
-}
-
 .blog-post {
     border: solid black 3px;
     box-shadow: black 4px 4px;
