@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
    data-name="Layer 1"
-   viewBox="0 0 799.99998 599.99999"
+   viewBox="0 0 799.99998 499.99999"
    version="1.1"
    id="svg24"
    sodipodi:docname="Wikipedia_20_pink_star.svg"
    inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
    width="800"
-   height="600"
+   height="500"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -36,11 +36,11 @@
      height="550.89001px" />
   <path
      fill="#e9e7c4"
-     d="M -11.093764,-3.3990132 -11.135374,607.54186 804.8176,608.56566 804.15193,-2.4258632 Z"
+     d="M -11.093764,-3.3990132 -11.135374,505.74771 804.8176,506.60099 804.15193,-2.5880086 Z"
      class="cls-1"
      id="path2"
      sodipodi:nodetypes="ccccc"
-     style="fill:#ffe3ea;fill-opacity:1;stroke-width:1.12456" />
+     style="fill:#ffe3ea;fill-opacity:1;stroke-width:1.02658" />
   <g
      fill="#ffcc00"
      stroke-width="0.730432"

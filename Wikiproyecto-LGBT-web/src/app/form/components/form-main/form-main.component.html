@@ -1,16 +1,32 @@
-<form>
+<form [formGroup]="webForm" (ngSubmit)="onSubmit()">
     <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label">Email address</label>
-        <input type="email" class="form-box form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+        <label for="pronouns" class="form-label">Selecciona tu preferencia de determinantes de género</label>
+        <select class="form-box form-select" aria-label="Determinantes de género" id="pronouns"
+            formControlName="pronouns" (change)="otherPronounsChosen()">
+            <option class="dropdown-item">Él</option>
+            <option class="dropdown-item" selected>Ella</option>
+            <option class="dropdown-item">Elle</option>
+            <option class="dropdown-item">Sin determinar/otro</option>
+        </select>
+    </div>
+    <div class="mb-3" *ngIf="showOtherPronounsField">
+        <label for="otherPronouns" class="form-label">Escribe aquí cómo deseas que nos dirijamos a ti</label>
+        <input id="otherPronouns" class="form-box form-control" formControlName="otherPronouns">
     </div>
     <div class="mb-3">
-        <select class="form-box form-select" aria-label="Default select example">
-            <option class="dropdown-item" selected>Open this select menu</option>
-            <option class="dropdown-item" value="1">One</option>
-            <option class="dropdown-item" value="2">Two</option>
-            <option class="dropdown-item" value="3">Three</option>
-        </select>
+        <label for="name" class="form-label">Nombre o alias</label>
+        <input class="form-box form-control" id="name" aria-describedby="name" formControlName="name">
+        <div class="formError" *ngIf="isFieldInvalid('name')">Este campo es obligatorio</div>
+    </div>
+    <div class="mb-3">
+        <label for="email" class="form-label">Dirección de correo electrónico</label>
+        <input type="email" class="form-box form-control" id="email" aria-describedby="emailHelp"
+            formControlName="email">
+        <div id="emailHelp" class="form-text">Nunca compartiremos tu dirección con otras personas</div>
+    </div>
+    <div class="mb-3">
+        <label for="whyTextarea" class="form-label">Cuéntanos por qué quieres formar parte de WMLGBT+</label>
+        <textarea class="form-control text-area" aria-label=" textarea" id="whyTextarea"></textarea>
     </div>
     <div class="form-check mb-3">
         <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">

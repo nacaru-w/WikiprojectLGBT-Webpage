@@ -18,7 +18,7 @@ export class MainPageComponent {
   ];
 
   constructor(config: NgbCarouselConfig) {
-    config.showNavigationArrows = true;
+    config.showNavigationArrows = false;
   }
 
 }

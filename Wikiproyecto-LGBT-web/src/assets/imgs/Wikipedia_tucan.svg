@@ -2,12 +2,12 @@
 <svg
    id="Layer_1"
    data-name="Layer 1"
-   viewBox="0 0 800 600"
+   viewBox="0 0 800 500"
    version="1.1"
    sodipodi:docname="Wikipedia_tucan.svg"
    inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
    width="800"
-   height="600"
+   height="500"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -42,10 +42,10 @@
      data-name="3NCvgX.tif"
      transform="matrix(0.58240536,0,0,0.5491346,0.04476705,0.07694847)">
     <path
-       d="m -6.2045717,1101.9107 c -3.9643093,-248.78506 2.570542,-882.55276 1.259648,-1103.201462 0,-4.1439 1391.7775237,-0.6947 1391.7775237,-0.6947 0.596,0.7395 0.3538,1103.820262 0.3538,1103.820262 -274.0475,-0.018 -1039.58566,9.5462 -1393.3909717,0.075 z"
+       d="m -6.2045717,921.89888 c -3.9643093,-208.26521 2.570542,-738.81059 1.259648,-923.5220384 0,-3.4689792 1391.7775237,-0.5815536 1391.7775237,-0.5815536 0.596,0.619057 0.3538,924.040052 0.3538,924.040052 -274.0475,-0.0151 -1039.58566,7.9914 -1393.3909717,0.0628 z"
        class="cls-1"
        id="path6"
-       style="fill:#b3efff;fill-opacity:1;stroke-width:1.13955"
+       style="fill:#b3efff;fill-opacity:1;stroke-width:1.04263"
        sodipodi:nodetypes="ccccc" />
     <path
        d="m 1198.5106,721.04427 a 1.8270857,1.8270857 0 0 1 0,-2.65991 z"

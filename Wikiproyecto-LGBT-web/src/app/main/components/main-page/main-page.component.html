@@ -5,23 +5,28 @@
         <div class="img-wrapper">
             <img [src]="image" alt="Random slide" />
         </div>
-        <div class="carousel-caption">
-            @switch (images.indexOf(image)) {
-            @case (0) {
+        @switch (images.indexOf(image)) {
+        @case (0) {
+        <div class="carousel-caption image-1">
             <h3>Make diversity more visible</h3>
             <p>Pitch in by adding info to a global encyclopedia</p>
-            }
-            @case (1) {
+        </div>
+
+        }
+        @case (1) {
+        <div class="carousel-caption image-2">
             <h3>Watch and protect </h3>
             <p>LGBT+ articles are commonly exposed to vandalism</p>
-            }
-            @case (2) {
+        </div>
+        }
+        @case (2) {
+        <div class="carousel-caption image-3">
             <h3>Join our community</h3>
             <p>Anyone can edit Wikipedia, we'll help you learn</p>
-            }
-            }
-
         </div>
+        }
+        }
+
     </ng-template>
     }
 </ngb-carousel>

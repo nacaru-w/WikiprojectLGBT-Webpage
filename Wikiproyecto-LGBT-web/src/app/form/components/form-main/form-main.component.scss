@@ -42,4 +42,27 @@ form {
         letter-spacing: -0.1em;
     }
 
+    .formError {
+        color: variables.$dark-danger;
+    }
+
+    .input-group {
+        border: solid black 2px;
+        box-shadow: black 1px 1px;
+
+        .input-group-text {
+            font-size: 0.9em;
+            border-right: solid black 3px;
+            max-width: 30%;
+            text-wrap: wrap;
+        }
+
+    }
+
+    .text-area {
+        border: solid black 2px;
+        box-shadow: black 1px 1px;
+        min-height: 7em;
+    }
+
 }

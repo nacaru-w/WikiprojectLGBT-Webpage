@@ -23,16 +23,14 @@ body {
 }
 
 .carousel-inner {
+    display: flex;
     width: min(95%, 900px);
-    height: min(95%, 400px);
     margin: 0 auto;
     border-radius: 40px;
     border: solid black 4px;
     box-shadow: black 6px 6px;
 
     .img-wrapper {
-        overflow: hidden;
-
         img {
             width: 100%;
             height: 100%;
@@ -41,8 +39,34 @@ body {
     }
 
     .carousel-caption {
+        display: flex;
+        flex-direction: column;
+        justify-items: center;
+        position: relative;
+        left: unset;
+        right: unset;
+        bottom: unset;
+        min-height: 10em;
         color: black;
         font-weight: bold;
+
+        @media screen and (max-width: 480px) {
+            min-height: 13em;
+            padding-inline: 0.5em;
+        }
+
+    }
+
+    .carousel-caption.image-1 {
+        background-color: $light;
+    }
+
+    .carousel-caption.image-2 {
+        background-color: $primary;
+    }
+
+    .carousel-caption.image-3 {
+        background-color: $warning;
     }
 
 }

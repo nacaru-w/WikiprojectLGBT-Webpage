@@ -6,8 +6,8 @@ import { StatisticsMainComponent } from './statistics/components/statistics-main
 
 export const routes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' },
-    { path: 'home', component: MainPageComponent },
-    { path: 'blog', component: BlogMainComponent },
-    { path: 'form', component: FormMainComponent },
+    { path: 'home', component: MainPageComponent, data: { animation: ['HomePage', 'footerAnimation'] } },
+    { path: 'blog', component: BlogMainComponent, data: { animation: ['BlogPage', 'footerAnimation'] } },
+    { path: 'form', component: FormMainComponent, data: { animation: ['FormPage', 'footerAnimation'] } },
     { path: 'stats', component: StatisticsMainComponent }
 ];
