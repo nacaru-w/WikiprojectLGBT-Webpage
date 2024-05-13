@@ -1,7 +1,7 @@
 <form [formGroup]="webForm" (ngSubmit)="onSubmit()">
-    <div class="mb-3">
-        <label for="pronouns" class="form-label">Selecciona tu preferencia de determinantes de género</label>
-        <select class="form-box form-select" aria-label="Determinantes de género" id="pronouns"
+    <div class="mb-2">
+        <label for="pronouns" class="form-label">Selecciona tus determinantes de género</label>
+        <select class="form-box form-select pronouns" aria-label="Determinantes de género" id="pronouns"
             formControlName="pronouns" (change)="otherPronounsChosen()">
             <option class="dropdown-item">Él</option>
             <option class="dropdown-item" selected>Ella</option>
@@ -9,65 +9,101 @@
             <option class="dropdown-item">Sin determinar/otro</option>
         </select>
     </div>
-    <div class="mb-3" *ngIf="showOtherPronounsField">
+    <div class="mb-2" *ngIf="showOtherPronounsField">
         <label for="otherPronouns" class="form-label">Escribe aquí cómo deseas que nos dirijamos a ti</label>
         <input id="otherPronouns" class="form-box form-control" formControlName="otherPronouns">
     </div>
-    <div class="mb-3">
-        <label for="name" class="form-label">Nombre o alias</label>
+    <div class="mb-2">
+        <label for="name" class="form-label">Nombre o alias*</label>
         <input class="form-box form-control" id="name" aria-describedby="name" formControlName="name">
-        <div class="formError" *ngIf="isFieldInvalid('name')">Este campo es obligatorio</div>
+        <div class="formError" [ngClass]="{'hidden': !isFieldInvalid('name')}">Este campo es obligatorio</div>
     </div>
-    <div class="mb-3">
-        <label for="email" class="form-label">Dirección de correo electrónico</label>
+    <div class="mb-2">
+        <label for="email" class="form-label">Dirección de correo electrónico*</label>
         <input type="email" class="form-box form-control" id="email" aria-describedby="emailHelp"
             formControlName="email">
         <div id="emailHelp" class="form-text">Nunca compartiremos tu dirección con otras personas</div>
+        <div class="formError" [ngClass]="{'hidden': !isFieldInvalid('email')}">Dirección incorrecta o faltante</div>
     </div>
-    <div class="mb-3">
-        <label for="whyTextarea" class="form-label">Cuéntanos por qué quieres formar parte de WMLGBT+</label>
-        <textarea class="form-control text-area" aria-label=" textarea" id="whyTextarea"></textarea>
+    <div class="mb-2">
+        <label for="whyTextarea" class="form-label">
+            Cuéntanos por qué quieres formar parte de WMLGBT+
+        </label>
+        <textarea class="form-control text-area" aria-label=" textarea" id="whyTextarea"
+            formControlName="reason"></textarea>
     </div>
-    <div class="form-check mb-3">
-        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-        <label class="form-check-label" for="flexCheckDefault">
-            Default checkbox
+    <div class="form-check mb-2">
+        <input class="form-check-input" type="checkbox" value="" id="wikimediaAccount"
+            formControlName="wikimediaAccount">
+        <label class="form-check-label" for="wikimediaAccount">
+            Tengo cuenta en los proyectos Wikimedia
         </label>
     </div>
-    <div class="form-check mb-3">
-        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
-        <label class="form-check-label" for="flexCheckChecked">
-            Checked checkbox
-        </label>
-    </div>
-    <div class="form-check mb-3">
-        <input class="form-check-input" type="radio" value="" id="flexRadioDefault1">
-        <label class="form-check-label" for="flexRadioDefault1">
-            Default radio
-        </label>
-    </div>
-    <div class="form-check mb-3">
-        <input class="form-check-input" type="radio" value="" id="flexRadioDefault1" checked>
-        <label class="form-check-label" for="flexRadioDefault2">
-            Default checked radio
-        </label>
-    </div>
-    <div class="form-check form-switch mb-3">
-        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
-        <label class="form-check-label" for="flexSwitchCheckDefault">Default switch checkbox input</label>
-    </div>
-    <div class="form-check form-switch mb-3">
-        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
-        <label class="form-check-label" for="flexSwitchCheckChecked">Checked switch checkbox input</label>
+    <div class="account-section" *ngIf="showValue('wikimediaAccount')">
+        <div class="input-group mb-2">
+            <span class="input-group-text" id="basic-addon1">&#64;</span>
+            <input type="text" class="input-group-box form-control" placeholder="Nombre de usuarie"
+                aria-label="Username" aria-describedby="basic-addon1" formControlName="wikimediaAccountName">
+        </div>
+        <div class="formError" id="userNameError" [ngClass]="{'hidden': !isFieldInvalid('wikimediaAccountName')}">
+            Nombre de usuario no válido
+        </div>
     </div>
 
-    <div class="mb-3">
-        <label for="exampleInputPassword1" class="form-label">Password</label>
-        <input type="password" class="form-box form-control" id="exampleInputPassword1">
+    <div class="form-check mb-2">
+        <input class="form-check-input" type="checkbox" value="" id="attendedEvent" formControlName="attendedEvent">
+        <label class="form-check-label" for="flexRadioDefault1">
+            He participado en algún evento WMLGBT+ organizado por la Fundación Wikimedia
+        </label>
     </div>
-    <div class="mb-3 form-check">
-        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-        <label class="form-check-label" for="exampleCheck1">Check me out</label>
+    <div class="input-group mb-2" *ngIf="showValue('attendedEvent')">
+        <span class="input-group-text" id="basic-addon1">Evento</span>
+        <input type="text" class="input-group-box form-control" placeholder="Nombre del evento" aria-label="Username"
+            aria-describedby="basic-addon1" formControlName="attendedEventName">
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <div class="form-check form-switch mb-2">
+        <input class="form-check-input" type="checkbox" role="switch" id="readPolicy">
+        <label class="form-check-label" for="readPolicy">Estoy de acuerdo con el <a target="_blank"
+                href="https://foundation.wikimedia.org/wiki/Policy:Universal_Code_of_Conduct/es">Código Universal de
+                Conducta</a> y la <a target="_blank"
+                href="https://meta.wikimedia.org/wiki/Friendly_space_policies/es">Política de
+                Espacios Amigables</a> de la Fundación Wikimedia</label>
+    </div>
+    <div class="form-check form-switch mb-2">
+        <input class="form-check-input" type="checkbox" role="switch" id="readPrivacy">
+        <label class="form-check-label" for="readPrivacy">He leído y acepto <a target="_blank" href="">la política de
+                privacidad</a></label>
+    </div>
+    <div class="submit-button-container d-grid col-6 mx-auto">
+        <button type="button" class="btn btn-primary mx-auto" data-bs-toggle="modal" data-bs-target="#formConfirm"
+            [ngClass]="{'disabled' : !webForm.valid}">
+            Enviar
+        </button>
+    </div>
+
 </form>
+
+<div class="modal fade" id="formConfirm" tabindex="-1" aria-labelledby="formConfirm" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">
+                    <div class="spinner-border" role="status" *ngIf="showSubmitSpinner"></div>
+                    {{formSendDataStatus}}
+                </h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Example of text within the body of a modal. Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Corrupti
+                eaque, neque architecto, sunt optio ullam quas explicabo minima eveniet cupiditate officiis a tenetur
+                ipsa
+                tempora suscipit, aperiam libero incidunt in.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>

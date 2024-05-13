@@ -12,29 +12,32 @@ import { CommonModule } from '@angular/common';
 })
 export class FormMainComponent {
   webForm: FormGroup;
+  formSendDataStatus: string = 'Enviando formulario...';
+  showSubmitSpinner: boolean = true;
 
   showOtherPronounsField: boolean = false;
 
   constructor(private formBuilder: FormBuilder) {
     this.webForm = this.formBuilder.group({
+      pronouns: new FormControl('', [Validators.required]),
+      otherPronouns: new FormControl(''),
       name: new FormControl('', Validators.required),
       email: new FormControl('', [Validators.required, Validators.email]),
-      pronouns: new FormControl('', [Validators.required]),
-      otherPronouns: new FormControl('')
+      reason: new FormControl('', [Validators.maxLength(1000)]),
+      wikimediaAccount: new FormControl(''),
+      wikimediaAccountName: new FormControl('', [Validators.pattern(/^(?!.*[@:>=#€]).*$/), Validators.maxLength(255)]),
+      attendedEvent: new FormControl(''),
+      attendedEventName: new FormControl('', [Validators.maxLength(255)])
     })
   }
 
   onSubmit() {
-    if (this.webForm.valid) {
-      console.log("hola");
-    } else {
-      console.log(this.webForm.errors)
-    }
+    console.log(this.webForm.errors)
   }
 
   isFieldInvalid(fieldName: string): boolean {
     const control = this.webForm.get(fieldName);
-    return control!.invalid && (control!.dirty || control!.touched)
+    return control!.invalid && (control!.dirty)
   }
 
   showValue(fieldName: string): string {
