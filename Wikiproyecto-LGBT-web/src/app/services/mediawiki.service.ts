@@ -71,4 +71,24 @@ export class MediawikiService {
 
   }
 
+  getLGBTArticleList(): Observable<string[]> {
+    return this.getPageContent('Wikiproyecto:LGBT/Artículos_creados').pipe(
+      map((res: string) => {
+        const regex = /\[\[(.*?)\]\]/g;
+        const matches: string[] = [];
+        let match;
+
+        while ((match = regex.exec(res)) !== null) {
+          if (match[1] !== 'artículo' &&
+            !match[1].toLocaleLowerCase().includes('wikiproyecto')) {
+            matches.push(match[1]);
+          }
+        }
+
+        return matches
+
+      })
+    )
+  }
+
 }
