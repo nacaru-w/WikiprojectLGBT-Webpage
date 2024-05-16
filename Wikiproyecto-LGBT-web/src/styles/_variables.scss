@@ -13,6 +13,8 @@ $success: #54de7d;
 $warning: #fff574;
 $danger: #fa7c7c;
 
+$purple: #ccacfd;
+
 $gray-lightest: #f5f5f5;
 $gray-lighter: #e0e0e0;
 $gray-light: #bdbdbd;
@@ -22,6 +24,10 @@ $gray-darker: #424242;
 $gray-darkest: #212121;
 
 $body-background: #f5f5f5;
+
+$lighter-primary: color.scale($primary, $lightness: 75%); // Lighter shade of blue
+$lighter-purple: color.scale($purple, $lightness: 75%);
+$lighter-orange: color.scale($info, $lightness: 75%);
 
 $dark-primary: color.adjust($primary, $lightness: -35%); // Darker shade of blue
 $dark-secondary: color.adjust($secondary, $lightness: -35%); // Darker shade of pink
