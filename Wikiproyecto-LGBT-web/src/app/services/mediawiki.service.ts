@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable, catchError, map } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Observable, catchError, map, throwError } from 'rxjs';
 
-import { MediawikiParams } from '../models/mediawiki-params';
+import { MediawikiParams } from './models/mediawiki-params';
+import { Participants } from './models/participants';
 
 @Injectable({
   providedIn: 'root'
@@ -30,14 +31,15 @@ export class MediawikiService {
       callUrl += `&${param}=${params[param]}`;
     }
 
-    const contentString = this.http.get(callUrl).pipe(
+    return this.http.get(callUrl).pipe(
       map((response: any) => {
         return response?.query?.pages[0]?.revisions[0]?.slots?.main?.content;
-      }
-      ))
-
-    return contentString
-
+      }),
+      catchError((error: HttpErrorResponse) => {
+        console.error('An error occurred:', error.message);
+        return error.message
+      })
+    );
   }
 
   getPageExtract(title: string): Observable<string> {
@@ -86,6 +88,28 @@ export class MediawikiService {
         }
 
         return matches
+
+      })
+    )
+  }
+
+  getParticipantNumbers(): Observable<Participants> {
+    return this.getPageContent('Wikiproyecto:LGBT/participantes').pipe(
+      map((res: string) => {
+        let obj: Participants = { totalCount: 0, thisYearCount: 0 }
+
+        const totalRegex = /# /g;
+        const totalCount = (res.match(totalRegex))!.length;
+
+        obj.totalCount = totalCount;
+
+        const thisYearRegex = /2024/g;
+        const thisYearCount = (res.match(thisYearRegex))!.length;
+
+        obj.thisYearCount = thisYearCount
+        console.log(obj);
+
+        return obj
 
       })
     )
