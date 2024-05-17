@@ -1,3 +1,40 @@
+<h2 class="chart-title">Artículos por mes</h2>
+<div class="chart-container">
+    <canvas id="monthlyCountChart">
+        {{ monthlyCountChart }}
+    </canvas>
+</div>
+
+<h2 class="chart-title">Artículos por año</h2>
+<div class="chart-container">
+    <canvas id="articleCountChart">{{ articleCountChart }}</canvas>
+</div>
+
+<h2 class="chart-title">Participantes</h2>
+<div class="chart-container">
+    <canvas id="participantCountChart">{{ participantCountChart}} </canvas>
+</div>
+
+<h2 class="card-set-title">
+    Últimos artículos
+</h2>
+<div class="card-container" style="display:flex;">
+    @for (item of cardDict | keyvalue; track item; let i = $index) {
+    <div class="card" style="width: 18rem;">
+        <img src="./../assets/imgs/Barba-wikiproyecto-lgbt.svg" class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">{{ item.key }}</h5>
+            <p class="card-text">
+                {{ item.value }}
+            </p>
+            <a href='https://es.wikipedia.org/wiki/{{item.key}}' class="btn btn-primary">
+                Ver en Wikipedia
+            </a>
+        </div>
+    </div>
+    }
+</div>
+
 <button type="button" class="btn btn-light">Light</button>
 <button type="button" class="btn btn-dark">Dark</button>
 <button type="button" class="btn btn-secondary">Secondary</button>
