@@ -1,18 +1,42 @@
-<h2 class="chart-title">Artículos por mes</h2>
-<div class="chart-container">
-    <canvas id="monthlyCountChart">
-        {{ monthlyCountChart }}
-    </canvas>
+<h2 class="chart-title">Artículos</h2>
+<div class="chart-container reversed">
+    <div class="chart-text">
+        <p>Aunque hay muchísimas formas distintas de contribuir como parte de WMLGBT+, los artículos conforman la
+            característica más reconocible de Wikipedia. En total, nuestra comunidad ha creado:</p>
+        <span class="count-paragraph"><span class="count-text">{{totalArticleCount}}</span> artículos</span>
+        <p>En el gráfico puedes observar qué tal lo hemos hecho estos últimos años</p>
+    </div>
+    <div class="chart">
+        <canvas id="articleCountChart">{{ articleCountChart }}</canvas>
+    </div>
 </div>
 
-<h2 class="chart-title">Artículos por año</h2>
+<h2 class="chart-title">Artículos por mes</h2>
 <div class="chart-container">
-    <canvas id="articleCountChart">{{ articleCountChart }}</canvas>
+    <div class="chart-text">
+        <p>Eventos como el <a href="https://es.wikipedia.org/wiki/Wikiproyecto:LGBT/Pa%C3%ADs_del_mes">Desafío del País
+                del Mes</a> nos permiten mantener nuestras ediciones mensuales altas. Solo este mes se han creado:</p>
+        <span class="count-paragraph"><span class="count-text">{{totalThisMonthArticleCount}}</span> artículos</span>
+        <p>Nuestros períodos de mayor actividad se suelen concentrar en los meses de marzo y junio, ¿puedes adivinar por
+            qué?</p>
+    </div>
+    <div class="chart">
+        <canvas id="monthlyCountChart">
+            {{ monthlyCountChart }}
+        </canvas>
+    </div>
 </div>
 
 <h2 class="chart-title">Participantes</h2>
-<div class="chart-container">
-    <canvas id="participantCountChart">{{ participantCountChart}} </canvas>
+<div class="chart-container reversed">
+    <div class="chart-text">
+        <p>El bloque fundamental de nuestra comunidad son sus participantes. Ahora mismo somos:</p>
+        <span class="count-paragraph"><span class="count-text">{{totalParticipantCount}}</span> personas</span>
+        <p>En el gráfico puedes observar las nuevas altas a lo largo de los últimos años</p>
+    </div>
+    <div class="chart">
+        <canvas id="participantCountChart">{{ participantCountChart}} </canvas>
+    </div>
 </div>
 
 <h2 class="card-set-title">

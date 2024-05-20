@@ -32,6 +32,10 @@ import { MonthlyOccurencesModel } from '../../models/monthly-occurences-model';
   styleUrl: './statistics-main.component.scss'
 })
 export class StatisticsMainComponent implements OnInit, AfterViewInit {
+  totalParticipantCount: number = 0;
+  totalArticleCount: number = 0;
+  totalThisMonthArticleCount: number = 0;
+
   cardDict: CardPreview = {};
 
   articleCountChart: any;
@@ -90,6 +94,9 @@ export class StatisticsMainComponent implements OnInit, AfterViewInit {
       this.participantCountChart.data.datasets[0].data[this.participantCountChart.data.datasets[0].data.length - 1] = restOfTimeNumbers;
 
       this.participantCountChart.update();
+
+      this.animateTotalParticipantCount(countNumbers.totalCount);
+
     })
   }
 
@@ -102,6 +109,8 @@ export class StatisticsMainComponent implements OnInit, AfterViewInit {
       }
       this.articleCountChart.data.datasets[0].data[0] = thisYearsArticles ? thisYearsArticles.length : 0;
       this.articleCountChart.update();
+
+      this.animateTotalArticleCount(res.length);
     });
   }
 
@@ -119,6 +128,8 @@ export class StatisticsMainComponent implements OnInit, AfterViewInit {
           arrayWithData.push(value);
         }
       })
+
+      this.animateTotalThisMonthArticleCount(arrayWithData[arrayWithData.length - 1]);
 
       this.monthlyCountChart.data.datasets[0].data = arrayWithData;
       this.monthlyCountChart.update();
@@ -201,6 +212,38 @@ export class StatisticsMainComponent implements OnInit, AfterViewInit {
       data: monthlyCountData,
       options: monthlyCountOptions
     })
+  }
+
+  animateTotalArticleCount(totalCount: number): void {
+    const interval = setInterval(() => {
+      if (this.totalArticleCount < 2500) {
+        this.totalArticleCount += 10;
+      } else {
+        this.totalArticleCount++;
+      }
+
+      if (this.totalArticleCount == totalCount) {
+        clearInterval(interval);
+      }
+    }, 1);
+  }
+
+  animateTotalParticipantCount(totalCount: number): void {
+    const interval = setInterval(() => {
+      this.totalParticipantCount++;
+      if (this.totalParticipantCount == totalCount) {
+        clearInterval(interval);
+      }
+    }, 10);
+  }
+
+  animateTotalThisMonthArticleCount(totalCount: number): void {
+    const interval = setInterval(() => {
+      this.totalThisMonthArticleCount++;
+      if (this.totalThisMonthArticleCount == totalCount) {
+        clearInterval(interval);
+      }
+    }, 10);
   }
 
 }

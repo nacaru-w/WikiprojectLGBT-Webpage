@@ -1,15 +1,66 @@
 @use 'variables';
 
 .chart-container {
+    display: flex;
+    flex-wrap: wrap;
     background-color: variables.$lighter-orange;
     position: relative;
     width: min(1000px, 95%);
-    height: 20em;
+    height: auto;
     margin: 0 auto;
     border: solid black 2px;
     border-radius: 15px;
     box-shadow: black 3px 3px;
     padding: 2em;
+
+    a {
+        color: black;
+        text-decoration: wavy underline;
+        /* Add underline */
+        transition: color 0.3s ease-in-out;
+        /* Add transition effect for text-shadow */
+        font-weight: normal;
+    }
+
+    a:hover {
+        color: variables.$deep-dark-primary;
+    }
+
+
+    .chart {
+        width: 65%;
+        flex: auto;
+    }
+
+    .chart-text {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        margin-block: 1em;
+        margin-inline: min(1em, 5%);
+        font-family: variables.$body-font;
+        width: 13em;
+        flex: auto;
+
+        p {
+            margin-bottom: 0;
+        }
+
+        .count-paragraph {
+            align-self: center;
+
+            .count-text {
+                font-size: 4em;
+            }
+
+        }
+
+    }
+
+}
+
+.reversed {
+    flex-direction: row-reverse;
 }
 
 .card-set-title,
