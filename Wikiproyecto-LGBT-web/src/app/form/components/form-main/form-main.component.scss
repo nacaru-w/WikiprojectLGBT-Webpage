@@ -7,7 +7,7 @@ form {
     box-shadow: black 4px 4px;
     border-radius: 20px;
     padding: 1.5em;
-    background-color: variables.$light;
+    background-color: variables.$lighter-purple;
     font-family: variables.$body-font;
 
     select {
@@ -73,17 +73,6 @@ form {
 
     .pronouns {
         width: min(100%, 300px);
-    }
-
-    a {
-        color: variables.$deep-dark-primary;
-        position: relative;
-        /* Add position relative for pseudo-element */
-        transition: color 0.3s ease;
-        /* Add transition effect */
-        text-decoration: none;
-        /* Remove underline */
-        word-wrap: overflow-wrap;
     }
 
     a {
