@@ -10,10 +10,12 @@ export const monthlyCountData = {
         'Agosto'
     ],
     datasets: [{
-        label: 'My First Dataset',
+        label: 'Artículos en este mes',
         data: [], // Will be populated through a MediaWiki API call
         fill: false,
         borderColor: '#000000',
+        hoverBackgroundColor: '#ffe3ea',
+        pointBackgroundColor: '#ffe3ea',
         tension: 0.1,
         borderWidth: 3,
     }]
