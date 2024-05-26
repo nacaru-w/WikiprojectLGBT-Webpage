@@ -11,6 +11,7 @@ import { Participants } from './models/participants';
 export class MediawikiService {
 
   url: string = "https://es.wikipedia.org/w/api.php";
+  wikidataUrl: string = "https://www.wikidata.org/w/api.php"
 
   constructor(private http: HttpClient) { }
 
@@ -113,6 +114,57 @@ export class MediawikiService {
 
       })
     )
+  }
+
+  getWikidataEntity(pageTitle: string): Observable<string> {
+    let callUrl = this.url + "?origin=*";
+
+    const params: MediawikiParams = {
+      action: "query",
+      prop: "pageprops",
+      titles: pageTitle,
+      ppprop: "wikibase_item",
+      format: "json"
+    }
+
+    for (let param in params) {
+      callUrl += `&${param}=${params[param]}`;
+    }
+
+    return this.http.get(callUrl).pipe(
+      map((response: any) => {
+        return response.query?.pages[0]?.pageprops?.wikibase_item;
+      }),
+      catchError((error: HttpErrorResponse) => {
+        console.error('An error ocurred', error.message);
+        return error.message
+      })
+    )
+  }
+
+  getImageUrlFromWdEntity(Q: string): Observable<string | undefined> {
+    let callUrl = this.wikidataUrl + "?origin=*";
+
+    const params: MediawikiParams = {
+      action: "wbgetclaims",
+      property: "P18",
+      entity: Q
+    }
+
+    for (let param in params) {
+      callUrl += `&${param}=${params[param]}`;
+    }
+
+    return this.http.get(callUrl).pipe(
+      map((response: any) => {
+        return response.claims?.P18[0].mainsnak?.datavalue?.value
+      }),
+      catchError((error: HttpErrorResponse) => {
+        console.error('An error ocurred', error.message);
+        return error.message
+      })
+    )
+
   }
 
 }
