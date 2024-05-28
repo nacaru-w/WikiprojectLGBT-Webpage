@@ -71,8 +71,18 @@ export class StatisticsMainComponent implements OnInit, AfterViewInit {
     this.mediawikiService.getPageExtract(title).subscribe(res => {
       let croppedExtract = this.cropString(res, 35);
       console.log(title, croppedExtract);
-      this.cardDict[title] = croppedExtract;
+      this.cardDict[title].extract = croppedExtract;
       console.log(this.cardDict);
+    })
+  }
+
+  assignImages(title: string): void {
+    this.mediawikiService.getWikidataEntity(title).subscribe(res => {
+      this.mediawikiService.getImageUrlFromWdEntity(res).subscribe(wdimage => {
+        this.cardDict[title].image = wdimage ?
+          `https://commons.wikimedia.org/w/index.php?title=Special:Redirect/file&wpvalue=${wdimage}`
+          : "./../assets/imgs/Barba-wikiproyecto-lgbt.svg";
+      })
     })
   }
 
@@ -106,6 +116,7 @@ export class StatisticsMainComponent implements OnInit, AfterViewInit {
       this.buildDict(res.slice(-3));
       for (let article in this.cardDict) {
         this.assignExtracts(article);
+        this.assignImages(article);
       }
       this.articleCountChart.data.datasets[0].data[0] = thisYearsArticles ? thisYearsArticles.length : 0;
       this.articleCountChart.update();
@@ -177,7 +188,10 @@ export class StatisticsMainComponent implements OnInit, AfterViewInit {
 
   buildDict(array: string[]) {
     for (let title of array) {
-      this.cardDict[title] = '';
+      this.cardDict[title] = {
+        extract: '',
+        image: ''
+      }
     }
   }
 
