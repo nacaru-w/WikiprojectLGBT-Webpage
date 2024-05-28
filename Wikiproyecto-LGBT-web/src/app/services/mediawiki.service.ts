@@ -133,7 +133,12 @@ export class MediawikiService {
 
     return this.http.get(callUrl).pipe(
       map((response: any) => {
-        return response.query?.pages[0]?.pageprops?.wikibase_item;
+        const pages = response.query?.pages
+        let returnString;
+        for (let page in pages) {
+          returnString = pages[page].pageprops.wikibase_item
+        }
+        return returnString;
       }),
       catchError((error: HttpErrorResponse) => {
         console.error('An error ocurred', error.message);
@@ -148,19 +153,23 @@ export class MediawikiService {
     const params: MediawikiParams = {
       action: "wbgetclaims",
       property: "P18",
-      entity: Q
+      entity: Q,
+      format: 'json'
     }
 
     for (let param in params) {
       callUrl += `&${param}=${params[param]}`;
     }
 
+
+
     return this.http.get(callUrl).pipe(
       map((response: any) => {
-        return response.claims?.P18[0].mainsnak?.datavalue?.value
+        const returnedString = response.claims?.P18 ? response.claims?.P18[0].mainsnak?.datavalue?.value : undefined;
+        return returnedString
       }),
       catchError((error: HttpErrorResponse) => {
-        console.error('An error ocurred', error.message);
+        console.error('An error ocurred:', error.message);
         return error.message
       })
     )
