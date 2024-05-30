@@ -62,17 +62,10 @@ export class StatisticsMainComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
   }
 
-  showPageContent(title: string): void {
-    this.mediawikiService.getPageContent(title).subscribe(res => {
-    })
-  }
-
   assignExtracts(title: string): void {
     this.mediawikiService.getPageExtract(title).subscribe(res => {
       let croppedExtract = this.cropString(res, 35);
-      console.log(title, croppedExtract);
       this.cardDict[title].extract = croppedExtract;
-      console.log(this.cardDict);
     })
   }
 
@@ -96,7 +89,6 @@ export class StatisticsMainComponent implements OnInit, AfterViewInit {
 
   getParticipantInfo(): void {
     this.mediawikiService.getParticipantNumbers().subscribe(res => {
-      console.log(res);
       const countNumbers = res;
       this.participantCountChart.data.datasets[0].data[0] = countNumbers.thisYearCount;
 
