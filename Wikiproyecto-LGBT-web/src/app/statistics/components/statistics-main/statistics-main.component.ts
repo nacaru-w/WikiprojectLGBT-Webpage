@@ -187,8 +187,6 @@ export class StatisticsMainComponent implements OnInit, AfterViewInit {
     }
   }
 
-
-
   createArticleCountChart() {
     const ctx = <HTMLCanvasElement>document.getElementById('articleCountChart');
 
