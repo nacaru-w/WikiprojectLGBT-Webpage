@@ -17,6 +17,4 @@ export class BlogMainComponent {
 
   constructor(private mediawikiService: MediawikiService) { }
 
-
-
 }
