@@ -227,45 +227,20 @@ body {
     margin: 2em auto;
     background-color: $light;
 
-    .card-img-top {
-        padding: 2em;
+    .card-img-container {
+        margin: 2em;
+        border: dashed black 4px;
+        border-radius: 20px;
+
     }
+
+
 
     .card-title {
         letter-spacing: -0.1em;
     }
 
     .card-text {
-        font-family: $body-font;
-    }
-
-}
-
-.scrollspy {
-    width: min(1000px, 95%);
-    margin: 2em auto;
-    border: solid black 3px;
-    border-radius: 20px;
-    box-shadow: black 4px 4px;
-    padding: 3em;
-    background-color: $light;
-
-    a.nav-link {
-        letter-spacing: -0.1em;
-        color: black;
-        margin: 0.25em;
-    }
-
-    a.nav-link.active {
-        color: black;
-    }
-
-    h4,
-    h5 {
-        letter-spacing: -0.1em;
-    }
-
-    p {
         font-family: $body-font;
     }
 
@@ -304,4 +279,5 @@ body {
         }
 
     }
+
 }
