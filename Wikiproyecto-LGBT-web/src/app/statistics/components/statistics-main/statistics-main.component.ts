@@ -15,6 +15,8 @@ import { monthlyCountData, monthlyCountOptions } from '../../chart_data/monthly-
 import { newParticipants2021, newParticipants2022, newParticipants2023 } from '../../chart_data/utils';
 
 import { MonthlyOccurencesModel } from '../../models/monthly-occurences-model';
+import { NotableArticles } from '../../models/notable-articles';
+import { popAnimation } from '../../../animations';
 
 @Component({
   selector: 'app-statistics-main',
@@ -29,12 +31,17 @@ import { MonthlyOccurencesModel } from '../../models/monthly-occurences-model';
     CommonModule,
   ],
   templateUrl: './statistics-main.component.html',
-  styleUrl: './statistics-main.component.scss'
+  styleUrl: './statistics-main.component.scss',
+  animations: [
+    popAnimation
+  ]
 })
 export class StatisticsMainComponent implements OnInit, AfterViewInit {
   totalParticipantCount: number = 0;
   totalArticleCount: number = 0;
   totalThisMonthArticleCount: number = 0;
+
+  notableArtDict: NotableArticles = { AB: [], AD: [] };
 
   cardDict: CardPreview = {};
 
@@ -53,6 +60,7 @@ export class StatisticsMainComponent implements OnInit, AfterViewInit {
       this.getMonthlyArticleCountInfo();
       this.getParticipantInfo();
       this.getInfo();
+      this.getNotableArticlesinfo();
     } catch (error) {
       console.log(error)
     }
@@ -138,6 +146,31 @@ export class StatisticsMainComponent implements OnInit, AfterViewInit {
       this.monthlyCountChart.update();
 
     })
+  }
+
+  getNotableArticlesinfo(): void {
+    this.mediawikiService.getPageContent('Wikiproyecto:LGBT/Artículos buenos y destacados').subscribe(res => {
+      const splitString = "[[WP:SAB|Artículos y anexos buenos]]";
+      const splitRes = res.split(splitString);
+      const notableArticles = {
+        AD: this.extractNotableElements(splitRes[0]),
+        AB: this.extractNotableElements(splitRes[1])
+      }
+      this.notableArtDict = notableArticles;
+      console.log(this.notableArtDict);
+    })
+  }
+
+  extractNotableElements(string: string): string[] {
+    const regex = /'''\[\[(.*?)\]\]'''/g;
+    let match;
+    const elements = [];
+
+    while ((match = regex.exec(string)) !== null) {
+      elements.push(match[1]);
+    }
+
+    return elements
   }
 
   getMonthlyCountArray(data: string): MonthlyOccurencesModel {

@@ -39,6 +39,43 @@
     </div>
 </div>
 
+<h2 class="chart-title">Artículos buenos<br>y destacados</h2>
+<div class="chart-container">
+    <div class="chart-text">
+        <p>
+            Los <a href="https://es.wikipedia.org/wiki/Wikipedia:Art%C3%ADculos_destacados">artículos destacados</a> y
+            <a href="https://es.wikipedia.org/wiki/Wikipedia:Art%C3%ADculos_buenos">artículos buenos</a> representan el
+            máximo nivel de calidad dentro de Wikipedia.
+        </p>
+        <p>
+            En el Wikiproyecto LGBT+ somos conscientes de ello, así que hemos
+            trabajado a lo largo de los años para llevar a este nivel muchas de las páginas que construimos.
+        </p>
+    </div>
+    <div class="chart">
+        <div class="star-chart-container">
+            <span class="star-total">Artículos destacados <span class="star-total-number">{{notableArtDict.AD.length ||
+                    ''}}</span></span>
+            <div class="star-chart" [@popAnimation]="notableArtDict.AD">
+                @for (item of notableArtDict.AD; track item) {
+                <a href="https://es.wikipedia.org/wiki/{{item}}"><img class="star"
+                        src="./../../../../assets/imgs/featured_article_symbol.svg" alt=""></a>
+                }
+            </div>
+        </div>
+        <div class="star-chart-container">
+            <span class="star-total">Artículos buenos <span class="star-total-number">{{notableArtDict.AB.length ||
+                    ''}}</span></span>
+            <div class="star-chart" [@popAnimation]="notableArtDict.AB">
+                @for (item of notableArtDict.AB; track item) {
+                <a href="https://es.wikipedia.org/wiki/{{item}}"><img class="star"
+                        src="./../../../../assets/imgs/good_article_symbol.svg" alt=""></a>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
 <h2 class="card-set-title">
     Últimos artículos
 </h2>

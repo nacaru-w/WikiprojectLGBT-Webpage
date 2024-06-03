@@ -90,3 +90,26 @@
     }
 
 }
+
+.star-chart-container {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+
+    .star {
+        width: 2em;
+        height: auto;
+    }
+
+    .star-total {
+        text-align: center;
+        padding-block: 1em;
+
+        .star-total-number {
+            font-size: 2.5em;
+            font-weight: bold;
+        }
+
+    }
+
+}
