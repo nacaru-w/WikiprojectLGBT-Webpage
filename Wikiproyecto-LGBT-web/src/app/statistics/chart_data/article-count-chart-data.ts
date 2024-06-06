@@ -6,9 +6,9 @@ import {
 
 export const articlesPerYearData =
 {
-    labels: ["Año actual", "2023", "2022", "2021"],
+    labels: ["2021", "2022", "2023", "Año actual"],
     datasets: [{
-        data: [0, articleCount2023, articleCount2022, articleCount2021],
+        data: [articleCount2021, articleCount2022, articleCount2023, 0],
         backgroundColor: [
             '#54de7d',
             '#fa7c7c',

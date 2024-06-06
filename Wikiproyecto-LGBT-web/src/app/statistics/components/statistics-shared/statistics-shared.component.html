@@ -1,0 +1,38 @@
+<nav class="stats-navbar">
+    <li class="stats-navbar-option" (click)="showChart('yearly-articles')">
+        <a href="javascript:void(0)">Artículos por año</a>
+    </li>
+    <li class="stats-navbar-option" (click)="showChart('monthly-articles')">
+        <a href="javascript:void(0)">Artículos por mes</a>
+    </li>
+    <li class="stats-navbar-option" (click)="showChart('notable')">
+        <a href="javascript:void(0)">Contenido notable</a>
+    </li>
+    <li class="stats-navbar-option" (click)="showChart('participants')">
+        <a href="javascript:void(0)">Participantes</a>
+    </li>
+    <li class="stats-navbar-option" (click)="showChart('last-articles')">
+        <a href="javascript:void(0)">Últimos artículos</a>
+    </li>
+</nav>
+<div class="chart-box">
+    <div class="Introduction">
+        <p>
+            El Wikiproyecto LGBT+ se fundó en la Wikipedia en español en el año 2007. Hemos tenido períodos de mayor y
+            de menor actividad, pero en general, estamos orgulloses de todo lo trabajado a lo largo de este tiempo.
+        </p>
+        <p>
+            Usando el menú superior, puedes navegar entre diferentes datos recabados a partir de la labor de las
+            personas que conforman el proyecto. ¡Son datos actuales, así que no te extrañes si de un momento a otro
+            observas que han cambiado!
+        </p>
+    </div>
+    <app-statistics-yearly-articles [@slideInOut]="showYearlyArticles"
+        *ngIf=showYearlyArticles></app-statistics-yearly-articles>
+    <app-statistics-monthly-articles [@slideInOut]="showMonthlyArticles"
+        *ngIf=showMonthlyArticles></app-statistics-monthly-articles>
+    <app-statistics-notable [@slideInOut]="showNotable" *ngIf=showNotable></app-statistics-notable>
+    <app-statistics-participants [@slideInOut]="showParticipants" *ngIf=showParticipants></app-statistics-participants>
+    <app-statistics-last-articles [@slideInOut]="showLastArticles"
+        *ngIf=showLastArticles></app-statistics-last-articles>
+</div>

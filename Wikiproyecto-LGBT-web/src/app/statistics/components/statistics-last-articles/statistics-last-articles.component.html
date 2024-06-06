@@ -1,0 +1,23 @@
+<div class="spinner-container text-secondary" *ngIf="showSpinner">
+    <div class="spinner-grow" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+</div>
+<div class="card-container" style="display:flex;" *ngIf="isDictFull(cardDict)" [@popAnimation]="isDictFull(cardDict)">
+    @for (item of cardDict | keyvalue; track item; let i = $index) {
+    <div class="card" style="width: 18rem;">
+        <div class="card-img-container">
+            <img src={{item.value.image}} class="card-img-top" alt="...">
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">{{ item.key }}</h5>
+            <p class="card-text">
+                {{ item.value.extract }}
+            </p>
+            <a href='https://es.wikipedia.org/wiki/{{item.key}}' class="btn btn-primary">
+                Ver en Wikipedia
+            </a>
+        </div>
+    </div>
+    }
+</div>
