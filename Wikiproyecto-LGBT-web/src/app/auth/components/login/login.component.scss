@@ -1,0 +1,11 @@
+@use 'variables';
+
+.login-container {
+    border: solid black 2px;
+    border-radius: 10px;
+    box-shadow: 4px 4px;
+    width: min(600px, 95%);
+    margin: 10em auto;
+    padding: 2em;
+    background-color: variables.$light;
+}

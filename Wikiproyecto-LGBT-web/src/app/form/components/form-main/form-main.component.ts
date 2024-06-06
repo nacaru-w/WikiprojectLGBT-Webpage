@@ -21,23 +21,40 @@ export class FormMainComponent {
     this.webForm = this.formBuilder.group({
       pronouns: new FormControl('', [Validators.required]),
       otherPronouns: new FormControl(''),
-      name: new FormControl('', Validators.required),
+      name: new FormControl('', [Validators.required, Validators.maxLength(50)]),
       email: new FormControl('', [Validators.required, Validators.email]),
       reason: new FormControl('', [Validators.maxLength(1000)]),
       wikimediaAccount: new FormControl(''),
-      wikimediaAccountName: new FormControl('', [Validators.pattern(/^(?!.*[@:>=#€]).*$/), Validators.maxLength(255)]),
+      wikimediaAccountName: new FormControl('', [Validators.pattern(/^(?!.*[@:>=#€]).*$/), Validators.maxLength(85)]),
       attendedEvent: new FormControl(''),
       attendedEventName: new FormControl('', [Validators.maxLength(255)])
     })
   }
 
   onSubmit() {
-    console.log(this.webForm.errors)
   }
 
   isFieldInvalid(fieldName: string): boolean {
     const control = this.webForm.get(fieldName);
+    console.log(fieldName, control?.errors)
     return control!.invalid && (control!.dirty)
+  }
+
+  getErrorMessage(fieldName: string): string | void {
+    const control = this.webForm.get(fieldName);
+    if (control?.errors) {
+      switch (Object.keys(control?.errors)[0]) {
+        case 'maxlength':
+          return `El campo no puede ser mayor a ${control.errors['maxlength'].requiredLength} caracteres`
+        case 'pattern':
+          return 'Nombre de usuario no válido'
+        case 'required':
+          return 'Este campo es obligatorio'
+        case 'email':
+          return 'No es un tipo de email correcto'
+      }
+    }
+
   }
 
   showValue(fieldName: string): string {

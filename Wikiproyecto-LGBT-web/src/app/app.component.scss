@@ -1,9 +1,16 @@
 .global-container {
     display: flex;
     flex-direction: column;
+    align-content: center;
     min-height: 100vh;
 }
 
 .main {
     flex: 1;
+
+    @media screen and (min-width: 992px) {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 }

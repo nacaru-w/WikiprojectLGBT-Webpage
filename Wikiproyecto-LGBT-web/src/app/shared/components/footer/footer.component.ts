@@ -1,31 +1,23 @@
 import { Component, OnInit, SimpleChanges } from '@angular/core';
 
-import { footerAnimations } from './footerAnimations';
-
 @Component({
   selector: 'app-footer',
   standalone: true,
   imports: [],
   templateUrl: './footer.component.html',
   styleUrl: './footer.component.scss',
-  animations: [footerAnimations]
 })
-export class FooterComponent implements OnInit {
 
-  menuState: 'open' | 'closed' = 'closed';
+export class FooterComponent {
+  animationState = 'visible';
 
   constructor() { }
 
-  ngOnInit(): void {
-    this.menuState = 'open';
+  hideFooter() {
+    this.animationState = 'hidden';
   }
 
-  clickEvent(): void {
-    if (this.menuState = 'open') {
-      this.menuState = 'closed';
-    } else {
-      this.menuState = 'open';
-    }
+  showFooter() {
+    this.animationState = 'visible';
   }
-
 }

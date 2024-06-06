@@ -1,0 +1,49 @@
+@use 'variables';
+
+.scrollspy-container {
+
+    display: flex;
+    align-content: center;
+    justify-content: center;
+
+    .scrollspy {
+        width: min(1000px, 95%);
+        margin: 2em auto;
+        border: solid black 3px;
+        border-radius: 20px;
+        box-shadow: black 4px 4px;
+        padding: 3em;
+        background-color: variables.$light;
+
+        a.nav-link {
+            letter-spacing: -0.1em;
+            color: black;
+            margin: 0.25em;
+        }
+
+        a.nav-link.active {
+            color: black;
+        }
+
+        h3 {
+            text-align: center;
+        }
+
+        h4,
+        h5 {
+            letter-spacing: -0.1em;
+        }
+
+        p,
+        ul {
+            font-family: variables.$body-font;
+        }
+
+        a {
+            color: black;
+            text-decoration: wavy underline;
+        }
+
+    }
+
+}

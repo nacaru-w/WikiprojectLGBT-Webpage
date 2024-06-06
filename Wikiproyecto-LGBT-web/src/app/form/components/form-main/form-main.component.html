@@ -1,3 +1,15 @@
+<div class="card">
+    <div class="img-container">
+        <img src="https://commons.wikimedia.org/w/index.php?title=Special:Redirect/file&wpvalue=Queer_LGBT%2B_guitar_graphic.png"
+            class="card-img-top" alt="...">
+    </div>
+    <div class="card-body text-center">
+        <p class="card-statement">¿Ya tienes una cuenta Wikimedia?</p>
+        <a href="https://es.wikipedia.org/wiki/Wikiproyecto:LGBT/participantes" class="btn btn-primary">
+            Inscríbete
+        </a>
+    </div>
+</div>
 <form [formGroup]="webForm" (ngSubmit)="onSubmit()">
     <div class="mb-2">
         <label for="pronouns" class="form-label">Selecciona tus determinantes de género</label>
@@ -16,14 +28,14 @@
     <div class="mb-2">
         <label for="name" class="form-label">Nombre o alias*</label>
         <input class="form-box form-control" id="name" aria-describedby="name" formControlName="name">
-        <div class="formError" [ngClass]="{'hidden': !isFieldInvalid('name')}">Este campo es obligatorio</div>
+        <div class="formError" [ngClass]="{'hidden': !isFieldInvalid('name')}">{{getErrorMessage('name')}}</div>
     </div>
     <div class="mb-2">
         <label for="email" class="form-label">Dirección de correo electrónico*</label>
         <input type="email" class="form-box form-control" id="email" aria-describedby="emailHelp"
             formControlName="email">
         <div id="emailHelp" class="form-text">Nunca compartiremos tu dirección con otras personas</div>
-        <div class="formError" [ngClass]="{'hidden': !isFieldInvalid('email')}">Dirección incorrecta o faltante</div>
+        <div class="formError" [ngClass]="{'hidden': !isFieldInvalid('email')}">{{getErrorMessage('email')}}</div>
     </div>
     <div class="mb-2">
         <label for="whyTextarea" class="form-label">
@@ -46,7 +58,7 @@
                 aria-label="Username" aria-describedby="basic-addon1" formControlName="wikimediaAccountName">
         </div>
         <div class="formError" id="userNameError" [ngClass]="{'hidden': !isFieldInvalid('wikimediaAccountName')}">
-            Nombre de usuario no válido
+            {{getErrorMessage('wikimediaAccountName')}}
         </div>
     </div>
 

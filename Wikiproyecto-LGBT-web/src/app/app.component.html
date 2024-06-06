@@ -3,5 +3,7 @@
     <div class="main" [@routeAnimations]="getRouteAnimationData()">
         <router-outlet></router-outlet>
     </div>
-    <app-footer></app-footer>
+    <div class="footer2" [@footerAnimations]="footerAnimationState">
+        <app-footer></app-footer>
+    </div>
 </div>

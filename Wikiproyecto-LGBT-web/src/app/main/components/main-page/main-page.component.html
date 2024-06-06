@@ -1,35 +1,63 @@
-@if (images) {
-<ngb-carousel>
-    @for (image of images; track image) {
-    <ng-template ngbSlide>
-        <div class="img-wrapper">
-            <img [src]="image" alt="Random slide" />
-        </div>
-        @switch (images.indexOf(image)) {
-        @case (0) {
-        <div class="carousel-caption image-1">
-            <h3>Make diversity more visible</h3>
-            <p>Pitch in by adding info to a global encyclopedia</p>
-        </div>
+<div class="carousel-and-boxes">
+    <div class="carousel-wrapper">
+        @if (images) {
+        <ngb-carousel>
+            @for (image of images; track image) {
+            <ng-template ngbSlide>
+                <div class="img-wrapper">
+                    <img [src]="image" alt="Random slide" />
+                </div>
+                @switch (images.indexOf(image)) {
+                @case (0) {
+                <div class="carousel-caption image-1">
+                    <h3>Visibiliza la diversidad</h3>
+                    <p>Pon tu granito de arena en la mayor enciclopedia</p>
+                </div>
 
-        }
-        @case (1) {
-        <div class="carousel-caption image-2">
-            <h3>Watch and protect </h3>
-            <p>LGBT+ articles are commonly exposed to vandalism</p>
-        </div>
-        }
-        @case (2) {
-        <div class="carousel-caption image-3">
-            <h3>Join our community</h3>
-            <p>Anyone can edit Wikipedia, we'll help you learn</p>
-        </div>
-        }
-        }
+                }
+                @case (1) {
+                <div class="carousel-caption image-2">
+                    <h3>Vigila y protege</h3>
+                    <p>El contenido LGBT+ sufre mayor vandalismo</p>
+                </div>
+                }
+                @case (2) {
+                <div class="carousel-caption image-3">
+                    <h3>Únete</h3>
+                    <p>Cualquier persona puede editar Wikipedia</p>
+                </div>
+                }
+                }
 
-    </ng-template>
-    }
-</ngb-carousel>
-}
+            </ng-template>
+            }
+        </ngb-carousel>
+        }
+    </div>
 
-<hr />
+
+    <div class="box-set">
+        <div class="card text-center">
+            <div class="img-container">
+                <img [src]=paisDelMesImage class="card-img-top" alt="...">
+            </div>
+            <div class="card-body">
+                <p class="card-statement">Desafío del País del mes: <span class="pais">{{paisDelMes}}</span></p>
+                <a href="https://es.wikipedia.org/wiki/Wikiproyecto:LGBT/Pa%C3%ADs_del_mes" class="btn btn-primary">Ver
+                    en
+                    Wikipedia</a>
+            </div>
+        </div>
+        <div class="card text-center">
+            <div class="img-container">
+                <img src="https://commons.wikimedia.org/w/index.php?title=Special:Redirect/file&wpvalue=Wikipedia Logo LGBT version.svg"
+                    class="card-img-top" alt="...">
+            </div>
+            <div class="card-body">
+                <p class="card-statement">¿Echas de menos algún artículo?</p>
+                <a href="https://es.wikipedia.org/wiki/Wikiproyecto:LGBT/Pa%C3%ADs_del_mes"
+                    class="btn btn-primary">¡Pídenoslo!</a>
+            </div>
+        </div>
+    </div>
+</div>

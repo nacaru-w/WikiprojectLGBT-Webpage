@@ -1,0 +1,65 @@
+@use 'variables';
+
+.carousel-and-boxes {
+    width: min(1225px, 95%);
+    margin: 1em auto;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.carousel-wrapper {
+    width: 60em;
+    flex: auto;
+}
+
+.box-set {
+    display: flex;
+    flex-wrap: wrap;
+    flex: 1;
+    gap: 1em;
+    align-content: space-evenly;
+    justify-content: center;
+    margin-block: 1em;
+
+    .card {
+        width: 15em;
+        height: 20em;
+        margin: unset;
+        flex: auto;
+        max-width: 20em;
+        background-color: variables.$lighter-orange;
+
+        .img-container {
+            width: 100%;
+            height: 50%;
+
+            img {
+                object-fit: contain;
+                height: 100%;
+                padding: 1.5em 1.5em 0.5em 1.5em;
+            }
+        }
+
+        .card-body {
+            height: 50%;
+
+            .card-statement {
+                letter-spacing: -0.1em;
+                text-align: center;
+
+                .pais {
+                    font-weight: bold;
+                }
+
+            }
+
+            .btn {
+                width: min(90%, 14em);
+                margin-inline: 5%;
+
+            }
+
+        }
+    }
+
+}
