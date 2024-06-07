@@ -1,0 +1,63 @@
+@use 'variables';
+
+.blog-list-container {
+    border: solid black 2px;
+    border-radius: 10px;
+    box-shadow: black 4px 4px;
+    background-color: variables.$gray-lightest;
+
+    table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0.5em;
+
+        .blog-entries {
+            font-family: variables.$body-font;
+        }
+
+        th {
+            background-color: variables.$gray-lighter;
+            border-radius: 5px;
+            font-weight: bold;
+            text-align: center !important;
+        }
+
+        th,
+        td {
+            font-size: 0.9em;
+            padding-block: 0.25em;
+            padding-inline: 0.75em;
+            text-align: left;
+        }
+
+        button {
+            margin-right: 0.25em;
+            border: solid #e0e0e0 2px;
+            border-radius: 10px;
+            padding-inline: 0.5em;
+            font-size: 0.85em;
+            box-shadow: #e0e0e0 1px 1px;
+        }
+    }
+
+}
+
+.new-entry-container {
+    margin-top: 20px;
+
+    .new-entry-button {
+        font-size: 0.9em;
+        padding: 10px 20px;
+        border-radius: 10px;
+        box-shadow: black 4px 4px;
+        background-color: variables.$gray-darker;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+
+    .new-entry-button:hover {
+        background-color: variables.$gray-dark;
+    }
+
+}
