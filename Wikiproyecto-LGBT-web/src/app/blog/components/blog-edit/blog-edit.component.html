@@ -1,1 +1,27 @@
-<p>blog-edit works!</p>
+<div class="blog-edit-form">
+    <form [formGroup]="blogForm" (ngSubmit)="onSubmit()">
+        <div class="post-id">ID: 00000</div>
+        <div class="date-and-author">
+            <div class="form-control">
+                <label for="author">Autor: </label>
+                <input class="author" type="text" formControlName="author" id="author">
+            </div>
+            <div class="form-control">
+                <label for="date">Fecha: </label>
+                <input class="date" type="date" formControlName="date" id="date">
+            </div>
+        </div>
+        <div class="form-control">
+            <label for="title">Título: </label>
+            <input type="text" formControlName="title" id="title">
+        </div>
+
+        <div class="form-control">
+            <label for="content">Contenido: </label>
+            <textarea class="textarea" name="content" id="content" formControlName="content"></textarea>
+        </div>
+        <div class="new-entry-container">
+            <button class="new-entry-button">Guardar</button>
+        </div>
+    </form>
+</div>

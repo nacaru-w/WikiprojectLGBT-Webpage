@@ -1,0 +1,87 @@
+@use 'variables';
+
+.blog-edit-form {
+    width: 1000px;
+    max-width: 95%;
+    margin-inline: auto;
+    margin-block: 1em;
+    font-family: variables.$body-font;
+
+    form {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 0.4em;
+
+        .post-id {
+            color: variables.$gray-lightest;
+            background-color: variables.$gray-darkest;
+            padding: 0.5em;
+            margin-block: 0.25em;
+            border-radius: 10px;
+            width: min(125px, 95%);
+            text-align: center;
+        }
+
+
+        .date-and-author {
+            display: flex;
+            gap: 0.3em;
+
+            .date {
+                width: min(200px, 100%);
+                margin-right: unset;
+            }
+
+            .author {
+                width: 100%;
+            }
+
+        }
+
+        .form-control {
+            display: flex;
+            flex-direction: column;
+            border: solid black 2px;
+            box-shadow: black 3px 3px;
+            background-color: variables.$gray-lightest;
+
+            .textarea {
+                min-height: 15em;
+            }
+
+            input,
+            textarea {
+                background-color: variables.$gray-lighter;
+                border: none;
+                margin-bottom: 0.25em;
+                border-radius: 10px;
+                padding-inline: 0.5em;
+            }
+
+        }
+
+        .new-entry-container {
+            margin-top: 1.25em;
+            margin-inline: auto;
+
+            .new-entry-button {
+                padding: 10px 30px;
+                border-radius: 10px;
+                box-shadow: black 4px 4px;
+                background-color: variables.$gray-darker;
+                color: white;
+                border: none;
+                cursor: pointer;
+            }
+
+            .new-entry-button:hover {
+                background-color: variables.$gray-dark;
+            }
+
+        }
+
+    }
+
+
+}

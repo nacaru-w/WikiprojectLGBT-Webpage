@@ -41,7 +41,7 @@
         <label for="whyTextarea" class="form-label">
             Cuéntanos por qué quieres formar parte de WMLGBT+
         </label>
-        <textarea class="form-control text-area" aria-label=" textarea" id="whyTextarea"
+        <textarea class="form-control text-area" aria-label="textarea" id="whyTextarea"
             formControlName="reason"></textarea>
     </div>
     <div class="form-check mb-2">
@@ -87,7 +87,7 @@
                 privacidad</a></label>
     </div>
     <div class="submit-button-container d-grid col-6 mx-auto">
-        <button type="button" class="btn btn-primary mx-auto" data-bs-toggle="modal" data-bs-target="#formConfirm"
+        <button type="submit" class="btn btn-primary mx-auto" data-bs-toggle="modal" data-bs-target="#formConfirm"
             [ngClass]="{'disabled' : !webForm.valid}">
             Enviar
         </button>

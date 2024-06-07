@@ -6,6 +6,7 @@ import { LoginComponent } from './auth/components/login/login.component';
 import { PrivacyComponent } from './legal/components/privacy/privacy.component';
 import { StatisticsSharedComponent } from './statistics/components/statistics-shared/statistics-shared.component';
 import { BlogAdminComponent } from './blog/components/blog-admin/blog-admin.component';
+import { BlogEditComponent } from './blog/components/blog-edit/blog-edit.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -14,6 +15,7 @@ export const routes: Routes = [
     { path: 'form', component: FormMainComponent, data: { animation: ['FormPage', 'footerAnimation'] } },
     { path: 'stats', component: StatisticsSharedComponent, data: { animation: ['StatisticsPage', 'footerAnimation'] } },
     { path: 'login', component: LoginComponent },
-    { path: 'blogadmin', component: BlogAdminComponent },
+    { path: 'blog-admin', component: BlogAdminComponent },
+    { path: 'blog-edit', component: BlogEditComponent },
     { path: 'privacy', component: PrivacyComponent }
 ];

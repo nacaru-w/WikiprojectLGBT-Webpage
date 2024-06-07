@@ -79,14 +79,6 @@ export class StatisticsMonthlyArticlesComponent implements OnInit {
     return matches ? matches.length : 0;
   }
 
-  getThisYearArticles(array: string[]): string[] | null {
-    const indexOfFirstArticle = array.indexOf("Tenderoni")
-    if (indexOfFirstArticle == -1) {
-      return null
-    }
-    return array.slice(indexOfFirstArticle);
-  }
-
   createMonthlyArticlesChart() {
     const ctx = <HTMLCanvasElement>document.getElementById('monthlyArticlesChart');
 

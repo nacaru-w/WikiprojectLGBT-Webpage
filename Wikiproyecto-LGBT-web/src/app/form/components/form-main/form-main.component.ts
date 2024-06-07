@@ -32,11 +32,11 @@ export class FormMainComponent {
   }
 
   onSubmit() {
+    console.log("Form:", this.webForm.value)
   }
 
   isFieldInvalid(fieldName: string): boolean {
     const control = this.webForm.get(fieldName);
-    console.log(fieldName, control?.errors)
     return control!.invalid && (control!.dirty)
   }
 

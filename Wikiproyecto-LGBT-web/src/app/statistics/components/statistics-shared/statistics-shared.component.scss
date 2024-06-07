@@ -1,0 +1,77 @@
+@use 'variables';
+
+.stats-navbar {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 1em;
+    width: min(900px, 95%);
+    margin: 0.5em auto 1em auto;
+    padding: 0.5em;
+    background-color: variables.$info;
+    border-radius: 10px;
+    border: solid black 2px;
+    box-shadow: black 4px 4px;
+
+    a {
+        color: black;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    li {
+        list-style-type: none;
+    }
+
+    li>a {
+        position: relative;
+    }
+
+    /* Fade in */
+    li>a::after {
+        content: '';
+        position: absolute;
+        bottom: -3px;
+        left: 0;
+        width: 100%;
+        height: 0.16em;
+        background-color: variables.$deep-dark-info;
+        border-radius: 2px;
+        transition: opacity 300ms, transform 300ms;
+    }
+
+    a:hover::after,
+    a:focus::after {
+        opacity: 1;
+        transform: translate3d(0, 0.2em, 0);
+    }
+
+    /* Scale from center */
+    a::after {
+        opacity: 1;
+        transform: scale(0);
+        transform-origin: center;
+    }
+
+    a:hover::after,
+    a:focus::after {
+        transform: scale(1);
+    }
+
+}
+
+.stats-introduction {
+
+    @media screen and (orientation: portrait) {
+        display: none;
+    }
+
+    width: min(900px, 95%);
+    font-family: variables.$body-font;
+    margin-inline: auto;
+    padding: 1em;
+    border-radius: 10px;
+    border: solid black 2px;
+    box-shadow: black 4px 4px;
+    background-color: variables.$lighter-orange;
+}
