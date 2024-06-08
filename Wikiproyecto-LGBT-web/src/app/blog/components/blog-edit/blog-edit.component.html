@@ -5,20 +5,32 @@
             <div class="form-control">
                 <label for="author">Autor: </label>
                 <input class="author" type="text" formControlName="author" id="author">
+                <div class="form-error" id="userNameError" *ngIf="isFieldInvalid('author')">
+                    {{getErrorMessage('author')}}
+                </div>
             </div>
             <div class="form-control">
                 <label for="date">Fecha: </label>
                 <input class="date" type="date" formControlName="date" id="date">
+                <div class="form-error" id="userNameError" [ngClass]="{'hidden': !isFieldInvalid('date')}">
+                    {{getErrorMessage('date')}}
+                </div>
             </div>
         </div>
         <div class="form-control">
             <label for="title">Título: </label>
             <input type="text" formControlName="title" id="title">
+            <div class="form-error" id="userNameError" [ngClass]="{'hidden': !isFieldInvalid('title')}">
+                {{getErrorMessage('title')}}
+            </div>
         </div>
 
         <div class="form-control">
-            <label for="content">Contenido: </label>
+            <label for="content">Contenido (en html): </label>
             <textarea class="textarea" name="content" id="content" formControlName="content"></textarea>
+            <div class="form-error" id="userNameError" [ngClass]="{'hidden': !isFieldInvalid('content')}">
+                {{getErrorMessage('content')}}
+            </div>
         </div>
         <div class="new-entry-container">
             <button class="new-entry-button">Guardar</button>

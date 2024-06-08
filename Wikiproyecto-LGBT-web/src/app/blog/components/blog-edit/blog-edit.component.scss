@@ -45,6 +45,8 @@
             border: solid black 2px;
             box-shadow: black 3px 3px;
             background-color: variables.$gray-lightest;
+            padding-top: 1.75em;
+            padding-bottom: 1.25em;
 
             .textarea {
                 min-height: 15em;
@@ -57,6 +59,14 @@
                 margin-bottom: 0.25em;
                 border-radius: 10px;
                 padding-inline: 0.5em;
+                padding-block: 0.25em;
+            }
+
+            .form-error {
+                position: absolute;
+                font-size: 0.85em;
+                color: variables.$dark-danger;
+                margin-top: -1.75em;
             }
 
         }
