@@ -2,16 +2,19 @@ import { Component } from '@angular/core';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { buttonState } from '../../../animations';
 
 @Component({
   selector: 'app-form-main',
   standalone: true,
   imports: [NgbDropdownModule, ReactiveFormsModule, CommonModule],
   templateUrl: './form-main.component.html',
-  styleUrl: './form-main.component.scss'
+  styleUrl: './form-main.component.scss',
+  animations: [buttonState]
 })
 export class FormMainComponent {
   webForm: FormGroup;
+
   formSendDataStatus: string = 'Enviando formulario...';
   showSubmitSpinner: boolean = true;
 

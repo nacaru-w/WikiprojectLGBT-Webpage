@@ -12,7 +12,7 @@
 </div>
 <form [formGroup]="webForm" (ngSubmit)="onSubmit()">
     <div class="mb-2">
-        <label for="pronouns" class="form-label">Selecciona tus determinantes de género</label>
+        <label for="pronouns" class="form-label">¿Cómo quieres que nos refiramos a ti?</label>
         <select class="form-box form-select pronouns" aria-label="Determinantes de género" id="pronouns"
             formControlName="pronouns" (change)="otherPronounsChosen()">
             <option class="dropdown-item">Él</option>
@@ -88,7 +88,7 @@
     </div>
     <div class="submit-button-container d-grid col-6 mx-auto">
         <button type="submit" class="btn btn-primary mx-auto" data-bs-toggle="modal" data-bs-target="#formConfirm"
-            [ngClass]="{'disabled' : !webForm.valid}">
+            [ngClass]="{'disabled' : !webForm.valid}" [@buttonState]="webForm.valid ? 'enabled' : 'disabled'">
             Enviar
         </button>
     </div>

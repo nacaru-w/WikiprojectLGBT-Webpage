@@ -73,9 +73,12 @@ form {
     .form-label {
         font-family: variables.$font-family-sans-serif;
         letter-spacing: -0.1em;
+        margin-block: 0.75rem;
     }
 
+
     .formError {
+        position: absolute;
         color: variables.$dark-danger;
         font-size: 0.9em;
     }
@@ -138,6 +141,10 @@ form {
 
     .submit-button-container {
         margin-top: 1em;
+    }
+
+    button {
+        transition: background-color 0.5s, opacity 0.5s;
     }
 
 }

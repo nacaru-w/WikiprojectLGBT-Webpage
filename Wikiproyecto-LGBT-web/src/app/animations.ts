@@ -86,3 +86,21 @@ export const chartsSlideInOutAnimation =
             animate('300ms ease-in', style({ transform: 'translateX(100%)', opacity: 0 }))
         ])
     ])
+
+export const buttonState =
+    trigger('buttonState', [
+        state('disabled', style({
+            backgroundColor: '#cccccc',
+            opacity: 0.5
+        })),
+        state('enabled', style({
+            backgroundColor: '#b3efff',
+            opacity: 1
+        })),
+        transition('disabled => enabled', [
+            animate('0.5s ease-in')
+        ]),
+        transition('enabled => disabled', [
+            animate('0.5s ease-in')
+        ])
+    ])
