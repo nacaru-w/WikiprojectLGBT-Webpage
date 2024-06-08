@@ -49,7 +49,8 @@ export class StatisticsLastArticlesComponent implements OnInit {
   assignExtracts(title: string): void {
     this.mediawikiService.getPageExtract(title).subscribe(res => {
       let croppedExtract = this.cropString(res, 35);
-      this.cardDict[title].extract = croppedExtract;
+      let sanitisedCroppedExtract = this.removeRefnumbers(croppedExtract)
+      this.cardDict[title].extract = sanitisedCroppedExtract;
     })
   }
 
@@ -71,6 +72,13 @@ export class StatisticsLastArticlesComponent implements OnInit {
       croppedString += '...';
     }
     return croppedString
+  }
+
+  removeRefnumbers(text: string): string {
+    const pattern = /\[\d+\]/g;
+    let cleanedText = text.replace(pattern, '');
+    cleanedText = cleanedText.replace(/\s+/g, ' ').trim();
+    return cleanedText
   }
 
   isDictFull(dict: CardPreview): boolean {
