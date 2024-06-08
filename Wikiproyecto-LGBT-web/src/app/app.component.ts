@@ -39,7 +39,6 @@ export class AppComponent implements OnInit {
       if (event instanceof NavigationStart) {
         this.hideFooter();
       } else if (event instanceof NavigationEnd) {
-        console.log("and this one?")
         setTimeout(() => this.showFooter(), 500);  // Adjust the timeout if needed
       }
     });
