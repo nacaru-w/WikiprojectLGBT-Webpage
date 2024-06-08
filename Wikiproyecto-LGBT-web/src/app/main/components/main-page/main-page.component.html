@@ -1,5 +1,5 @@
 <div class="carousel-and-boxes">
-    <div class="carousel-wrapper">
+    <div class="carousel-wrapper" *ngIf="isAllLoaded" [@popAnimation]="isAllLoaded">
         @if (images) {
         <ngb-carousel>
             @for (image of images; track image) {
@@ -37,7 +37,7 @@
 
 
     <div class="box-set">
-        <div class="card text-center">
+        <div class="card text-center" [@popAnimation]="isAllLoaded">
             <div class="img-container">
                 <img [src]=paisDelMesImage class="card-img-top" alt="...">
             </div>
@@ -48,7 +48,7 @@
                     Wikipedia</a>
             </div>
         </div>
-        <div class="card text-center">
+        <div class="card text-center" [@popAnimation]="isAllLoaded">
             <div class="img-container">
                 <img src="https://commons.wikimedia.org/w/index.php?title=Special:Redirect/file&wpvalue=Wikipedia Logo LGBT version.svg"
                     class="card-img-top" alt="...">

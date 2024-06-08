@@ -1,16 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { NgbCarouselConfig, NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 import { MediawikiService } from '../../../services/mediawiki.service';
+import { popAnimation } from '../../../animations';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-main-page',
   standalone: true,
-  imports: [NgbCarouselModule],
+  imports: [NgbCarouselModule, CommonModule],
   templateUrl: './main-page.component.html',
   styleUrl: './main-page.component.scss',
-  providers: [NgbCarouselConfig]
+  providers: [NgbCarouselConfig],
+  animations: [popAnimation]
 })
 export class MainPageComponent implements OnInit {
+  isAllLoaded: boolean = false;
+
   images: string[] = [
     './../assets/imgs/Wikipedia_20_pink_star.svg',
     './../assets/imgs/Wikipedia_tucan.svg',
@@ -34,6 +39,7 @@ export class MainPageComponent implements OnInit {
   getPaisDelMesInfo(): void {
     this.mediaWikiService.getPageContent('Wikiproyecto:LGBT/País del mes').subscribe((res => {
       this.processPaisDelMesString(res);
+      this.isAllLoaded = true;
     }))
   }
 
@@ -57,7 +63,7 @@ export class MainPageComponent implements OnInit {
   }
 
   findImage(str: string): string | null {
-    let archivoRegex = /\[\[Archivo:(.*?)(\|)/;
+    let archivoRegex = /\[\[(?:[Aa]rchivo|[Ff]ile):(.*?)(\|)/;
 
     let archivoMatch = str.match(archivoRegex);
     if (archivoMatch) {
