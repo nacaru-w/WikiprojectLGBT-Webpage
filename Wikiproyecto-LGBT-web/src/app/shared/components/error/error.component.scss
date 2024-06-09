@@ -1,0 +1,15 @@
+@use 'variables';
+
+.error-container {
+    margin: 2em;
+    padding: 2.5em;
+    border: solid black 3px;
+    border-radius: 30px;
+    background-color: variables.$info;
+    box-shadow: black 4px 4px;
+
+    .error-title {
+        font-weight: bold;
+    }
+
+}

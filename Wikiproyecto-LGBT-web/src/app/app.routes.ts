@@ -7,6 +7,7 @@ import { PrivacyComponent } from './legal/components/privacy/privacy.component';
 import { StatisticsSharedComponent } from './statistics/components/statistics-shared/statistics-shared.component';
 import { BlogAdminComponent } from './blog/components/blog-admin/blog-admin.component';
 import { BlogEditComponent } from './blog/components/blog-edit/blog-edit.component';
+import { ErrorComponent } from './shared/components/error/error.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -17,5 +18,8 @@ export const routes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'blog-admin', component: BlogAdminComponent },
     { path: 'blog-edit', component: BlogEditComponent },
-    { path: 'privacy', component: PrivacyComponent }
+    { path: 'privacy', component: PrivacyComponent },
+
+    { path: '**', pathMatch: 'full', component: ErrorComponent }
+
 ];
