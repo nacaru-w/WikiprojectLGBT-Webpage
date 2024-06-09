@@ -57,6 +57,15 @@ $theme-colors: (
 );
 
 /// FONTS
+@font-face {
+    font-family: "Lexend Mega";
+    src: url('../assets/fonts/Lexend_Mega/LexendMega-VariableFont_wght.ttf');
+}
+
+@font-face {
+    font-family: "Lexend";
+    src: url('../assets/fonts/Lexend/Lexend-VariableFont_wght.ttf');
+}
 
 $font-family-sans-serif: "Lexend Mega", sans-serif;
 $body-font: "Lexend", sans-serif;
