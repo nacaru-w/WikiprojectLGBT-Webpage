@@ -41,5 +41,8 @@ testem.log
 .DS_Store
 Thumbs.db
 
+# Ignore database credentials file
+**/credentials.ts
+
 # Other
 sync_changes.sh
