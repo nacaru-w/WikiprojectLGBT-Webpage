@@ -30,7 +30,9 @@ export class FormMainComponent {
       wikimediaAccount: new FormControl(''),
       wikimediaAccountName: new FormControl('', [Validators.pattern(/^(?!.*[@:>=#€]).*$/), Validators.maxLength(85)]),
       attendedEvent: new FormControl(''),
-      attendedEventName: new FormControl('', [Validators.maxLength(255)])
+      attendedEventName: new FormControl('', [Validators.maxLength(255)]),
+      readPrivacy: new FormControl('', [Validators.required]),
+      readPolicy: new FormControl('', [Validators.required])
     })
   }
 
@@ -41,6 +43,13 @@ export class FormMainComponent {
   isFieldInvalid(fieldName: string): boolean {
     const control = this.webForm.get(fieldName);
     return control!.invalid && (control!.dirty)
+  }
+
+  isFormValid(): boolean {
+    if (this.webForm.invalid || !this.showValue('readPrivacy') || !this.showValue('readPolicy')) {
+      return false
+    }
+    return true
   }
 
   getErrorMessage(fieldName: string): string | void {
@@ -67,6 +76,19 @@ export class FormMainComponent {
 
   otherPronounsChosen(): void {
     this.showOtherPronounsField = this.showValue('pronouns') == 'Sin determinar/otro'
+  }
+
+  concordWikimediaAccountNamePlaceholder() {
+    switch (this.showValue('pronouns')) {
+      case 'Él':
+        return 'Nombre de usuario';
+      case 'Ella':
+        return 'Nombre de usuaria';
+      case 'Elle':
+        return 'Nombre de usuarie';
+      default:
+        return 'Nombre de usuario';
+    }
   }
 
 }

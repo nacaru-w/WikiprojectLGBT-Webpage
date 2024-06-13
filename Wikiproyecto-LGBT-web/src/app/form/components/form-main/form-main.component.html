@@ -1,7 +1,6 @@
 <div class="card">
     <div class="img-container">
-        <img src="https://commons.wikimedia.org/w/index.php?title=Special:Redirect/file&wpvalue=Queer_LGBT%2B_guitar_graphic.png"
-            class="card-img-top" alt="...">
+        <img src="../../../../assets/imgs/Queer_LGBT+_guitar_graphic.png" class="card-img-top" alt="...">
     </div>
     <div class="card-body text-center">
         <p class="card-statement">¿Ya tienes una cuenta Wikimedia?</p>
@@ -54,8 +53,9 @@
     <div class="account-section" *ngIf="showValue('wikimediaAccount')">
         <div class="input-group mb-2">
             <span class="input-group-text" id="basic-addon1">&#64;</span>
-            <input type="text" class="input-group-box form-control" placeholder="Nombre de usuarie"
-                aria-label="Username" aria-describedby="basic-addon1" formControlName="wikimediaAccountName">
+            <input type="text" class="input-group-box form-control"
+                [placeholder]='concordWikimediaAccountNamePlaceholder()' aria-label="Username"
+                aria-describedby="basic-addon1" formControlName="wikimediaAccountName">
         </div>
         <div class="formError" id="userNameError" [ngClass]="{'hidden': !isFieldInvalid('wikimediaAccountName')}">
             {{getErrorMessage('wikimediaAccountName')}}
@@ -74,21 +74,21 @@
             aria-describedby="basic-addon1" formControlName="attendedEventName">
     </div>
     <div class="form-check form-switch mb-2">
-        <input class="form-check-input" type="checkbox" role="switch" id="readPolicy">
+        <input class="form-check-input" type="checkbox" role="switch" id="readPolicy" formControlName="readPolicy">
         <label class="form-check-label" for="readPolicy">Estoy de acuerdo con el <a target="_blank"
                 href="https://foundation.wikimedia.org/wiki/Policy:Universal_Code_of_Conduct/es">Código Universal de
                 Conducta</a> y la <a target="_blank"
                 href="https://meta.wikimedia.org/wiki/Friendly_space_policies/es">Política de
-                Espacios Amigables</a> de la Fundación Wikimedia</label>
+                Espacios Amigables</a> de la Fundación Wikimedia*</label>
     </div>
     <div class="form-check form-switch mb-2">
-        <input class="form-check-input" type="checkbox" role="switch" id="readPrivacy">
+        <input class="form-check-input" type="checkbox" role="switch" id="readPrivacy" formControlName="readPrivacy">
         <label class="form-check-label" for="readPrivacy">He leído y acepto <a target="_blank" href="">la política de
-                privacidad</a></label>
+                privacidad</a>*</label>
     </div>
     <div class="submit-button-container d-grid col-6 mx-auto">
         <button type="submit" class="btn btn-primary mx-auto" data-bs-toggle="modal" data-bs-target="#formConfirm"
-            [ngClass]="{'disabled' : !webForm.valid}" [@buttonState]="webForm.valid ? 'enabled' : 'disabled'">
+            [ngClass]="{'disabled' : !isFormValid()}" [@buttonState]="isFormValid() ? 'enabled' : 'disabled'">
             Enviar
         </button>
     </div>
