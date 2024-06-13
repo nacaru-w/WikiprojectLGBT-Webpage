@@ -37,10 +37,7 @@
                 "src/styles"
               ]
             },
-            "scripts": [
-              "node_modules/bootstrap/dist/js/bootstrap.esm.min.js",
-              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
-            ],
+            "scripts": [],
             "server": "src/main.server.ts",
             "prerender": true,
             "ssr": {
@@ -105,9 +102,7 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": [
-              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
-            ]
+            "scripts": []
           }
         },
         "lint": {
