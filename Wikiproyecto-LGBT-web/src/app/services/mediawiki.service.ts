@@ -136,7 +136,8 @@ export class MediawikiService {
         const pages = response.query?.pages
         let returnString;
         for (let page in pages) {
-          returnString = pages[page].pageprops.wikibase_item
+          console.log(pages[page]);
+          returnString = pages[page].pageprops?.wikibase_item || '';
         }
         return returnString;
       }),
