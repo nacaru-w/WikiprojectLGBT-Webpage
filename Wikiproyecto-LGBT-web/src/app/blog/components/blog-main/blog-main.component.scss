@@ -22,74 +22,11 @@
         font-size: 1.4rem;
     }
 
-    .post-info {
-        display: flex;
-        flex-direction: row;
-
-        .author-and-thumb {
-            display: flex;
-            flex-direction: column;
-            margin-inline: 1em;
-
-            .author {
-                align-self: center;
-                letter-spacing: -0.1em;
-
-                .author-name {
-                    font-weight: bold;
-                }
-
-            }
-
-            .date {
-                color: #515151;
-            }
-
-        }
-
-        .thumb-img-container {
-            width: 2.75em;
-            height: 2.75em;
-            border: solid black 2px;
-            box-shadow: black 1px 1px;
-            border-radius: 50%;
-            background-color: variables.$light;
-            justify-self: center;
-
-            img {
-                width: 100%;
-                height: 100%;
-                clip-path: circle(50% at 50% 50%);
-            }
-        }
-
+    .author,
+    .date {
+        letter-spacing: -0.1em;
     }
 
-    .post-content {
-        font-family: variables.$body-font;
-        margin-block: 2em;
-
-        .post-img-container {
-            border: dashed black 3px;
-            border-radius: 20px;
-            height: auto;
-            width: min(100%, 700px);
-            margin-top: 1.5em;
-            margin-bottom: 0.5em;
-            margin-inline: auto;
-
-            img {
-                border-radius: 20px;
-            }
-
-        }
-    }
-
-    .figure-caption {
-        width: min(100%, 700px);
-        margin-inline: auto;
-        text-align: center;
-    }
 
 }
 

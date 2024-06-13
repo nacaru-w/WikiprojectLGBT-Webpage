@@ -53,7 +53,7 @@ export class BlogPostComponent implements OnInit {
         this.content = res.content
         setTimeout(() => {
           this.loaded = true;
-        }, 500);
+        }, 300);
       }
     })
   }

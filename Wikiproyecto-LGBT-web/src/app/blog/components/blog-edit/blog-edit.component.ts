@@ -2,6 +2,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
 
+import { ActivatedRoute } from '@angular/router';
+import { ApiService } from '../../../services/api.service';
+
 @Component({
   selector: 'app-blog-edit',
   standalone: true,
@@ -12,12 +15,43 @@ import { ReactiveFormsModule, FormControl, FormGroup, Validators, FormBuilder } 
 export class BlogEditComponent {
   blogForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) {
+  postId: string | null = '';
+  date: Date = new Date();
+  author: string = '';
+  title: string = '';
+  content: string = '';
+  loaded: boolean = false;
+
+  error: string = '';
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private activatedRoute: ActivatedRoute,
+    private apiService: ApiService
+  ) {
+    this.postId = this.activatedRoute.snapshot.paramMap.get('id');
+    if (this.postId) {
+      this.getPost(this.postId);
+    }
+
     this.blogForm = this.formBuilder.group({
-      author: new FormControl('', [Validators.required, Validators.maxLength(10)]),
-      date: new FormControl('', [Validators.required]),
-      title: new FormControl('', [Validators.maxLength(100)]),
-      content: new FormControl('', [Validators.maxLength(10000)]),
+      author: new FormControl(this.postId ? this.author : '', [Validators.required, Validators.maxLength(75)]),
+      date: new FormControl(this.postId ? this.date : '', [Validators.required]),
+      title: new FormControl(this.postId ? this.title : '', [Validators.maxLength(255)]),
+      content: new FormControl(this.postId ? this.content : '', [Validators.maxLength(10000)]),
+    })
+  }
+
+  getPost(id: string): void {
+    this.apiService.getPostInfo(id).subscribe((res) => {
+      if (typeof res == 'string' || !res) {
+        this.error = res;
+      } else {
+        this.date = res.date
+        this.author = res.author
+        this.title = res.title
+        this.content = res.content
+      }
     })
   }
 

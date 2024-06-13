@@ -1,6 +1,6 @@
 <div class="blog-edit-form">
     <form [formGroup]="blogForm" (ngSubmit)="onSubmit()">
-        <div class="post-id">ID: 00000</div>
+        <div class="post-id">ID: {{postId || ''}}</div>
         <div class="date-and-author">
             <div class="form-control">
                 <label for="author">Autor: </label>

@@ -1,18 +1,19 @@
-@if (error) {
-
-}
-<div [@popAnimation]="loaded">
+<div [@popAnimation]="loaded || error">
+    @if (error) {
+    <div class="blog-post">
+        <h1 class="error-title">Error: 500</h1>
+        <span>{{error}}</span>
+    </div>
+    }
     @if (loaded && !error) {
     @for (item of sortedPosts; track $index) {
-
     <a class="fill-link" routerLink="/blog/{{item.id}}">
         <div class="blog-post">
             <h2>{{item.title}}</h2>
-            <div>{{item.author}}</div>
-            <div>{{item.date | dateFormat }}</div>
+            <div class="author">{{item.author}}</div>
+            <div class="date">{{item.date | dateFormat }}</div>
         </div>
     </a>
-
     }
     }
 </div>
