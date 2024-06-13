@@ -11,12 +11,21 @@ async function sample() {
   const connection = await mysql.createConnection(
     credentials
   );
-  const [rows, _] = await connection.execute('select * FROM prueba WHERE a > ?', [3]);
+  const [rows, _] = await connection.execute('select * FROM blog_posts');
   return rows
+}
+
+async function getPostInfo(id: string) {
+  const connection = await mysql.createConnection(
+    credentials
+  );
+  const [rows, _] = await connection.execute('SELECT * FROM blog_posts WHERE id = ?', [id]);
+  return rows;
 }
 
 // The Express app is exported so that it can be used by serverless Functions.
 export function app(): express.Express {
+  const cors = require('cors');
   const server = express();
   const serverDistFolder = dirname(fileURLToPath(import.meta.url));
   const browserDistFolder = resolve(serverDistFolder, '../browser');
@@ -24,13 +33,23 @@ export function app(): express.Express {
 
   const commonEngine = new CommonEngine();
 
+  server.use(cors());
+
   server.set('view engine', 'html');
   server.set('views', browserDistFolder);
 
-  // Example Express Rest API endpoints
-  server.get('/api/prueba', (req, res) => {
+  // Express Rest API endpoints
+  server.get('/api/blog_posts', (req, res) => {
     sample().then((rows) => res.send(rows))
   });
+
+  server.get(`/api/blog/:id`, (req, res) => {
+    const id = req.params.id
+    getPostInfo(id).then((rows) => {
+      res.send(rows)
+    })
+  });
+
   // Serve static files from /browser
   server.get('*.*', express.static(browserDistFolder, {
     maxAge: '1y'
