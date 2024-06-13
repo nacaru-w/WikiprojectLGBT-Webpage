@@ -3,18 +3,43 @@ import { Component, input } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { MediawikiService } from '../../../services/mediawiki.service';
 import { Observable } from 'rxjs';
+import { ApiService } from '../../../services/api.service';
+import { BlogPostInfoModel } from '../../models/blog-post-info-model';
+import { DateFormatPipe } from '../../../pipes/date-format.pipe';
+
+import { RouterModule, RouterLink } from '@angular/router';
+
+import { popAnimation } from '../../../animations';
 
 @Component({
   selector: 'app-blog-main',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, DateFormatPipe, RouterModule],
   templateUrl: './blog-main.component.html',
-  styleUrl: './blog-main.component.scss'
+  styleUrl: './blog-main.component.scss',
+  animations: [popAnimation]
 })
-export class BlogMainComponent {
-  lastThreeArticles: string[] = [];
-  lastThreeTexts: string[] = [];
+export class BlogMainComponent implements OnInit {
+  error: string = '';
+  loaded: boolean = false;
+  sortedPosts: BlogPostInfoModel[] = [];
+  constructor(private apiService: ApiService) { }
 
-  constructor(private mediawikiService: MediawikiService) { }
+  getPosts() {
+    this.apiService.getPosts().subscribe((res) => {
+      if (!res || res.length == 0 || typeof res == 'string') {
+        this.error = 'Oops, se ha producido un error';
+      } else {
+        this.sortedPosts = res.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+        setTimeout(() => {
+          this.loaded = true;
+        }, 500);
+      }
+    })
+  }
+
+  ngOnInit(): void {
+    this.getPosts();
+  }
 
 }

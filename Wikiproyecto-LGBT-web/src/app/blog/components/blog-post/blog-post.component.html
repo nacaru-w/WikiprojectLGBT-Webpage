@@ -1,0 +1,59 @@
+@if (!loaded && !error) {
+<div class="spinner-container text-secondary">
+    <div class="spinner-grow" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+</div>
+}
+
+<div class="blog-post" [@popAnimation]="loaded" [ngClass]="{hidden: !loaded}">
+    @if (loaded) {
+    <h2>{{title}}</h2>
+    <div class="post-info">
+        <div class="thumb-img-container">
+            <img src="./../assets/imgs/Barba-wikiproyecto-lgbt.svg" alt="Título" class="post-image">
+        </div>
+        <div class="author-and-thumb">
+
+            <span class="author">por <span class="author-name">{{author}}</span></span>
+            <span class="date">{{date | dateFormat }}</span>
+        </div>
+
+    </div>
+    <div class="post-content">
+        {{content}}
+        <!-- <p>
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quae non porro ipsum aut reprehenderit deserunt,
+                beatae
+                aliquam alias totam, quaerat amet obcaecati molestiae quidem nisi doloribus in molestias, odio vel.
+            </p>
+            <figure>
+                <div class="post-img-container">
+                    <img src="./../assets/imgs/Wikimedia_Diversity_banner.svg" alt="Banner">
+                </div>
+                <figcaption class="figure-caption">
+                    Ejemplo
+                </figcaption>
+            </figure>
+            <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum quisquam et mollitia, ex velit deleniti
+                repellendus
+                voluptatem quis pariatur nisi atque molestiae quaerat accusantium dolores odit! Architecto ipsum eum ex!
+            </p>
+            <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque ducimus quas asperiores totam tempora,
+                corporis
+                libero iusto? Omnis ipsam deserunt eius, fugit excepturi dolores vero. Voluptatibus libero obcaecati
+                voluptatem
+                distinctio!
+            </p> -->
+    </div>
+    }
+</div>
+
+@if (error) {
+<div class="blog-post">
+    <h1 class="error-title">Error: 404</h1>
+    <span>¡Lo siento! Parece que ese post del blog que estás buscando no existe.</span>
+</div>
+}

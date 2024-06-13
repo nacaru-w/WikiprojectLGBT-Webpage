@@ -4,7 +4,7 @@
     border: solid black 3px;
     box-shadow: black 4px 4px;
     width: min(95%, 900px);
-    padding: 1em 1.5em;
+    padding: 1em 7vw;
     margin: 1em auto;
     border-radius: 40px;
     background-color: variables.$primary;
@@ -91,13 +91,13 @@
         text-align: center;
     }
 
+
 }
 
-a.fill-link {
-    text-decoration: none;
-    color: black;
+.error-title {
+    font-weight: bold;
 }
 
-a.fill-link:hover {
-    color: variables.$dark-primary;
+.hidden {
+    display: none;
 }
