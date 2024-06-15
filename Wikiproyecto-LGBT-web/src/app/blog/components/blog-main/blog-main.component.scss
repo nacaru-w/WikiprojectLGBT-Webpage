@@ -1,5 +1,10 @@
 @use 'variables';
 
+.blog-posts-container {
+    display: flex;
+    flex-direction: column;
+}
+
 .blog-post {
     border: solid black 3px;
     box-shadow: black 4px 4px;
@@ -19,12 +24,17 @@
         padding: 0.4em 1.25em;
         margin: 1em auto;
         background-color: variables.$warning;
-        font-size: 1.4rem;
+        font-size: 1.3rem;
+    }
+
+    .author {
+        font-weight: bold;
     }
 
     .author,
     .date {
         letter-spacing: -0.1em;
+        text-align: center;
     }
 
 

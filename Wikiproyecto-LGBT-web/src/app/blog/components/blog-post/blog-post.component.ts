@@ -5,6 +5,8 @@ import { BlogPostInfoModel } from '../../models/blog-post-info-model';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 import { CommonModule } from '@angular/common';
 
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+
 import { popAnimation } from '../../../animations';
 
 @Component({
@@ -20,14 +22,15 @@ export class BlogPostComponent implements OnInit {
   date: Date = new Date();
   author: string = '';
   title: string = '';
-  content: string = '';
+  content: string | SafeHtml = '';
   loaded: boolean = false;
 
   error: string = '';
 
   constructor(
     private apiService: ApiService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private sanitizer: DomSanitizer
   ) {
     this.postId = this.activatedRoute.snapshot.paramMap.get('id')
     console.log(this.postId)
@@ -50,7 +53,7 @@ export class BlogPostComponent implements OnInit {
         this.date = res.date
         this.author = res.author
         this.title = res.title
-        this.content = res.content
+        this.content = this.sanitizer.bypassSecurityTrustHtml(res.content);
         setTimeout(() => {
           this.loaded = true;
         }, 300);

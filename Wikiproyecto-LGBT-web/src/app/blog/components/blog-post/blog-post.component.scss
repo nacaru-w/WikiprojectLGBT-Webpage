@@ -69,7 +69,7 @@
         font-family: variables.$body-font;
         margin-block: 2em;
 
-        .post-img-container {
+        div.post-img-container {
             border: dashed black 3px;
             border-radius: 20px;
             height: auto;
@@ -83,12 +83,13 @@
             }
 
         }
-    }
 
-    .figure-caption {
-        width: min(100%, 700px);
-        margin-inline: auto;
-        text-align: center;
+        figcaption.figure-caption {
+            width: min(100%, 700px);
+            margin-inline: auto;
+            text-align: center;
+        }
+
     }
 
 

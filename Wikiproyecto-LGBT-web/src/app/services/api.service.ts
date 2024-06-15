@@ -2,6 +2,8 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, throwError, map, of, tap } from 'rxjs';
 import { BlogPostInfoModel } from '../blog/models/blog-post-info-model';
+import { error } from 'node:console';
+import { response } from 'express';
 
 @Injectable({
   providedIn: 'root'
@@ -31,7 +33,6 @@ export class ApiService {
   getPostInfo(id: string): Observable<BlogPostInfoModel | string> {
     if (this.postCache[id]) {
       // Return the cached post if it exists
-      console.log('using postcache', this.postCache[id])
       return of(this.postCache[id]);
     } else {
       return this.http.get<BlogPostInfoModel[]>(this.endpoint + 'blog/' + id).pipe(
@@ -49,6 +50,46 @@ export class ApiService {
         })
       )
     }
+  }
+
+  addPost(date: string, author: string, title: string, content: string): Observable<any> {
+    const postData = { date, author, title, content };
+    const headers = { headers: { 'Content-Type': 'application/json' } }
+    return this.http.post<any>(this.endpoint + 'blog', postData, headers).pipe(
+      map(response => {
+        return 'Post added succesfully with id: ' + response.insertId;
+      }),
+      catchError((error: HttpErrorResponse) => {
+        console.error('An error occurred: ', error.message);
+        return of(error.message)
+      })
+    )
+  }
+
+  editPost(id: string, date: string, author: string, title: string, content: string): Observable<any> {
+    const putData = { id, date, author, title, content };
+    const headers = { headers: { 'Content-Type': 'application/json', /*'Access-Control-Allow-Origin': 'https://wmlgbt-es-web.toolforge.org'*/ }, }
+    return this.http.put<any>(this.endpoint + 'blog/' + id, putData, headers).pipe(
+      map(response => {
+        return `Post edited successfully with id: ` + response.id
+      }),
+      catchError((error: HttpErrorResponse) => {
+        console.error('An error occurred: ', error.message);
+        return of(error.message)
+      })
+    )
+  }
+
+  deletePost(id: string) {
+    return this.http.delete<any>(this.endpoint + 'blog/' + id).pipe(
+      map(response => {
+        return 'Post deleted successfully with id: ' + response.id
+      }),
+      catchError((error: HttpErrorResponse) => {
+        console.error('An error ocurred: ', error.message);
+        return of(error.message)
+      })
+    )
   }
 
 }

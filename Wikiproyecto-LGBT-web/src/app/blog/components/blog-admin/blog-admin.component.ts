@@ -30,4 +30,11 @@ export class BlogAdminComponent implements OnInit {
     })
   }
 
+  deletePost(id: string | number): void {
+    id = id.toString()
+    this.apiService.deletePost(id).subscribe((res) => {
+      console.log('Component response:', res);
+    })
+  }
+
 }

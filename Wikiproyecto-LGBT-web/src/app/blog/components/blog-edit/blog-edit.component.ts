@@ -16,7 +16,7 @@ export class BlogEditComponent {
   blogForm: FormGroup;
 
   postId: string | null = '';
-  date: Date = new Date();
+  date: string | Date = new Date();
   author: string = '';
   title: string = '';
   content: string = '';
@@ -47,7 +47,7 @@ export class BlogEditComponent {
       if (typeof res == 'string' || !res) {
         this.error = res;
       } else {
-        this.date = res.date
+        this.date = this.timestampToDate(res.date);
         this.author = res.author
         this.title = res.title
         this.content = res.content
@@ -79,8 +79,38 @@ export class BlogEditComponent {
     }
   }
 
-  onSubmit() {
-    console.log(this.blogForm.value)
+  timestampToDate(timestamp: string | Date): string {
+    const date = new Date(timestamp);
+    return date.toISOString().split('T')[0];
+  }
+
+  dateToTimestamp(dateString: string): number {
+    const [year, month, day] = dateString.split('-').map(Number);
+
+    const date = new Date(year, month - 1, day);
+
+    return date.getTime();
+  }
+
+
+  onSubmit(): void {
+    const formValues = this.blogForm.value
+    const formParams = [
+      formValues.date,
+      formValues.author,
+      formValues.title,
+      formValues.content
+    ] as const;
+    console.log(formValues);
+    if (!this.postId) {
+      this.apiService.addPost(...formParams).subscribe((res) => {
+        console.log(res);
+      })
+    } else {
+      this.apiService.editPost(this.postId, ...formParams).subscribe((res) => {
+        console.log(res);
+      })
+    }
   }
 
 }
