@@ -5,7 +5,20 @@ import { fileURLToPath } from 'node:url';
 import { dirname, join, resolve } from 'node:path';
 import bootstrap from './src/main.server';
 import mysql from 'mysql2/promise';
-import { credentials } from './credentials';
+import passport from 'passport'
+import passportMediawiki from 'passport-mediawiki-oauth';
+
+const MediaWikiStrategy = passportMediawiki.OAuthStrategy;
+import { credentials, oauthCredentials } from './credentials';
+
+import session from 'express-session';
+// Declare type of Mediawiki session object so that it works with TypeScript
+// See: https://stackoverflow.com/a/65805410
+declare module "express-session" {
+  interface Session {
+    user?: any;
+  }
+}
 
 async function getTable() {
   const connection = await mysql.createConnection(
@@ -105,11 +118,83 @@ export function app(): express.Express {
 
   const commonEngine = new CommonEngine();
 
+  server.use(session({
+    secret: oauthCredentials.session_secret,
+    saveUninitialized: true,
+    resave: true
+    // TODO: Add store backed by MariaDB using https://www.npmjs.com/package/express-mysql-session
+  }));
+  server.use(passport.initialize());
+  server.use(passport.session());
+
   server.use(cors());
   server.use(express.json())
 
   server.set('view engine', 'html');
   server.set('views', browserDistFolder);
+
+  // Wikimedia Oauth
+  passport.use(new MediaWikiStrategy(
+    {
+      consumerKey: oauthCredentials.consumer_key,
+      consumerSecret: oauthCredentials.consumer_secret,
+    },
+    function (token: string, tokenSecret: string, profile: any, done: any) {
+      profile.oauth = {
+        consumer_key: oauthCredentials.consumer_key,
+        consumer_secret: oauthCredentials.consumer_secret,
+        token: token,
+        token_secret: tokenSecret
+      };
+      return done(null, profile);
+    }
+  ));
+
+  passport.serializeUser(function (user, done) {
+    done(null, user);
+  });
+
+  passport.deserializeUser(function (obj: false | Express.User | null | undefined, done) {
+    done(null, obj);
+  });
+
+  server.get("/login-mediawiki", function (req, res) {
+    res.redirect(req.baseUrl + "/auth/mediawiki/callback");
+  });
+
+  server.get("/auth/mediawiki/callback", function (req, res, next) {
+    passport.authenticate("mediawiki", function (err: any, user: any) {
+      if (err) {
+        return next(err);
+      }
+
+      if (!user) {
+        return res.redirect(req.baseUrl + "/login");
+      }
+
+      req.logIn(user, function (err) {
+        if (err) {
+          return next(err);
+        }
+        req.session.user = user;
+        res.redirect(req.baseUrl + "/");
+      });
+    })(req, res, next);
+  });
+
+  server.get("/logout", function (req, res) {
+    delete req.session.user;
+    res.redirect(req.baseUrl + "/");
+  });
+
+  server.get("/api/user", (req, res) => {
+    if (req?.session?.user) {
+      res.json({ displayName: req.session.user.displayName })
+    } else {
+      res.status(400).json({ reason: 'Not logged in' });
+    }
+  })
+
 
   // Express Rest API endpoints
   server.get('/api/blog_posts', (req, res) => {
