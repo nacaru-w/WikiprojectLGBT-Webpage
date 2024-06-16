@@ -16,6 +16,16 @@ export class ApiService {
 
   constructor(private http: HttpClient, @Optional() @Inject(REQUEST) private request: Request) { }
 
+  private getHeaders(): HttpHeaders {
+    console.log(JSON.stringify(this.request?.headers));
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' }); /*'Access-Control-Allow-Origin': 'https://wmlgbt-es-web.toolforge.org'*/
+    let cookie = this.request?.headers?.get("Cookie");
+    if (cookie) {
+      headers = headers.set('Cookie', cookie);
+    }
+    return headers;
+  }
+
   getPosts(): Observable<BlogPostInfoModel[] | string> {
     if (this.postsCache) {
       console.log('using postscache', this.postsCache)
@@ -55,8 +65,8 @@ export class ApiService {
 
   addPost(date: string, author: string, title: string, content: string): Observable<any> {
     const postData = { date, author, title, content };
-    const headers = { headers: { 'Content-Type': 'application/json' } }
-    return this.http.post<any>(this.endpoint + 'blog', postData, headers).pipe(
+    const options = { headers: this.getHeaders(), withCredentials: true }
+    return this.http.post<any>(this.endpoint + 'blog', postData, options).pipe(
       map(response => {
         return {
           success: true,
@@ -72,16 +82,7 @@ export class ApiService {
 
   editPost(id: string, date: string, author: string, title: string, content: string): Observable<any> {
     const putData = { id, date, author, title, content };
-    console.log(JSON.stringify(this.request?.headers));
-    let headers = new HttpHeaders({ 'Content-Type': 'application/json' }); /*'Access-Control-Allow-Origin': 'https://wmlgbt-es-web.toolforge.org'*/
-    let cookie = this.request?.headers?.get("Cookie");
-    if (cookie) {
-      headers = headers.set('Cookie', cookie);
-    }
-    const options = {
-      headers: headers,
-      withCredentials: true
-    }
+    const options = { headers: this.getHeaders(), withCredentials: true }
     return this.http.put<any>(this.endpoint + 'blog/' + id, putData, options).pipe(
       map(response => {
         return {
@@ -97,7 +98,8 @@ export class ApiService {
   }
 
   deletePost(id: string) {
-    return this.http.delete<any>(this.endpoint + 'blog/' + id).pipe(
+    const options = { headers: this.getHeaders(), withCredentials: true }
+    return this.http.delete<any>(this.endpoint + 'blog/' + id, options).pipe(
       map(response => {
         return 'Post deleted successfully with id: ' + response.id
       }),

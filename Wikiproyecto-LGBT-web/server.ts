@@ -126,9 +126,11 @@ async function checkAdminStatus(username: string) {
 
 async function isAuthorized(req: express.Request) {
   if (req?.session?.user) {
+    console.log("Checking admin status for user", req.session.user.displayName)
     return checkAdminStatus(req.session.user.displayName)
   }
 
+  console.log("Logged out user attempted to use protected endpoint")
   return false;
 }
 
@@ -316,7 +318,8 @@ function run(): void {
   // Start up the Node server
   const server = app();
   server.listen(port, () => {
-    console.log(`Node Expresss server listening on http://localhost:${port}`);
+    console.log(`Node Express server listening on http://localhost:${port}`);
+    console.log(`Version with authorization control on all endpoints`);
   });
 }
 
