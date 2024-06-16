@@ -73,10 +73,13 @@
 
         .new-entry-container {
             margin-top: 1.25em;
-            margin-inline: auto;
+            display: flex;
+            gap: 0.5em;
+            justify-content: center;
+            flex-wrap: wrap;
 
             .new-entry-button {
-                padding: 10px 30px;
+                padding: 0.5em 0.75em;
                 border-radius: 10px;
                 box-shadow: black 4px 4px;
                 background-color: variables.$gray-darker;
@@ -85,8 +88,21 @@
                 cursor: pointer;
             }
 
+            .return-button {
+                padding: 0.5em 0.75em;
+                border-radius: 10px;
+                box-shadow: black 4px 4px;
+                background-color: variables.$gray-lighter;
+                color: black;
+                border: none;
+            }
+
             .new-entry-button:hover {
                 background-color: variables.$gray-dark;
+            }
+
+            .return-button:hover {
+                background-color: variables.$gray;
             }
 
         }
@@ -94,4 +110,12 @@
     }
 
 
+}
+
+.spinner-border {
+    margin-inline: 1em;
+}
+
+a {
+    color: black;
 }

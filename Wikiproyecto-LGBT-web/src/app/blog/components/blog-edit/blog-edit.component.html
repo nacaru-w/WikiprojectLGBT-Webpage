@@ -35,7 +35,29 @@
             </div>
         </div>
         <div class="new-entry-container">
-            <button class="new-entry-button">Guardar</button>
+            <button type="button" class="return-button"><a href="/blog-admin">Volver al panel</a></button>
+            <button type="submit" class="new-entry-button" data-bs-toggle="modal"
+                data-bs-target="#submitModal">Guardar</button>
         </div>
     </form>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="submitModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Estado</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                {{responseMessage}}<div class="spinner-border" role="status" *ngIf="showSubmitSpinner"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary"><a href="/blog-admin">Volver al panel</a></button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
 </div>

@@ -12,7 +12,7 @@
         </thead>
         <tbody class="blog-entries">
             @for (item of infoArray; track $index) {
-            <tr>
+            <tr id="post{{item.id}}">
                 <td>{{item.id}}</td>
                 <td>{{item.date | dateFormat }}</td>
                 <td>{{item.author}}</td>
@@ -20,7 +20,7 @@
                 <td><a href="/blog/{{item.id}}">Enlace</a></td>
                 <td>
                     <button><a href="/blog-edit/{{item.id}}">Editar</a></button>
-                    <button (click)="deletePost(item.id)">Eliminar</button>
+                    <button id="delete{{item.id}}" (click)="deletePost(item.id)">Eliminar</button>
                 </td>
             </tr>
             }

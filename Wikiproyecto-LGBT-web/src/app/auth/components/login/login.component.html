@@ -1,18 +1,12 @@
 <div class="login-container">
-    <form action="">
-        <div class="mb-2">
-            <label for="name" class="form-label">Usuario</label>
-            <input class="form-box form-control" id="user" aria-describedby="user" formControlName="user">
-            <div class="mb-2">
-                <label for="name" class="form-label">Contraseña</label>
-                <input class="form-box form-control" id="password" type="password" aria-describedby="password"
-                    formControlName="password">
-            </div>
-        </div>
-        <div class="submit-button-container d-grid col-6 mx-auto">
+    <div class="mb-2">
+        El login de administradores se lleva a cabo a través de MediaWiki Oauth
+    </div>
+    <div class="submit-button-container">
+        <a href="/login-mediawiki">
             <button type="button" class="btn btn-primary mx-auto" data-bs-toggle="modal" data-bs-target="#formConfirm">
-                Enviar
+                Iniciar sesión
             </button>
-        </div>
-    </form>
+        </a>
+    </div>
 </div>

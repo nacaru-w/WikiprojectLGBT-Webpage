@@ -30,11 +30,21 @@ export class BlogAdminComponent implements OnInit {
     })
   }
 
-  deletePost(id: string | number): void {
+  deletePost(id: string | number): string | void {
+    const deleteButton = document.querySelector(`#delete${id}`)
+    if (deleteButton?.textContent == 'Eliminar') {
+      return deleteButton.textContent = '¿Seguro?';
+    }
     id = id.toString()
     this.apiService.deletePost(id).subscribe((res) => {
       console.log('Component response:', res);
+      this.removeRow(id);
     })
+  }
+
+  removeRow(postId: string) {
+    const row = document.querySelector(`#post${postId}`);
+    row?.remove();
   }
 
 }

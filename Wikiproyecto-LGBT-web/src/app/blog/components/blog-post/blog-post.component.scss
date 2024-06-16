@@ -68,28 +68,6 @@
     .post-content {
         font-family: variables.$body-font;
         margin-block: 2em;
-
-        div.post-img-container {
-            border: dashed black 3px;
-            border-radius: 20px;
-            height: auto;
-            width: min(100%, 700px);
-            margin-top: 1.5em;
-            margin-bottom: 0.5em;
-            margin-inline: auto;
-
-            img {
-                border-radius: 20px;
-            }
-
-        }
-
-        figcaption.figure-caption {
-            width: min(100%, 700px);
-            margin-inline: auto;
-            text-align: center;
-        }
-
     }
 
 

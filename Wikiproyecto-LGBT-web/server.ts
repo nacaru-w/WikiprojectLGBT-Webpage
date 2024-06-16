@@ -4,6 +4,7 @@ import express from 'express';
 import { fileURLToPath } from 'node:url';
 import { dirname, join, resolve } from 'node:path';
 import bootstrap from './src/main.server';
+import { REQUEST, RESPONSE } from './src/express.tokens';
 import mysql from 'mysql2/promise';
 import passport from 'passport'
 import passportMediawiki from 'passport-mediawiki-oauth';
@@ -108,6 +109,31 @@ async function deleteRow(id: string) {
 
 }
 
+async function checkAdminStatus(username: string) {
+  const connection = await mysql.createConnection(credentials);
+
+  try {
+    const [rows]: [any[], mysql.FieldPacket[]] = await connection.execute('SELECT 1 FROM administrators WHERE username = ? LIMIT 1', [username]);
+
+    return rows.length > 0;
+  } catch (error) {
+    console.error('Error retrieving row:', error);
+    throw error;
+  } finally {
+    await connection.end();
+  }
+}
+
+async function isAuthorized(req: express.Request) {
+  if (req?.session?.user) {
+    return checkAdminStatus(req.session.user.displayName)
+  }
+
+  return false;
+}
+
+const unauthorizedError = { reason: "Not logged in or not authorized to perform this action" };
+
 // The Express app is exported so that it can be used by serverless Functions.
 export function app(): express.Express {
   const cors = require('cors');
@@ -127,7 +153,9 @@ export function app(): express.Express {
   server.use(passport.initialize());
   server.use(passport.session());
 
-  server.use(cors());
+  server.use(cors({
+    credentials: true
+  }));
   server.use(express.json())
 
   server.set('view engine', 'html');
@@ -136,8 +164,8 @@ export function app(): express.Express {
   // Wikimedia Oauth
   passport.use(new MediaWikiStrategy(
     {
-      consumerKey: oauthCredentials.consumer_key,
-      consumerSecret: oauthCredentials.consumer_secret,
+      consumerKey: oauthCredentials.consumer_key, // Defines the app that will make use of oauth
+      consumerSecret: oauthCredentials.consumer_secret, // Acknowledges the creator of the app
     },
     function (token: string, tokenSecret: string, profile: any, done: any) {
       profile.oauth = {
@@ -189,7 +217,12 @@ export function app(): express.Express {
 
   server.get("/api/user", (req, res) => {
     if (req?.session?.user) {
-      res.json({ displayName: req.session.user.displayName })
+      checkAdminStatus(req.session.user.displayName).then((isAdmin) => {
+        res.json({
+          displayName: req.session.user.displayName,
+          isAdmin: isAdmin,
+        })
+      })
     } else {
       res.status(400).json({ reason: 'Not logged in' });
     }
@@ -209,25 +242,44 @@ export function app(): express.Express {
   });
 
   server.post('/api/blog', (req, res) => {
-    const { date, author, title, content } = req.body;
-    insertRow(date, author, title, content)
-      .then((result) => res.status(201).send(result))
-      .catch((error) => res.status(500).send('Error inserting row: ' + error.message))
+    isAuthorized(req).then((authorized) => {
+      if (!authorized) {
+        res.status(403).json(unauthorizedError);
+        return;
+      }
+      const { date, author, title, content } = req.body;
+      insertRow(date, author, title, content)
+        .then((result) => res.status(201).send(result))
+        .catch((error) => res.status(500).send('Error inserting row: ' + error.message))
+
+    })
   })
 
   server.put('/api/blog/:id', (req, res) => {
-    const id = req.params.id;
-    const { date, author, title, content } = req.body;
-    updateRow(date, author, title, content, id)
-      .then((result) => res.status(200).send({ result, id }))
-      .catch((error) => res.status(500).send('Error updating row: ' + error.message));
+    isAuthorized(req).then((authorized) => {
+      if (!authorized) {
+        res.status(403).json(unauthorizedError);
+        return
+      }
+      const id = req.params.id;
+      const { date, author, title, content } = req.body;
+      updateRow(date, author, title, content, id)
+        .then((result) => res.status(200).send({ result, id }))
+        .catch((error) => res.status(500).send('Error updating row: ' + error.message));
+    })
   })
 
   server.delete('/api/blog/:id', (req, res) => {
-    const id = req.params.id;
-    deleteRow(id)
-      .then((result) => res.status(200).send({ result, id }))
-      .catch((error) => res.status(500).send('Error deleting row: ' + error.message))
+    isAuthorized(req).then((authorized) => {
+      if (!authorized) {
+        res.status(403).json(unauthorizedError);
+        return
+      }
+      const id = req.params.id;
+      deleteRow(id)
+        .then((result) => res.status(200).send({ result, id }))
+        .catch((error) => res.status(500).send('Error deleting row: ' + error.message))
+    })
   })
 
   // Serve static files from /browser
@@ -245,7 +297,11 @@ export function app(): express.Express {
         documentFilePath: indexHtml,
         url: `${protocol}://${headers.host}${originalUrl}`,
         publicPath: browserDistFolder,
-        providers: [{ provide: APP_BASE_HREF, useValue: baseUrl }],
+        providers: [
+          { provide: APP_BASE_HREF, useValue: baseUrl },
+          { provide: REQUEST, useValue: req },
+          { provide: RESPONSE, useValue: res },
+        ],
       })
       .then((html) => res.send(html))
       .catch((err) => next(err));

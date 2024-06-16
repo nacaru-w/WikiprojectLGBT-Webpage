@@ -1,9 +1,10 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { Inject, Injectable, Optional } from '@angular/core';
 import { Observable, catchError, throwError, map, of, tap } from 'rxjs';
 import { BlogPostInfoModel } from '../blog/models/blog-post-info-model';
 import { error } from 'node:console';
 import { response } from 'express';
+import { REQUEST } from '../../express.tokens';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class ApiService {
   postsCache: BlogPostInfoModel[] | null = null;
   postCache: { [id: string]: BlogPostInfoModel } = {};
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, @Optional() @Inject(REQUEST) private request: Request) { }
 
   getPosts(): Observable<BlogPostInfoModel[] | string> {
     if (this.postsCache) {
@@ -57,25 +58,40 @@ export class ApiService {
     const headers = { headers: { 'Content-Type': 'application/json' } }
     return this.http.post<any>(this.endpoint + 'blog', postData, headers).pipe(
       map(response => {
-        return 'Post added succesfully with id: ' + response.insertId;
+        return {
+          success: true,
+          message: 'Post added succesfully with id: ' + response.insertId
+        }
       }),
       catchError((error: HttpErrorResponse) => {
         console.error('An error occurred: ', error.message);
-        return of(error.message)
+        return of(error)
       })
     )
   }
 
   editPost(id: string, date: string, author: string, title: string, content: string): Observable<any> {
     const putData = { id, date, author, title, content };
-    const headers = { headers: { 'Content-Type': 'application/json', /*'Access-Control-Allow-Origin': 'https://wmlgbt-es-web.toolforge.org'*/ }, }
-    return this.http.put<any>(this.endpoint + 'blog/' + id, putData, headers).pipe(
+    console.log(JSON.stringify(this.request?.headers));
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' }); /*'Access-Control-Allow-Origin': 'https://wmlgbt-es-web.toolforge.org'*/
+    let cookie = this.request?.headers?.get("Cookie");
+    if (cookie) {
+      headers = headers.set('Cookie', cookie);
+    }
+    const options = {
+      headers: headers,
+      withCredentials: true
+    }
+    return this.http.put<any>(this.endpoint + 'blog/' + id, putData, options).pipe(
       map(response => {
-        return `Post edited successfully with id: ` + response.id
+        return {
+          success: true,
+          message: `Post edited successfully with id: ` + response.id
+        }
       }),
       catchError((error: HttpErrorResponse) => {
         console.error('An error occurred: ', error.message);
-        return of(error.message)
+        return of(error)
       })
     )
   }
@@ -87,7 +103,7 @@ export class ApiService {
       }),
       catchError((error: HttpErrorResponse) => {
         console.error('An error ocurred: ', error.message);
-        return of(error.message)
+        return of(error)
       })
     )
   }

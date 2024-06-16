@@ -23,6 +23,8 @@ export class BlogEditComponent {
   loaded: boolean = false;
 
   error: string = '';
+  responseMessage: string = 'Enviando...';
+  showSubmitSpinner: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -55,13 +57,6 @@ export class BlogEditComponent {
     })
   }
 
-  ngOnInit(): void {
-
-  }
-
-  ngOnDestroy(): void {
-  }
-
   isFieldInvalid(fieldName: string): boolean {
     const control = this.blogForm.get(fieldName);
     return !control!.valid && (control!.dirty)
@@ -86,29 +81,38 @@ export class BlogEditComponent {
 
   dateToTimestamp(dateString: string): number {
     const [year, month, day] = dateString.split('-').map(Number);
-
     const date = new Date(year, month - 1, day);
 
     return date.getTime();
   }
 
+  getCurrentDate(): string {
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+
 
   onSubmit(): void {
+    this.showSubmitSpinner = true;
     const formValues = this.blogForm.value
     const formParams = [
-      formValues.date,
+      formValues.date || this.getCurrentDate(),
       formValues.author,
       formValues.title,
       formValues.content
     ] as const;
-    console.log(formValues);
     if (!this.postId) {
       this.apiService.addPost(...formParams).subscribe((res) => {
-        console.log(res);
+        this.showSubmitSpinner = false;
+        this.responseMessage = res?.success ? '¡Tu post ha sido publicado!' : '¡Parece que ha habido un error al añadir el post, prueba de nuevo más tarde!';
       })
     } else {
       this.apiService.editPost(this.postId, ...formParams).subscribe((res) => {
-        console.log(res);
+        this.showSubmitSpinner = false;
+        this.responseMessage = res?.success ? '¡Tu post ha sido editado!' : '¡Parece que ha habido un error al editar el post, prueba de nuevo más tarde!';
       })
     }
   }

@@ -401,3 +401,32 @@ body {
     }
 
 }
+
+figure {
+    div.post-img-container {
+        border: dashed black 3px;
+        border-radius: 20px;
+        height: auto;
+        width: fit-content;
+        margin-top: 1.5em;
+        margin-bottom: 0.5em;
+        margin-inline: auto;
+
+        img {
+            border-radius: 20px;
+            width: 100%;
+            max-width: 40em;
+            min-width: min(20em, 90%);
+            max-height: 20em;
+            min-height: 10em;
+        }
+
+    }
+
+    figcaption.figure-caption {
+        width: min(100%, 700px);
+        margin-inline: auto;
+        text-align: center;
+    }
+
+}

@@ -46,6 +46,7 @@ export class StatisticsYearlyArticlesComponent implements OnInit {
   }
 
   getThisYearArticles(array: string[]): string[] | null {
+    console.log(array)
     const indexOfFirstArticle = array.indexOf("Tenderoni")
     if (indexOfFirstArticle == -1) {
       return null
