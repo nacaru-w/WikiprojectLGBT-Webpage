@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Inject, Injectable, Optional } from '@angular/core';
-import { Observable, catchError, throwError, map, of, tap } from 'rxjs';
+import { Observable, catchError, throwError, map, of, tap, BehaviorSubject } from 'rxjs';
 import { BlogPostInfoModel } from '../blog/models/blog-post-info-model';
 import { error } from 'node:console';
 import { response } from 'express';
@@ -17,7 +17,6 @@ export class ApiService {
   constructor(private http: HttpClient, @Optional() @Inject(REQUEST) private request: Request) { }
 
   private getHeaders(): HttpHeaders {
-    console.log(JSON.stringify(this.request?.headers));
     let headers = new HttpHeaders({ 'Content-Type': 'application/json' }); /*'Access-Control-Allow-Origin': 'https://wmlgbt-es-web.toolforge.org'*/
     let cookie = this.request?.headers?.get("Cookie");
     if (cookie) {
@@ -65,9 +64,11 @@ export class ApiService {
 
   addPost(date: string, author: string, title: string, content: string): Observable<any> {
     const postData = { date, author, title, content };
-    const options = { headers: this.getHeaders(), withCredentials: true }
+    const options = { headers: this.getHeaders() }
     return this.http.post<any>(this.endpoint + 'blog', postData, options).pipe(
       map(response => {
+        // invalidate cache for all posts
+        this.postsCache = null;
         return {
           success: true,
           message: 'Post added succesfully with id: ' + response.insertId
@@ -82,9 +83,12 @@ export class ApiService {
 
   editPost(id: string, date: string, author: string, title: string, content: string): Observable<any> {
     const putData = { id, date, author, title, content };
-    const options = { headers: this.getHeaders(), withCredentials: true }
+    const options = { headers: this.getHeaders() }
     return this.http.put<any>(this.endpoint + 'blog/' + id, putData, options).pipe(
       map(response => {
+        // invalidate cache
+        this.postsCache = null;
+        delete this.postCache[id];
         return {
           success: true,
           message: `Post edited successfully with id: ` + response.id
@@ -97,11 +101,16 @@ export class ApiService {
     )
   }
 
-  deletePost(id: string) {
-    const options = { headers: this.getHeaders(), withCredentials: true }
+  deletePost(id: string): Observable<any> {
+    const options = { headers: this.getHeaders() }
     return this.http.delete<any>(this.endpoint + 'blog/' + id, options).pipe(
       map(response => {
-        return 'Post deleted successfully with id: ' + response.id
+        this.postsCache = null;
+        delete this.postCache[id]
+        return {
+          success: true,
+          message: 'Post deleted successfully with id: ' + response.id
+        }
       }),
       catchError((error: HttpErrorResponse) => {
         console.error('An error ocurred: ', error.message);
