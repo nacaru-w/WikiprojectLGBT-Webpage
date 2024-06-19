@@ -1,5 +1,16 @@
 @use 'variables';
 
+.admin-username {
+    text-align: center;
+    margin-block: 0.25em;
+    padding: 0.5em;
+    border: solid black 2px;
+    background-color: variables.$gray-lighter;
+    border-radius: 10px;
+    box-shadow: #000 2px 2px;
+    letter-spacing: -0.1em;
+}
+
 .blog-list-container {
     border: solid black 2px;
     border-radius: 10px;
@@ -43,7 +54,7 @@
 }
 
 .new-entry-container {
-    margin-top: 20px;
+    margin-top: 1em;
 
     .new-entry-button {
         font-size: 0.9em;
@@ -58,6 +69,26 @@
 
     .new-entry-button:hover {
         background-color: variables.$gray-dark;
+    }
+
+}
+
+.logout-button-container {
+    margin-top: 1em;
+
+    .logout-button {
+        font-size: .9em;
+        padding: 10px 20px;
+        border-radius: 10px;
+        box-shadow: #000 4px 4px;
+        background-color: variables.$gray-lighter;
+        color: black;
+        border: none;
+        cursor: pointer;
+    }
+
+    .logout-button:hover {
+        background-color: variables.$gray-light;
     }
 
 }

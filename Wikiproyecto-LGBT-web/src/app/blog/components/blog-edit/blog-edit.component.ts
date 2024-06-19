@@ -1,14 +1,14 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
 
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ApiService } from '../../../services/api.service';
 
 @Component({
   selector: 'app-blog-edit',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, RouterLink],
   templateUrl: './blog-edit.component.html',
   styleUrl: './blog-edit.component.scss',
 })
@@ -29,30 +29,35 @@ export class BlogEditComponent {
   constructor(
     private formBuilder: FormBuilder,
     private activatedRoute: ActivatedRoute,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private router: Router
   ) {
     this.postId = this.activatedRoute.snapshot.paramMap.get('id');
-    if (this.postId) {
-      this.getPost(this.postId);
-    }
-
     this.blogForm = this.formBuilder.group({
       author: new FormControl(this.postId ? this.author : '', [Validators.required, Validators.maxLength(75)]),
       date: new FormControl(this.postId ? this.date : '', [Validators.required]),
       title: new FormControl(this.postId ? this.title : '', [Validators.maxLength(255)]),
       content: new FormControl(this.postId ? this.content : '', [Validators.maxLength(10000)]),
     })
+
+    if (this.postId) {
+      this.getPost(this.postId);
+    }
   }
 
   getPost(id: string): void {
     this.apiService.getPostInfo(id).subscribe((res) => {
+      console.log('getpost', res);
       if (typeof res == 'string' || !res) {
         this.error = res;
       } else {
-        this.date = this.timestampToDate(res.date);
-        this.author = res.author
-        this.title = res.title
-        this.content = res.content
+        const data = {
+          date: this.timestampToDate(res.date),
+          author: res.author,
+          title: res.title,
+          content: res.content
+        }
+        this.blogForm.patchValue(data);
       }
     })
   }
@@ -94,7 +99,6 @@ export class BlogEditComponent {
     return `${year}-${month}-${day}`;
   }
 
-
   onSubmit(): void {
     this.showSubmitSpinner = true;
     const formValues = this.blogForm.value
@@ -116,5 +120,12 @@ export class BlogEditComponent {
       })
     }
   }
+
+  navigateToPanel() {
+    setTimeout(() => {
+      this.router.navigateByUrl("/blog-admin")
+    }, 500);
+  }
+
 
 }

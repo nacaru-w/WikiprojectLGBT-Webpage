@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { MediawikiService } from '../../../services/mediawiki.service';
 
-import { chartsSlideInOutAnimation, popAnimation } from '../../../animations';
+import { chartsSlideInOutAnimation, popAnimation } from '../../../animations/animations';
 
 import { NotableArticles } from '../../models/notable-articles';
 

@@ -7,7 +7,7 @@ import { CommonModule } from '@angular/common';
 
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
-import { popAnimation } from '../../../animations';
+import { popAnimation } from '../../../animations/animations';
 
 @Component({
   selector: 'app-blog-post',

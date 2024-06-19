@@ -4,13 +4,13 @@
             <div class="link-list">
                 <ul>
                     <li class="list-item">
-                        <a href="">Example link</a>
+                        <a href="https://meta.wikimedia.org/wiki/Wikimedia_LGBT%2B/Portal" target="_blank">Meta</a>
                     </li>
                     <li class="list-item">
-                        <a href="">Example 2</a>
+                        <a routerLink="/blog-admin">Blog panel</a>
                     </li>
                     <li class="list-item">
-                        <a href="">Another example</a>
+                        <a [href]="isAuth ? '/logout' : '/login'">{{isAuth ? 'Cerrar sesión' : 'Admin login'}}</a>
                     </li>
                 </ul>
             </div>

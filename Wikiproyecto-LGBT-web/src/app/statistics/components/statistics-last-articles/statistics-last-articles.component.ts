@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
 
 import { ChangeDetectorRef } from '@angular/core';
 
-import { popAnimation } from '../../../animations';
+import { popAnimation } from '../../../animations/animations';
 
 @Component({
   selector: 'app-statistics-last-articles',

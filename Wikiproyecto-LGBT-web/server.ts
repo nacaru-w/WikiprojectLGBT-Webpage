@@ -207,7 +207,7 @@ export function app(): express.Express {
           return next(err);
         }
         req.session.user = user;
-        res.redirect(req.baseUrl + "/");
+        res.redirect(req.baseUrl + "/blog-admin");
       });
     })(req, res, next);
   });

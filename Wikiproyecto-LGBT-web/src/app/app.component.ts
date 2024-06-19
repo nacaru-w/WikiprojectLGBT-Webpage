@@ -3,8 +3,7 @@ import { Component, InjectionToken, OnInit } from '@angular/core';
 import { RouterOutlet, Router, NavigationStart, NavigationEnd } from '@angular/router';
 import { FooterComponent } from './shared/components/footer/footer.component';
 import { HeaderComponent } from './shared/components/header/header.component';
-import { footerAnimations, slideInAnimation } from './animations';
-import { CacheService } from './services/cache.service';
+import { footerAnimations, slideInAnimation } from './animations/animations';
 
 import { ChildrenOutletContexts } from '@angular/router';
 
@@ -31,7 +30,6 @@ export class AppComponent implements OnInit {
   constructor(
     private contexts: ChildrenOutletContexts,
     private router: Router,
-    private cacheService: CacheService,
   ) { }
 
   ngOnInit() {

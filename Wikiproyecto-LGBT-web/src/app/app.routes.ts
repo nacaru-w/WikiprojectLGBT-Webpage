@@ -10,6 +10,7 @@ import { BlogEditComponent } from './blog/components/blog-edit/blog-edit.compone
 import { ErrorComponent } from './shared/components/error/error.component';
 import { AttributionComponent } from './legal/components/attribution/attribution.component';
 import { BlogPostComponent } from './blog/components/blog-post/blog-post.component';
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -18,8 +19,8 @@ export const routes: Routes = [
     { path: 'form', component: FormMainComponent, data: { animation: ['FormPage', 'footerAnimation'] } },
     { path: 'stats', component: StatisticsSharedComponent, data: { animation: ['StatisticsPage', 'footerAnimation'] } },
     { path: 'login', component: LoginComponent },
-    { path: 'blog-admin', component: BlogAdminComponent },
-    { path: 'blog-edit', component: BlogEditComponent },
+    { path: 'blog-admin', component: BlogAdminComponent, resolve: [authGuard], data: { animation: ['BlogAdminPage', 'footerAnimation'] } },
+    { path: 'blog-edit', component: BlogEditComponent, resolve: [authGuard], data: { animation: ['BlogEditPage', 'footerAnimation'] } },
     { path: 'privacy', component: PrivacyComponent, data: { animation: ['PrivacyPage', 'footerAnimation'] } },
     { path: 'attribution', component: AttributionComponent, data: { animation: ['AttributionPage', 'footerAnimation'] } },
 

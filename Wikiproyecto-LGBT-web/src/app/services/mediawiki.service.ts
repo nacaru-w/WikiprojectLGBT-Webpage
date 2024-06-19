@@ -162,8 +162,6 @@ export class MediawikiService {
       callUrl += `&${param}=${params[param]}`;
     }
 
-
-
     return this.http.get(callUrl).pipe(
       map((response: any) => {
         const returnedString = response.claims?.P18 ? response.claims?.P18[0].mainsnak?.datavalue?.value : undefined;

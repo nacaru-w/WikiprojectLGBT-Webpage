@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { NgbCarouselConfig, NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 import { MediawikiService } from '../../../services/mediawiki.service';
-import { popAnimation } from '../../../animations';
+import { popAnimation } from '../../../animations/animations';
 import { CommonModule } from '@angular/common';
 
 @Component({

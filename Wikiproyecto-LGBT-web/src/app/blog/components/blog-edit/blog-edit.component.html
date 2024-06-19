@@ -15,7 +15,12 @@
                 <label for="date">Fecha: </label>
                 <input class="date" type="date" formControlName="date" id="date">
                 <div class="form-error" id="userNameError" [ngClass]="{'hidden': !isFieldInvalid('date')}">
+                    @if (getErrorMessage('date') == 'Este campo es obligatorio') {
+                    La fecha por defecto será el día de hoy
+                    }
+                    @if ((getErrorMessage('date') != 'Este campo es obligatorio')) {
                     {{getErrorMessage('date')}}
+                    }
                 </div>
             </div>
         </div>
@@ -35,7 +40,7 @@
             </div>
         </div>
         <div class="new-entry-container">
-            <button type="button" class="return-button"><a href="/blog-admin">Volver al panel</a></button>
+            <button type="button" class="return-button"><a routerLink="/blog-admin">Volver al panel</a></button>
             <button type="submit" class="new-entry-button" data-bs-toggle="modal"
                 data-bs-target="#submitModal">Guardar</button>
         </div>
@@ -55,7 +60,8 @@
                 {{responseMessage}}<div class="spinner-border" role="status" *ngIf="showSubmitSpinner"></div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary"><a href="/blog-admin">Volver al panel</a></button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)=navigateToPanel()>Volver
+                    al panel</button>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
             </div>
         </div>

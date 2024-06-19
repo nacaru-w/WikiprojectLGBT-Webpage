@@ -1,3 +1,4 @@
+<div class="admin-username">{{adminUsernameText}}</div>
 <div class="blog-list-container">
     <table>
         <thead>
@@ -17,9 +18,9 @@
                 <td>{{item.date | dateFormat }}</td>
                 <td>{{item.author}}</td>
                 <td>{{item.title}}</td>
-                <td><a href="/blog/{{item.id}}">Enlace</a></td>
+                <td><a href="/blog/{{item.id}}" target="_blank">Enlace</a></td>
                 <td>
-                    <button><a href="/blog-edit/{{item.id}}">Editar</a></button>
+                    <button><a routerLink="/blog-edit/{{item.id}}">Editar</a></button>
                     <button id="delete{{item.id}}" (click)="deletePost(item.id)">Eliminar</button>
                 </td>
             </tr>
@@ -28,5 +29,8 @@
     </table>
 </div>
 <div class="new-entry-container">
-    <a href="/blog-edit"><button class="new-entry-button">Nueva entrada</button></a>
+    <a routerLink="/blog-edit"><button class="new-entry-button">Nueva entrada</button></a>
+</div>
+<div class="logout-button-container">
+    <a href="/logout"><button class="logout-button">Cerrar sesión</button></a>
 </div>

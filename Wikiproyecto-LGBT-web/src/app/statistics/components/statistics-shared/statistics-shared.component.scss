@@ -12,6 +12,9 @@
     border-radius: 10px;
     border: solid black 2px;
     box-shadow: black 4px 4px;
+    font-size: 0.9em;
+    letter-spacing: -0.1em;
+    font-weight: bold;
 
     a {
         color: black;
@@ -74,4 +77,16 @@
     border: solid black 2px;
     box-shadow: black 4px 4px;
     background-color: variables.$lighter-orange;
+
+    a {
+        color: black;
+        text-decoration: wavy underline;
+        transition: color 0.3s ease-in-out;
+        font-weight: normal;
+    }
+
+    a:hover {
+        color: variables.$deep-dark-primary;
+    }
+
 }

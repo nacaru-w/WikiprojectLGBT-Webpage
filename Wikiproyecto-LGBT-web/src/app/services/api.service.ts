@@ -1,9 +1,7 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Inject, Injectable, Optional } from '@angular/core';
-import { Observable, catchError, throwError, map, of, tap, BehaviorSubject } from 'rxjs';
+import { Observable, catchError, map, of, tap } from 'rxjs';
 import { BlogPostInfoModel } from '../blog/models/blog-post-info-model';
-import { error } from 'node:console';
-import { response } from 'express';
 import { REQUEST } from '../../express.tokens';
 
 @Injectable({
@@ -116,6 +114,24 @@ export class ApiService {
         console.error('An error ocurred: ', error.message);
         return of(error)
       })
+    )
+  }
+
+  getLoginStatus(): Observable<any> {
+    const options = { headers: this.getHeaders() }
+    return this.http.get<any>(this.endpoint + 'user', options).pipe(
+      map(response => response),
+      catchError((error: HttpErrorResponse) => {
+        console.error('An error ocurred: ', error.message);
+        return of(error);
+      })
+
+    )
+  }
+
+  isAdmin(): Observable<boolean> {
+    return this.getLoginStatus().pipe(
+      map(response => response?.isAdmin || false)
     )
   }
 

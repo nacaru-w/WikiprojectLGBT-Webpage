@@ -16,7 +16,7 @@ import { newParticipants2021, newParticipants2022, newParticipants2023 } from '.
 
 import { MonthlyOccurencesModel } from '../../models/monthly-occurences-model';
 import { NotableArticles } from '../../models/notable-articles';
-import { popAnimation } from '../../../animations';
+import { popAnimation } from '../../../animations/animations';
 
 @Component({
   selector: 'app-statistics-main',

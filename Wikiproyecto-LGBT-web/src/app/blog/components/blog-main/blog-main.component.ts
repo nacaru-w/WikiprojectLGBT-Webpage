@@ -1,15 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { Component, input } from '@angular/core';
+import { Component } from '@angular/core';
 import { OnInit } from '@angular/core';
-import { MediawikiService } from '../../../services/mediawiki.service';
-import { Observable } from 'rxjs';
 import { ApiService } from '../../../services/api.service';
 import { BlogPostInfoModel } from '../../models/blog-post-info-model';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 
-import { RouterModule, RouterLink } from '@angular/router';
+import { RouterModule } from '@angular/router';
 
-import { popAnimation } from '../../../animations';
+import { popAnimation } from '../../../animations/animations';
 
 @Component({
   selector: 'app-blog-main',

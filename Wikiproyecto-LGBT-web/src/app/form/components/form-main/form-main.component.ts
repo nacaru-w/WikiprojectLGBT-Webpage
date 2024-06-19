@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { buttonState } from '../../../animations';
+import { buttonState } from '../../../animations/animations';
 
 @Component({
   selector: 'app-form-main',

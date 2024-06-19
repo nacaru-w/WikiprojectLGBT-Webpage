@@ -6,7 +6,7 @@ import { StatisticsYearlyArticlesComponent } from '../statistics-yearly-articles
 import { StatisticsParticipantsComponent } from '../statistics-participants/statistics-participants.component';
 import { StatisticsLastArticlesComponent } from '../statistics-last-articles/statistics-last-articles.component';
 
-import { chartsSlideInOutAnimation } from '../../../animations';
+import { chartsSlideInOutAnimation } from '../../../animations/animations';
 
 @Component({
   selector: 'app-statistics-shared',

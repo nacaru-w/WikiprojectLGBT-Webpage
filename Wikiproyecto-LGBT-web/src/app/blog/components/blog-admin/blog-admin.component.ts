@@ -1,23 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../../services/api.service';
 import { BlogPostInfoModel } from '../../models/blog-post-info-model';
-
+import { RouterLink } from '@angular/router';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 
 @Component({
   selector: 'app-blog-admin',
   standalone: true,
-  imports: [DateFormatPipe],
+  imports: [DateFormatPipe, RouterLink],
   templateUrl: './blog-admin.component.html',
   styleUrl: './blog-admin.component.scss'
 })
 export class BlogAdminComponent implements OnInit {
   infoArray: BlogPostInfoModel[] = []
+  adminUsernameText: string = '';
 
   constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
     this.getBlogPosts();
+    this.getAdminName();
   }
 
   getBlogPosts(): void {
@@ -49,6 +51,13 @@ export class BlogAdminComponent implements OnInit {
   removeRow(postId: string) {
     const row = document.querySelector(`#post${postId}`);
     row?.remove();
+  }
+
+  getAdminName() {
+    this.apiService.getLoginStatus().subscribe((res) => {
+      console.log(res);
+      this.adminUsernameText = res?.displayName ? `¡Hola, ${res.displayName}!` : '';
+    })
   }
 
 }
