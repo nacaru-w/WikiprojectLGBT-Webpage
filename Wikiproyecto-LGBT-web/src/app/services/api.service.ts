@@ -25,7 +25,6 @@ export class ApiService {
 
   getPosts(): Observable<BlogPostInfoModel[] | string> {
     if (this.postsCache) {
-      console.log('using postscache', this.postsCache)
       return of(this.postsCache)
     } else {
       return this.http.get<BlogPostInfoModel[]>(this.endpoint + 'blog_posts').pipe(
@@ -125,7 +124,6 @@ export class ApiService {
         console.error('An error ocurred: ', error.message);
         return of(error);
       })
-
     )
   }
 

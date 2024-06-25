@@ -39,7 +39,6 @@ export class BlogAdminComponent implements OnInit {
     }
     let stringId = id.toString()
     this.apiService.deletePost(stringId).subscribe((res) => {
-      console.log('Component response:', res);
       if (res?.success) {
         this.removeRow(stringId);
       } else if (deleteButton) {
@@ -55,7 +54,6 @@ export class BlogAdminComponent implements OnInit {
 
   getAdminName() {
     this.apiService.getLoginStatus().subscribe((res) => {
-      console.log(res);
       this.adminUsernameText = res?.displayName ? `¡Hola, ${res.displayName}!` : '';
     })
   }

@@ -157,7 +157,6 @@ export class StatisticsMainComponent implements OnInit, AfterViewInit {
         AB: this.extractNotableElements(splitRes[1])
       }
       this.notableArtDict = notableArticles;
-      console.log(this.notableArtDict);
     })
   }
 

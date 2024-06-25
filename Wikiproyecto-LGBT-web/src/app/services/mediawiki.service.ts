@@ -108,7 +108,6 @@ export class MediawikiService {
         const thisYearCount = (res.match(thisYearRegex))!.length;
 
         obj.thisYearCount = thisYearCount
-        console.log(obj);
 
         return obj
 

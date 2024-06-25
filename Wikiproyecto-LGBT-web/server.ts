@@ -36,7 +36,6 @@ async function getTable() {
     await connection.end();
   }
 
-
 }
 
 async function getRow(id: string) {
@@ -114,7 +113,6 @@ async function checkAdminStatus(username: string) {
 
   try {
     const [rows]: [any[], mysql.FieldPacket[]] = await connection.execute('SELECT 1 FROM administrators WHERE username = ? LIMIT 1', [username]);
-
     return rows.length > 0;
   } catch (error) {
     console.error('Error retrieving row:', error);

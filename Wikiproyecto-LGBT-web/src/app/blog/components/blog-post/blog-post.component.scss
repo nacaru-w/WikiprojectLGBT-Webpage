@@ -68,8 +68,25 @@
     .post-content {
         font-family: variables.$body-font;
         margin-block: 2em;
-    }
 
+        p {
+
+            a {
+                color: black !important;
+                text-decoration: wavy underline !important;
+                /* Add underline */
+                transition: color 0.3s ease-in-out !important;
+                /* Add transition effect for text-shadow */
+                font-weight: normal !important;
+            }
+
+            a:hover {
+                color: variables.$deep-dark-primary;
+            }
+
+        }
+
+    }
 
 }
 

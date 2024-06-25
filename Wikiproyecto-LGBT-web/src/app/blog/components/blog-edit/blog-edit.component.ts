@@ -47,7 +47,6 @@ export class BlogEditComponent {
 
   getPost(id: string): void {
     this.apiService.getPostInfo(id).subscribe((res) => {
-      console.log('getpost', res);
       if (typeof res == 'string' || !res) {
         this.error = res;
       } else {

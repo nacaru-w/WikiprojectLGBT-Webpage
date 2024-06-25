@@ -33,7 +33,6 @@ export class BlogPostComponent implements OnInit {
     private sanitizer: DomSanitizer
   ) {
     this.postId = this.activatedRoute.snapshot.paramMap.get('id')
-    console.log(this.postId)
   }
 
   ngOnInit(): void {
