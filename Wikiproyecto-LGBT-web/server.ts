@@ -224,7 +224,7 @@ export function app(): express.Express {
         })
       })
     } else {
-      res.status(400).json({ reason: 'Not logged in' });
+      res.json({ reason: 'Not logged in' });
     }
   })
 
