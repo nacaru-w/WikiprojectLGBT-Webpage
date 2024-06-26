@@ -425,6 +425,16 @@ figure {
         width: min(100%, 700px);
         margin-inline: auto;
         text-align: center;
+
+        a {
+            color: inherit;
+            text-decoration: wavy underline;
+        }
+
+        a:hover {
+            color: $deep-dark-primary;
+        }
+
     }
 
 }

@@ -8,11 +8,13 @@
 .blog-post {
     border: solid black 3px;
     box-shadow: black 4px 4px;
-    width: min(95%, 900px);
     padding: 1em 1.5em;
-    margin: 1em auto;
     border-radius: 40px;
     background-color: variables.$primary;
+
+    @media screen and (max-width: 990px) {
+        margin: 1em;
+    }
 
     h2 {
         letter-spacing: -0.125em;
@@ -20,11 +22,12 @@
         border: solid black 3px;
         border-radius: 15px;
         box-shadow: black 2px 2px;
-        width: fit-content;
         padding: 0.4em 1.25em;
-        margin: 1em auto;
+        margin-block: 1em;
         background-color: variables.$warning;
         font-size: 1.3rem;
+        width: fit-content;
+        margin-inline: auto;
     }
 
     .author {
