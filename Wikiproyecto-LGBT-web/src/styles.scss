@@ -395,6 +395,11 @@ body {
         .star {
             width: 1.75em;
             height: auto;
+            transition: opacity 0.4s ease;
+        }
+
+        .star:hover {
+            opacity: 60%;
         }
     }
 
