@@ -11,9 +11,10 @@
     padding: 1em 1.5em;
     border-radius: 40px;
     background-color: variables.$primary;
+    margin-block: 0.5em;
 
     @media screen and (max-width: 990px) {
-        margin: 1em;
+        margin-inline: 0.5em;
     }
 
     h2 {
