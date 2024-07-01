@@ -22,8 +22,8 @@ export class MainPageComponent implements OnInit {
     './../assets/imgs/WP20Symbols_2004_aktenzeichen_rectangle.svg',
   ];
 
-  paisDelMes: string = '';
-  paisDelMesImage: string = '';
+  eventoDelMes: string = '';
+  eventoDelMesImage: string = '';
 
   constructor(config: NgbCarouselConfig, private mediaWikiService: MediawikiService) {
     config.showNavigationArrows = false;
@@ -33,32 +33,32 @@ export class MainPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getPaisDelMesInfo();
+    this.getEventoDelMesInfo();
   }
 
-  getPaisDelMesInfo(): void {
-    this.mediaWikiService.getPageContent('Wikiproyecto:LGBT/País del mes').subscribe((res => {
-      this.processPaisDelMesString(res);
+  getEventoDelMesInfo(): void {
+    this.mediaWikiService.getPageContent('Wikiproyecto:LGBT/Evento del mes').subscribe((res => {
+      this.processEventoDelMesString(res);
       this.isAllLoaded = true;
     }))
   }
 
-  processPaisDelMesString(str: string): void {
+  processEventoDelMesString(str: string): void {
     const startSubstring = "Este mes en curso"
     const endSubstring = "|}"
 
     let startIndex = str.indexOf(startSubstring);
     if (startIndex === -1) {
-      this.paisDelMes = '';
-      this.paisDelMesImage = '';
+      this.eventoDelMes = '';
+      this.eventoDelMesImage = '';
     } else {
       startIndex += startSubstring.length;
       let firstCrop = str.substring(startIndex);
       let endIndex = firstCrop.indexOf(endSubstring);
       let secondCrop = firstCrop.substring(0, endIndex);
 
-      this.paisDelMesImage = this.findImage(secondCrop) || '';
-      this.paisDelMes = this.findCountry(secondCrop) || 'LGBT_Flag_map_of_the_World.png';
+      this.eventoDelMesImage = this.findImage(secondCrop) || '';
+      this.eventoDelMes = this.findCountry(secondCrop) || 'LGBT_Flag_map_of_the_World.png';
     }
   }
 
