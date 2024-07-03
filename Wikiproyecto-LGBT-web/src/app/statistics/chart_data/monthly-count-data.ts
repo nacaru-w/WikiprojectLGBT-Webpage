@@ -1,3 +1,12 @@
+function getCurrentYear() {
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+    return currentYear.toString();
+}
+
+export const thisYear = getCurrentYear()
+export const lastYear = (+getCurrentYear() - 1).toString()
+
 export const monthlyCountData = {
     labels: [
         'Enero',
@@ -7,18 +16,34 @@ export const monthlyCountData = {
         'Mayo',
         'Junio',
         'Julio',
-        'Agosto'
+        'Agosto',
+        'Septiembre',
+        'Octubre',
+        'Noviembre',
+        'Diciembre'
     ],
-    datasets: [{
-        label: 'Artículos en este mes',
-        data: [], // Will be populated through a MediaWiki API call
-        fill: false,
-        borderColor: '#000000',
-        hoverBackgroundColor: '#ffe3ea',
-        pointBackgroundColor: '#ffe3ea',
-        tension: 0.1,
-        borderWidth: 3,
-    }]
+    datasets: [
+        {
+            label: thisYear,
+            data: [], // Will be populated through a MediaWiki API call
+            fill: false,
+            borderColor: '#000000',
+            hoverBackgroundColor: '#ffe3ea',
+            pointBackgroundColor: '#ffe3ea',
+            tension: 0.1,
+            borderWidth: 3,
+        },
+        {
+            label: lastYear,
+            data: [], // Will be populated through a MediaWiki API call
+            fill: false,
+            borderColor: '#9e9e9e',
+            hoverBackgroundColor: '#bdbdbd',
+            pointBackgroundColor: '#bdbdbd',
+            tension: 0.1,
+            borderWidth: 3,
+        }
+    ]
 }
 
 export const monthlyCountOptions = {

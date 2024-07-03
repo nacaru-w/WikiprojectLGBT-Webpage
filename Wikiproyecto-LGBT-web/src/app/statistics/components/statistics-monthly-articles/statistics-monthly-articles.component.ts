@@ -5,7 +5,7 @@ import { Chart } from 'chart.js/auto';
 
 import { MediawikiService } from '../../../services/mediawiki.service';
 
-import { monthlyCountData, monthlyCountOptions } from '../../chart_data/monthly-count-data';
+import { lastYear, monthlyCountData, monthlyCountOptions, thisYear } from '../../chart_data/monthly-count-data';
 
 import { MonthlyOccurencesModel } from '../../models/monthly-occurences-model';
 
@@ -30,25 +30,43 @@ export class StatisticsMonthlyArticlesComponent implements OnInit {
 
   getMonthlyArticlesInfo(): void {
     this.mediawikiService.getPageContent('Wikiproyecto:LGBT/Artículos creados').subscribe(res => {
-      const target = "# [[Tenderoni]]";
-      const targetIndex = res.indexOf(target);
-      const newStr = res.substring(targetIndex);
-      const monthObject = this.getMonthlyArticleArray(newStr);
+      const thisYearMonthObj = this.generateMonthlyCountObject(res, thisYear, 'Categoría:Wikiproyecto:LGBT');
+      const lastYearMonthObj = this.generateMonthlyCountObject(res, lastYear, '=== Año en curso ===');
 
-      let arrayWithData: number[] = [];
+      let thisYearDataArray: number[] = this.populateDataArray(thisYearMonthObj);
+      let lastYearDataArray: number[] = this.populateDataArray(lastYearMonthObj);
 
-      Object.values(monthObject).forEach(value => {
-        if (value > 0) {
-          arrayWithData.push(value);
-        }
-      })
+      this.animateThisMonthArticleCount(thisYearDataArray[thisYearDataArray.length - 1]);
 
-      this.animateThisMonthArticleCount(arrayWithData[arrayWithData.length - 1]);
+      this.monthlyArticlesChart.data.datasets[0].data = thisYearDataArray;
+      this.monthlyArticlesChart.data.datasets[1].data = lastYearDataArray;
 
-      this.monthlyArticlesChart.data.datasets[0].data = arrayWithData;
       this.monthlyArticlesChart.update();
-
     })
+  }
+
+  generateMonthlyCountObject(
+    pageString: string,
+    beginning: string,
+    end: string
+  ): MonthlyOccurencesModel {
+    const regex: RegExp = new RegExp(String.raw`= ${beginning}[\s\S]*?(?=${end})`)
+    let match: RegExpMatchArray | null = pageString.match(regex);
+    let countObj = {};
+    if (match) {
+      countObj = this.getMonthlyArticleArray(match[0])
+    }
+    return countObj
+  }
+
+  populateDataArray(monthObject: MonthlyOccurencesModel) {
+    let array: number[] = [];
+    Object.values(monthObject).forEach(value => {
+      if (value > 0) {
+        array.push(value);
+      }
+    })
+    return array;
   }
 
   getMonthlyArticleArray(data: string): MonthlyOccurencesModel {
@@ -60,7 +78,11 @@ export class StatisticsMonthlyArticlesComponent implements OnInit {
       "mayo\)}}",
       "junio\)}}",
       "julio\)}}",
-      "agosto\)}}"
+      "agosto\)}}",
+      "septiembre\)}}",
+      "octubre\)}}",
+      "noviembre\)}}",
+      "diciembre\)}}"
     ];
 
     let counts: MonthlyOccurencesModel = {};
