@@ -55,7 +55,7 @@ export class StatisticsYearlyArticlesComponent implements OnInit {
 
   animateTotalArticleCount(totalCount: number): void {
     const interval = setInterval(() => {
-      if (this.totalArticleCount < 2500) {
+      if (this.totalArticleCount < totalCount - 100) {
         this.totalArticleCount += 10;
       } else {
         this.totalArticleCount++;
