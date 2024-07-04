@@ -34,15 +34,26 @@ export class StatisticsMonthlyArticlesComponent implements OnInit {
       const lastYearMonthObj = this.generateMonthlyCountObject(res, lastYear, '=== Año en curso ===');
 
       let thisYearDataArray: number[] = this.populateDataArray(thisYearMonthObj);
+
       let lastYearDataArray: number[] = this.populateDataArray(lastYearMonthObj);
 
       this.animateThisMonthArticleCount(thisYearDataArray[thisYearDataArray.length - 1]);
+
+      if (!this.isEndOfTheMonth()) {
+        thisYearDataArray.pop()
+      }
 
       this.monthlyArticlesChart.data.datasets[0].data = thisYearDataArray;
       this.monthlyArticlesChart.data.datasets[1].data = lastYearDataArray;
 
       this.monthlyArticlesChart.update();
     })
+  }
+
+  isEndOfTheMonth(): boolean {
+    const today = new Date();
+    const dayOfMonth = today.getDate();
+    return dayOfMonth >= 20;
   }
 
   generateMonthlyCountObject(
