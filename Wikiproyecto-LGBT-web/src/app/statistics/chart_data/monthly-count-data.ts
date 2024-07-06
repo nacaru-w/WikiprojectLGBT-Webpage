@@ -5,7 +5,8 @@ function getCurrentYear() {
 }
 
 export const thisYear = getCurrentYear()
-export const lastYear = (+getCurrentYear() - 1).toString()
+export const lastYear = (+thisYear - 1).toString()
+export const twoYearsAgo = (+lastYear - 1).toString()
 
 export const monthlyCountData = {
     labels: [
@@ -40,6 +41,16 @@ export const monthlyCountData = {
             borderColor: '#9e9e9e',
             hoverBackgroundColor: '#bdbdbd',
             pointBackgroundColor: '#bdbdbd',
+            tension: 0.1,
+            borderWidth: 3,
+        },
+        {
+            label: twoYearsAgo,
+            data: [],
+            fill: false,
+            borderColor: '#cacaca',
+            hoverBackgroundColor: '#f5f5f5',
+            pointBackgroundColor: '#f5f5f5',
             tension: 0.1,
             borderWidth: 3,
         }
