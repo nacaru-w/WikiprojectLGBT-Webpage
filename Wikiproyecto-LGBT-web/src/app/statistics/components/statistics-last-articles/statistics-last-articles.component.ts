@@ -59,7 +59,7 @@ export class StatisticsLastArticlesComponent implements OnInit {
       this.mediawikiService.getImageUrlFromWdEntity(res).subscribe(wdimage => {
         this.cardDict[title].image = wdimage ?
           `https://commons.wikimedia.org/w/index.php?title=Special:Redirect/file&wpvalue=${wdimage}`
-          : "./../assets/imgs/Barba-wikiproyecto-lgbt.svg";
+          : "./../assets/imgs/barba_question_trans.svg";
       })
     })
   }

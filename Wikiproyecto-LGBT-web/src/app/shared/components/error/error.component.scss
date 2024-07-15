@@ -7,6 +7,12 @@
     border-radius: 30px;
     background-color: variables.$info;
     box-shadow: black 4px 4px;
+    text-align: center;
+
+    .barba-question {
+        max-width: 20em;
+        margin-inline: auto;
+    }
 
     .error-title {
         font-weight: bold;
