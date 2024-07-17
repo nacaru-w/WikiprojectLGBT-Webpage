@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   id="Capa_1"
+   data-name="Capa 1"
+   viewBox="0 0 345 450"
+   version="1.1"
+   sodipodi:docname="barba_bear.svg"
+   width="345"
+   height="450"
+   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview60"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     showgrid="false"
+     inkscape:zoom="1.688"
+     inkscape:cx="249.70379"
+     inkscape:cy="250.29621"
+     inkscape:window-width="1920"
+     inkscape:window-height="1016"
+     inkscape:window-x="1920"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="Capa_1" />
+  <defs
+     id="defs7">
+    <style
+       id="style2">
+      .cls-1 {
+        fill: #ffe97a;
+      }
+
+      .cls-1, .cls-2, .cls-3, .cls-4, .cls-5, .cls-6, .cls-7, .cls-8, .cls-9, .cls-10 {
+        stroke-width: 0px;
+      }
+
+      .cls-2 {
+        opacity: .18;
+      }
+
+      .cls-4 {
+        fill: #1a1a1a;
+      }
+
+      .cls-5 {
+        fill: #f4b56a;
+      }
+
+      .cls-6 {
+        fill: #b8b8b8;
+      }
+
+      .cls-7 {
+        fill: #fff;
+      }
+
+      .cls-11 {
+        fill: none;
+        stroke: #000;
+        stroke-miterlimit: 10;
+        stroke-width: 9.27px;
+      }
+
+      .cls-8 {
+        opacity: .11;
+      }
+
+      .cls-9 {
+        fill: #ffedc0;
+      }
+
+      .cls-12 {
+        clip-path: url(#clippath);
+      }
+
+      .cls-10 {
+        fill: #c69c6d;
+      }
+    </style>
+    <clipPath
+       id="clippath">
+      <path
+         class="cls-11"
+         d="m 118.89,443.06 c 4.92,5.27 12.49,7.92 20.19,5.93 l 14,-3.62 c 9.08,-2.35 15.43,-10.54 15.43,-19.92 v -25.81 c 0,-10.02 7.22,-18.58 17.1,-20.28 l 14.01,-2.4 c 12.57,-2.15 24.05,7.53 24.05,20.28 v 4.75 c 0,13.28 12.39,23.08 25.31,20.02 l 15,-3.55 c 9.51,-2.25 16.12,-10.87 15.83,-20.63 l -0.44,-14.74 c -0.31,-10.36 7.13,-19.33 17.37,-20.94 l 13.47,-2.12 c 12.48,-1.96 23.77,7.69 23.77,20.32 0,12.63 12.15,22.91 24.98,20.09 l 24.16,-5.3 V 207.82 c 0.5,-4.69 0.77,-9.45 0.77,-14.27 0,-73.39 -59.49,-132.88 -132.88,-132.88 -73.39,0 -132.89,59.5 -132.89,132.88 0,4.82 0.27,9.58 0.77,14.27 z"
+         id="path4" />
+    </clipPath>
+  </defs>
+  <g
+     id="g43"
+     transform="matrix(0.99985456,0,0,1,-78.468495,-28.035)">
+    <g
+       class="cls-12"
+       clip-path="url(#clippath)"
+       id="g39">
+      <g
+         id="g23">
+        <polygon
+           class="cls-9"
+           points="69.71,237.49 445.77,194.81 440.14,258.73 64.08,301.41 "
+           id="polygon9" />
+        <polygon
+           class="cls-1"
+           points="69.28,177.1 445.34,134.42 439.71,198.34 63.66,241.02 "
+           id="polygon11" />
+        <polygon
+           class="cls-5"
+           points="71.92,127.47 447.98,84.79 442.35,148.71 66.3,191.39 "
+           id="polygon13" />
+        <polygon
+           class="cls-7"
+           points="69.71,283.25 445.77,240.57 440.14,304.5 64.08,347.17 "
+           id="polygon15" />
+        <polygon
+           class="cls-6"
+           points="62.34,328.98 438.4,286.31 432.77,350.23 56.72,392.9 "
+           id="polygon17" />
+        <polygon
+           class="cls-4"
+           points="48.74,379.02 424.8,336.34 402.55,418.66 26.49,461.34 "
+           id="polygon19" />
+        <polygon
+           class="cls-10"
+           points="71.92,79.18 447.98,36.5 442.35,100.42 66.3,143.1 "
+           id="polygon21" />
+      </g>
+      <path
+         class="cls-8"
+         d="m 200.1,50.96 c 0,0 -48.3,83.66 -50.63,131.67 -2.33,48.01 0,309.12 0,309.12 H 90.02 L 100.51,95.43 Z"
+         id="path25" />
+      <g
+         id="g37">
+        <path
+           class="cls-4"
+           d="m 328.39,116.94 c -2.62,-4.01 -7.47,-6.19 -12.18,-5.97 -2.25,0.03 -4.41,0.43 -6.64,0.57 -2.51,0.19 -5.13,-0.08 -7.61,-0.87 -3.61,-1.07 -7.28,-3.05 -11.13,-2.56 -4.17,0.45 -7.68,4.35 -8.01,8.46 -0.47,5.1 3.77,9.01 5.02,13.67 0.46,1.56 0.62,3.2 0.65,4.9 0.07,2.57 -0.22,5.22 0.46,7.7 0.97,3.26 3.58,5.29 6.85,6.64 5.9,2.16 10.96,1.57 14.99,-3.47 2.84,-3.34 4.98,-7.3 7.97,-10.54 4.4,-5.32 14.89,-10.67 9.67,-18.48 l -0.04,-0.06 z"
+           id="path27" />
+        <ellipse
+           class="cls-4"
+           cx="307.76999"
+           cy="100.08"
+           rx="7.46"
+           ry="8.5600004"
+           transform="rotate(-63.01,307.75545,100.08606)"
+           id="ellipse29" />
+        <ellipse
+           class="cls-4"
+           cx="277.95999"
+           cy="134.81"
+           rx="7.46"
+           ry="8.5600004"
+           transform="rotate(-38.69,277.97385,134.81588)"
+           id="ellipse31" />
+        <ellipse
+           class="cls-4"
+           cx="272.39001"
+           cy="112.33"
+           rx="7.46"
+           ry="8.5600004"
+           transform="rotate(-44.38,272.37716,112.32921)"
+           id="ellipse33" />
+        <ellipse
+           class="cls-4"
+           cx="286.07001"
+           cy="96.540001"
+           rx="7.46"
+           ry="8.5600004"
+           transform="rotate(-38.69,286.0863,96.534979)"
+           id="ellipse35" />
+      </g>
+    </g>
+    <path
+       class="cls-11"
+       d="m 118.89,443.06 c 4.92,5.27 12.49,7.92 20.19,5.93 l 14,-3.62 c 9.08,-2.35 15.43,-10.54 15.43,-19.92 v -25.81 c 0,-10.02 7.22,-18.58 17.1,-20.28 l 14.01,-2.4 c 12.57,-2.15 24.05,7.53 24.05,20.28 v 4.75 c 0,13.28 12.39,23.08 25.31,20.02 l 15,-3.55 c 9.51,-2.25 16.12,-10.87 15.83,-20.63 l -0.44,-14.74 c -0.31,-10.36 7.13,-19.33 17.37,-20.94 l 13.47,-2.12 c 12.48,-1.96 23.77,7.69 23.77,20.32 0,12.63 12.15,22.91 24.98,20.09 l 24.16,-5.3 V 207.82 c 0.5,-4.69 0.77,-9.45 0.77,-14.27 0,-73.39 -59.49,-132.88 -132.88,-132.88 -73.39,0 -132.89,59.5 -132.89,132.88 0,4.82 0.27,9.58 0.77,14.27 z"
+       id="path41" />
+  </g>
+  <g
+     id="g57"
+     transform="matrix(0.99985456,0,0,1,-78.468495,-28.035)">
+    <circle
+       class="cls-3"
+       cx="201.94"
+       cy="179.62"
+       r="21.450001"
+       id="circle45" />
+    <circle
+       class="cls-3"
+       cx="344.48999"
+       cy="180.71001"
+       r="21.450001"
+       id="circle47" />
+    <circle
+       class="cls-2"
+       cx="201.94"
+       cy="183.69"
+       r="21.450001"
+       id="circle49" />
+    <circle
+       class="cls-2"
+       cx="344.48999"
+       cy="184.78"
+       r="21.450001"
+       id="circle51" />
+    <ellipse
+       class="cls-7"
+       cx="353.75"
+       cy="177.64999"
+       rx="5.6199999"
+       ry="6.04"
+       id="ellipse53" />
+    <ellipse
+       class="cls-7"
+       cx="213.07001"
+       cy="177.64999"
+       rx="5.6199999"
+       ry="6.04"
+       id="ellipse55" />
+  </g>
+</svg>
