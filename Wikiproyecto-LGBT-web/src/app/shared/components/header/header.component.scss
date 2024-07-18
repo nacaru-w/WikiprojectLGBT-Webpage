@@ -14,6 +14,12 @@
             width: 2em;
             height: auto;
             transition: transform 0.3s ease;
+
+            img {
+                width: 100%;
+                height: auto;
+            }
+
         }
 
         .barba-icon-container:hover {

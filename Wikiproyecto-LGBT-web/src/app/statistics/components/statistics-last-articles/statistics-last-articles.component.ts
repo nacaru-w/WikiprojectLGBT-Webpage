@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef } from '@angular/core';
 
 import { popAnimation } from '../../../animations/animations';
+import { BarbaService } from '../../../services/barba.service';
 
 @Component({
   selector: 'app-statistics-last-articles',
@@ -20,7 +21,15 @@ export class StatisticsLastArticlesComponent implements OnInit {
   cardDict: CardPreview = {};
   showSpinner: boolean = true;
 
-  constructor(private mediawikiService: MediawikiService, private cdReF: ChangeDetectorRef) { }
+  barba: string;
+
+  constructor(
+    private mediawikiService: MediawikiService,
+    private barbaService: BarbaService,
+    private cdReF: ChangeDetectorRef
+  ) {
+    this.barba = this.barbaService.getCurrentBarba();
+  }
 
   ngOnInit(): void {
     this.getLastArticlesInfo();
@@ -59,7 +68,7 @@ export class StatisticsLastArticlesComponent implements OnInit {
       this.mediawikiService.getImageUrlFromWdEntity(res).subscribe(wdimage => {
         this.cardDict[title].image = wdimage ?
           `https://commons.wikimedia.org/w/index.php?title=Special:Redirect/file&wpvalue=${wdimage}`
-          : "./../assets/imgs/barba_question_trans.svg";
+          : `assets/imgs/Barbas/shrug/barba_shrug_${this.barba}.svg`;
       })
     })
   }

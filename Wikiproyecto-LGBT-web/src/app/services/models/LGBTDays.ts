@@ -6,6 +6,7 @@ export interface LGBTDays {
         'asexual' |
         'bear' |
         'bisexual' |
+        'fluid' |
         'genderqueer' |
         'intersex' |
         'lesbian' |

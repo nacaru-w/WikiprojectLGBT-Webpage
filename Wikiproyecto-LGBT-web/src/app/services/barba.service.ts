@@ -82,8 +82,8 @@ export class BarbaService {
 
   constructor() {
     this.currentDate = new Date();
-    this.currentDay = this.currentDate.getDay();
-    this.currentMonth = this.currentDate.getMonth() - 1;
+    this.currentDay = this.currentDate.getDate();
+    this.currentMonth = this.currentDate.getMonth() + 1;
   }
 
   getCurrentBarba(): string {

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { BarbaService } from '../../../services/barba.service';
 
 @Component({
   selector: 'app-error',
@@ -9,4 +10,9 @@ import { Component } from '@angular/core';
 })
 export class ErrorComponent {
 
+  barba: string;
+
+  constructor(private barbaService: BarbaService) {
+    this.barba = this.barbaService.getCurrentBarba();
+  }
 }

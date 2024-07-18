@@ -3,6 +3,7 @@ import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { buttonState } from '../../../animations/animations';
+import { BarbaService } from '../../../services/barba.service';
 
 @Component({
   selector: 'app-form-main',
@@ -20,7 +21,11 @@ export class FormMainComponent {
 
   showOtherPronounsField: boolean = false;
 
-  constructor(private formBuilder: FormBuilder) {
+  barba: string;
+
+  constructor(private formBuilder: FormBuilder, private barbaService: BarbaService) {
+    this.barba = this.barbaService.getCurrentBarba();
+
     this.webForm = this.formBuilder.group({
       pronouns: new FormControl('', [Validators.required]),
       otherPronouns: new FormControl(''),
