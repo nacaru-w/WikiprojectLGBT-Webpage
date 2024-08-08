@@ -8,6 +8,7 @@ import { ChangeDetectorRef } from '@angular/core';
 
 import { popAnimation } from '../../../animations/animations';
 import { BarbaService } from '../../../services/barba.service';
+import { unescapeInvalidCharacters } from '../../../utils/utils';
 
 @Component({
   selector: 'app-statistics-last-articles',
@@ -48,7 +49,8 @@ export class StatisticsLastArticlesComponent implements OnInit {
 
   buildDict(array: string[]) {
     for (let title of array) {
-      this.cardDict[title] = {
+      const escapedTitle = unescapeInvalidCharacters(title);
+      this.cardDict[escapedTitle] = {
         extract: '',
         image: ''
       }

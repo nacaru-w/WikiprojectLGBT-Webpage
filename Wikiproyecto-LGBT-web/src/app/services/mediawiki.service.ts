@@ -4,6 +4,7 @@ import { Observable, catchError, map, throwError } from 'rxjs';
 
 import { MediawikiParams } from './models/mediawiki-params';
 import { Participants } from './models/participants';
+import { escapeInvalidCharacters } from '../utils/utils';
 
 @Injectable({
   providedIn: 'root'
@@ -16,12 +17,13 @@ export class MediawikiService {
   constructor(private http: HttpClient) { }
 
   getPageContent(title: string): Observable<string> {
+    const escapedTitle = escapeInvalidCharacters(title);
     let callUrl = this.url + "?origin=*";
 
     const params: MediawikiParams = {
       action: "query",
       prop: "revisions",
-      titles: title,
+      titles: escapedTitle,
       rvprop: "content",
       rvslots: "main",
       formatversion: "2",
@@ -44,12 +46,13 @@ export class MediawikiService {
   }
 
   getPageExtract(title: string): Observable<string> {
+    const escapedTitle = escapeInvalidCharacters(title);
     let callUrl = this.url + "?origin=*";
 
     const params: MediawikiParams = {
       action: "query",
       prop: "extracts",
-      titles: title,
+      titles: escapedTitle,
       exsentences: "5",
       exlimit: "1",
       explaintext: "true",
