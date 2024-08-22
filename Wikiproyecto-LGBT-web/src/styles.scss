@@ -449,7 +449,9 @@ figure {
     font-family: $body-font;
     margin-block: 2em;
 
-    p {
+    p,
+    ul,
+    li {
 
         a {
             color: black;
