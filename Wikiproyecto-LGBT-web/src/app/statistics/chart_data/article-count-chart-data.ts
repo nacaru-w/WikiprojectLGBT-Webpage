@@ -11,11 +11,11 @@ export const articlesPerYearData =
     datasets: [{
         data: [articleCount2021, articleCount2022, articleCount2023, articleCount2024, 0],
         backgroundColor: [
-            '#54de7d',
+            '#a97cfa',
             '#fa7c7c',
             '#b3efff',
             '#fff574',
-            '#a97cfa'
+            '#3ac78f'
         ],
         borderColor: [
             '#000000',
