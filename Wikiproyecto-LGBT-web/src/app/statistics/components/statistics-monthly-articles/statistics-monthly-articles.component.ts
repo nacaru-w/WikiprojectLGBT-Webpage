@@ -5,7 +5,7 @@ import { Chart } from 'chart.js/auto';
 
 import { MediawikiService } from '../../../services/mediawiki.service';
 
-import { lastYear, monthlyCountData, monthlyCountOptions, thisYear, twoYearsAgo } from '../../chart_data/monthly-count-data';
+import { lastYear, monthlyCountData, monthlyCountOptions, thisYear, threeYearsAgo, twoYearsAgo } from '../../chart_data/monthly-count-data';
 
 import { MonthlyOccurencesModel } from '../../models/monthly-occurences-model';
 
@@ -32,11 +32,13 @@ export class StatisticsMonthlyArticlesComponent implements OnInit {
     this.mediawikiService.getPageContent('Wikiproyecto:LGBT/Artículos creados').subscribe(res => {
       const thisYearMonthObj = this.generateMonthlyCountObject(res, thisYear, 'Categoría:Wikiproyecto:LGBT');
       const lastYearMonthObj = this.generateMonthlyCountObject(res, lastYear, '=== Año en curso ===');
-      const twoYearsAgoMonthObj = this.generateMonthlyCountObject(res, twoYearsAgo, `= ${lastYear}`)
+      const twoYearsAgoMonthObj = this.generateMonthlyCountObject(res, twoYearsAgo, `= ${lastYear}`);
+      const threeYearsAgoMonthObj = this.generateMonthlyCountObject(res, threeYearsAgo, `= ${twoYearsAgo}`)
 
       let thisYearDataArray: number[] = this.populateDataArray(thisYearMonthObj);
       let lastYearDataArray: number[] = this.populateDataArray(lastYearMonthObj);
       let twoYearsAgoDataArray: number[] = this.populateDataArray(twoYearsAgoMonthObj);
+      let threeYearsAgoDataArray: number[] = this.populateDataArray(threeYearsAgoMonthObj);
 
       this.animateThisMonthArticleCount(thisYearDataArray[thisYearDataArray.length - 1]);
 
@@ -46,7 +48,8 @@ export class StatisticsMonthlyArticlesComponent implements OnInit {
 
       this.monthlyArticlesChart.data.datasets[0].data = thisYearDataArray;
       this.monthlyArticlesChart.data.datasets[1].data = lastYearDataArray;
-      this.monthlyArticlesChart.data.datasets[2].data = twoYearsAgoDataArray
+      this.monthlyArticlesChart.data.datasets[2].data = twoYearsAgoDataArray;
+      this.monthlyArticlesChart.data.datasets[3].data = threeYearsAgoDataArray;
 
       this.monthlyArticlesChart.update();
     })
