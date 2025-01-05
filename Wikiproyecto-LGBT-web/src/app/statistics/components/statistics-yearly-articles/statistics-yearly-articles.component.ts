@@ -39,14 +39,14 @@ export class StatisticsYearlyArticlesComponent implements OnInit {
   getAllArticles(): void {
     this.mediawikiService.getLGBTArticleList().subscribe(res => {
       const thisYearsArticles = this.getThisYearArticles(res);
-      this.yearlyArticlesChart.data.datasets[0].data[3] = thisYearsArticles ? thisYearsArticles.length : 0;
+      this.yearlyArticlesChart.data.datasets[0].data[4] = thisYearsArticles ? thisYearsArticles.length : 0;
       this.yearlyArticlesChart.update();
       this.animateTotalArticleCount(res.length);
     })
   }
 
   getThisYearArticles(array: string[]): string[] | null {
-    const indexOfFirstArticle = array.indexOf("Tenderoni")
+    const indexOfFirstArticle = array.indexOf("Sher Machado")
     if (indexOfFirstArticle == -1) {
       return null
     }
