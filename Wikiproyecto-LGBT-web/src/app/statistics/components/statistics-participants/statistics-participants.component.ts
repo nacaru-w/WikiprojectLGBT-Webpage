@@ -4,7 +4,7 @@ import { Chart } from 'chart.js/auto';
 import { BaseChartDirective } from 'ng2-charts';
 
 import { participantCountData, participantCountOptions } from '../../chart_data/participant-count-chat-data';
-import { newParticipants2021, newParticipants2022, newParticipants2023 } from '../../chart_data/utils';
+import { newParticipants2021, newParticipants2022, newParticipants2023, newParticipants2024 } from '../../chart_data/utils';
 
 import { MediawikiService } from '../../../services/mediawiki.service';
 
@@ -33,7 +33,7 @@ export class StatisticsParticipantsComponent implements OnInit {
       const countNumbers = res;
       this.participantCountChart.data.datasets[0].data[0] = countNumbers.thisYearCount;
 
-      const restOfTimeNumbers = countNumbers.totalCount - (newParticipants2023 + newParticipants2022 + newParticipants2021);
+      const restOfTimeNumbers = countNumbers.totalCount - (newParticipants2023 + newParticipants2022 + newParticipants2021 + newParticipants2024);
       this.participantCountChart.data.datasets[0].data[this.participantCountChart.data.datasets[0].data.length - 1] = restOfTimeNumbers;
 
       this.participantCountChart.update();

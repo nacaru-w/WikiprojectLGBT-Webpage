@@ -107,7 +107,7 @@ export class MediawikiService {
 
         obj.totalCount = totalCount;
 
-        const thisYearRegex = /2024/g;
+        const thisYearRegex = /2025/g;
         const thisYearCount = (res.match(thisYearRegex))!.length;
 
         obj.thisYearCount = thisYearCount
