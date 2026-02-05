@@ -2,22 +2,25 @@ import {
     articleCount2021,
     articleCount2022,
     articleCount2023,
-    articleCount2024
+    articleCount2024,
+    articleCount2025
 } from "./utils";
 
 export const articlesPerYearData =
 {
-    labels: ["2021", "2022", "2023", "2024", "Año actual"],
+    labels: ["2021", "2022", "2023", "2024", "2025", "Año actual"],
     datasets: [{
-        data: [articleCount2021, articleCount2022, articleCount2023, articleCount2024, 0],
+        data: [articleCount2021, articleCount2022, articleCount2023, articleCount2024, articleCount2025, 0],
         backgroundColor: [
             '#a97cfa',
             '#fa7c7c',
             '#b3efff',
             '#fff574',
+            '#ff6fb7',
             '#3ac78f'
         ],
         borderColor: [
+            '#000000',
             '#000000',
             '#000000',
             '#000000',

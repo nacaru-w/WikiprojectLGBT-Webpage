@@ -39,14 +39,14 @@ export class StatisticsYearlyArticlesComponent implements OnInit {
   getAllArticles(): void {
     this.mediawikiService.getLGBTArticleList().subscribe(res => {
       const thisYearsArticles = this.getThisYearArticles(res);
-      this.yearlyArticlesChart.data.datasets[0].data[4] = thisYearsArticles ? thisYearsArticles.length : 0;
+      this.yearlyArticlesChart.data.datasets[0].data[5] = thisYearsArticles ? thisYearsArticles.length : 0;
       this.yearlyArticlesChart.update();
       this.animateTotalArticleCount(res.length);
     })
   }
 
   getThisYearArticles(array: string[]): string[] | null {
-    const indexOfFirstArticle = array.indexOf("Sher Machado")
+    const indexOfFirstArticle = array.indexOf("What it feels like for a girl (serie de televisión)")
     if (indexOfFirstArticle == -1) {
       return null
     }
@@ -56,7 +56,7 @@ export class StatisticsYearlyArticlesComponent implements OnInit {
   animateTotalArticleCount(totalCount: number): void {
     const interval = setInterval(() => {
       if (this.totalArticleCount < totalCount - 100) {
-        this.totalArticleCount += 10;
+        this.totalArticleCount += 20;
       } else {
         this.totalArticleCount++;
       }

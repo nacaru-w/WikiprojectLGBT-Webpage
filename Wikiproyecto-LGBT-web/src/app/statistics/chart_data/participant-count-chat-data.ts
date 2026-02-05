@@ -1,8 +1,9 @@
-import { newParticipants2021, newParticipants2022, newParticipants2023, newParticipants2024 } from "./utils"
+import { newParticipants2021, newParticipants2022, newParticipants2023, newParticipants2024, newParticipants2025 } from "./utils"
 
 export const participantCountData = {
     labels: [
         'Año actual',
+        '2025',
         '2024',
         '2023',
         '2022',
@@ -10,9 +11,10 @@ export const participantCountData = {
         'Resto del tiempo',
     ],
     datasets: [{
-        data: [0, newParticipants2024, newParticipants2023, newParticipants2022, newParticipants2021, 0],
+        data: [0, newParticipants2025, newParticipants2024, newParticipants2023, newParticipants2022, newParticipants2021, 0],
         backgroundColor: [
             '#3ac78f',
+            '#ff6fb7',
             '#fff574',
             '#b1efff',
             '#fa7c7c',
