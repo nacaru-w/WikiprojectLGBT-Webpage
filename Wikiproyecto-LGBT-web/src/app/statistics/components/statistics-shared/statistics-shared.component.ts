@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { StatisticsMonthlyArticlesComponent } from '../statistics-monthly-articles/statistics-monthly-articles.component';
 import { StatisticsNotableComponent } from '../statistics-notable/statistics-notable.component';
 import { StatisticsYearlyArticlesComponent } from '../statistics-yearly-articles/statistics-yearly-articles.component';
@@ -17,7 +16,6 @@ import { chartsSlideInOutAnimation } from '../../../animations/animations';
     StatisticsYearlyArticlesComponent,
     StatisticsParticipantsComponent,
     StatisticsLastArticlesComponent,
-    CommonModule,
   ],
   templateUrl: './statistics-shared.component.html',
   styleUrl: './statistics-shared.component.scss',

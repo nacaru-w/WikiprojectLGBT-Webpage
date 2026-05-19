@@ -29,12 +29,19 @@
             observas que han cambiado!
         </p>
     </div>
-    <app-statistics-yearly-articles [@slideInOut]="showYearlyArticles"
-        *ngIf=showYearlyArticles></app-statistics-yearly-articles>
-    <app-statistics-monthly-articles [@slideInOut]="showMonthlyArticles"
-        *ngIf=showMonthlyArticles></app-statistics-monthly-articles>
-    <app-statistics-notable [@slideInOut]="showNotable" *ngIf=showNotable></app-statistics-notable>
-    <app-statistics-participants [@slideInOut]="showParticipants" *ngIf=showParticipants></app-statistics-participants>
-    <app-statistics-last-articles [@slideInOut]="showLastArticles"
-        *ngIf=showLastArticles></app-statistics-last-articles>
+    @if (showYearlyArticles) {
+        <app-statistics-yearly-articles [@slideInOut]="showYearlyArticles"></app-statistics-yearly-articles>
+    }
+    @if (showMonthlyArticles) {
+        <app-statistics-monthly-articles [@slideInOut]="showMonthlyArticles"></app-statistics-monthly-articles>
+    }
+    @if (showNotable) {
+        <app-statistics-notable [@slideInOut]="showNotable"></app-statistics-notable>
+    }
+    @if (showParticipants) {
+        <app-statistics-participants [@slideInOut]="showParticipants"></app-statistics-participants>
+    }
+    @if (showLastArticles) {
+        <app-statistics-last-articles [@slideInOut]="showLastArticles"></app-statistics-last-articles>
+    }
 </div>

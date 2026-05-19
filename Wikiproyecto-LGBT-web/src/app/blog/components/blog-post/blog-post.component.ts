@@ -52,12 +52,29 @@ export class BlogPostComponent implements OnInit {
         this.date = res.date
         this.author = res.author
         this.title = res.title
-        this.content = this.sanitizer.bypassSecurityTrustHtml(res.content);
+        this.content = this.sanitizer.bypassSecurityTrustHtml(
+          this.normalizeWikimediaThumbWidths(res.content)
+        );
         setTimeout(() => {
           this.loaded = true;
         }, 300);
       }
     })
+  }
+
+  // Wikimedia only serves hotlinked thumbnails at a fixed set of widths
+  // (https://w.wiki/GHai). Any other size returns HTTP 400 + text/html,
+  // which Firefox then blocks via OpaqueResponseBlocking.
+  private static readonly ALLOWED_THUMB_WIDTHS = [20, 40, 60, 120, 250, 330, 500, 960, 1280, 1920, 3840];
+
+  private normalizeWikimediaThumbWidths(html: string): string {
+    const thumbRegex = /(upload\.wikimedia\.org\/wikipedia\/[^"'\s]+\/thumb\/[^"'\s]+\/)(\d+)(px-[^"'\s]+)/g;
+    return html.replace(thumbRegex, (_match, prefix, widthStr, suffix) => {
+      const width = parseInt(widthStr, 10);
+      const allowed = BlogPostComponent.ALLOWED_THUMB_WIDTHS.find(w => w >= width)
+        ?? BlogPostComponent.ALLOWED_THUMB_WIDTHS[BlogPostComponent.ALLOWED_THUMB_WIDTHS.length - 1];
+      return `${prefix}${allowed}${suffix}`;
+    });
   }
 
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 
 import { MediawikiService } from '../../../services/mediawiki.service';
 
@@ -10,7 +10,7 @@ import { NotableArticles } from '../../models/notable-articles';
 @Component({
   selector: 'app-statistics-notable',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './statistics-notable.component.html',
   styleUrl: './statistics-notable.component.scss',
   animations: [popAnimation, chartsSlideInOutAnimation]

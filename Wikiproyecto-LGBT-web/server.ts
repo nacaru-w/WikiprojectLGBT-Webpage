@@ -1,12 +1,15 @@
-import { APP_BASE_HREF } from '@angular/common';
-import { CommonEngine } from '@angular/ssr';
+import {
+  AngularNodeAppEngine,
+  createNodeRequestHandler,
+  isMainModule,
+  writeResponseToNodeResponse,
+} from '@angular/ssr/node';
 import express from 'express';
+import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { dirname, join, resolve } from 'node:path';
-import bootstrap from './src/main.server';
 import { REQUEST, RESPONSE } from './src/express.tokens';
 import mysql from 'mysql2/promise';
-import passport from 'passport'
+import passport from 'passport';
 import passportMediawiki from 'passport-mediawiki-oauth';
 
 const MediaWikiStrategy = passportMediawiki.OAuthStrategy;
@@ -134,191 +137,191 @@ async function isAuthorized(req: express.Request) {
 
 const unauthorizedError = { reason: "Not logged in or not authorized to perform this action" };
 
-// The Express app is exported so that it can be used by serverless Functions.
-export function app(): express.Express {
-  const cors = require('cors');
-  const server = express();
-  const serverDistFolder = dirname(fileURLToPath(import.meta.url));
-  const browserDistFolder = resolve(serverDistFolder, '../browser');
-  const indexHtml = join(serverDistFolder, 'index.server.html');
+const serverDistFolder = dirname(fileURLToPath(import.meta.url));
+const browserDistFolder = resolve(serverDistFolder, '../browser');
 
-  const commonEngine = new CommonEngine();
+const app = express();
+const angularApp = new AngularNodeAppEngine();
 
-  server.use(session({
-    secret: oauthCredentials.session_secret,
-    saveUninitialized: true,
-    resave: true
-    // TODO: Add store backed by MariaDB using https://www.npmjs.com/package/express-mysql-session
-  }));
-  server.use(passport.initialize());
-  server.use(passport.session());
+const cors = require('cors');
 
-  server.use(cors({
-    credentials: true
-  }));
-  server.use(express.json())
+app.use(session({
+  secret: oauthCredentials.session_secret,
+  saveUninitialized: true,
+  resave: true
+  // TODO: Add store backed by MariaDB using https://www.npmjs.com/package/express-mysql-session
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
-  server.set('view engine', 'html');
-  server.set('views', browserDistFolder);
+app.use(cors({
+  credentials: true
+}));
+app.use(express.json());
 
-  // Wikimedia Oauth
-  passport.use(new MediaWikiStrategy(
-    {
-      consumerKey: oauthCredentials.consumer_key, // Defines the app that will make use of oauth
-      consumerSecret: oauthCredentials.consumer_secret, // Acknowledges the creator of the app
-    },
-    function (token: string, tokenSecret: string, profile: any, done: any) {
-      profile.oauth = {
-        consumer_key: oauthCredentials.consumer_key,
-        consumer_secret: oauthCredentials.consumer_secret,
-        token: token,
-        token_secret: tokenSecret
-      };
-      return done(null, profile);
+// Wikimedia Oauth
+passport.use(new MediaWikiStrategy(
+  {
+    consumerKey: oauthCredentials.consumer_key,
+    consumerSecret: oauthCredentials.consumer_secret,
+  },
+  function (token: string, tokenSecret: string, profile: any, done: any) {
+    profile.oauth = {
+      consumer_key: oauthCredentials.consumer_key,
+      consumer_secret: oauthCredentials.consumer_secret,
+      token: token,
+      token_secret: tokenSecret
+    };
+    return done(null, profile);
+  }
+));
+
+passport.serializeUser(function (user, done) {
+  done(null, user);
+});
+
+passport.deserializeUser(function (obj: false | Express.User | null | undefined, done) {
+  done(null, obj);
+});
+
+app.get("/login-mediawiki", function (req, res) {
+  res.redirect(req.baseUrl + "/auth/mediawiki/callback");
+});
+
+app.get("/auth/mediawiki/callback", function (req, res, next) {
+  passport.authenticate("mediawiki", function (err: any, user: any) {
+    if (err) {
+      return next(err);
     }
-  ));
 
-  passport.serializeUser(function (user, done) {
-    done(null, user);
-  });
+    if (!user) {
+      return res.redirect(req.baseUrl + "/login");
+    }
 
-  passport.deserializeUser(function (obj: false | Express.User | null | undefined, done) {
-    done(null, obj);
-  });
-
-  server.get("/login-mediawiki", function (req, res) {
-    res.redirect(req.baseUrl + "/auth/mediawiki/callback");
-  });
-
-  server.get("/auth/mediawiki/callback", function (req, res, next) {
-    passport.authenticate("mediawiki", function (err: any, user: any) {
+    req.logIn(user, function (err) {
       if (err) {
         return next(err);
       }
+      req.session.user = user;
+      res.redirect(req.baseUrl + "/blog-admin");
+    });
+  })(req, res, next);
+});
 
-      if (!user) {
-        return res.redirect(req.baseUrl + "/login");
-      }
+app.get("/logout", function (req, res) {
+  delete req.session.user;
+  res.redirect(req.baseUrl + "/");
+});
 
-      req.logIn(user, function (err) {
-        if (err) {
-          return next(err);
-        }
-        req.session.user = user;
-        res.redirect(req.baseUrl + "/blog-admin");
-      });
-    })(req, res, next);
-  });
-
-  server.get("/logout", function (req, res) {
-    delete req.session.user;
-    res.redirect(req.baseUrl + "/");
-  });
-
-  server.get("/api/user", (req, res) => {
-    if (req?.session?.user) {
-      checkAdminStatus(req.session.user.displayName).then((isAdmin) => {
-        res.json({
-          displayName: req.session.user.displayName,
-          isAdmin: isAdmin,
-        })
+app.get("/api/user", (req, res) => {
+  if (req?.session?.user) {
+    checkAdminStatus(req.session.user.displayName).then((isAdmin) => {
+      res.json({
+        displayName: req.session.user.displayName,
+        isAdmin: isAdmin,
       })
-    } else {
-      res.json({ reason: 'Not logged in' });
+    })
+  } else {
+    res.json({ reason: 'Not logged in' });
+  }
+});
+
+
+// Express Rest API endpoints
+app.get('/api/blog_posts', (req, res) => {
+  getTable().then((rows) => res.send(rows))
+});
+
+app.get(`/api/blog/:id`, (req, res) => {
+  const id = req.params.id
+  getRow(id).then((rows) => {
+    res.send(rows)
+  })
+});
+
+app.post('/api/blog', (req, res) => {
+  isAuthorized(req).then((authorized) => {
+    if (!authorized) {
+      res.status(403).json(unauthorizedError);
+      return;
     }
+    const { date, author, title, content } = req.body;
+    insertRow(date, author, title, content)
+      .then((result) => res.status(201).send(result))
+      .catch((error) => res.status(500).send('Error inserting row: ' + error.message))
   })
+});
 
-
-  // Express Rest API endpoints
-  server.get('/api/blog_posts', (req, res) => {
-    getTable().then((rows) => res.send(rows))
-  });
-
-  server.get(`/api/blog/:id`, (req, res) => {
-    const id = req.params.id
-    getRow(id).then((rows) => {
-      res.send(rows)
-    })
-  });
-
-  server.post('/api/blog', (req, res) => {
-    isAuthorized(req).then((authorized) => {
-      if (!authorized) {
-        res.status(403).json(unauthorizedError);
-        return;
-      }
-      const { date, author, title, content } = req.body;
-      insertRow(date, author, title, content)
-        .then((result) => res.status(201).send(result))
-        .catch((error) => res.status(500).send('Error inserting row: ' + error.message))
-
-    })
+app.put('/api/blog/:id', (req, res) => {
+  isAuthorized(req).then((authorized) => {
+    if (!authorized) {
+      res.status(403).json(unauthorizedError);
+      return
+    }
+    const id = req.params.id;
+    const { date, author, title, content } = req.body;
+    updateRow(date, author, title, content, id)
+      .then((result) => res.status(200).send({ result, id }))
+      .catch((error) => res.status(500).send('Error updating row: ' + error.message));
   })
+});
 
-  server.put('/api/blog/:id', (req, res) => {
-    isAuthorized(req).then((authorized) => {
-      if (!authorized) {
-        res.status(403).json(unauthorizedError);
-        return
-      }
-      const id = req.params.id;
-      const { date, author, title, content } = req.body;
-      updateRow(date, author, title, content, id)
-        .then((result) => res.status(200).send({ result, id }))
-        .catch((error) => res.status(500).send('Error updating row: ' + error.message));
-    })
+app.delete('/api/blog/:id', (req, res) => {
+  isAuthorized(req).then((authorized) => {
+    if (!authorized) {
+      res.status(403).json(unauthorizedError);
+      return
+    }
+    const id = req.params.id;
+    deleteRow(id)
+      .then((result) => res.status(200).send({ result, id }))
+      .catch((error) => res.status(500).send('Error deleting row: ' + error.message))
   })
+});
 
-  server.delete('/api/blog/:id', (req, res) => {
-    isAuthorized(req).then((authorized) => {
-      if (!authorized) {
-        res.status(403).json(unauthorizedError);
-        return
-      }
-      const id = req.params.id;
-      deleteRow(id)
-        .then((result) => res.status(200).send({ result, id }))
-        .catch((error) => res.status(500).send('Error deleting row: ' + error.message))
+/**
+ * Serve static files from /browser
+ */
+app.use(
+  express.static(browserDistFolder, {
+    maxAge: '1y',
+    index: false,
+    redirect: false,
+  }),
+);
+
+/**
+ * Handle all other requests by rendering the Angular application.
+ */
+app.use((req, res, next) => {
+  angularApp
+    .handle(req, {
+      providers: [
+        { provide: REQUEST, useValue: req },
+        { provide: RESPONSE, useValue: res },
+      ],
     })
-  })
+    .then((response) =>
+      response ? writeResponseToNodeResponse(response, res) : next(),
+    )
+    .catch(next);
+});
 
-  // Serve static files from /browser
-  server.get('*.*', express.static(browserDistFolder, {
-    maxAge: '1y'
-  }));
-
-  // All regular routes use the Angular engine
-  server.get('*', (req, res, next) => {
-    const { protocol, originalUrl, baseUrl, headers } = req;
-
-    commonEngine
-      .render({
-        bootstrap,
-        documentFilePath: indexHtml,
-        url: `${protocol}://${headers.host}${originalUrl}`,
-        publicPath: browserDistFolder,
-        providers: [
-          { provide: APP_BASE_HREF, useValue: baseUrl },
-          { provide: REQUEST, useValue: req },
-          { provide: RESPONSE, useValue: res },
-        ],
-      })
-      .then((html) => res.send(html))
-      .catch((err) => next(err));
-  });
-
-  return server;
-}
-
-function run(): void {
+/**
+ * Start the server if this module is the main entry point.
+ * The server listens on the port defined by the `PORT` environment variable, or defaults to 4000.
+ */
+if (isMainModule(import.meta.url)) {
   const port = process.env['PORT'] || 4000;
-
-  // Start up the Node server
-  const server = app();
-  server.listen(port, () => {
+  app.listen(port, (error?: Error) => {
+    if (error) {
+      throw error;
+    }
     console.log(`Node Express server listening on http://localhost:${port}`);
-    console.log(`Version with authorization control on all endpoints`);
   });
 }
 
-run();
+/**
+ * The request handler used by the Angular CLI (dev-server and during build).
+ */
+export const reqHandler = createNodeRequestHandler(app);

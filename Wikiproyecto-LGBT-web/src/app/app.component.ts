@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, InjectionToken, OnInit } from '@angular/core';
 import { RouterOutlet, Router, NavigationStart, NavigationEnd } from '@angular/router';
 import { FooterComponent } from './shared/components/footer/footer.component';
@@ -13,9 +13,8 @@ import { ChildrenOutletContexts } from '@angular/router';
   imports: [
     HeaderComponent,
     FooterComponent,
-    RouterOutlet,
-    CommonModule,
-  ],
+    RouterOutlet
+],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   animations: [
