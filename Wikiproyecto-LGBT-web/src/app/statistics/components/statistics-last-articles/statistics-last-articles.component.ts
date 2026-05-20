@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CardPreview } from '../../models/card-preview';
 
 import { MediawikiService } from '../../../services/mediawiki.service';
@@ -19,18 +19,14 @@ import { unescapeInvalidCharacters } from '../../../utils/utils';
   animations: [popAnimation]
 })
 export class StatisticsLastArticlesComponent implements OnInit {
+  private mediawikiService = inject(MediawikiService);
+  private barbaService = inject(BarbaService);
+  private cdReF = inject(ChangeDetectorRef);
+
   cardDict: CardPreview = {};
   showSpinner: boolean = true;
 
-  barba: string;
-
-  constructor(
-    private mediawikiService: MediawikiService,
-    private barbaService: BarbaService,
-    private cdReF: ChangeDetectorRef
-  ) {
-    this.barba = this.barbaService.getCurrentBarba();
-  }
+  barba: string = this.barbaService.getCurrentBarba();
 
   ngOnInit(): void {
     this.getLastArticlesInfo();

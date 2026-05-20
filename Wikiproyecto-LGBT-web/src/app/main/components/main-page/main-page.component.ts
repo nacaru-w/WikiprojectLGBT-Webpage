@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, inject } from '@angular/core';
 import { NgbCarouselConfig, NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 import { MediawikiService } from '../../../services/mediawiki.service';
 import { popAnimation } from '../../../animations/animations';
@@ -14,6 +14,8 @@ import { popAnimation } from '../../../animations/animations';
   animations: [popAnimation]
 })
 export class MainPageComponent implements OnInit {
+  private mediaWikiService = inject(MediawikiService);
+
   isAllLoaded: boolean = false;
 
   images: string[] = [
@@ -25,7 +27,8 @@ export class MainPageComponent implements OnInit {
   eventoDelMes: string = '';
   eventoDelMesImage: string = '';
 
-  constructor(config: NgbCarouselConfig, private mediaWikiService: MediawikiService) {
+  constructor() {
+    const config = inject(NgbCarouselConfig);
     config.showNavigationArrows = false;
     config.showNavigationIndicators = false;
     config.pauseOnHover = false;

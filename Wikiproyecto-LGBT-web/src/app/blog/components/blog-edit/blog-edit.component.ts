@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
 
@@ -12,10 +12,13 @@ import { ApiService } from '../../../services/api.service';
   templateUrl: './blog-edit.component.html',
   styleUrl: './blog-edit.component.scss',
 })
-export class BlogEditComponent {
-  blogForm: FormGroup;
+export class BlogEditComponent implements OnInit {
+  private formBuilder = inject(FormBuilder);
+  private activatedRoute = inject(ActivatedRoute);
+  private apiService = inject(ApiService);
+  private router = inject(Router);
 
-  postId: string | null = '';
+  postId: string | null = this.activatedRoute.snapshot.paramMap.get('id');
   date: string | Date = new Date();
   author: string = '';
   title: string = '';
@@ -26,20 +29,14 @@ export class BlogEditComponent {
   responseMessage: string = 'Enviando...';
   showSubmitSpinner: boolean = false;
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private activatedRoute: ActivatedRoute,
-    private apiService: ApiService,
-    private router: Router
-  ) {
-    this.postId = this.activatedRoute.snapshot.paramMap.get('id');
-    this.blogForm = this.formBuilder.group({
-      author: new FormControl(this.postId ? this.author : '', [Validators.required, Validators.maxLength(75)]),
-      date: new FormControl(this.postId ? this.date : '', [Validators.required]),
-      title: new FormControl(this.postId ? this.title : '', [Validators.maxLength(255)]),
-      content: new FormControl(this.postId ? this.content : '', [Validators.maxLength(10000)]),
-    })
+  blogForm: FormGroup = this.formBuilder.group({
+    author: new FormControl(this.postId ? this.author : '', [Validators.required, Validators.maxLength(75)]),
+    date: new FormControl(this.postId ? this.date : '', [Validators.required]),
+    title: new FormControl(this.postId ? this.title : '', [Validators.maxLength(255)]),
+    content: new FormControl(this.postId ? this.content : '', [Validators.maxLength(10000)]),
+  });
 
+  ngOnInit(): void {
     if (this.postId) {
       this.getPost(this.postId);
     }

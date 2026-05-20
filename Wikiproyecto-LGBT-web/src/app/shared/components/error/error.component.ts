@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { BarbaService } from '../../../services/barba.service';
 
 @Component({
@@ -9,10 +9,7 @@ import { BarbaService } from '../../../services/barba.service';
   styleUrl: './error.component.scss'
 })
 export class ErrorComponent {
+  private barbaService = inject(BarbaService);
 
-  barba: string;
-
-  constructor(private barbaService: BarbaService) {
-    this.barba = this.barbaService.getCurrentBarba();
-  }
+  barba: string = this.barbaService.getCurrentBarba();
 }

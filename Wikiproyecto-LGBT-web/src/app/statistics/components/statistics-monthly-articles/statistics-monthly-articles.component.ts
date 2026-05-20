@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 
 import { BaseChartDirective } from 'ng2-charts';
 import { Chart } from 'chart.js/auto';
@@ -18,10 +18,10 @@ import { MonthlyOccurencesModel } from '../../models/monthly-occurences-model';
 })
 export class StatisticsMonthlyArticlesComponent implements OnInit {
 
+  private mediawikiService = inject(MediawikiService);
+
   monthlyArticlesChart: any;
   thisMonthArticleCount: number = 0;
-
-  constructor(private mediawikiService: MediawikiService) { }
 
   ngOnInit(): void {
     this.createMonthlyArticlesChart();

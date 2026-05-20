@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, inject } from '@angular/core';
 import { NgbAccordionModule, NgbCollapse, NgbScrollSpyModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
@@ -37,6 +37,8 @@ import { popAnimation } from '../../../animations/animations';
   ]
 })
 export class StatisticsMainComponent implements OnInit, AfterViewInit {
+  private mediawikiService = inject(MediawikiService);
+
   totalParticipantCount: number = 0;
   totalArticleCount: number = 0;
   totalThisMonthArticleCount: number = 0;
@@ -48,9 +50,6 @@ export class StatisticsMainComponent implements OnInit, AfterViewInit {
   articleCountChart: any;
   participantCountChart: any;
   monthlyCountChart: any;
-
-  constructor(private mediawikiService: MediawikiService) {
-  }
 
   ngOnInit(): void {
     try {

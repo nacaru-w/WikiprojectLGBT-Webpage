@@ -1,5 +1,5 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { Inject, Injectable, Optional } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable, catchError, map, of, tap } from 'rxjs';
 import { BlogPostInfoModel } from '../blog/models/blog-post-info-model';
 import { REQUEST } from '../../express.tokens';
@@ -8,11 +8,15 @@ import { REQUEST } from '../../express.tokens';
   providedIn: 'root'
 })
 export class ApiService {
+  private http = inject(HttpClient);
+  // The REQUEST token is declared as an Express Request, but the original code
+  // treated it as a DOM Request (using `headers.get(...)`); we keep that typing
+  // to preserve the existing behaviour after switching to inject().
+  private request = inject(REQUEST, { optional: true }) as unknown as Request | null;
+
   endpoint: string = 'https://wmlgbt-es-web.toolforge.org/api/'
   postsCache: BlogPostInfoModel[] | null = null;
   postCache: { [id: string]: BlogPostInfoModel } = {};
-
-  constructor(private http: HttpClient, @Optional() @Inject(REQUEST) private request: Request) { }
 
   private getHeaders(): HttpHeaders {
     let headers = new HttpHeaders({ 'Content-Type': 'application/json' }); /*'Access-Control-Allow-Origin': 'https://wmlgbt-es-web.toolforge.org'*/

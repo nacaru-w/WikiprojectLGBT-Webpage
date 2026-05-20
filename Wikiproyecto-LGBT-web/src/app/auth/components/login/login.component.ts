@@ -1,4 +1,4 @@
-import { AfterViewInit, Component } from '@angular/core';
+import { AfterViewInit, Component, inject } from '@angular/core';
 import { ApiService } from '../../../services/api.service';
 import { popAnimation } from '../../../animations/animations';
 
@@ -11,11 +11,11 @@ import { popAnimation } from '../../../animations/animations';
   animations: [popAnimation]
 })
 export class LoginComponent implements AfterViewInit {
+  private apiService = inject(ApiService);
+
   isLoggedIn: boolean | null = null;
   isAdmin: boolean = false;
   animate: boolean = false;
-
-  constructor(private apiService: ApiService) { }
 
   ngAfterViewInit(): void {
     this.knowLoginStatus();

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ApiService } from '../../../services/api.service';
 import { BlogPostInfoModel } from '../../models/blog-post-info-model';
 import { RouterLink } from '@angular/router';
@@ -12,10 +12,10 @@ import { DateFormatPipe } from '../../../pipes/date-format.pipe';
   styleUrl: './blog-admin.component.scss'
 })
 export class BlogAdminComponent implements OnInit {
+  private apiService = inject(ApiService);
+
   infoArray: BlogPostInfoModel[] = []
   adminUsernameText: string = '';
-
-  constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
     this.getBlogPosts();

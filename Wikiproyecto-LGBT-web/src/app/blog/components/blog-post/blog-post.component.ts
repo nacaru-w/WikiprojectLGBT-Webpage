@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ApiService } from '../../../services/api.service';
 import { BlogPostInfoModel } from '../../models/blog-post-info-model';
@@ -18,7 +18,11 @@ import { popAnimation } from '../../../animations/animations';
   animations: [popAnimation]
 })
 export class BlogPostComponent implements OnInit {
-  postId: string | null = '';
+  private apiService = inject(ApiService);
+  private activatedRoute = inject(ActivatedRoute);
+  private sanitizer = inject(DomSanitizer);
+
+  postId: string | null = this.activatedRoute.snapshot.paramMap.get('id');
   date: Date = new Date();
   author: string = '';
   title: string = '';
@@ -26,14 +30,6 @@ export class BlogPostComponent implements OnInit {
   loaded: boolean = false;
 
   error: string = '';
-
-  constructor(
-    private apiService: ApiService,
-    private activatedRoute: ActivatedRoute,
-    private sanitizer: DomSanitizer
-  ) {
-    this.postId = this.activatedRoute.snapshot.paramMap.get('id')
-  }
 
   ngOnInit(): void {
     if (!this.postId) {

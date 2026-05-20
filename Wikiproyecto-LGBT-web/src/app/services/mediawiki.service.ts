@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, catchError, map, throwError } from 'rxjs';
 
@@ -10,11 +10,10 @@ import { escapeInvalidCharacters } from '../utils/utils';
   providedIn: 'root'
 })
 export class MediawikiService {
+  private http = inject(HttpClient);
 
   url: string = "https://es.wikipedia.org/w/api.php";
   wikidataUrl: string = "https://www.wikidata.org/w/api.php"
-
-  constructor(private http: HttpClient) { }
 
   getPageContent(title: string): Observable<string> {
     const escapedTitle = escapeInvalidCharacters(title);

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 
 
 import { MediawikiService } from '../../../services/mediawiki.service';
@@ -16,11 +16,11 @@ import { NotableArticles } from '../../models/notable-articles';
   animations: [popAnimation, chartsSlideInOutAnimation]
 })
 export class StatisticsNotableComponent implements OnInit {
+  private mediawikiService = inject(MediawikiService);
+
   isAPIDone: boolean = false;
 
   notableArtDict: NotableArticles = { AB: [], AD: [] };
-
-  constructor(private mediawikiService: MediawikiService) { }
 
   ngOnInit(): void {
     this.getNotableArticlesinfo();

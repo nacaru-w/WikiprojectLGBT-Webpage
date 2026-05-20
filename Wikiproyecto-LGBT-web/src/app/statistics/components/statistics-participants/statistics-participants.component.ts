@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 
 import { Chart } from 'chart.js/auto';
 import { BaseChartDirective } from 'ng2-charts';
@@ -17,11 +17,11 @@ import { MediawikiService } from '../../../services/mediawiki.service';
 })
 export class StatisticsParticipantsComponent implements OnInit {
 
+  private mediawikiService = inject(MediawikiService);
+
   totalParticipantCount: number = 0;
 
   participantCountChart: any;
-
-  constructor(private mediawikiService: MediawikiService) { }
 
   ngOnInit(): void {
     this.createParticipantCountChart();

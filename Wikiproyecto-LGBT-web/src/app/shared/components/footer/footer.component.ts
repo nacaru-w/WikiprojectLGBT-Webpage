@@ -1,4 +1,4 @@
-import { Component, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnInit, SimpleChanges, inject } from '@angular/core';
 import { ApiService } from '../../../services/api.service';
 import { RouterLink } from '@angular/router';
 
@@ -11,12 +11,10 @@ import { RouterLink } from '@angular/router';
 })
 
 export class FooterComponent implements OnInit {
+  private apiService = inject(ApiService);
+
   animationState = 'visible';
   isAuth = false;
-
-  constructor(
-    private apiService: ApiService
-  ) { }
 
   hideFooter() {
     this.animationState = 'hidden';

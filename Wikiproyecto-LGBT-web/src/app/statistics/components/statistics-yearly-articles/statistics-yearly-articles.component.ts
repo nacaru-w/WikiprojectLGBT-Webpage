@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Chart } from 'chart.js/auto';
 
 import { MediawikiService } from '../../../services/mediawiki.service';
@@ -15,11 +15,11 @@ import { BaseChartDirective } from 'ng2-charts';
   styleUrl: './statistics-yearly-articles.component.scss',
 })
 export class StatisticsYearlyArticlesComponent implements OnInit {
+  private mediawikiService = inject(MediawikiService);
+
   articlesArray: string[] = [];
   totalArticleCount: number = 0;
   yearlyArticlesChart: any;
-
-  constructor(private mediawikiService: MediawikiService) { }
 
   ngOnInit(): void {
     this.createYearlyArticlesChart();

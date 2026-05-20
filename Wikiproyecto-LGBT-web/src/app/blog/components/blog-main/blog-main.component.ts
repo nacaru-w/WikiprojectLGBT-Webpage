@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { ApiService } from '../../../services/api.service';
 import { BlogPostInfoModel } from '../../models/blog-post-info-model';
@@ -18,10 +18,11 @@ import { popAnimation } from '../../../animations/animations';
   animations: [popAnimation]
 })
 export class BlogMainComponent implements OnInit {
+  private apiService = inject(ApiService);
+
   error: string = '';
   loaded: boolean = false;
   sortedPosts: BlogPostInfoModel[] = [];
-  constructor(private apiService: ApiService) { }
 
   getPosts() {
     this.apiService.getPosts().subscribe((res) => {

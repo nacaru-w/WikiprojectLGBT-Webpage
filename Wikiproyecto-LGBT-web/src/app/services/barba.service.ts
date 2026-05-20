@@ -5,9 +5,9 @@ import { LGBTDays } from './models/LGBTDays';
   providedIn: 'root'
 })
 export class BarbaService {
-  currentDate: Date;
-  currentDay: number;
-  currentMonth: number;
+  currentDate: Date = new Date();
+  currentDay: number = this.currentDate.getDate();
+  currentMonth: number = this.currentDate.getMonth() + 1;
   currentBarba: string = '';
 
   dayDictionary: LGBTDays = {
@@ -79,12 +79,6 @@ export class BarbaService {
   }
 
 
-
-  constructor() {
-    this.currentDate = new Date();
-    this.currentDay = this.currentDate.getDate();
-    this.currentMonth = this.currentDate.getMonth() + 1;
-  }
 
   getCurrentBarba(): string {
     const today = this.currentDay;

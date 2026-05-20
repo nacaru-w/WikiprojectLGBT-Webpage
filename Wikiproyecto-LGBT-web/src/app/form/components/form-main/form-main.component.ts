@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -14,32 +14,29 @@ import { BarbaService } from '../../../services/barba.service';
   animations: [buttonState]
 })
 export class FormMainComponent {
-  webForm: FormGroup;
+  private formBuilder = inject(FormBuilder);
+  private barbaService = inject(BarbaService);
+
+  webForm: FormGroup = this.formBuilder.group({
+    pronouns: new FormControl('', [Validators.required]),
+    otherPronouns: new FormControl(''),
+    name: new FormControl('', [Validators.required, Validators.maxLength(50)]),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    reason: new FormControl('', [Validators.maxLength(1000)]),
+    wikimediaAccount: new FormControl(''),
+    wikimediaAccountName: new FormControl('', [Validators.pattern(/^(?!.*[@:>=#€]).*$/), Validators.maxLength(85)]),
+    attendedEvent: new FormControl(''),
+    attendedEventName: new FormControl('', [Validators.maxLength(255)]),
+    readPrivacy: new FormControl('', [Validators.required]),
+    readPolicy: new FormControl('', [Validators.required])
+  });
 
   formSendDataStatus: string = 'Enviando formulario...';
   showSubmitSpinner: boolean = true;
 
   showOtherPronounsField: boolean = false;
 
-  barba: string;
-
-  constructor(private formBuilder: FormBuilder, private barbaService: BarbaService) {
-    this.barba = this.barbaService.getCurrentBarba();
-
-    this.webForm = this.formBuilder.group({
-      pronouns: new FormControl('', [Validators.required]),
-      otherPronouns: new FormControl(''),
-      name: new FormControl('', [Validators.required, Validators.maxLength(50)]),
-      email: new FormControl('', [Validators.required, Validators.email]),
-      reason: new FormControl('', [Validators.maxLength(1000)]),
-      wikimediaAccount: new FormControl(''),
-      wikimediaAccountName: new FormControl('', [Validators.pattern(/^(?!.*[@:>=#€]).*$/), Validators.maxLength(85)]),
-      attendedEvent: new FormControl(''),
-      attendedEventName: new FormControl('', [Validators.maxLength(255)]),
-      readPrivacy: new FormControl('', [Validators.required]),
-      readPolicy: new FormControl('', [Validators.required])
-    })
-  }
+  barba: string = this.barbaService.getCurrentBarba();
 
   onSubmit() {
     console.log("Form:", this.webForm.value)
