@@ -6,46 +6,10 @@
         <span class="count-paragraph"><span class="count-text">{{thisMonthArticleCount}}</span> artículos</span>
         <p>Nuestros períodos de mayor actividad se suelen concentrar en los meses de marzo y junio, ¿puedes adivinar por
             qué?</p>
-        <button type="button" class="btn year-filter-btn" data-bs-toggle="modal"
-            data-bs-target="#yearFilterModal" aria-label="Filtrar años" title="Filtrar años">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
-                <path
-                    d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5z" />
-            </svg>
-        </button>
     </div>
     <div class="chart">
         <canvas id="monthlyArticlesChart">
             {{ monthlyArticlesChart }}
         </canvas>
-    </div>
-</div>
-
-<!-- Modal: filter which years are shown in the chart -->
-<div class="modal fade" id="yearFilterModal" tabindex="-1" aria-labelledby="yearFilterModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="yearFilterModalLabel">Filtrar años</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p class="filter-help">Selecciona los años que quieres mostrar en la gráfica.</p>
-                <div class="year-filter-list">
-                    @for (filter of yearFilters(); track filter.datasetIndex) {
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" role="switch"
-                                [id]="'yearFilter-' + filter.label" [checked]="filter.visible"
-                                [style.background-color]="filter.paleColor"
-                                (change)="toggleYear(filter.datasetIndex)">
-                            <label class="form-check-label" [for]="'yearFilter-' + filter.label">{{ filter.label }}</label>
-                        </div>
-                    }
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
-            </div>
-        </div>
     </div>
 </div>

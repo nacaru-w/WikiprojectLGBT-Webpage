@@ -1,3 +1,4 @@
+import { ChartOptions } from "chart.js";
 import { colorForYear } from "./utils";
 
 function getCurrentYear() {
@@ -20,6 +21,7 @@ function yearDataset(year: string) {
         data: [] as number[], // Will be populated through a MediaWiki API call
         fill: false,
         borderColor: color,
+        backgroundColor: color, // legend swatch colour (fill is off, so no area is drawn)
         hoverBackgroundColor: color,
         pointBackgroundColor: color,
         pointBorderColor: '#000000',
@@ -53,11 +55,20 @@ export const monthlyCountData = {
     ]
 }
 
-export const monthlyCountOptions = {
+export const monthlyCountOptions: ChartOptions<'line'> = {
     maintainAspectRatio: false,
     plugins: {
         legend: {
-            display: false
+            display: true,
+            position: 'top',
+            labels: {
+                usePointStyle: true,
+                pointStyle: 'circle',
+                color: "#000",
+                font: {
+                    family: "'Lexend', sans-serif",
+                }
+            }
         }
     },
     scales: {
