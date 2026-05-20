@@ -5,10 +5,12 @@ import { ReactiveFormsModule, FormControl, FormGroup, Validators, FormBuilder } 
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ApiService } from '../../../services/api.service';
 
+import { QuillEditorComponent, QuillModules } from 'ngx-quill';
+
 @Component({
   selector: 'app-blog-edit',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, RouterLink],
+  imports: [ReactiveFormsModule, CommonModule, RouterLink, QuillEditorComponent],
   templateUrl: './blog-edit.component.html',
   styleUrl: './blog-edit.component.scss',
 })
@@ -28,6 +30,27 @@ export class BlogEditComponent implements OnInit {
   error: string = '';
   responseMessage: string = 'Enviando...';
   showSubmitSpinner = signal(false);
+
+  // The live Quill instance, captured once the editor is created in the browser.
+  private quillEditor: any;
+
+  // Basic formatting toolbar. The image button is overridden to insert by URL
+  // only — there is no upload button, so users can embed images via links.
+  quillModules: QuillModules = {
+    toolbar: {
+      container: [
+        ['bold', 'italic', 'underline', 'strike'],
+        [{ header: [2, 3, 4, false] }],
+        [{ list: 'ordered' }, { list: 'bullet' }],
+        ['blockquote'],
+        ['link', 'image'],
+        ['clean'],
+      ],
+      handlers: {
+        image: () => this.insertImageByUrl(),
+      },
+    },
+  };
 
   blogForm: FormGroup = this.formBuilder.group({
     author: new FormControl(this.postId ? this.author : '', [Validators.required, Validators.maxLength(75)]),
@@ -115,6 +138,30 @@ export class BlogEditComponent implements OnInit {
         this.responseMessage = res?.success ? '¡Tu post ha sido editado!' : '¡Parece que ha habido un error al editar el post, prueba de nuevo más tarde!';
       })
     }
+  }
+
+  onEditorCreated(quill: any): void {
+    this.quillEditor = quill;
+  }
+
+  // Prompts for an image URL and embeds it at the cursor. Replaces Quill's
+  // default image button (which would open a file picker / base64 upload).
+  insertImageByUrl(): void {
+    const quill = this.quillEditor;
+    if (!quill) {
+      return;
+    }
+    const url = window.prompt('Pega la URL de la imagen:')?.trim();
+    if (!url) {
+      return;
+    }
+    if (!/^https?:\/\//i.test(url)) {
+      window.alert('La URL debe empezar por http:// o https://');
+      return;
+    }
+    const range = quill.getSelection(true);
+    quill.insertEmbed(range.index, 'image', url, 'user');
+    quill.setSelection(range.index + 1, 0);
   }
 
   navigateToPanel() {

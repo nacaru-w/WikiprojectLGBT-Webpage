@@ -48,8 +48,36 @@
             padding-top: 1.75em;
             padding-bottom: 1.25em;
 
-            .textarea {
-                min-height: 15em;
+            // The WYSIWYG editor renders its own .ql-* markup (from the global
+            // quill.snow.css), so we reach into it with ::ng-deep to match the
+            // rounded, light-grey look of the other form fields.
+            quill-editor {
+                display: block;
+
+                ::ng-deep {
+
+                    .ql-toolbar.ql-snow,
+                    .ql-container.ql-snow {
+                        border-color: black;
+                    }
+
+                    .ql-toolbar.ql-snow {
+                        border-top-left-radius: 10px;
+                        border-top-right-radius: 10px;
+                        background-color: white;
+                    }
+
+                    .ql-container.ql-snow {
+                        border-bottom-left-radius: 10px;
+                        border-bottom-right-radius: 10px;
+                        background-color: variables.$gray-lighter;
+                        font-family: inherit;
+                    }
+
+                    .ql-editor {
+                        min-height: 15em;
+                    }
+                }
             }
 
             input,

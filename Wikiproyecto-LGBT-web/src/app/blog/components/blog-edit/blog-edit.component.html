@@ -35,8 +35,15 @@
     </div>
 
     <div class="form-control">
-      <label for="content">Contenido (en html): </label>
-      <textarea class="textarea" name="content" id="content" formControlName="content"></textarea>
+      <label for="content">Contenido: </label>
+      <quill-editor
+        id="content"
+        formControlName="content"
+        [modules]="quillModules"
+        format="html"
+        placeholder="Escribe el contenido del post…"
+        (onEditorCreated)="onEditorCreated($event)">
+      </quill-editor>
       <div class="form-error" id="userNameError" [ngClass]="{'hidden': !isFieldInvalid('content')}">
         {{getErrorMessage('content')}}
       </div>

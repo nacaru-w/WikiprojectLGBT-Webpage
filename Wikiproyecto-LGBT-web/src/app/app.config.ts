@@ -6,6 +6,7 @@ import { provideClientHydration, withHttpTransferCacheOptions } from '@angular/p
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
+import { provideQuillConfig } from 'ngx-quill';
 import { withCredentialsInterceptor } from './interceptors/with-credentials.interceptor';
 
 export const appConfig: ApplicationConfig = {
@@ -19,5 +20,7 @@ export const appConfig: ApplicationConfig = {
     provideAnimationsAsync(),
     provideHttpClient(withFetch(), withInterceptors([withCredentialsInterceptor])),
     provideCharts(withDefaultRegisterables()),
+    // Sanitize HTML bound into/out of the editor so stored post content can't inject scripts.
+    provideQuillConfig({ sanitize: true }),
   ]
 };

@@ -38,6 +38,7 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/quill/dist/quill.snow.css",
               "src/styles.scss"
             ],
             "stylePreprocessorOptions": {
@@ -110,6 +111,7 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/quill/dist/quill.snow.css",
               "src/styles.scss"
             ],
             "scripts": []
