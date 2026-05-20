@@ -8,6 +8,7 @@ import express from 'express';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { REQUEST, RESPONSE } from './src/express.tokens';
+import { filterUnwantedCrawlers } from './src/bot-filter';
 import mysql from 'mysql2/promise';
 import passport from 'passport';
 import passportMediawiki from 'passport-mediawiki-oauth';
@@ -289,6 +290,13 @@ app.use(
     redirect: false,
   }),
 );
+
+/**
+ * Steer unwanted crawlers (scrapers, AI bots, …) to the static shell so they
+ * don't trigger a full SSR render. Search engines and link-preview bots are
+ * allow-listed inside the helper and fall through to the render below.
+ */
+app.use(filterUnwantedCrawlers(browserDistFolder));
 
 /**
  * Handle all other requests by rendering the Angular application.
