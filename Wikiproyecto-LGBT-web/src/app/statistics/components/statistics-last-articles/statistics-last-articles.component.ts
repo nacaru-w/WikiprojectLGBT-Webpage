@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { CardPreview } from '../../models/card-preview';
 
 import { MediawikiService } from '../../../services/mediawiki.service';
@@ -24,7 +24,7 @@ export class StatisticsLastArticlesComponent implements OnInit {
   private cdReF = inject(ChangeDetectorRef);
 
   cardDict: CardPreview = {};
-  showSpinner: boolean = true;
+  showSpinner = signal(true);
 
   barba: string = this.barbaService.getCurrentBarba();
 
@@ -39,7 +39,7 @@ export class StatisticsLastArticlesComponent implements OnInit {
         this.assignExtracts(article);
         this.assignImages(article);
       }
-      this.showSpinner = false;
+      this.showSpinner.set(false);
     })
   }
 

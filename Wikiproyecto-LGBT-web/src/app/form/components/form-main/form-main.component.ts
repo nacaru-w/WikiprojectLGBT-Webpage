@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -32,9 +32,9 @@ export class FormMainComponent {
   });
 
   formSendDataStatus: string = 'Enviando formulario...';
-  showSubmitSpinner: boolean = true;
+  showSubmitSpinner = signal(true);
 
-  showOtherPronounsField: boolean = false;
+  showOtherPronounsField = signal(false);
 
   barba: string = this.barbaService.getCurrentBarba();
 
@@ -77,7 +77,7 @@ export class FormMainComponent {
   }
 
   otherPronounsChosen(): void {
-    this.showOtherPronounsField = this.showValue('pronouns') == 'Sin determinar/otro'
+    this.showOtherPronounsField.set(this.showValue('pronouns') == 'Sin determinar/otro')
   }
 
   concordWikimediaAccountNamePlaceholder() {

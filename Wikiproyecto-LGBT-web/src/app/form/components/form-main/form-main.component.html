@@ -20,7 +20,7 @@
       <option class="dropdown-item">Sin determinar/otro</option>
     </select>
   </div>
-  @if (showOtherPronounsField) {
+  @if (showOtherPronounsField()) {
     <div class="mb-2">
       <label for="otherPronouns" class="form-label">Escribe aquí cómo deseas que nos dirijamos a ti</label>
       <input id="otherPronouns" class="form-box form-control" formControlName="otherPronouns">
@@ -107,7 +107,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="exampleModalLabel">
-          @if (showSubmitSpinner) {
+          @if (showSubmitSpinner()) {
             <div class="spinner-border" role="status"></div>
           }
           {{formSendDataStatus}}

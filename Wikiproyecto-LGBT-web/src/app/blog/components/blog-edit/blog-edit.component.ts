@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
 
@@ -23,11 +23,11 @@ export class BlogEditComponent implements OnInit {
   author: string = '';
   title: string = '';
   content: string = '';
-  loaded: boolean = false;
+  loaded = signal(false);
 
   error: string = '';
   responseMessage: string = 'Enviando...';
-  showSubmitSpinner: boolean = false;
+  showSubmitSpinner = signal(false);
 
   blogForm: FormGroup = this.formBuilder.group({
     author: new FormControl(this.postId ? this.author : '', [Validators.required, Validators.maxLength(75)]),
@@ -96,7 +96,7 @@ export class BlogEditComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.showSubmitSpinner = true;
+    this.showSubmitSpinner.set(true);
     const formValues = this.blogForm.value
     const formParams = [
       formValues.date || this.getCurrentDate(),
@@ -106,12 +106,12 @@ export class BlogEditComponent implements OnInit {
     ] as const;
     if (!this.postId) {
       this.apiService.addPost(...formParams).subscribe((res) => {
-        this.showSubmitSpinner = false;
+        this.showSubmitSpinner.set(false);
         this.responseMessage = res?.success ? '¡Tu post ha sido publicado!' : '¡Parece que ha habido un error al añadir el post, prueba de nuevo más tarde!';
       })
     } else {
       this.apiService.editPost(this.postId, ...formParams).subscribe((res) => {
-        this.showSubmitSpinner = false;
+        this.showSubmitSpinner.set(false);
         this.responseMessage = res?.success ? '¡Tu post ha sido editado!' : '¡Parece que ha habido un error al editar el post, prueba de nuevo más tarde!';
       })
     }

@@ -1,11 +1,11 @@
-<div class="blog-posts-container" [@popAnimation]="loaded || error">
+<div class="blog-posts-container" [@popAnimation]="loaded() || error">
     @if (error) {
     <div class="blog-post">
         <h1 class="error-title">Error: 500</h1>
         <span>{{error}}</span>
     </div>
     }
-    @if (loaded && !error) {
+    @if (loaded() && !error) {
     @for (item of sortedPosts; track $index) {
     <a class="fill-link" routerLink="/blog/{{item.id}}">
         <div class="blog-post">

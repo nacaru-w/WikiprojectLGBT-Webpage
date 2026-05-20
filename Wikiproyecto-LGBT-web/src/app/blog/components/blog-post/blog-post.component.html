@@ -6,8 +6,8 @@
 </div>
 } -->
 
-<div class="blog-post" [@popAnimation]="loaded" [ngClass]="{hidden: !loaded}">
-    @if (loaded) {
+<div class="blog-post" [@popAnimation]="loaded()" [ngClass]="{hidden: !loaded()}">
+    @if (loaded()) {
     <h2>{{title}}</h2>
     <div class="post-info">
         <div class="thumb-img-container">

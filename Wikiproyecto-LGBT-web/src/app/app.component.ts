@@ -1,5 +1,5 @@
 
-import { Component, InjectionToken, OnInit, inject } from '@angular/core';
+import { Component, InjectionToken, OnInit, inject, signal } from '@angular/core';
 import { RouterOutlet, Router, NavigationStart, NavigationEnd } from '@angular/router';
 import { FooterComponent } from './shared/components/footer/footer.component';
 import { HeaderComponent } from './shared/components/header/header.component';
@@ -27,7 +27,7 @@ export class AppComponent implements OnInit {
   private router = inject(Router);
 
   title: string = 'Wikiproyecto-LGBT-web';
-  footerAnimationState: string = 'visible';
+  footerAnimationState = signal<string>('visible');
 
   ngOnInit() {
     this.router.events.subscribe(event => {
@@ -40,11 +40,11 @@ export class AppComponent implements OnInit {
   }
 
   hideFooter() {
-    this.footerAnimationState = 'hidden';
+    this.footerAnimationState.set('hidden');
   }
 
   showFooter() {
-    this.footerAnimationState = 'visible';
+    this.footerAnimationState.set('visible');
   }
 
   getRouteAnimationData() {

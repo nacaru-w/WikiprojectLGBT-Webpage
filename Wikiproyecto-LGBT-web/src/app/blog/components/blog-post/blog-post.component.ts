@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ApiService } from '../../../services/api.service';
 import { BlogPostInfoModel } from '../../models/blog-post-info-model';
@@ -27,13 +27,13 @@ export class BlogPostComponent implements OnInit {
   author: string = '';
   title: string = '';
   content: string | SafeHtml = '';
-  loaded: boolean = false;
+  loaded = signal(false);
 
   error: string = '';
 
   ngOnInit(): void {
     if (!this.postId) {
-      this.loaded = true;
+      this.loaded.set(true);
       this.error = 'No se ha encontrado el post'
     } else {
       this.getPost(this.postId);
@@ -52,7 +52,7 @@ export class BlogPostComponent implements OnInit {
           this.normalizeWikimediaThumbWidths(res.content)
         );
         setTimeout(() => {
-          this.loaded = true;
+          this.loaded.set(true);
         }, 300);
       }
     })

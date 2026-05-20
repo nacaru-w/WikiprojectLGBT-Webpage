@@ -1,5 +1,5 @@
-@if (isLoggedIn !== null && !isLoggedIn) {
-<div class="login-container" [@popAnimation]="animate">
+@if (isLoggedIn() !== null && !isLoggedIn()) {
+<div class="login-container" [@popAnimation]="animate()">
     <div class="mb-2">
         El login de administradores se lleva a cabo a través de MediaWiki Oauth
     </div>
@@ -12,8 +12,8 @@
     </div>
 </div>
 }
-@if (isLoggedIn && !isAdmin) {
-<div class="login-container" [@popAnimation]="animate">
+@if (isLoggedIn() && !isAdmin()) {
+<div class="login-container" [@popAnimation]="animate()">
     <div class="mb-2">
         Lo siento, pero parece que no perteneces al grupo de administradores.
     </div>

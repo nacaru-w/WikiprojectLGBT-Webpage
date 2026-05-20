@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { NgbCollapse } from '@ng-bootstrap/ng-bootstrap';
 import { BarbaService } from '../../../services/barba.service';
@@ -17,7 +17,7 @@ export class HeaderComponent {
 
   barba: string;
 
-  isMenuCollapsed = true;
+  isMenuCollapsed = signal(true);
 
   constructor() {
     console.log(this.barbaService.getCurrentBarba())

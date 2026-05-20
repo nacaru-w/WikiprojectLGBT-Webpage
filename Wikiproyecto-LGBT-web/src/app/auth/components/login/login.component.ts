@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, inject } from '@angular/core';
+import { AfterViewInit, Component, inject, signal } from '@angular/core';
 import { ApiService } from '../../../services/api.service';
 import { popAnimation } from '../../../animations/animations';
 
@@ -13,9 +13,9 @@ import { popAnimation } from '../../../animations/animations';
 export class LoginComponent implements AfterViewInit {
   private apiService = inject(ApiService);
 
-  isLoggedIn: boolean | null = null;
-  isAdmin: boolean = false;
-  animate: boolean = false;
+  isLoggedIn = signal<boolean | null>(null);
+  isAdmin = signal(false);
+  animate = signal(false);
 
   ngAfterViewInit(): void {
     this.knowLoginStatus();
@@ -23,10 +23,10 @@ export class LoginComponent implements AfterViewInit {
 
   knowLoginStatus() {
     this.apiService.getLoginStatus().subscribe((res) => {
-      this.isLoggedIn = res?.displayName ? true : false;
-      this.isAdmin = res?.isAdmin ? true : false;
+      this.isLoggedIn.set(res?.displayName ? true : false);
+      this.isAdmin.set(res?.isAdmin ? true : false);
       setTimeout(() => {
-        this.animate = true;
+        this.animate.set(true);
       }, 1000);
     })
   }

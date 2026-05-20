@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { ApiService } from '../../../services/api.service';
 import { BlogPostInfoModel } from '../../models/blog-post-info-model';
@@ -21,7 +21,7 @@ export class BlogMainComponent implements OnInit {
   private apiService = inject(ApiService);
 
   error: string = '';
-  loaded: boolean = false;
+  loaded = signal(false);
   sortedPosts: BlogPostInfoModel[] = [];
 
   getPosts() {
@@ -31,7 +31,7 @@ export class BlogMainComponent implements OnInit {
       } else {
         this.sortedPosts = res.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
         setTimeout(() => {
-          this.loaded = true;
+          this.loaded.set(true);
         }, 500);
       }
     })

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, inject } from '@angular/core';
+import { AfterViewInit, Component, OnInit, inject, signal } from '@angular/core';
 import { NgbCarouselConfig, NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 import { MediawikiService } from '../../../services/mediawiki.service';
 import { popAnimation } from '../../../animations/animations';
@@ -16,7 +16,7 @@ import { popAnimation } from '../../../animations/animations';
 export class MainPageComponent implements OnInit {
   private mediaWikiService = inject(MediawikiService);
 
-  isAllLoaded: boolean = false;
+  isAllLoaded = signal(false);
 
   images: string[] = [
     './../assets/imgs/Wikipedia_20_pink_star.svg',
@@ -42,7 +42,7 @@ export class MainPageComponent implements OnInit {
   getEventoDelMesInfo(): void {
     this.mediaWikiService.getPageContent('Wikiproyecto:LGBT/Evento del mes').subscribe((res => {
       this.processEventoDelMesString(res);
-      this.isAllLoaded = true;
+      this.isAllLoaded.set(true);
     }))
   }
 

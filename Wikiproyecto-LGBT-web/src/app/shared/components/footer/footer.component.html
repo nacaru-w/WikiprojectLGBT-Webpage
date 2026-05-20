@@ -10,7 +10,7 @@
                         <a routerLink="/blog-admin">Blog panel</a>
                     </li>
                     <li class="list-item">
-                        <a [href]="isAuth ? '/logout' : '/login'">{{isAuth ? 'Cerrar sesión' : 'Admin login'}}</a>
+                        <a [href]="isAuth() ? '/logout' : '/login'">{{isAuth() ? 'Cerrar sesión' : 'Admin login'}}</a>
                     </li>
                 </ul>
             </div>

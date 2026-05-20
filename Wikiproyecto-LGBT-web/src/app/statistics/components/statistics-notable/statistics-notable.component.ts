@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 
 
 import { MediawikiService } from '../../../services/mediawiki.service';
@@ -18,7 +18,7 @@ import { NotableArticles } from '../../models/notable-articles';
 export class StatisticsNotableComponent implements OnInit {
   private mediawikiService = inject(MediawikiService);
 
-  isAPIDone: boolean = false;
+  isAPIDone = signal(false);
 
   notableArtDict: NotableArticles = { AB: [], AD: [] };
 
@@ -35,7 +35,7 @@ export class StatisticsNotableComponent implements OnInit {
         AB: this.extractNotableElements(splitRes[1])
       }
       this.notableArtDict = notableArticles;
-      this.isAPIDone = true;
+      this.isAPIDone.set(true);
     })
   }
 
