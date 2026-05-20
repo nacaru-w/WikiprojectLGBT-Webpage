@@ -3,8 +3,11 @@ import {
     articleCount2022,
     articleCount2023,
     articleCount2024,
-    articleCount2025
+    articleCount2025,
+    colorForYear
 } from "./utils";
+
+const currentYear = new Date().getFullYear();
 
 export const articlesPerYearData =
 {
@@ -12,12 +15,12 @@ export const articlesPerYearData =
     datasets: [{
         data: [articleCount2021, articleCount2022, articleCount2023, articleCount2024, articleCount2025, 0],
         backgroundColor: [
-            '#a97cfa',
-            '#fa7c7c',
-            '#b3efff',
-            '#fff574',
-            '#ff6fb7',
-            '#3ac78f'
+            colorForYear(2021),
+            colorForYear(2022),
+            colorForYear(2023),
+            colorForYear(2024),
+            colorForYear(2025),
+            colorForYear(currentYear)
         ],
         borderColor: [
             '#000000',

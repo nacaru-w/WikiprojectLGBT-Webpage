@@ -1,3 +1,5 @@
+import { colorForYear } from "./utils";
+
 function getCurrentYear() {
     const currentDate = new Date();
     const currentYear = currentDate.getFullYear();
@@ -8,6 +10,25 @@ export const thisYear = getCurrentYear();
 export const lastYear = (+thisYear - 1).toString();
 export const twoYearsAgo = (+lastYear - 1).toString();
 export const threeYearsAgo = (+lastYear - 2).toString();
+
+// One line per year. Colours come from the shared palette so they mirror each
+// year's colour in the "Artículos por año" chart (see colorForYear in utils.ts).
+function yearDataset(year: string) {
+    const color = colorForYear(year);
+    return {
+        label: year,
+        data: [] as number[], // Will be populated through a MediaWiki API call
+        fill: false,
+        borderColor: color,
+        hoverBackgroundColor: color,
+        pointBackgroundColor: color,
+        pointBorderColor: '#000000',
+        pointBorderWidth: 2,
+        pointRadius: 4,
+        tension: 0.1,
+        borderWidth: 3,
+    };
+}
 
 export const monthlyCountData = {
     labels: [
@@ -25,46 +46,10 @@ export const monthlyCountData = {
         'Diciembre'
     ],
     datasets: [
-        {
-            label: thisYear,
-            data: [], // Will be populated through a MediaWiki API call
-            fill: false,
-            borderColor: '#000000',
-            hoverBackgroundColor: '#ffe3ea',
-            pointBackgroundColor: '#ffe3ea',
-            tension: 0.1,
-            borderWidth: 3,
-        },
-        {
-            label: lastYear,
-            data: [], // Will be populated through a MediaWiki API call
-            fill: false,
-            borderColor: '#9e9e9e',
-            hoverBackgroundColor: '#bdbdbd',
-            pointBackgroundColor: '#bdbdbd',
-            tension: 0.1,
-            borderWidth: 3,
-        },
-        {
-            label: twoYearsAgo,
-            data: [],
-            fill: false,
-            borderColor: '#cacaca',
-            hoverBackgroundColor: '#f5f5f5',
-            pointBackgroundColor: '#f5f5f5',
-            tension: 0.1,
-            borderWidth: 3,
-        },
-        {
-            label: threeYearsAgo,
-            data: [],
-            fill: false,
-            borderColor: '#d8d8d8',
-            hoverBackgroundColor: '#eaeaea',
-            pointBackgroundColor: '#eaeaea',
-            tension: 0.1,
-            borderWidth: 3,
-        }
+        yearDataset(thisYear),
+        yearDataset(lastYear),
+        yearDataset(twoYearsAgo),
+        yearDataset(threeYearsAgo),
     ]
 }
 

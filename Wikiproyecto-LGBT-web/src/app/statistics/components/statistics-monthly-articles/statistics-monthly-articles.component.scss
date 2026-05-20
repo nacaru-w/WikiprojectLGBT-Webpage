@@ -1,0 +1,62 @@
+@use 'variables';
+
+// Pinned to the top-left corner of the .chart-container card (its positioned
+// ancestor). A plain gray icon button, in keeping with the project's palette.
+.year-filter-btn {
+    position: absolute;
+    top: 0.75em;
+    left: 0.75em;
+    z-index: 2;
+    margin: 0;
+    padding: 0.35em 0.45em;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: variables.$gray-light;
+    color: black;
+    box-shadow: black 2px 2px;
+
+    &:hover {
+        background-color: variables.$gray;
+    }
+
+    svg {
+        display: block;
+        width: 1.2em;
+        height: 1.2em;
+        fill: currentColor;
+    }
+}
+
+// The modal markup lives in this component's template, so these rules layer on
+// top of the global .modal-content / .modal-body theme defined in styles.scss.
+.modal-body {
+    .filter-help {
+        font-family: variables.$font-family-sans-serif;
+        letter-spacing: -0.1em;
+        margin-bottom: 1em;
+    }
+
+    .year-filter-list {
+        display: flex;
+        flex-direction: column;
+        gap: 0.6em;
+        width: fit-content;
+        margin-inline: auto;
+    }
+
+    .form-check-input,
+    .form-check-input:checked,
+    .form-check-input:focus {
+        border: solid black 2px;
+        box-shadow: black 1px 1px;
+        cursor: pointer;
+    }
+
+    .form-check-label {
+        font-family: variables.$font-family-sans-serif;
+        font-weight: bold;
+        letter-spacing: -0.1em;
+        cursor: pointer;
+    }
+}

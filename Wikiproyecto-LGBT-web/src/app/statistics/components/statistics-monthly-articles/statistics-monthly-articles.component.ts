@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 
 import { BaseChartDirective } from 'ng2-charts';
 import { Chart } from 'chart.js/auto';
@@ -6,8 +6,17 @@ import { Chart } from 'chart.js/auto';
 import { MediawikiService } from '../../../services/mediawiki.service';
 
 import { lastYear, monthlyCountData, monthlyCountOptions, thisYear, threeYearsAgo, twoYearsAgo } from '../../chart_data/monthly-count-data';
+import { palerColorForYear } from '../../chart_data/utils';
 
 import { MonthlyOccurencesModel } from '../../models/monthly-occurences-model';
+
+interface YearFilter {
+  label: string;
+  datasetIndex: number;
+  visible: boolean;
+  // Pale tint of this year's line colour, used as the switch's background.
+  paleColor: string;
+}
 
 @Component({
   selector: 'app-statistics-monthly-articles',
@@ -22,6 +31,14 @@ export class StatisticsMonthlyArticlesComponent implements OnInit {
 
   monthlyArticlesChart: any;
   thisMonthArticleCount: number = 0;
+
+  // One entry per dataset in monthlyCountData (index 0 = current year ... index 3 = three years ago).
+  yearFilters = signal<YearFilter[]>([
+    { label: thisYear, datasetIndex: 0, visible: true, paleColor: palerColorForYear(thisYear) },
+    { label: lastYear, datasetIndex: 1, visible: true, paleColor: palerColorForYear(lastYear) },
+    { label: twoYearsAgo, datasetIndex: 2, visible: true, paleColor: palerColorForYear(twoYearsAgo) },
+    { label: threeYearsAgo, datasetIndex: 3, visible: true, paleColor: palerColorForYear(threeYearsAgo) },
+  ]);
 
   ngOnInit(): void {
     this.createMonthlyArticlesChart();
@@ -125,6 +142,25 @@ export class StatisticsMonthlyArticlesComponent implements OnInit {
       data: monthlyCountData,
       options: monthlyCountOptions
     })
+  }
+
+  toggleYear(datasetIndex: number): void {
+    this.yearFilters.update(filters =>
+      filters.map(filter =>
+        filter.datasetIndex === datasetIndex ? { ...filter, visible: !filter.visible } : filter
+      )
+    );
+    this.applyYearFilters();
+  }
+
+  private applyYearFilters(): void {
+    if (!this.monthlyArticlesChart) {
+      return;
+    }
+    for (const filter of this.yearFilters()) {
+      this.monthlyArticlesChart.setDatasetVisibility(filter.datasetIndex, filter.visible);
+    }
+    this.monthlyArticlesChart.update();
   }
 
   animateThisMonthArticleCount(totalCount: number): void {
