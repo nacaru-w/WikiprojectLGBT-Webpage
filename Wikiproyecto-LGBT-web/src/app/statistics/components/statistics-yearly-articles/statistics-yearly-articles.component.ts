@@ -5,12 +5,10 @@ import { MediawikiService } from '../../../services/mediawiki.service';
 
 import { articlesPerYearData, articlesPerYearOptions } from '../../chart_data/article-count-chart-data';
 
-import { BaseChartDirective } from 'ng2-charts';
-
 @Component({
   selector: 'app-statistics-yearly-articles',
   standalone: true,
-  imports: [BaseChartDirective],
+  imports: [],
   templateUrl: './statistics-yearly-articles.component.html',
   styleUrl: './statistics-yearly-articles.component.scss',
 })

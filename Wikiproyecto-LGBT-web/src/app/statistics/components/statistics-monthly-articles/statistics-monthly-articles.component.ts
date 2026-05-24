@@ -1,6 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
 
-import { BaseChartDirective } from 'ng2-charts';
 import { Chart } from 'chart.js/auto';
 
 import { MediawikiService } from '../../../services/mediawiki.service';
@@ -12,7 +11,7 @@ import { MonthlyOccurencesModel } from '../../models/monthly-occurences-model';
 @Component({
   selector: 'app-statistics-monthly-articles',
   standalone: true,
-  imports: [BaseChartDirective],
+  imports: [],
   templateUrl: './statistics-monthly-articles.component.html',
   styleUrl: './statistics-monthly-articles.component.scss'
 })

@@ -1,7 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 
 import { Chart } from 'chart.js/auto';
-import { BaseChartDirective } from 'ng2-charts';
 
 import { participantCountData, participantCountOptions } from '../../chart_data/participant-count-chat-data';
 import { newParticipants2021, newParticipants2022, newParticipants2023, newParticipants2024, newParticipants2025 } from '../../chart_data/utils';
@@ -11,7 +10,7 @@ import { MediawikiService } from '../../../services/mediawiki.service';
 @Component({
   selector: 'app-statistics-participants',
   standalone: true,
-  imports: [BaseChartDirective],
+  imports: [],
   templateUrl: './statistics-participants.component.html',
   styleUrl: './statistics-participants.component.scss'
 })

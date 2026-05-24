@@ -3,7 +3,6 @@ import { NgbAccordionModule, NgbCollapse, NgbScrollSpyModule } from '@ng-bootstr
 import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { MediawikiService } from '../../../services/mediawiki.service';
-import { BaseChartDirective } from 'ng2-charts';
 import { CommonModule } from '@angular/common';
 import { Chart } from 'chart.js/auto';
 import { CardPreview } from '../../models/card-preview';
@@ -27,7 +26,6 @@ import { popAnimation } from '../../../animations/animations';
     NgbDropdownModule,
     NgbScrollSpyModule,
     NgbCollapse,
-    BaseChartDirective,
     CommonModule,
   ],
   templateUrl: './statistics-main.component.html',
