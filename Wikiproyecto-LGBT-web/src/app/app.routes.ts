@@ -14,7 +14,7 @@ import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' },
-    { path: 'home', component: MainPageComponent, data: { animation: ['HomePage', 'footerAnimation'] } },
+    { path: 'home', component: MainPageComponent, data: { animation: ['HomePage', 'footerAnimation'], deferLoader: true } },
     { path: 'blog', component: BlogMainComponent, data: { animation: ['BlogPage', 'footerAnimation'] } },
     { path: 'form', component: FormMainComponent, data: { animation: ['FormPage', 'footerAnimation'] } },
     { path: 'stats', component: StatisticsSharedComponent, data: { animation: ['StatisticsPage', 'footerAnimation'] } },

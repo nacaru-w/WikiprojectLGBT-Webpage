@@ -1,9 +1,11 @@
 
-import { Component, InjectionToken, OnInit, inject, signal } from '@angular/core';
+import { Component, InjectionToken, OnInit, PLATFORM_ID, effect, inject, signal } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { RouterOutlet, Router, NavigationStart, NavigationEnd } from '@angular/router';
 import { FooterComponent } from './shared/components/footer/footer.component';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { footerAnimations, slideInAnimation } from './animations/animations';
+import { LoadingService } from './services/loading.service';
 
 import { ChildrenOutletContexts } from '@angular/router';
 
@@ -25,9 +27,32 @@ import { ChildrenOutletContexts } from '@angular/router';
 export class AppComponent implements OnInit {
   private contexts = inject(ChildrenOutletContexts);
   private router = inject(Router);
+  private loading = inject(LoadingService);
+  private platformId = inject(PLATFORM_ID);
 
   title: string = 'Wikiproyecto-LGBT-web';
   footerAnimationState = signal<string>('visible');
+
+  private loaderDismissed = false;
+
+  constructor() {
+    // Fade out the initial loading screen (declared in index.html) once the
+    // active page reports it is ready, then remove it from the DOM. Runs only
+    // in the browser, so `document` is safe to use inside dismissLoader().
+    effect(() => {
+      const ready = this.loading.ready();
+      if (this.loaderDismissed || !isPlatformBrowser(this.platformId) || !ready) {
+        return;
+      }
+      this.loaderDismissed = true;
+      this.dismissLoader();
+    });
+
+    // Safety net: never let the loader hang if a page's data never arrives.
+    if (isPlatformBrowser(this.platformId)) {
+      setTimeout(() => this.loading.markReady(), 12000);
+    }
+  }
 
   ngOnInit() {
     this.router.events.subscribe(event => {
@@ -35,8 +60,38 @@ export class AppComponent implements OnInit {
         this.hideFooter();
       } else if (event instanceof NavigationEnd) {
         setTimeout(() => this.showFooter(), 500);  // Adjust the timeout if needed
+        // Pages that don't defer the loader (everything but the home page) are
+        // ready as soon as they render, so dismiss the loader straight away.
+        if (!this.routeDefersLoader()) {
+          this.loading.markReady();
+        }
       }
     });
+  }
+
+  private routeDefersLoader(): boolean {
+    return !!this.contexts.getContext('primary')?.route?.snapshot?.data?.['deferLoader'];
+  }
+
+  private dismissLoader(): void {
+    const loader = document.getElementById('app-loading');
+    if (!loader) {
+      this.loading.markLoaderGone();
+      return;
+    }
+    let finished = false;
+    const done = () => {
+      if (finished) {
+        return;
+      }
+      finished = true;
+      loader.remove();
+      this.loading.markLoaderGone();
+    };
+    loader.classList.add('app-loading--hidden');
+    loader.addEventListener('transitionend', done, { once: true });
+    // Fallback in case the transition never fires (e.g. reduced motion).
+    setTimeout(done, 800);
   }
 
   hideFooter() {

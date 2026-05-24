@@ -12,10 +12,81 @@
   <!-- <link
     href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&family=Lexend+Deca:wght@100..900&family=Lexend+Exa:wght@100..900&family=Lexend+Mega:wght@100..900&family=Lexend:wght@100..900&display=swap"
     rel="stylesheet"> -->
+
+  <!-- Initial loading screen. Inlined so it paints immediately (before the JS
+       bundle / styles load), covering the blank background on first load. It is
+       a sibling of <app-root> so it never interferes with SSR hydration, and is
+       faded out + removed by AppComponent once Angular has rendered. -->
+  <style>
+    #app-loading {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1.25rem;
+      background-color: #f5f5f5;
+      background-image: url('assets/imgs/background_dot.svg');
+      background-repeat: repeat;
+      opacity: 1;
+      /* `backwards` shows the from-state (opacity 0) before the fade-in starts;
+         no `forwards`, so the settled opacity (1) comes from the rule above and
+         the fade-out transition below can take over on dismiss. */
+      animation: app-loading-fade-in 0.35s ease backwards;
+      transition: opacity 0.5s ease;
+    }
+
+    #app-loading.app-loading--hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    #app-loading .app-loading__barba {
+      width: 120px;
+      max-width: 40vw;
+      height: auto;
+      animation: app-loading-float 2.4s ease-in-out infinite;
+      filter: drop-shadow(0 12px 9px rgba(0, 0, 0, 0.12));
+    }
+
+    #app-loading .app-loading__text {
+      margin: 0;
+      font-family: "Lexend Mega", "Lexend", sans-serif;
+      font-weight: 700;
+      letter-spacing: -0.05em;
+      color: #000;
+    }
+
+    @keyframes app-loading-fade-in {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* Ghost-like hover: bobs up and down while gently pulsing its opacity. */
+    @keyframes app-loading-float {
+      0%, 100% { transform: translateY(0); opacity: 0.85; }
+      50% { transform: translateY(-14px); opacity: 1; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #app-loading,
+      #app-loading .app-loading__barba {
+        animation: none;
+        opacity: 1;
+      }
+    }
+  </style>
 </head>
 
 <body>
   <app-root></app-root>
+
+  <div id="app-loading">
+    <img class="app-loading__barba" src="assets/imgs/Barba-wikiproyecto-lgbt.svg" alt="" aria-hidden="true">
+    <p class="app-loading__text">Cargando...</p>
+  </div>
 </body>
 
 </html>

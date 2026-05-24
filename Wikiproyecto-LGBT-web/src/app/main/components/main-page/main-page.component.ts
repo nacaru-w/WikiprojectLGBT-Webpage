@@ -1,6 +1,7 @@
-import { AfterViewInit, Component, OnInit, inject, signal } from '@angular/core';
+import { AfterViewInit, Component, OnInit, computed, inject, signal } from '@angular/core';
 import { NgbCarouselConfig, NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 import { MediawikiService } from '../../../services/mediawiki.service';
+import { LoadingService } from '../../../services/loading.service';
 import { popAnimation } from '../../../animations/animations';
 
 
@@ -15,8 +16,14 @@ import { popAnimation } from '../../../animations/animations';
 })
 export class MainPageComponent implements OnInit {
   private mediaWikiService = inject(MediawikiService);
+  private loading = inject(LoadingService);
 
+  // True once the "Evento del mes" data has been fetched.
   isAllLoaded = signal(false);
+
+  // The blocks only appear once their data is ready AND the Barba loader has
+  // finished fading out, so the loader and the blocks' intro never overlap.
+  blocksReady = computed(() => this.isAllLoaded() && this.loading.loaderGone());
 
   images: string[] = [
     './../assets/imgs/Wikipedia_20_pink_star.svg',
@@ -40,10 +47,22 @@ export class MainPageComponent implements OnInit {
   }
 
   getEventoDelMesInfo(): void {
-    this.mediaWikiService.getPageContent('Wikiproyecto:LGBT/Evento del mes').subscribe((res => {
-      this.processEventoDelMesString(res);
-      this.isAllLoaded.set(true);
-    }))
+    this.mediaWikiService.getPageContent('Wikiproyecto:LGBT/Evento del mes').subscribe({
+      next: (res) => {
+        this.processEventoDelMesString(res);
+        this.reveal();
+      },
+      // Even on error, reveal the page so the loader doesn't hang forever.
+      error: () => this.reveal(),
+    });
+  }
+
+  // Marks the data as loaded and tells the loader it may fade out. AppComponent
+  // then signals loaderGone(), which flips blocksReady() and triggers the
+  // blocks' pop-in animation.
+  private reveal(): void {
+    this.isAllLoaded.set(true);
+    this.loading.markReady();
   }
 
   processEventoDelMesString(str: string): void {
