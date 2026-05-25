@@ -1,8 +1,8 @@
 @if (showSpinner()) {
-  <div class="spinner-container text-secondary">
-    <div class="spinner-grow" role="status">
-      <span class="visually-hidden">{{ 'common.loading' | translate }}</span>
-    </div>
+  <div class="barba-loader">
+    <img class="barba-loader-img" src="./../../../../assets/imgs/Barba-wikiproyecto-lgbt.svg" alt=""
+      aria-hidden="true">
+    <span class="barba-loader-label">{{ 'common.loading' | translate }}</span>
   </div>
 }
 @if (isDictFull(cardDict)) {
@@ -10,7 +10,13 @@
     @for (item of cardDict | keyvalue; track item; let i = $index) {
       <div class="card" style="width: 18rem;">
         <div class="card-img-container">
-          <img src={{item.value.image}} class="card-img-top" alt="...">
+          @if (item.value.hasImage) {
+            <img src="{{item.value.image}}" class="card-img-top" alt="">
+          } @else {
+            <img src="{{item.value.image}}" class="card-img-top" alt="" #pop="ngbPopover"
+              [ngbPopover]="noImageInfo" triggers="manual" popoverClass="notable-popover" container="body"
+              (mouseenter)="openNoImagePopover(pop, item.value.wikidataId)" (mouseleave)="scheduleClose()">
+          }
         </div>
         <div class="card-body">
           <h5 class="card-title">{{ item.key }}</h5>
@@ -25,3 +31,13 @@
     }
   </div>
 }
+
+<!-- Shared "no image" popover. Declared here so component styles apply even with
+     container="body"; it reads the hovered card's Wikidata id for the link. -->
+<ng-template #noImageInfo>
+  <span class="no-image-popover" (mouseenter)="cancelClose()" (mouseleave)="scheduleClose()">
+    {{ 'stats.lastArticles.noImage' | translate }}
+    <a [href]="'https://www.wikidata.org/wiki/' + activeWikidataId()" target="_blank"
+      rel="noopener">{{ 'stats.lastArticles.here' | translate }}</a>.
+  </span>
+</ng-template>

@@ -1,6 +1,34 @@
-.spinner-container {
-    width: 2em;
-    margin: 0 auto;
-    padding-block: 4em;
+@use 'variables';
 
+// The loading state uses the shared global .barba-loader (see styles.scss).
+
+// Pin the "See on Wikipedia" button to the bottom of every card, whatever the
+// preview length. Cards stretch to equal height in the flex row; the button is
+// pushed down with margin-top: auto inside the column-flex card body.
+.card {
+    .card-body {
+        display: flex;
+        flex-direction: column;
+
+        .btn {
+            margin-top: auto;
+        }
+    }
+}
+
+// "No image" popover content. Declared in this component (so these styles apply
+// even though the popover window is appended to <body>); the box itself is
+// themed by the shared .notable-popover class.
+.no-image-popover {
+    font-family: variables.$body-font;
+
+    a {
+        color: variables.$deep-dark-primary;
+        text-decoration: wavy underline;
+        font-weight: bold;
+
+        &:hover {
+            color: variables.$dark-primary;
+        }
+    }
 }
