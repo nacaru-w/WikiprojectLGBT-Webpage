@@ -61,6 +61,11 @@
         transform: scale(1);
     }
 
+    /* Keep the underline shown for the section named by the URL fragment. */
+    .stats-navbar-option.active>a::after {
+        transform: scale(1);
+    }
+
 }
 
 .stats-introduction {
@@ -92,4 +97,31 @@
         color: variables.$deep-dark-primary;
     }
 
+}
+
+// Empty state shown before a section is picked. Unlike .stats-introduction it
+// stays visible in portrait, so the prompt is present on mobile too.
+.stats-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75em;
+    width: min(900px, 95%);
+    margin: 1.5em auto;
+    padding: 1em;
+    text-align: center;
+
+    .placeholder-barba {
+        width: min(240px, 60vw);
+        height: auto;
+        filter: drop-shadow(0 8px 7px rgba(0, 0, 0, 0.12));
+    }
+
+    .placeholder-label {
+        margin: 0;
+        font-family: variables.$font-family-sans-serif;
+        font-weight: bold;
+        letter-spacing: -0.05em;
+        color: black;
+    }
 }
