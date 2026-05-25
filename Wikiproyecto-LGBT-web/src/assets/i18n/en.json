@@ -129,6 +129,7 @@
     "intro2": "Using the top menu, you can browse through the different data gathered from the work of the people who make up the project. They are live figures, so don't be surprised if you see them change from one moment to the next!",
     "articlesUnit": "articles",
     "participantsUnit": "people",
+    "pickSection": "Pick one of the sections in the menu above",
     "nav": {
       "yearlyArticles": "Articles per year",
       "monthlyArticles": "Articles per month",
@@ -152,7 +153,24 @@
       "text1": "<a href=\"https://es.wikipedia.org/wiki/Wikipedia:Art%C3%ADculos_destacados\">Featured articles</a> and <a href=\"https://es.wikipedia.org/wiki/Wikipedia:Art%C3%ADculos_buenos\">good articles</a> represent the highest level of quality within Wikipedia.",
       "text2": "At the LGBT+ WikiProject we are aware of this, so we have worked over the years to bring many of the pages we build up to this level.",
       "featured": "Featured articles",
-      "good": "Good articles"
+      "good": "Good articles",
+      "noPreview": "No preview available",
+      "by": "by",
+      "filter": {
+        "button": "Filter",
+        "title": "Filter articles",
+        "year": "Year",
+        "author": "Author",
+        "clear": "Clear filters",
+        "done": "Done",
+        "showing": "Showing {{count}} articles",
+        "search": "Search…",
+        "noMatches": "No matches"
+      }
+    },
+    "lastArticles": {
+      "noImage": "This article does not have an image, you can add one",
+      "here": "here"
     },
     "chart": {
       "currentYear": "Current year",

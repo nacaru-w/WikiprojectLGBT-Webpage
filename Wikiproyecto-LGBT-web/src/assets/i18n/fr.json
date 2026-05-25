@@ -129,6 +129,7 @@
     "intro2": "À l'aide du menu supérieur, tu peux parcourir les différentes données recueillies grâce au travail des personnes qui composent le projet. Ce sont des données en temps réel, alors ne sois pas surpris·e si elles changent d'un instant à l'autre !",
     "articlesUnit": "articles",
     "participantsUnit": "personnes",
+    "pickSection": "Choisis l'une des sections du menu ci-dessus",
     "nav": {
       "yearlyArticles": "Articles par an",
       "monthlyArticles": "Articles par mois",
@@ -152,7 +153,24 @@
       "text1": "Les <a href=\"https://es.wikipedia.org/wiki/Wikipedia:Art%C3%ADculos_destacados\">articles de qualité</a> et les <a href=\"https://es.wikipedia.org/wiki/Wikipedia:Art%C3%ADculos_buenos\">bons articles</a> représentent le plus haut niveau de qualité au sein de Wikipédia.",
       "text2": "Au sein du Projet LGBT+, nous en sommes conscient·es, c'est pourquoi nous avons travaillé au fil des ans pour amener à ce niveau bon nombre des pages que nous construisons.",
       "featured": "Articles de qualité",
-      "good": "Bons articles"
+      "good": "Bons articles",
+      "noPreview": "Aucun aperçu disponible",
+      "by": "par",
+      "filter": {
+        "button": "Filtrer",
+        "title": "Filtrer les articles",
+        "year": "Année",
+        "author": "Auteur",
+        "clear": "Effacer les filtres",
+        "done": "Terminé",
+        "showing": "{{count}} articles affichés",
+        "search": "Rechercher…",
+        "noMatches": "Aucun résultat"
+      }
+    },
+    "lastArticles": {
+      "noImage": "Cet article n'a pas d'image, vous pouvez en ajouter une",
+      "here": "ici"
     },
     "chart": {
       "currentYear": "Année en cours",
