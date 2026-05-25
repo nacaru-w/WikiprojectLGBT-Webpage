@@ -3,44 +3,44 @@
     <img src="assets/imgs/Barbas/editor/barba_editor_{{barba}}.svg" class="card-img-top" alt="...">
   </div>
   <div class="card-body text-center">
-    <p class="card-statement">¿Ya tienes una cuenta Wikimedia?</p>
+    <p class="card-statement">{{ 'form.hasAccount' | translate }}</p>
     <a href="https://es.wikipedia.org/wiki/Wikiproyecto:LGBT/participantes" class="btn btn-primary">
-      Inscríbete
+      {{ 'form.signUp' | translate }}
     </a>
   </div>
 </div>
 <form [formGroup]="webForm" (ngSubmit)="onSubmit()">
   <div class="mb-2">
-    <label for="pronouns" class="form-label">¿Cómo quieres que nos refiramos a ti?</label>
-    <select class="form-box form-select pronouns" aria-label="Determinantes de género" id="pronouns"
+    <label for="pronouns" class="form-label">{{ 'form.pronounsLabel' | translate }}</label>
+    <select class="form-box form-select pronouns" [attr.aria-label]="'form.pronounsAria' | translate" id="pronouns"
       formControlName="pronouns" (change)="otherPronounsChosen()">
-      <option class="dropdown-item">Él</option>
-      <option class="dropdown-item" selected>Ella</option>
-      <option class="dropdown-item">Elle</option>
-      <option class="dropdown-item">Sin determinar/otro</option>
+      <option class="dropdown-item" value="he">{{ 'form.pronouns.he' | translate }}</option>
+      <option class="dropdown-item" value="she" selected>{{ 'form.pronouns.she' | translate }}</option>
+      <option class="dropdown-item" value="they">{{ 'form.pronouns.they' | translate }}</option>
+      <option class="dropdown-item" value="other">{{ 'form.pronouns.other' | translate }}</option>
     </select>
   </div>
   @if (showOtherPronounsField()) {
     <div class="mb-2">
-      <label for="otherPronouns" class="form-label">Escribe aquí cómo deseas que nos dirijamos a ti</label>
+      <label for="otherPronouns" class="form-label">{{ 'form.otherPronounsLabel' | translate }}</label>
       <input id="otherPronouns" class="form-box form-control" formControlName="otherPronouns">
     </div>
   }
   <div class="mb-2">
-    <label for="name" class="form-label">Nombre o alias*</label>
+    <label for="name" class="form-label">{{ 'form.nameLabel' | translate }}</label>
     <input class="form-box form-control" id="name" aria-describedby="name" formControlName="name">
     <div class="formError" [ngClass]="{'hidden': !isFieldInvalid('name')}">{{getErrorMessage('name')}}</div>
   </div>
   <div class="mb-2">
-    <label for="email" class="form-label">Dirección de correo electrónico*</label>
+    <label for="email" class="form-label">{{ 'form.emailLabel' | translate }}</label>
     <input type="email" class="form-box form-control" id="email" aria-describedby="emailHelp"
       formControlName="email">
-    <div id="emailHelp" class="form-text">Nunca compartiremos tu dirección con otras personas</div>
+    <div id="emailHelp" class="form-text">{{ 'form.emailHelp' | translate }}</div>
     <div class="formError" [ngClass]="{'hidden': !isFieldInvalid('email')}">{{getErrorMessage('email')}}</div>
   </div>
   <div class="mb-2">
     <label for="whyTextarea" class="form-label">
-      Cuéntanos por qué quieres formar parte de WMLGBT+
+      {{ 'form.whyLabel' | translate }}
     </label>
     <textarea class="form-control text-area" aria-label="textarea" id="whyTextarea"
     formControlName="reason"></textarea>
@@ -49,7 +49,7 @@
     <input class="form-check-input" type="checkbox" value="" id="wikimediaAccount"
       formControlName="wikimediaAccount">
     <label class="form-check-label" for="wikimediaAccount">
-      Tengo cuenta en los proyectos Wikimedia
+      {{ 'form.hasWikimediaAccount' | translate }}
     </label>
   </div>
   @if (showValue('wikimediaAccount')) {
@@ -69,34 +69,28 @@
   <div class="form-check mb-2">
     <input class="form-check-input" type="checkbox" value="" id="attendedEvent" formControlName="attendedEvent">
     <label class="form-check-label" for="flexRadioDefault1">
-      He participado en algún evento WMLGBT+ organizado por la Fundación Wikimedia
+      {{ 'form.attendedEvent' | translate }}
     </label>
   </div>
   @if (showValue('attendedEvent')) {
     <div class="input-group mb-2">
-      <span class="input-group-text" id="basic-addon1">Evento</span>
-      <input type="text" class="input-group-box form-control" placeholder="Nombre del evento" aria-label="Username"
+      <span class="input-group-text" id="basic-addon1">{{ 'form.eventLabel' | translate }}</span>
+      <input type="text" class="input-group-box form-control" [placeholder]="'form.eventNamePlaceholder' | translate" aria-label="Username"
         aria-describedby="basic-addon1" formControlName="attendedEventName">
     </div>
   }
   <div class="form-check form-switch mb-2">
     <input class="form-check-input" type="checkbox" role="switch" id="readPolicy" formControlName="readPolicy">
-    <label class="form-check-label" for="readPolicy">Estoy de acuerdo con el <a target="_blank"
-      href="https://foundation.wikimedia.org/wiki/Policy:Universal_Code_of_Conduct/es">Código Universal de
-    Conducta</a> y la <a target="_blank"
-    href="https://meta.wikimedia.org/wiki/Friendly_space_policies/es">Política de
-  Espacios Amigables</a> de la Fundación Wikimedia*</label>
+    <label class="form-check-label" for="readPolicy" [innerHTML]="'form.agreeConduct' | translate"></label>
 </div>
 <div class="form-check form-switch mb-2">
   <input class="form-check-input" type="checkbox" role="switch" id="readPrivacy" formControlName="readPrivacy">
-  <label class="form-check-label" for="readPrivacy">He leído y acepto la <a target="_blank"
-    href="/privacy">política de
-  privacidad</a>*</label>
+  <label class="form-check-label" for="readPrivacy" [innerHTML]="'form.agreePrivacy' | translate"></label>
 </div>
 <div class="submit-button-container d-grid col-6 mx-auto">
   <button type="submit" class="btn btn-primary mx-auto" data-bs-toggle="modal" data-bs-target="#formConfirm"
     [ngClass]="{'disabled' : !isFormValid()}" [@buttonState]="isFormValid() ? 'enabled' : 'disabled'">
-    Enviar
+    {{ 'form.submit' | translate }}
   </button>
 </div>
 
@@ -110,7 +104,7 @@
           @if (showSubmitSpinner()) {
             <div class="spinner-border" role="status"></div>
           }
-          {{formSendDataStatus}}
+          {{ formSendDataStatus | translate }}
         </h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>

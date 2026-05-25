@@ -115,7 +115,10 @@ form {
         margin-bottom: 1.5em;
     }
 
-    a {
+    // The policy/privacy consent labels are rendered via [innerHTML] (they carry
+    // translated links), so their <a> elements aren't tagged for view
+    // encapsulation — reach into them with ::ng-deep, kept scoped under form.
+    ::ng-deep a {
         color: black;
         text-decoration: wavy underline;
         /* Add underline */
@@ -124,7 +127,7 @@ form {
         font-weight: normal;
     }
 
-    a:hover {
+    ::ng-deep a:hover {
         color: variables.$deep-dark-primary;
     }
 

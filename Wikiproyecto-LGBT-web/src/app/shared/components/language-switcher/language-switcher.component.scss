@@ -1,0 +1,52 @@
+@use "_variables";
+
+.lang-switcher {
+    display: inline-block;
+
+    .lang-toggle {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4em;
+        padding: 0.25em 0.6em;
+        font-family: variables.$font-family-sans-serif;
+        font-weight: bold;
+        color: black;
+        background-color: transparent;
+        border: solid black 2px;
+        border-radius: 0.5em;
+        cursor: pointer;
+        transition: background-color 0.2s ease, transform 0.2s ease;
+
+        .lang-globe {
+            font-size: 1.1em;
+            line-height: 1;
+        }
+
+        &:hover,
+        &:focus-visible {
+            background-color: variables.$info;
+        }
+
+        // ng-bootstrap renders the caret via the .dropdown-toggle::after it adds;
+        // nudge it so it sits comfortably next to the label.
+        &::after {
+            margin-left: 0.1em;
+        }
+    }
+
+    .lang-item {
+        font-family: variables.$font-family-sans-serif;
+        font-weight: bold;
+        cursor: pointer;
+
+        &.active {
+            background-color: variables.$secondary;
+            color: black;
+        }
+
+        &:hover:not(.active),
+        &:focus {
+            background-color: variables.$light;
+        }
+    }
+}

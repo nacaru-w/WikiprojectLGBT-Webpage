@@ -78,14 +78,17 @@
     box-shadow: black 4px 4px;
     background-color: variables.$lighter-orange;
 
-    a {
+    // The intro paragraph is rendered via [innerHTML] (it carries a translated
+    // link), so its <a> isn't tagged for view encapsulation — reach into it
+    // with ::ng-deep, kept scoped under .stats-introduction.
+    ::ng-deep a {
         color: black;
         text-decoration: wavy underline;
         transition: color 0.3s ease-in-out;
         font-weight: normal;
     }
 
-    a:hover {
+    ::ng-deep a:hover {
         color: variables.$deep-dark-primary;
     }
 

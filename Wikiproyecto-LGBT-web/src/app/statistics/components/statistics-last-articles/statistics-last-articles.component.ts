@@ -9,11 +9,12 @@ import { ChangeDetectorRef } from '@angular/core';
 import { popAnimation } from '../../../animations/animations';
 import { BarbaService } from '../../../services/barba.service';
 import { unescapeInvalidCharacters } from '../../../utils/utils';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-statistics-last-articles',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslatePipe],
   templateUrl: './statistics-last-articles.component.html',
   styleUrl: './statistics-last-articles.component.scss',
   animations: [popAnimation]

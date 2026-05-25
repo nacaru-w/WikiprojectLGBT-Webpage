@@ -4,28 +4,27 @@
             <div class="link-list">
                 <ul>
                     <li class="list-item">
-                        <a href="https://meta.wikimedia.org/wiki/Wikimedia_LGBT%2B/Portal" target="_blank">Meta</a>
+                        <a href="https://meta.wikimedia.org/wiki/Wikimedia_LGBT%2B/Portal" target="_blank">{{ 'footer.meta' | translate }}</a>
                     </li>
                     <li class="list-item">
-                        <a routerLink="/blog-admin">Blog panel</a>
+                        <a routerLink="/blog-admin">{{ 'footer.blogPanel' | translate }}</a>
                     </li>
                     <li class="list-item">
-                        <a [href]="isAuth() ? '/logout' : '/login'">{{isAuth() ? 'Cerrar sesión' : 'Admin login'}}</a>
+                        <a [href]="isAuth() ? '/logout' : '/login'">{{ (isAuth() ? 'footer.logout' : 'footer.adminLogin') | translate }}</a>
                     </li>
                 </ul>
             </div>
             <div class="link-list">
                 <ul>
                     <li class="list-item">
-                        <a href="/privacy">Política de privacidad</a>
+                        <a href="/privacy">{{ 'footer.privacyPolicy' | translate }}</a>
                     </li>
                     <li class="list-item">
-                        <a href="/attribution">Atribución</a>
+                        <a href="/attribution">{{ 'footer.attribution' | translate }}</a>
                     </li>
                     <li class="list-item">
                         <a target="_blank"
-                            href="https://foundation.wikimedia.org/wiki/Policy:Universal_Code_of_Conduct/es">Código
-                            Universal de Conducta</a>
+                            href="https://foundation.wikimedia.org/wiki/Policy:Universal_Code_of_Conduct/es">{{ 'footer.codeOfConduct' | translate }}</a>
                     </li>
                 </ul>
             </div>

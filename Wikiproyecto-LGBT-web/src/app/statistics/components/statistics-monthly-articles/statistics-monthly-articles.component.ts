@@ -1,4 +1,5 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { Chart } from 'chart.js/auto';
 
@@ -7,17 +8,27 @@ import { MediawikiService } from '../../../services/mediawiki.service';
 import { lastYear, monthlyCountData, monthlyCountOptions, thisYear, threeYearsAgo, twoYearsAgo } from '../../chart_data/monthly-count-data';
 
 import { MonthlyOccurencesModel } from '../../models/monthly-occurences-model';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+
+// Keys for the x-axis month labels (translated at chart creation). Distinct
+// from the Spanish month tokens used to parse the wiki source in this file.
+const MONTH_KEYS = [
+  'january', 'february', 'march', 'april', 'may', 'june',
+  'july', 'august', 'september', 'october', 'november', 'december',
+];
 
 @Component({
   selector: 'app-statistics-monthly-articles',
   standalone: true,
-  imports: [],
+  imports: [TranslatePipe],
   templateUrl: './statistics-monthly-articles.component.html',
   styleUrl: './statistics-monthly-articles.component.scss'
 })
 export class StatisticsMonthlyArticlesComponent implements OnInit {
 
   private mediawikiService = inject(MediawikiService);
+  private translate = inject(TranslateService);
+  private destroyRef = inject(DestroyRef);
 
   monthlyArticlesChart: any;
   thisMonthArticleCount: number = 0;
@@ -25,6 +36,10 @@ export class StatisticsMonthlyArticlesComponent implements OnInit {
   ngOnInit(): void {
     this.createMonthlyArticlesChart();
     this.getMonthlyArticlesInfo();
+    // Re-translate the chart labels whenever the language changes at runtime.
+    this.translate.onLangChange
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => this.applyChartLabels());
   }
 
   getMonthlyArticlesInfo(): void {
@@ -124,6 +139,18 @@ export class StatisticsMonthlyArticlesComponent implements OnInit {
       data: monthlyCountData,
       options: monthlyCountOptions
     })
+
+    this.applyChartLabels();
+  }
+
+  private applyChartLabels(): void {
+    if (!this.monthlyArticlesChart) {
+      return;
+    }
+    this.monthlyArticlesChart.data.labels = MONTH_KEYS.map(
+      key => this.translate.instant(`stats.chart.months.${key}`)
+    );
+    this.monthlyArticlesChart.update();
   }
 
   animateThisMonthArticleCount(totalCount: number): void {

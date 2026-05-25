@@ -11,20 +11,20 @@
               @switch (images.indexOf(image)) {
                 @case (0) {
                   <div class="carousel-caption image-1">
-                    <h3>Visibiliza</h3>
-                    <p>Aporta diversidad a la mayor enciclopedia</p>
+                    <h3>{{ 'home.carousel.visibilize.title' | translate }}</h3>
+                    <p>{{ 'home.carousel.visibilize.text' | translate }}</p>
                   </div>
                 }
                 @case (1) {
                   <div class="carousel-caption image-2">
-                    <h3>Vigila y protege</h3>
-                    <p>El contenido LGBT+ sufre mayor vandalismo</p>
+                    <h3>{{ 'home.carousel.protect.title' | translate }}</h3>
+                    <p>{{ 'home.carousel.protect.text' | translate }}</p>
                   </div>
                 }
                 @case (2) {
                   <div class="carousel-caption image-3">
-                    <h3>Únete</h3>
-                    <p>Cualquier persona puede editar Wikipedia</p>
+                    <h3>{{ 'home.carousel.join.title' | translate }}</h3>
+                    <p>{{ 'home.carousel.join.text' | translate }}</p>
                   </div>
                 }
               }
@@ -40,10 +40,8 @@
           <img [src]=eventoDelMesImage class="card-img-top" alt="...">
         </div>
         <div class="card-body">
-          <p class="card-statement">Evento del mes: <span class="pais">{{eventoDelMes}}</span></p>
-          <a href="https://es.wikipedia.org/wiki/Wikiproyecto:LGBT/Pa%C3%ADs_del_mes" class="btn btn-primary">Ver
-            en
-          Wikipedia</a>
+          <p class="card-statement">{{ 'home.eventOfMonth' | translate }} <span class="pais">{{eventoDelMes}}</span></p>
+          <a href="https://es.wikipedia.org/wiki/Wikiproyecto:LGBT/Pa%C3%ADs_del_mes" class="btn btn-primary">{{ 'common.viewOnWikipedia' | translate }}</a>
         </div>
       </div>
       <div class="card text-center" [@popAnimation]="blocksReady()">
@@ -52,9 +50,9 @@
             class="card-img-top" alt="...">
         </div>
         <div class="card-body">
-          <p class="card-statement">¿Echas de menos algún artículo?</p>
+          <p class="card-statement">{{ 'home.missingArticle' | translate }}</p>
           <a href="https://es.wikipedia.org/wiki/Wikiproyecto:LGBT/Solicitados"
-          class="btn btn-primary">¡Pídenoslo!</a>
+          class="btn btn-primary">{{ 'home.requestIt' | translate }}</a>
         </div>
       </div>
     </div>

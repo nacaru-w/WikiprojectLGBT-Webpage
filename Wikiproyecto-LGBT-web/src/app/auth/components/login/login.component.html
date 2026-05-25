@@ -1,12 +1,12 @@
 @if (isLoggedIn() !== null && !isLoggedIn()) {
 <div class="login-container" [@popAnimation]="animate()">
     <div class="mb-2">
-        El login de administradores se lleva a cabo a través de MediaWiki Oauth
+        {{ 'login.oauthInfo' | translate }}
     </div>
     <div class="submit-button-container">
         <a href="/login-mediawiki">
             <button type="button" class="btn btn-primary mx-auto" data-bs-toggle="modal" data-bs-target="#formConfirm">
-                Iniciar sesión
+                {{ 'login.signIn' | translate }}
             </button>
         </a>
     </div>
@@ -15,7 +15,7 @@
 @if (isLoggedIn() && !isAdmin()) {
 <div class="login-container" [@popAnimation]="animate()">
     <div class="mb-2">
-        Lo siento, pero parece que no perteneces al grupo de administradores.
+        {{ 'login.notAdmin' | translate }}
     </div>
 </div>
 }

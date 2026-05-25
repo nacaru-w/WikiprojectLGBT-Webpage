@@ -1,11 +1,12 @@
 import { AfterViewInit, Component, inject, signal } from '@angular/core';
 import { ApiService } from '../../../services/api.service';
 import { popAnimation } from '../../../animations/animations';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [],
+  imports: [TranslatePipe],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
   animations: [popAnimation]

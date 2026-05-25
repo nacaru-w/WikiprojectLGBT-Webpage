@@ -6,11 +6,12 @@ import { MediawikiService } from '../../../services/mediawiki.service';
 import { chartsSlideInOutAnimation, popAnimation } from '../../../animations/animations';
 
 import { NotableArticles } from '../../models/notable-articles';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-statistics-notable',
   standalone: true,
-  imports: [],
+  imports: [TranslatePipe],
   templateUrl: './statistics-notable.component.html',
   styleUrl: './statistics-notable.component.scss',
   animations: [popAnimation, chartsSlideInOutAnimation]

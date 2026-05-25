@@ -8,11 +8,12 @@ import { CommonModule } from '@angular/common';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 import { popAnimation } from '../../../animations/animations';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-blog-post',
   standalone: true,
-  imports: [DateFormatPipe, CommonModule],
+  imports: [DateFormatPipe, CommonModule, TranslatePipe],
   templateUrl: './blog-post.component.html',
   styleUrl: './blog-post.component.scss',
   animations: [popAnimation]

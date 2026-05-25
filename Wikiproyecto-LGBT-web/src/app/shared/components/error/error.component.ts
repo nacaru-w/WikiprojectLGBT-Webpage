@@ -1,10 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { BarbaService } from '../../../services/barba.service';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-error',
   standalone: true,
-  imports: [],
+  imports: [TranslatePipe],
   templateUrl: './error.component.html',
   styleUrl: './error.component.scss'
 })

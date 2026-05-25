@@ -1,0 +1,197 @@
+{
+  "common": {
+    "viewOnWikipedia": "Voir sur Wikipédia",
+    "loading": "Chargement..."
+  },
+  "header": {
+    "blog": "Blog",
+    "contact": "Contact",
+    "ourWork": "Notre travail"
+  },
+  "footer": {
+    "meta": "Meta",
+    "blogPanel": "Panneau du blog",
+    "adminLogin": "Connexion admin",
+    "logout": "Se déconnecter",
+    "privacyPolicy": "Politique de confidentialité",
+    "attribution": "Attribution",
+    "codeOfConduct": "Code de conduite universel"
+  },
+  "home": {
+    "carousel": {
+      "visibilize": {
+        "title": "Rends visible",
+        "text": "Apporte de la diversité à la plus grande encyclopédie"
+      },
+      "protect": {
+        "title": "Surveille et protège",
+        "text": "Le contenu LGBT+ subit davantage de vandalisme"
+      },
+      "join": {
+        "title": "Rejoins-nous",
+        "text": "Tout le monde peut modifier Wikipédia"
+      }
+    },
+    "eventOfMonth": "Événement du mois :",
+    "missingArticle": "Un article te manque ?",
+    "requestIt": "Demande-le nous !"
+  },
+  "error": {
+    "title404": "Erreur : 404",
+    "notFound": "Nous n'avons pas trouvé cette page"
+  },
+  "login": {
+    "oauthInfo": "La connexion des administrateurs se fait via MediaWiki OAuth",
+    "signIn": "Se connecter",
+    "notAdmin": "Désolé, mais il semble que tu n'appartiennes pas au groupe des administrateurs."
+  },
+  "blog": {
+    "loadError": "Oups, une erreur s'est produite",
+    "error500Title": "Erreur : 500",
+    "error404Title": "Erreur : 404",
+    "postNotFound": "Désolé ! Il semble que l'article de blog que tu cherches n'existe pas.",
+    "by": "par",
+    "admin": {
+      "id": "ID",
+      "date": "Date",
+      "author": "Auteur",
+      "title": "Titre",
+      "content": "Contenu",
+      "actions": "Actions",
+      "link": "Lien",
+      "edit": "Modifier",
+      "delete": "Supprimer",
+      "confirmDelete": "Sûr ?",
+      "error": "Erreur",
+      "newEntry": "Nouvelle entrée",
+      "logout": "Se déconnecter",
+      "greeting": "Bonjour, {{name}} !"
+    },
+    "edit": {
+      "idLabel": "ID :",
+      "authorLabel": "Auteur :",
+      "dateLabel": "Date :",
+      "titleLabel": "Titre :",
+      "contentLabel": "Contenu :",
+      "dateDefaultHint": "La date par défaut sera celle d'aujourd'hui",
+      "contentPlaceholder": "Écris le contenu de l'article…",
+      "backToPanel": "Retour au panneau",
+      "save": "Enregistrer",
+      "status": "Statut",
+      "close": "Fermer",
+      "sending": "Envoi...",
+      "published": "Ton article a été publié !",
+      "publishError": "Il semble qu'une erreur soit survenue lors de l'ajout de l'article, réessaie plus tard !",
+      "edited": "Ton article a été modifié !",
+      "editError": "Il semble qu'une erreur soit survenue lors de la modification de l'article, réessaie plus tard !",
+      "imagePrompt": "Colle l'URL de l'image :",
+      "imageUrlInvalid": "L'URL doit commencer par http:// ou https://"
+    }
+  },
+  "form": {
+    "hasAccount": "Tu as déjà un compte Wikimedia ?",
+    "signUp": "Inscris-toi",
+    "pronounsLabel": "Comment veux-tu que l'on s'adresse à toi ?",
+    "pronounsAria": "Marqueurs de genre",
+    "pronouns": {
+      "he": "Il",
+      "she": "Elle",
+      "they": "Iel",
+      "other": "Indéterminé/autre"
+    },
+    "otherPronounsLabel": "Écris ici comment tu souhaites que l'on s'adresse à toi",
+    "nameLabel": "Nom ou pseudonyme*",
+    "emailLabel": "Adresse e-mail*",
+    "emailHelp": "Nous ne partagerons jamais ton adresse avec d'autres personnes",
+    "whyLabel": "Explique-nous pourquoi tu veux faire partie de WMLGBT+",
+    "hasWikimediaAccount": "J'ai un compte sur les projets Wikimedia",
+    "attendedEvent": "J'ai participé à un événement WMLGBT+ organisé par la Fondation Wikimedia",
+    "eventLabel": "Événement",
+    "eventNamePlaceholder": "Nom de l'événement",
+    "agreeConduct": "J'accepte le <a target=\"_blank\" href=\"https://foundation.wikimedia.org/wiki/Policy:Universal_Code_of_Conduct/fr\">Code de conduite universel</a> et la <a target=\"_blank\" href=\"https://meta.wikimedia.org/wiki/Friendly_space_policies/fr\">Politique des espaces conviviaux</a> de la Fondation Wikimedia*",
+    "agreePrivacy": "J'ai lu et j'accepte la <a target=\"_blank\" href=\"/privacy\">politique de confidentialité</a>*",
+    "submit": "Envoyer",
+    "sending": "Envoi du formulaire...",
+    "username": {
+      "he": "Nom d'utilisateur",
+      "she": "Nom d'utilisatrice",
+      "they": "Nom d'utilisateur·ice"
+    }
+  },
+  "validation": {
+    "required": "Ce champ est obligatoire",
+    "maxlength": "Ce champ ne peut pas dépasser {{max}} caractères",
+    "pattern": "Nom d'utilisateur non valide",
+    "email": "Ce n'est pas une adresse e-mail valide"
+  },
+  "stats": {
+    "intro1": "Le <a href=\"https://es.wikipedia.org/wiki/Wikiproyecto:LGBT\">Projet LGBT+</a> a été fondé sur la Wikipédia en espagnol en 2007. Nous avons connu des périodes plus ou moins actives, mais dans l'ensemble, de nombreux articles ont été travaillés au cours de cette période.",
+    "intro2": "À l'aide du menu supérieur, tu peux parcourir les différentes données recueillies grâce au travail des personnes qui composent le projet. Ce sont des données en temps réel, alors ne sois pas surpris·e si elles changent d'un instant à l'autre !",
+    "articlesUnit": "articles",
+    "participantsUnit": "personnes",
+    "nav": {
+      "yearlyArticles": "Articles par an",
+      "monthlyArticles": "Articles par mois",
+      "notable": "Contenu remarquable",
+      "participants": "Participant·es",
+      "lastArticles": "Derniers articles"
+    },
+    "articles": {
+      "text1": "Bien qu'il existe de nombreuses façons de contribuer au sein de WMLGBT+, les articles sont la caractéristique la plus reconnaissable de Wikipédia. Au total, notre communauté a créé :",
+      "text2": "Sur le graphique, tu peux voir comment nous nous en sommes sortis ces dernières années"
+    },
+    "monthly": {
+      "text1": "Des événements comme le <a href=\"https://es.wikipedia.org/wiki/Wikiproyecto:LGBT/Evento_del_mes\">Défi du mois</a> nous permettent de maintenir un nombre élevé de modifications mensuelles. Depuis le début du mois, nous avons créé :",
+      "text2": "Nos périodes les plus actives se concentrent généralement en mars et en juin, peux-tu deviner pourquoi ?"
+    },
+    "participants": {
+      "text1": "Le socle de notre communauté, ce sont ses participant·es. En ce moment, nous sommes :",
+      "text2": "Sur le graphique, tu peux voir les nouvelles inscriptions au fil des dernières années"
+    },
+    "notable": {
+      "text1": "Les <a href=\"https://es.wikipedia.org/wiki/Wikipedia:Art%C3%ADculos_destacados\">articles de qualité</a> et les <a href=\"https://es.wikipedia.org/wiki/Wikipedia:Art%C3%ADculos_buenos\">bons articles</a> représentent le plus haut niveau de qualité au sein de Wikipédia.",
+      "text2": "Au sein du Projet LGBT+, nous en sommes conscient·es, c'est pourquoi nous avons travaillé au fil des ans pour amener à ce niveau bon nombre des pages que nous construisons.",
+      "featured": "Articles de qualité",
+      "good": "Bons articles"
+    },
+    "chart": {
+      "currentYear": "Année en cours",
+      "restOfTime": "Auparavant",
+      "months": {
+        "january": "Janvier",
+        "february": "Février",
+        "march": "Mars",
+        "april": "Avril",
+        "may": "Mai",
+        "june": "Juin",
+        "july": "Juillet",
+        "august": "Août",
+        "september": "Septembre",
+        "october": "Octobre",
+        "november": "Novembre",
+        "december": "Décembre"
+      }
+    }
+  },
+  "privacy": {
+    "title": "Politique de confidentialité",
+    "nav": {
+      "intro": "Introduction",
+      "responsible": "Responsable",
+      "principles": "Principes appliqués",
+      "obtaining": "Collecte",
+      "rights": "Tes droits",
+      "purpose": "Finalité",
+      "security": "Sécurité"
+    },
+    "heading": {
+      "intro": "Introduction",
+      "responsible": "Responsable de la gestion des données",
+      "principles": "Principes appliqués au traitement des données",
+      "obtaining": "Collecte des données personnelles",
+      "rights": "Tes droits",
+      "purpose": "Finalité des données",
+      "security": "Sécurité des données personnelles"
+    }
+  }
+}

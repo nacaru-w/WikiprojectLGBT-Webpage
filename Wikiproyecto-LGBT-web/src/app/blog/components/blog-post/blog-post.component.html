@@ -15,7 +15,7 @@
         </div>
         <div class="author-and-thumb">
 
-            <span class="author">por <span class="author-name">{{author}}</span></span>
+            <span class="author">{{ 'blog.by' | translate }} <span class="author-name">{{author}}</span></span>
             <span class="date">{{date | dateFormat }}</span>
         </div>
 
@@ -27,7 +27,7 @@
 
 @if (error) {
 <div class="blog-post">
-    <h1 class="error-title">Error: 404</h1>
-    <span>¡Lo siento! Parece que ese post del blog que estás buscando no existe.</span>
+    <h1 class="error-title">{{ 'blog.error404Title' | translate }}</h1>
+    <span>{{ 'blog.postNotFound' | translate }}</span>
 </div>
 }

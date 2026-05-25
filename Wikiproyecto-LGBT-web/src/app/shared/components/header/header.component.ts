@@ -2,11 +2,13 @@ import { Component, inject, signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { NgbCollapse } from '@ng-bootstrap/ng-bootstrap';
 import { BarbaService } from '../../../services/barba.service';
+import { LanguageSwitcherComponent } from '../language-switcher/language-switcher.component';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [NgbCollapse, RouterLink],
+  imports: [NgbCollapse, RouterLink, LanguageSwitcherComponent, TranslatePipe],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
   providers: [Router]

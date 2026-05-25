@@ -1,33 +1,24 @@
 <nav class="stats-navbar">
     <li class="stats-navbar-option" (click)="showChart('yearly-articles')">
-        <a href="javascript:void(0)">Artículos por año</a>
+        <a href="javascript:void(0)">{{ 'stats.nav.yearlyArticles' | translate }}</a>
     </li>
     <li class="stats-navbar-option" (click)="showChart('monthly-articles')">
-        <a href="javascript:void(0)">Artículos por mes</a>
+        <a href="javascript:void(0)">{{ 'stats.nav.monthlyArticles' | translate }}</a>
     </li>
     <li class="stats-navbar-option" (click)="showChart('notable')">
-        <a href="javascript:void(0)">Contenido notable</a>
+        <a href="javascript:void(0)">{{ 'stats.nav.notable' | translate }}</a>
     </li>
     <li class="stats-navbar-option" (click)="showChart('participants')">
-        <a href="javascript:void(0)">Participantes</a>
+        <a href="javascript:void(0)">{{ 'stats.nav.participants' | translate }}</a>
     </li>
     <li class="stats-navbar-option" (click)="showChart('last-articles')">
-        <a href="javascript:void(0)">Últimos artículos</a>
+        <a href="javascript:void(0)">{{ 'stats.nav.lastArticles' | translate }}</a>
     </li>
 </nav>
 <div class="chart-box">
     <div class="stats-introduction">
-        <p>
-            El <a href="https://es.wikipedia.org/wiki/Wikiproyecto:LGBT">Wikiproyecto LGBT+</a> se fundó en la Wikipedia
-            en español en el año 2007. Hemos tenido períodos de mayor y
-            de menor actividad, pero en general, han sido muchos artículos los que se han trabajado a lo largo de este
-            tiempo.
-        </p>
-        <p>
-            Usando el menú superior, puedes navegar entre diferentes datos recabados a partir de la labor de las
-            personas que conforman el proyecto. ¡Son datos actuales, así que no te extrañes si de un momento a otro
-            observas que han cambiado!
-        </p>
+        <p [innerHTML]="'stats.intro1' | translate"></p>
+        <p>{{ 'stats.intro2' | translate }}</p>
     </div>
     @if (showYearlyArticles) {
         <app-statistics-yearly-articles [@slideInOut]="showYearlyArticles"></app-statistics-yearly-articles>

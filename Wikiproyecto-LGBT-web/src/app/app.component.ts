@@ -6,6 +6,8 @@ import { FooterComponent } from './shared/components/footer/footer.component';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { footerAnimations, slideInAnimation } from './animations/animations';
 import { LoadingService } from './services/loading.service';
+import { TranslateService } from '@ngx-translate/core';
+import { SUPPORTED_LANGS } from './services/i18n/i18n.config';
 
 import { ChildrenOutletContexts } from '@angular/router';
 
@@ -29,6 +31,7 @@ export class AppComponent implements OnInit {
   private router = inject(Router);
   private loading = inject(LoadingService);
   private platformId = inject(PLATFORM_ID);
+  private translate = inject(TranslateService);
 
   title: string = 'Wikiproyecto-LGBT-web';
   footerAnimationState = signal<string>('visible');
@@ -36,6 +39,12 @@ export class AppComponent implements OnInit {
   private loaderDismissed = false;
 
   constructor() {
+    // Register the supported languages and load the default one. Injecting
+    // TranslateService here (the root component) triggers its initial load
+    // during the SSR render phase, where the disk-path token is available and
+    // the dictionary can be written to TransferState for the browser.
+    this.translate.addLangs([...SUPPORTED_LANGS]);
+
     // Fade out the initial loading screen (declared in index.html) once the
     // active page reports it is ready, then remove it from the DOM. Runs only
     // in the browser, so `document` is safe to use inside dismissLoader().

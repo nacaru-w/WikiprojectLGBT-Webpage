@@ -8,11 +8,12 @@ import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 import { RouterModule } from '@angular/router';
 
 import { popAnimation } from '../../../animations/animations';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-blog-main',
   standalone: true,
-  imports: [CommonModule, DateFormatPipe, RouterModule],
+  imports: [CommonModule, DateFormatPipe, RouterModule, TranslatePipe],
   templateUrl: './blog-main.component.html',
   styleUrl: './blog-main.component.scss',
   animations: [popAnimation]
@@ -27,7 +28,7 @@ export class BlogMainComponent implements OnInit {
   getPosts() {
     this.apiService.getPosts().subscribe((res) => {
       if (!res || res.length == 0 || typeof res == 'string') {
-        this.error = 'Oops, se ha producido un error';
+        this.error = 'blog.loadError';
       } else {
         this.sortedPosts = res.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
         setTimeout(() => {

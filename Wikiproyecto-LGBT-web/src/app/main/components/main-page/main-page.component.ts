@@ -3,12 +3,13 @@ import { NgbCarouselConfig, NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap
 import { MediawikiService } from '../../../services/mediawiki.service';
 import { LoadingService } from '../../../services/loading.service';
 import { popAnimation } from '../../../animations/animations';
+import { TranslatePipe } from '@ngx-translate/core';
 
 
 @Component({
   selector: 'app-main-page',
   standalone: true,
-  imports: [NgbCarouselModule],
+  imports: [NgbCarouselModule, TranslatePipe],
   templateUrl: './main-page.component.html',
   styleUrl: './main-page.component.scss',
   providers: [NgbCarouselConfig],

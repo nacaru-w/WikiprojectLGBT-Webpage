@@ -3,12 +3,12 @@
     <table>
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Fecha</th>
-                <th>Autor</th>
-                <th>Título</th>
-                <th>Contenido</th>
-                <th>Acciones</th>
+                <th>{{ 'blog.admin.id' | translate }}</th>
+                <th>{{ 'blog.admin.date' | translate }}</th>
+                <th>{{ 'blog.admin.author' | translate }}</th>
+                <th>{{ 'blog.admin.title' | translate }}</th>
+                <th>{{ 'blog.admin.content' | translate }}</th>
+                <th>{{ 'blog.admin.actions' | translate }}</th>
             </tr>
         </thead>
         <tbody class="blog-entries">
@@ -18,10 +18,10 @@
                 <td>{{item.date | dateFormat }}</td>
                 <td>{{item.author}}</td>
                 <td>{{item.title}}</td>
-                <td><a href="/blog/{{item.id}}" target="_blank">Enlace</a></td>
+                <td><a href="/blog/{{item.id}}" target="_blank">{{ 'blog.admin.link' | translate }}</a></td>
                 <td>
-                    <button><a routerLink="/blog-edit/{{item.id}}">Editar</a></button>
-                    <button id="delete{{item.id}}" (click)="deletePost(item.id)">Eliminar</button>
+                    <button><a routerLink="/blog-edit/{{item.id}}">{{ 'blog.admin.edit' | translate }}</a></button>
+                    <button id="delete{{item.id}}" (click)="deletePost(item.id)">{{ 'blog.admin.delete' | translate }}</button>
                 </td>
             </tr>
             }
@@ -29,8 +29,8 @@
     </table>
 </div>
 <div class="new-entry-container">
-    <a routerLink="/blog-edit"><button class="new-entry-button">Nueva entrada</button></a>
+    <a routerLink="/blog-edit"><button class="new-entry-button">{{ 'blog.admin.newEntry' | translate }}</button></a>
 </div>
 <div class="logout-button-container">
-    <a href="/logout"><button class="logout-button">Cerrar sesión</button></a>
+    <a href="/logout"><button class="logout-button">{{ 'blog.admin.logout' | translate }}</button></a>
 </div>

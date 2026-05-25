@@ -1,0 +1,14 @@
+<div ngbDropdown class="lang-switcher" display="dynamic" placement="bottom-end">
+    <button type="button" class="lang-toggle" ngbDropdownToggle aria-label="Cambiar idioma">
+        <span class="lang-globe" aria-hidden="true">&#127760;</span>
+        <span class="lang-current">{{ labels[currentLang()] }}</span>
+    </button>
+    <div ngbDropdownMenu aria-label="Idiomas disponibles">
+        @for (lang of langs; track lang) {
+        <button ngbDropdownItem type="button" class="lang-item" [class.active]="lang === currentLang()"
+            [attr.aria-current]="lang === currentLang() ? 'true' : null" (click)="select(lang)">
+            {{ labels[lang] }}
+        </button>
+        }
+    </div>
+</div>

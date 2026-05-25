@@ -6,6 +6,7 @@ import { StatisticsParticipantsComponent } from '../statistics-participants/stat
 import { StatisticsLastArticlesComponent } from '../statistics-last-articles/statistics-last-articles.component';
 
 import { chartsSlideInOutAnimation } from '../../../animations/animations';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-statistics-shared',
@@ -16,6 +17,7 @@ import { chartsSlideInOutAnimation } from '../../../animations/animations';
     StatisticsYearlyArticlesComponent,
     StatisticsParticipantsComponent,
     StatisticsLastArticlesComponent,
+    TranslatePipe,
   ],
   templateUrl: './statistics-shared.component.html',
   styleUrl: './statistics-shared.component.scss',

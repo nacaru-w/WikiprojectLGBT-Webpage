@@ -4,11 +4,12 @@ import { FormControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } 
 import { CommonModule } from '@angular/common';
 import { buttonState } from '../../../animations/animations';
 import { BarbaService } from '../../../services/barba.service';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-form-main',
   standalone: true,
-  imports: [NgbDropdownModule, ReactiveFormsModule, CommonModule],
+  imports: [NgbDropdownModule, ReactiveFormsModule, CommonModule, TranslatePipe],
   templateUrl: './form-main.component.html',
   styleUrl: './form-main.component.scss',
   animations: [buttonState]
@@ -16,6 +17,7 @@ import { BarbaService } from '../../../services/barba.service';
 export class FormMainComponent {
   private formBuilder = inject(FormBuilder);
   private barbaService = inject(BarbaService);
+  private translate = inject(TranslateService);
 
   webForm: FormGroup = this.formBuilder.group({
     pronouns: new FormControl('', [Validators.required]),
@@ -31,7 +33,8 @@ export class FormMainComponent {
     readPolicy: new FormControl('', [Validators.required])
   });
 
-  formSendDataStatus: string = 'Enviando formulario...';
+  // Holds a translation key; the template renders it through the translate pipe.
+  formSendDataStatus: string = 'form.sending';
   showSubmitSpinner = signal(true);
 
   showOtherPronounsField = signal(false);
@@ -59,13 +62,13 @@ export class FormMainComponent {
     if (control?.errors) {
       switch (Object.keys(control?.errors)[0]) {
         case 'maxlength':
-          return `El campo no puede ser mayor a ${control.errors['maxlength'].requiredLength} caracteres`
+          return this.translate.instant('validation.maxlength', { max: control.errors['maxlength'].requiredLength })
         case 'pattern':
-          return 'Nombre de usuario no válido'
+          return this.translate.instant('validation.pattern')
         case 'required':
-          return 'Este campo es obligatorio'
+          return this.translate.instant('validation.required')
         case 'email':
-          return 'No es un tipo de email correcto'
+          return this.translate.instant('validation.email')
       }
     }
 
@@ -77,19 +80,19 @@ export class FormMainComponent {
   }
 
   otherPronounsChosen(): void {
-    this.showOtherPronounsField.set(this.showValue('pronouns') == 'Sin determinar/otro')
+    this.showOtherPronounsField.set(this.showValue('pronouns') == 'other')
   }
 
   concordWikimediaAccountNamePlaceholder() {
     switch (this.showValue('pronouns')) {
-      case 'Él':
-        return 'Nombre de usuario';
-      case 'Ella':
-        return 'Nombre de usuaria';
-      case 'Elle':
-        return 'Nombre de usuarie';
+      case 'he':
+        return this.translate.instant('form.username.he');
+      case 'she':
+        return this.translate.instant('form.username.she');
+      case 'they':
+        return this.translate.instant('form.username.they');
       default:
-        return 'Nombre de usuario';
+        return this.translate.instant('form.username.he');
     }
   }
 

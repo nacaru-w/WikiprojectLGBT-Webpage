@@ -4,14 +4,14 @@
             <div class="scrollspy-navmenu-container col-4">
                 <nav [ngbScrollSpyMenu]="spy" class="h-100 flex-column align-items-stretch pe-4">
                     <nav class="nav nav-pills flex-column">
-                        <a role="button" class="nav-link" ngbScrollSpyItem="nested-1">Introducción</a>
+                        <a role="button" class="nav-link" ngbScrollSpyItem="nested-1">{{ 'privacy.nav.intro' | translate }}</a>
 
-                        <a role="button" class="nav-link" ngbScrollSpyItem="nested-2">Responsable</a>
-                        <a role="button" class="nav-link" ngbScrollSpyItem="nested-3">Principios aplicados</a>
-                        <a role="button" class="nav-link" ngbScrollSpyItem="nested-4">Obtención</a>
-                        <a role="button" class="nav-link" ngbScrollSpyItem="nested-5">Tus derechos</a>
-                        <a role="button" class="nav-link" ngbScrollSpyItem="nested-6">Finalidad</a>
-                        <a role="button" class="nav-link" ngbScrollSpyItem="nested-7">Seguridad</a>
+                        <a role="button" class="nav-link" ngbScrollSpyItem="nested-2">{{ 'privacy.nav.responsible' | translate }}</a>
+                        <a role="button" class="nav-link" ngbScrollSpyItem="nested-3">{{ 'privacy.nav.principles' | translate }}</a>
+                        <a role="button" class="nav-link" ngbScrollSpyItem="nested-4">{{ 'privacy.nav.obtaining' | translate }}</a>
+                        <a role="button" class="nav-link" ngbScrollSpyItem="nested-5">{{ 'privacy.nav.rights' | translate }}</a>
+                        <a role="button" class="nav-link" ngbScrollSpyItem="nested-6">{{ 'privacy.nav.purpose' | translate }}</a>
+                        <a role="button" class="nav-link" ngbScrollSpyItem="nested-7">{{ 'privacy.nav.security' | translate }}</a>
 
 
 
@@ -27,15 +27,15 @@
             </div>
 
             <div class="scrollspy-textbox-container col-8">
-                <h3>Política de privacidad</h3>
+                <h3>{{ 'privacy.title' | translate }}</h3>
                 <div ngbScrollSpy #spy="ngbScrollSpy" rootMargin="16px"
                     class="scrollspy-textbox bg-light p-3 rounded-2 mb-3" style="height: 50vh;">
-                    <h4 ngbScrollSpyFragment="nested-1">Introducción</h4>
+                    <h4 ngbScrollSpyFragment="nested-1">{{ 'privacy.heading.intro' | translate }}</h4>
                     <p>
                         Wikimedia LGBT+ es una asociación de personas sin representación como entidad legal. Está
                         reconocida, sin embargo, como afiliado de la Fundación Wikimedia.
                     </p>
-                    <h4 ngbScrollSpyFragment="nested-2">Responsable de la administración de los datos</h4>
+                    <h4 ngbScrollSpyFragment="nested-2">{{ 'privacy.heading.responsible' | translate }}</h4>
                     <p>
                         Los datos de carácter personal
                         suministrados a través del formulario de la web son gestionados por las personas administradoras
@@ -43,7 +43,7 @@
                         web. Ante cualquier duda al respecto, puede contactar a través de la dirección
                         ejemplo(arroba)ejemplo.com
                     </p>
-                    <h4 ngbScrollSpyFragment="nested-3">Principios aplicados en el tratamiento de datos</h4>
+                    <h4 ngbScrollSpyFragment="nested-3">{{ 'privacy.heading.principles' | translate }}</h4>
                     <p>
                         En el tratamiento de tus datos personales, WMLGBT+ aplicará los siguientes principios que se
                         ajustan a las exigencias del nuevo reglamento europeo de protección de datos:
@@ -66,7 +66,7 @@
                         precauciones necesarias para evitar el acceso no autorizado o uso indebido de los datos de sus
                         usuarios por parte de terceros.
                     </p>
-                    <h4 ngbScrollSpyFragment="nested-4">Obtención de datos personales</h4>
+                    <h4 ngbScrollSpyFragment="nested-4">{{ 'privacy.heading.obtaining' | translate }}</h4>
                     <p>
                         Para navegar por la página web de WMLGBT+ en español no es necesario que facilites ningún dato
                         personal. Los casos en los que sí proporcionas tus datos personales son los siguientes:
@@ -75,7 +75,7 @@
                         <li>Al contactar a través de los formularios de contacto.</li>
                     </ul>
 
-                    <h4 ngbScrollSpyFragment="nested-5">Tus derechos</h4>
+                    <h4 ngbScrollSpyFragment="nested-5">{{ 'privacy.heading.rights' | translate }}</h4>
                     <p>
                         WMLGBT+ te informa que sobre tus datos personales tienes derecho a:
                     </p>
@@ -109,7 +109,7 @@
                         tratamiento de datos personales que te conciernen infringe el Reglamento.
                     </p>
 
-                    <h4 ngbScrollSpyFragment="nested-6">Finalidad de los datos</h4>
+                    <h4 ngbScrollSpyFragment="nested-6">{{ 'privacy.heading.purpose' | translate }}</h4>
                     <p>
                         Cuando te conectas al sitio Web para mandar un correo a WMLGBT+, te suscribes a su boletín o
                         realizas una contratación, estás facilitando información de carácter personal de la que el
@@ -147,7 +147,7 @@
                         puedas tener y que no esté sujeta a las condiciones del sitio Web o de la contratación.
                     </p>
 
-                    <h4 ngbScrollSpyFragment="nested-7">Seguridad de los datos personales</h4>
+                    <h4 ngbScrollSpyFragment="nested-7">{{ 'privacy.heading.security' | translate }}</h4>
                     <p>
                         Para proteger tus datos personales, WMLGBT+ toma todas las precauciones razonables y sigue las
                         mejores prácticas de la industria para evitar su pérdida, mal uso, acceso indebido, divulgación,

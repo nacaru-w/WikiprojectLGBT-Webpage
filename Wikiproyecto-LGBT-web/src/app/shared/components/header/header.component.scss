@@ -32,6 +32,15 @@
         }
     }
 
+    // Language switcher + hamburger, grouped on the right. On desktop the
+    // toggler is hidden by Bootstrap (navbar-expand-lg) and only the switcher
+    // shows; on mobile both sit next to each other, outside the collapse.
+    .header-controls {
+        display: flex;
+        align-items: center;
+        gap: 0.5em;
+    }
+
     .navbar-toggler {
         border: solid black 3px;
         color: black;

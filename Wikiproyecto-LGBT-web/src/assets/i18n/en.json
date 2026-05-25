@@ -1,0 +1,197 @@
+{
+  "common": {
+    "viewOnWikipedia": "View on Wikipedia",
+    "loading": "Loading..."
+  },
+  "header": {
+    "blog": "Blog",
+    "contact": "Contact",
+    "ourWork": "Our work"
+  },
+  "footer": {
+    "meta": "Meta",
+    "blogPanel": "Blog panel",
+    "adminLogin": "Admin login",
+    "logout": "Log out",
+    "privacyPolicy": "Privacy policy",
+    "attribution": "Attribution",
+    "codeOfConduct": "Universal Code of Conduct"
+  },
+  "home": {
+    "carousel": {
+      "visibilize": {
+        "title": "Make it visible",
+        "text": "Bring diversity to the largest encyclopedia"
+      },
+      "protect": {
+        "title": "Watch and protect",
+        "text": "LGBT+ content suffers more vandalism"
+      },
+      "join": {
+        "title": "Join us",
+        "text": "Anyone can edit Wikipedia"
+      }
+    },
+    "eventOfMonth": "Event of the month:",
+    "missingArticle": "Is there an article you're missing?",
+    "requestIt": "Request it!"
+  },
+  "error": {
+    "title404": "Error: 404",
+    "notFound": "We couldn't find that page"
+  },
+  "login": {
+    "oauthInfo": "Administrator login is handled through MediaWiki OAuth",
+    "signIn": "Sign in",
+    "notAdmin": "Sorry, but it looks like you don't belong to the administrators group."
+  },
+  "blog": {
+    "loadError": "Oops, something went wrong",
+    "error500Title": "Error: 500",
+    "error404Title": "Error: 404",
+    "postNotFound": "Sorry! It looks like the blog post you're looking for doesn't exist.",
+    "by": "by",
+    "admin": {
+      "id": "ID",
+      "date": "Date",
+      "author": "Author",
+      "title": "Title",
+      "content": "Content",
+      "actions": "Actions",
+      "link": "Link",
+      "edit": "Edit",
+      "delete": "Delete",
+      "confirmDelete": "Are you sure?",
+      "error": "Error",
+      "newEntry": "New entry",
+      "logout": "Log out",
+      "greeting": "Hi, {{name}}!"
+    },
+    "edit": {
+      "idLabel": "ID:",
+      "authorLabel": "Author:",
+      "dateLabel": "Date:",
+      "titleLabel": "Title:",
+      "contentLabel": "Content:",
+      "dateDefaultHint": "The default date will be today",
+      "contentPlaceholder": "Write the post content…",
+      "backToPanel": "Back to panel",
+      "save": "Save",
+      "status": "Status",
+      "close": "Close",
+      "sending": "Sending...",
+      "published": "Your post has been published!",
+      "publishError": "It seems there was an error adding the post, please try again later!",
+      "edited": "Your post has been edited!",
+      "editError": "It seems there was an error editing the post, please try again later!",
+      "imagePrompt": "Paste the image URL:",
+      "imageUrlInvalid": "The URL must start with http:// or https://"
+    }
+  },
+  "form": {
+    "hasAccount": "Do you already have a Wikimedia account?",
+    "signUp": "Sign up",
+    "pronounsLabel": "How would you like us to refer to you?",
+    "pronounsAria": "Gender markers",
+    "pronouns": {
+      "he": "He",
+      "she": "She",
+      "they": "They",
+      "other": "Undefined/other"
+    },
+    "otherPronounsLabel": "Write here how you would like us to address you",
+    "nameLabel": "Name or alias*",
+    "emailLabel": "Email address*",
+    "emailHelp": "We will never share your address with anyone",
+    "whyLabel": "Tell us why you want to be part of WMLGBT+",
+    "hasWikimediaAccount": "I have an account on the Wikimedia projects",
+    "attendedEvent": "I have taken part in a WMLGBT+ event organized by the Wikimedia Foundation",
+    "eventLabel": "Event",
+    "eventNamePlaceholder": "Event name",
+    "agreeConduct": "I agree to the Wikimedia Foundation's <a target=\"_blank\" href=\"https://foundation.wikimedia.org/wiki/Policy:Universal_Code_of_Conduct\">Universal Code of Conduct</a> and <a target=\"_blank\" href=\"https://meta.wikimedia.org/wiki/Friendly_space_policies\">Friendly Space Policy</a>*",
+    "agreePrivacy": "I have read and accept the <a target=\"_blank\" href=\"/privacy\">privacy policy</a>*",
+    "submit": "Submit",
+    "sending": "Sending form...",
+    "username": {
+      "he": "Username",
+      "she": "Username",
+      "they": "Username"
+    }
+  },
+  "validation": {
+    "required": "This field is required",
+    "maxlength": "This field cannot be longer than {{max}} characters",
+    "pattern": "Invalid username",
+    "email": "This is not a valid email"
+  },
+  "stats": {
+    "intro1": "The <a href=\"https://es.wikipedia.org/wiki/Wikiproyecto:LGBT\">LGBT+ WikiProject</a> was founded on the Spanish Wikipedia in 2007. We have had periods of greater and lesser activity, but overall many articles have been worked on throughout this time.",
+    "intro2": "Using the top menu, you can browse through the different data gathered from the work of the people who make up the project. They are live figures, so don't be surprised if you see them change from one moment to the next!",
+    "articlesUnit": "articles",
+    "participantsUnit": "people",
+    "nav": {
+      "yearlyArticles": "Articles per year",
+      "monthlyArticles": "Articles per month",
+      "notable": "Notable content",
+      "participants": "Participants",
+      "lastArticles": "Latest articles"
+    },
+    "articles": {
+      "text1": "Although there are many different ways to contribute as part of WMLGBT+, articles are the most recognizable feature of Wikipedia. In total, our community has created:",
+      "text2": "In the chart you can see how well we've done over the last few years"
+    },
+    "monthly": {
+      "text1": "Events such as the <a href=\"https://es.wikipedia.org/wiki/Wikiproyecto:LGBT/Evento_del_mes\">Challenge of the Month</a> help us keep our monthly edits high. So far this month we have created:",
+      "text2": "Our busiest periods tend to be concentrated in March and June, can you guess why?"
+    },
+    "participants": {
+      "text1": "The cornerstone of our community is its participants. Right now we are:",
+      "text2": "In the chart you can see the new sign-ups over the last few years"
+    },
+    "notable": {
+      "text1": "<a href=\"https://es.wikipedia.org/wiki/Wikipedia:Art%C3%ADculos_destacados\">Featured articles</a> and <a href=\"https://es.wikipedia.org/wiki/Wikipedia:Art%C3%ADculos_buenos\">good articles</a> represent the highest level of quality within Wikipedia.",
+      "text2": "At the LGBT+ WikiProject we are aware of this, so we have worked over the years to bring many of the pages we build up to this level.",
+      "featured": "Featured articles",
+      "good": "Good articles"
+    },
+    "chart": {
+      "currentYear": "Current year",
+      "restOfTime": "Earlier",
+      "months": {
+        "january": "January",
+        "february": "February",
+        "march": "March",
+        "april": "April",
+        "may": "May",
+        "june": "June",
+        "july": "July",
+        "august": "August",
+        "september": "September",
+        "october": "October",
+        "november": "November",
+        "december": "December"
+      }
+    }
+  },
+  "privacy": {
+    "title": "Privacy policy",
+    "nav": {
+      "intro": "Introduction",
+      "responsible": "Data controller",
+      "principles": "Principles applied",
+      "obtaining": "Data collection",
+      "rights": "Your rights",
+      "purpose": "Purpose",
+      "security": "Security"
+    },
+    "heading": {
+      "intro": "Introduction",
+      "responsible": "Data controller",
+      "principles": "Principles applied in data processing",
+      "obtaining": "Collection of personal data",
+      "rights": "Your rights",
+      "purpose": "Purpose of the data",
+      "security": "Security of personal data"
+    }
+  }
+}

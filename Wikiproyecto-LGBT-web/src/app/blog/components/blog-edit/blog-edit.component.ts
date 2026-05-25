@@ -6,11 +6,12 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ApiService } from '../../../services/api.service';
 
 import { QuillEditorComponent, QuillModules } from 'ngx-quill';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-blog-edit',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, RouterLink, QuillEditorComponent],
+  imports: [ReactiveFormsModule, CommonModule, RouterLink, QuillEditorComponent, TranslatePipe],
   templateUrl: './blog-edit.component.html',
   styleUrl: './blog-edit.component.scss',
 })
@@ -19,6 +20,7 @@ export class BlogEditComponent implements OnInit {
   private activatedRoute = inject(ActivatedRoute);
   private apiService = inject(ApiService);
   private router = inject(Router);
+  private translate = inject(TranslateService);
 
   postId: string | null = this.activatedRoute.snapshot.paramMap.get('id');
   date: string | Date = new Date();
@@ -28,7 +30,8 @@ export class BlogEditComponent implements OnInit {
   loaded = signal(false);
 
   error: string = '';
-  responseMessage: string = 'Enviando...';
+  // Holds a translation key; the template renders it through the translate pipe.
+  responseMessage: string = 'blog.edit.sending';
   showSubmitSpinner = signal(false);
 
   // The live Quill instance, captured once the editor is created in the browser.
@@ -91,11 +94,15 @@ export class BlogEditComponent implements OnInit {
     if (control?.errors) {
       switch (Object.keys(control?.errors)[0]) {
         case 'maxlength':
-          return `El campo no puede ser mayor a ${control.errors['maxlength'].requiredLength} caracteres`
+          return this.translate.instant('validation.maxlength', { max: control.errors['maxlength'].requiredLength })
         case 'required':
-          return 'Este campo es obligatorio'
+          return this.translate.instant('validation.required')
       }
     }
+  }
+
+  hasError(fieldName: string, errorType: string): boolean {
+    return !!this.blogForm.get(fieldName)?.errors?.[errorType];
   }
 
   timestampToDate(timestamp: string | Date): string {
@@ -130,12 +137,12 @@ export class BlogEditComponent implements OnInit {
     if (!this.postId) {
       this.apiService.addPost(...formParams).subscribe((res) => {
         this.showSubmitSpinner.set(false);
-        this.responseMessage = res?.success ? '¡Tu post ha sido publicado!' : '¡Parece que ha habido un error al añadir el post, prueba de nuevo más tarde!';
+        this.responseMessage = res?.success ? 'blog.edit.published' : 'blog.edit.publishError';
       })
     } else {
       this.apiService.editPost(this.postId, ...formParams).subscribe((res) => {
         this.showSubmitSpinner.set(false);
-        this.responseMessage = res?.success ? '¡Tu post ha sido editado!' : '¡Parece que ha habido un error al editar el post, prueba de nuevo más tarde!';
+        this.responseMessage = res?.success ? 'blog.edit.edited' : 'blog.edit.editError';
       })
     }
   }
@@ -151,12 +158,12 @@ export class BlogEditComponent implements OnInit {
     if (!quill) {
       return;
     }
-    const url = window.prompt('Pega la URL de la imagen:')?.trim();
+    const url = window.prompt(this.translate.instant('blog.edit.imagePrompt'))?.trim();
     if (!url) {
       return;
     }
     if (!/^https?:\/\//i.test(url)) {
-      window.alert('La URL debe empezar por http:// o https://');
+      window.alert(this.translate.instant('blog.edit.imageUrlInvalid'));
       return;
     }
     const range = quill.getSelection(true);
