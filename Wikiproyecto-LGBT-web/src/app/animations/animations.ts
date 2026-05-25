@@ -8,7 +8,9 @@ export const slideInAnimation =
     trigger('routeAnimations', [
         transition('* <=> *', [
             style({ position: 'relative' }),
-            query(':enter, :leave', [
+            // Only the leaving view is pulled out of the flow, so it can overlap
+            // the entering one and slide away.
+            query(':leave', [
                 style({
                     position: 'absolute',
                     top: 0,
@@ -16,8 +18,12 @@ export const slideInAnimation =
                     width: '100%',
                 })
             ], { optional: true }),
+            // The entering view stays in normal flow, so .main's (vertical)
+            // centering already applies while it slides in. It just translates
+            // horizontally — nothing snaps into place when the animation ends, so
+            // there's no vertical "drop" once the new page settles.
             query(':enter', [
-                style({ left: '-100%' })
+                style({ width: '100%', transform: 'translateX(-100%)' })
             ], { optional: true }),
             query(':leave', animateChild(), { optional: true }),
             group([
@@ -25,7 +31,7 @@ export const slideInAnimation =
                     animate('200ms ease-out', style({ left: '100%', opacity: '1' }))
                 ], { optional: true }),
                 query(':enter', [
-                    animate('300ms ease-out', style({ left: '0%' }))
+                    animate('300ms ease-out', style({ transform: 'translateX(0)' }))
                 ], { optional: true }),
                 query('@*', animateChild(), { optional: true })
             ]),
@@ -50,19 +56,14 @@ export const footerAnimations =
         ])
     ]);
 
+// Fades an element in as a single block on enter (no per-child stagger).
 export const fadeInAnimation =
     trigger('fadeIn', [
-        state('hidden', style({
-            opacity: 0,
-        })),
-        state('visible', style({
-            opacity: 1,
-        })),
-        transition('hidden => visible', [
-            animate('0.5s ease in')
+        transition(':enter', [
+            style({ opacity: 0 }),
+            animate('450ms ease-out', style({ opacity: 1 }))
         ])
-    ]
-    )
+    ])
 
 export const popAnimation =
     trigger('popAnimation', [

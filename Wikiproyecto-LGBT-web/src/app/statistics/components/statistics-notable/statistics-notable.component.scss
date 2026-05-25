@@ -1,0 +1,196 @@
+@use 'variables';
+
+.notable-showcase {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1em;
+    // Top padding leaves room for the absolutely-positioned filter button.
+    padding-block: 3em 0.5em;
+
+    // Filter icon button, pinned to the top-right corner of the section.
+    .notable-filter-btn {
+        position: absolute;
+        top: 0.6em;
+        right: 0.6em;
+        z-index: 2;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 2.4em;
+        height: 2.4em;
+        padding: 0;
+        color: black;
+        background-color: variables.$white;
+        border: solid black 2px;
+        border-radius: 0.6em;
+        box-shadow: black 2px 2px;
+        cursor: pointer;
+        transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+
+        .filter-icon {
+            width: 1.2em;
+            height: 1.2em;
+        }
+
+        &:hover,
+        &:focus-visible {
+            transform: translateY(-2px);
+            box-shadow: black 3px 4px;
+        }
+
+        &.active {
+            background-color: variables.$info;
+        }
+
+        // Count chip on the corner when filters are active.
+        .filter-badge {
+            position: absolute;
+            top: -0.55em;
+            right: -0.55em;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 1.4em;
+            height: 1.4em;
+            padding: 0 0.25em;
+            border: solid black 1.5px;
+            border-radius: 0.7em;
+            background-color: variables.$danger;
+            color: black;
+            font-family: variables.$font-family-sans-serif;
+            font-size: 0.7em;
+            font-weight: bold;
+            line-height: 1;
+        }
+    }
+
+    .notable-group {
+        text-align: center;
+    }
+
+    // Colored chip header per type, echoing the .chart-title / nav chip style.
+    .notable-group-header {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4em;
+        margin-bottom: 0.7em;
+        padding: 0.25em 0.9em;
+        border: solid black 2px;
+        border-radius: 12px;
+        box-shadow: black 2px 2px;
+        font-family: variables.$font-family-sans-serif;
+        font-weight: bold;
+        letter-spacing: -0.08em;
+
+        &.featured {
+            background-color: variables.$warning;
+        }
+
+        &.good {
+            background-color: variables.$primary;
+        }
+    }
+
+    .notable-group-icon {
+        width: 1.2em;
+        height: auto;
+    }
+
+    .notable-group-count {
+        font-size: 1.15em;
+        font-weight: bold;
+    }
+
+    .notable-badges {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.5em;
+    }
+
+    // Each article is a rounded, bordered tile that lifts on hover.
+    .notable-badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 2.7em;
+        height: 2.7em;
+        background-color: variables.$white;
+        border: solid black 2px;
+        border-radius: 0.7em;
+        box-shadow: black 2px 2px;
+        cursor: pointer;
+        transition: transform 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
+
+        .notable-badge-icon {
+            width: 1.5em;
+            height: auto;
+            transition: transform 0.18s ease;
+        }
+
+        &:hover,
+        &:focus-visible {
+            transform: translateY(-3px);
+            box-shadow: black 4px 5px;
+
+            .notable-badge-icon {
+                transform: scale(1.12);
+            }
+        }
+
+        &.featured:hover,
+        &.featured:focus-visible {
+            background-color: variables.$lighter-orange;
+        }
+
+        &.good:hover,
+        &.good:focus-visible {
+            background-color: variables.$lighter-primary;
+        }
+    }
+}
+
+// Popover body (declared in this component's template, so its encapsulation
+// attribute applies even though the popover window is appended to <body>).
+.article-popover-extract {
+    margin: 0;
+    font-family: variables.$body-font;
+}
+
+// Credited editor(s) line, shown immediately above the (lazily-loaded) summary.
+.article-popover-author {
+    margin: 0 0 0.45em 0;
+    font-family: variables.$body-font;
+    font-size: 0.92em;
+    font-style: italic;
+    color: variables.$gray-dark;
+}
+
+// Loading state: a mini barba bobbing above the label, matching the main loader.
+.popover-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3em;
+    font-family: variables.$body-font;
+
+    .popover-loading-barba {
+        width: 2.4em;
+        height: auto;
+        // Keyframes live in global styles (barba-float) so the animation also
+        // applies to the body-appended popover window.
+        animation: barba-float 2.2s ease-in-out infinite;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .popover-loading .popover-loading-barba {
+        animation: none;
+    }
+}
+
+// NOTE: the filter modal's content styles (accordion, search box, option list,
+// footer count) live in global styles.scss under .notable-filter-modal, because
+// NgbModal renders the modal outside this component's view.

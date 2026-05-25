@@ -3,27 +3,145 @@
         <p [innerHTML]="'stats.notable.text1' | translate"></p>
         <p>{{ 'stats.notable.text2' | translate }}</p>
     </div>
-    <div class="chart">
-        <div class="star-chart-container">
-            <div class="star-total">{{ 'stats.notable.featured' | translate }} <span class="star-total-number">{{notableArtDict.AD.length ||
-                    ''}}</span></div>
-            <div class="star-chart" [@popAnimation]="notableArtDict.AD">
-                @for (item of notableArtDict.AD; track item) {
-                <a href="https://es.wikipedia.org/wiki/{{item}}"><img class="star"
-                        src="./../../../../assets/imgs/featured_article_symbol.svg" alt=""></a>
+    @if (isAPIDone()) {
+    <div class="chart notable-showcase" [@fadeIn]>
+        <button type="button" class="notable-filter-btn" [class.active]="hasActiveFilters()"
+            (click)="openFilterModal(filterModal)" [title]="'stats.notable.filter.button' | translate"
+            [attr.aria-label]="'stats.notable.filter.button' | translate">
+            <svg class="filter-icon" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                    d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5z" />
+            </svg>
+            @if (hasActiveFilters()) {<span class="filter-badge">{{ activeFilterCount() }}</span>}
+        </button>
+        <div class="notable-group">
+            <div class="notable-group-header featured">
+                <img class="notable-group-icon" src="./../../../../assets/imgs/featured_article_symbol.svg" alt="">
+                <span class="notable-group-label">{{ 'stats.notable.featured' | translate }}</span>
+                <span class="notable-group-count">{{ visibleArticles(notableArtDict.AD).length }}</span>
+            </div>
+            <div class="notable-badges">
+                @for (item of visibleArticles(notableArtDict.AD); track item) {
+                <a class="notable-badge featured" href="https://es.wikipedia.org/wiki/{{ item }}" target="_blank"
+                    rel="noopener" [attr.aria-label]="item" [ngbPopover]="articleInfo" [popoverTitle]="item"
+                    popoverClass="notable-popover" container="body" triggers="mouseenter:mouseleave"
+                    (mouseenter)="onHover(item)">
+                    <img class="notable-badge-icon" src="./../../../../assets/imgs/featured_article_symbol.svg" alt="">
+                </a>
                 }
             </div>
-
         </div>
-        <div class="star-chart-container">
-            <div class="star-total">{{ 'stats.notable.good' | translate }} <span class="star-total-number">{{notableArtDict.AB.length ||
-                    ''}}</span></div>
-            <div class="star-chart" [@popAnimation]="notableArtDict.AB">
-                @for (item of notableArtDict.AB; track item) {
-                <a href="https://es.wikipedia.org/wiki/{{item}}"><img class="star"
-                        src="./../../../../assets/imgs/good_article_symbol.svg" alt=""></a>
+
+        <div class="notable-group">
+            <div class="notable-group-header good">
+                <img class="notable-group-icon" src="./../../../../assets/imgs/good_article_symbol.svg" alt="">
+                <span class="notable-group-label">{{ 'stats.notable.good' | translate }}</span>
+                <span class="notable-group-count">{{ visibleArticles(notableArtDict.AB).length }}</span>
+            </div>
+            <div class="notable-badges">
+                @for (item of visibleArticles(notableArtDict.AB); track item) {
+                <a class="notable-badge good" href="https://es.wikipedia.org/wiki/{{ item }}" target="_blank"
+                    rel="noopener" [attr.aria-label]="item" [ngbPopover]="articleInfo" [popoverTitle]="item"
+                    popoverClass="notable-popover" container="body" triggers="mouseenter:mouseleave"
+                    (mouseenter)="onHover(item)">
+                    <img class="notable-badge-icon" src="./../../../../assets/imgs/good_article_symbol.svg" alt="">
+                </a>
                 }
             </div>
         </div>
     </div>
+    }
 </div>
+
+<!-- Shared popover body. It reads the active article's lazily-loaded summary;
+     declared here, so component styles still apply even with container="body". -->
+<ng-template #articleInfo>
+    @if (activeArticle(); as title) {
+    @if (articleAuthors[title]; as author) {
+    <p class="article-popover-author">{{ 'stats.notable.by' | translate }} {{ author }}</p>
+    }
+    @if (extracts()[title] !== undefined) {
+    <p class="article-popover-extract">{{ extracts()[title] || ('stats.notable.noPreview' | translate) }}</p>
+    } @else {
+    <div class="popover-loading">
+        <img class="popover-loading-barba" src="./../../../../assets/imgs/Barba-wikiproyecto-lgbt.svg" alt=""
+            aria-hidden="true">
+        <span class="popover-loading-label">{{ 'common.loading' | translate }}</span>
+    </div>
+    }
+    }
+</ng-template>
+
+<!-- Filter modal: each facet (year / author) is its own accordion section. -->
+<ng-template #filterModal let-modal>
+    <div class="modal-header">
+        <h2 class="modal-title fs-5">{{ 'stats.notable.filter.title' | translate }}</h2>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+    </div>
+    <div class="modal-body">
+        <div ngbAccordion>
+            <div ngbAccordionItem [collapsed]="yearCollapsed">
+                <h2 ngbAccordionHeader>
+                    <button ngbAccordionButton>{{ 'stats.notable.filter.year' | translate }}</button>
+                </h2>
+                <div ngbAccordionCollapse>
+                    <div ngbAccordionBody>
+                        <ng-template>
+                            <input #yearSearchInput type="search" class="form-control filter-search"
+                                [placeholder]="'stats.notable.filter.search' | translate"
+                                [attr.aria-label]="'stats.notable.filter.search' | translate"
+                                (input)="yearSearch.set(yearSearchInput.value)">
+                            <div class="filter-options">
+                                @for (year of filteredYears(); track year; let i = $index) {
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" [id]="'fy-' + i"
+                                        [checked]="selectedYears().has(year)" (change)="toggleYear(year)">
+                                    <label class="form-check-label" [for]="'fy-' + i">{{ year }}</label>
+                                </div>
+                                } @empty {
+                                <p class="filter-empty">{{ 'stats.notable.filter.noMatches' | translate }}</p>
+                                }
+                            </div>
+                        </ng-template>
+                    </div>
+                </div>
+            </div>
+            <div ngbAccordionItem [collapsed]="authorCollapsed">
+                <h2 ngbAccordionHeader>
+                    <button ngbAccordionButton>{{ 'stats.notable.filter.author' | translate }}</button>
+                </h2>
+                <div ngbAccordionCollapse>
+                    <div ngbAccordionBody>
+                        <ng-template>
+                            <input #authorSearchInput type="search" class="form-control filter-search"
+                                [placeholder]="'stats.notable.filter.search' | translate"
+                                [attr.aria-label]="'stats.notable.filter.search' | translate"
+                                (input)="authorSearch.set(authorSearchInput.value)">
+                            <div class="filter-options">
+                                @for (author of filteredAuthors(); track author; let i = $index) {
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" [id]="'fa-' + i"
+                                        [checked]="selectedAuthors().has(author)" (change)="toggleAuthor(author)">
+                                    <label class="form-check-label" [for]="'fa-' + i">{{ author }}</label>
+                                </div>
+                                } @empty {
+                                <p class="filter-empty">{{ 'stats.notable.filter.noMatches' | translate }}</p>
+                                }
+                            </div>
+                        </ng-template>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <span class="filter-result">{{ 'stats.notable.filter.showing' | translate:{ count: totalVisible() } }}</span>
+        <button type="button" class="btn btn-secondary" [disabled]="!hasActiveFilters()" (click)="clearFilters()">
+            {{ 'stats.notable.filter.clear' | translate }}
+        </button>
+        <button type="button" class="btn btn-primary" (click)="modal.close()">
+            {{ 'stats.notable.filter.done' | translate }}
+        </button>
+    </div>
+</ng-template>
