@@ -469,3 +469,199 @@ figure {
     }
 
 }
+
+// Gentle bobbing for the barba mascot in loading states. Global (not component
+// @keyframes) so it also applies inside the body-appended notable popover.
+@keyframes barba-float {
+    0%, 100% { transform: translateY(0); opacity: 0.85; }
+    50% { transform: translateY(-6px); opacity: 1; }
+}
+
+// Page-level loading indicator: the barba mascot bobbing above a "Loading…"
+// label. Shared by the blog and last-articles pages. (The notable component's
+// hover popover uses its own smaller variant but the same barba-float.)
+.barba-loader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    // Fill most of the viewport and center vertically, so the barba sits in the
+    // middle of the content area rather than hugging the top.
+    justify-content: center;
+    min-height: 60vh;
+    gap: 0.5em;
+    font-family: $body-font;
+
+    .barba-loader-img {
+        width: 4.5em;
+        height: auto;
+        animation: barba-float 2.2s ease-in-out infinite;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .barba-loader .barba-loader-img {
+        animation: none;
+    }
+}
+
+// Article info popover for the notable-articles showcase. The popover window is
+// an ng-bootstrap component rendered outside any component view, so it's themed
+// globally; Bootstrap 5's --bs-popover-* variables also restyle the arrow.
+.notable-popover {
+    --bs-popover-max-width: 270px;
+    --bs-popover-bg: #ffffff; // $white
+    --bs-popover-border-color: #000;
+    --bs-popover-border-width: 2px;
+    --bs-popover-border-radius: 12px;
+    --bs-popover-header-bg: #ffe3ea; // $light
+    --bs-popover-header-color: #000;
+    --bs-popover-header-font-size: 0.95rem;
+    --bs-popover-body-color: #000;
+    --bs-popover-font-size: 0.85rem;
+    box-shadow: #000 3px 3px;
+    font-family: $body-font;
+    // Show/hide instantly (overrides Bootstrap's .fade) so the loading state is
+    // visible the moment the popover appears, and a closing popover can't briefly
+    // show the next article's text while it fades out.
+    transition: none;
+
+    .popover-header {
+        font-family: $font-family-sans-serif;
+        font-weight: bold;
+        letter-spacing: -0.05em;
+    }
+}
+
+// Filter modal for the notable-articles showcase. NgbModal renders the modal at
+// <body> (outside any component view), so its content is themed globally and
+// scoped by the windowClass set in StatisticsNotableComponent.openFilterModal().
+.notable-filter-modal {
+    // Borderless but still neo-brutalist: the modal box and its body already
+    // supply the heavy black framing, so we drop every internal accordion border
+    // and give the sections character instead with flat colour fills, bold
+    // condensed type, rounded corners and a single offset shadow per section.
+    .accordion {
+        --bs-accordion-border-width: 0;
+        --bs-accordion-border-color: transparent;
+        --bs-accordion-active-color: #000;
+        --bs-accordion-active-bg: #b3efff; // $primary
+        --bs-accordion-btn-focus-box-shadow: none;
+        width: auto;
+        margin: 0;
+        border: none;
+        box-shadow: none;
+    }
+
+    // Each section is a flat card: white body, rounded corners, offset shadow,
+    // no border anywhere inside.
+    .accordion-item {
+        border: none;
+        border-radius: 10px;
+        background-color: $white;
+        box-shadow: black 3px 3px;
+
+        &+.accordion-item {
+            margin-top: 0.8em;
+        }
+    }
+
+    .accordion-button {
+        border: none;
+        border-radius: 10px;
+        background-color: $lighter-primary;
+        color: #000;
+        font-family: $font-family-sans-serif;
+        font-weight: bold;
+        letter-spacing: -0.08em;
+        box-shadow: none;
+
+        // Expanded: solid accent fill, square off the bottom to meet the body.
+        &:not(.collapsed) {
+            background-color: $primary;
+            border-radius: 10px 10px 0 0;
+            box-shadow: none;
+        }
+
+        &:focus {
+            box-shadow: none;
+        }
+    }
+
+    .accordion-body {
+        border: none;
+        border-radius: 0 0 10px 10px;
+        font-family: $body-font;
+    }
+
+    // Per-section search box.
+    .filter-search {
+        margin-bottom: 0.6em;
+        border: solid black 1.5px;
+        border-radius: 8px;
+        font-family: $body-font;
+
+        &:focus {
+            border-color: black;
+            box-shadow: 0 0 0 0.2rem $lighter-primary;
+        }
+    }
+
+    .filter-empty {
+        margin: 0;
+        font-family: $body-font;
+        font-style: italic;
+        color: $gray-dark;
+    }
+
+    .filter-options {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(8.5em, 1fr));
+        gap: 0.35em 0.75em;
+
+        // Flex layout so long labels wrap under the label (not the checkbox) and
+        // never overflow into the neighbouring column. min-width:0 lets cells shrink.
+        .form-check {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.45em;
+            min-width: 0;
+            margin: 0;
+            padding-left: 0;
+
+            .form-check-input {
+                flex: 0 0 auto;
+                float: none;
+                margin: 0.2em 0 0;
+                cursor: pointer;
+                border: solid black 1.5px;
+
+                &:checked {
+                    background-color: $dark-primary;
+                    border-color: black;
+                }
+
+                &:focus {
+                    border-color: black;
+                    box-shadow: 0 0 0 0.2rem $lighter-primary;
+                }
+            }
+
+            .form-check-label {
+                min-width: 0;
+                overflow-wrap: anywhere;
+                line-height: 1.25;
+                cursor: pointer;
+                font-family: $body-font;
+            }
+        }
+    }
+
+    // "Showing N articles" count, pushed to the left of the footer buttons.
+    .filter-result {
+        margin-right: auto;
+        font-family: $body-font;
+        font-size: 0.9em;
+        font-weight: bold;
+        letter-spacing: -0.05em;
+    }
+}
