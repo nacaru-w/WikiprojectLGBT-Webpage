@@ -1,5 +1,13 @@
 @use 'variables';
 
+// On desktop .main vertically centers its routed content. That makes the nav
+// drift up/down as each subsection's height changes. Stretch this component to
+// fill .main instead, so its content (the nav first) stays pinned to the top.
+:host {
+    align-self: stretch;
+    width: 100%;
+}
+
 .stats-navbar {
     display: flex;
     justify-content: space-around;
@@ -8,7 +16,9 @@
     width: min(900px, 95%);
     margin: 0.5em auto 1em auto;
     padding: 0.5em;
-    background-color: variables.$info;
+    // Mirror the main site header nav (pale-pink surface, red underline) so the
+    // two navigational elements share the same visual language.
+    background-color: variables.$light;
     border-radius: 10px;
     border: solid black 2px;
     box-shadow: black 4px 4px;
@@ -38,7 +48,7 @@
         left: 0;
         width: 100%;
         height: 0.16em;
-        background-color: variables.$deep-dark-info;
+        background-color: variables.$danger;
         border-radius: 2px;
         transition: opacity 300ms, transform 300ms;
     }

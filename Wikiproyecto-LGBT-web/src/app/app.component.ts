@@ -1,5 +1,5 @@
 
-import { Component, InjectionToken, OnInit, PLATFORM_ID, effect, inject, signal } from '@angular/core';
+import { Component, InjectionToken, NgZone, OnInit, PLATFORM_ID, effect, inject, signal } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { RouterOutlet, Router, NavigationStart, NavigationEnd } from '@angular/router';
 import { FooterComponent } from './shared/components/footer/footer.component';
@@ -32,6 +32,7 @@ export class AppComponent implements OnInit {
   private loading = inject(LoadingService);
   private platformId = inject(PLATFORM_ID);
   private translate = inject(TranslateService);
+  private ngZone = inject(NgZone);
 
   title: string = 'Wikiproyecto-LGBT-web';
   footerAnimationState = signal<string>('visible');
@@ -58,8 +59,12 @@ export class AppComponent implements OnInit {
     });
 
     // Safety net: never let the loader hang if a page's data never arrives.
+    // Scheduled outside Angular's zone so this long-lived pending timer can't
+    // keep the app "unstable" and block SSR hydration from completing (NG0506).
     if (isPlatformBrowser(this.platformId)) {
-      setTimeout(() => this.loading.markReady(), 12000);
+      this.ngZone.runOutsideAngular(() => {
+        setTimeout(() => this.ngZone.run(() => this.loading.markReady()), 12000);
+      });
     }
   }
 
