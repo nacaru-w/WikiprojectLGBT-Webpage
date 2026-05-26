@@ -1,7 +1,6 @@
 <div ngbDropdown class="lang-switcher" display="dynamic" placement="bottom-end">
     <button type="button" class="lang-toggle" ngbDropdownToggle aria-label="Cambiar idioma">
-        <span class="lang-globe" aria-hidden="true">&#127760;</span>
-        <span class="lang-current">{{ labels[currentLang()] }}</span>
+        <img class="lang-icon" src="assets/imgs/language-icon.svg" alt="" aria-hidden="true">
     </button>
     <div ngbDropdownMenu aria-label="Idiomas disponibles">
         @for (lang of langs; track lang) {

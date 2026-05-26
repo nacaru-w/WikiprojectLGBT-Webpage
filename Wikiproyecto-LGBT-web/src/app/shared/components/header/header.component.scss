@@ -41,10 +41,49 @@
         gap: 0.5em;
     }
 
+    // Mobile menu button: matches the language toggle beside it — a square,
+    // bordered pill with the glyph flex-centered (so it sits dead-centre), cyan
+    // only on hover/focus, and no heavy Bootstrap focus glow on selection.
     .navbar-toggler {
-        border: solid black 3px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 2.3rem;
+        height: 2.3rem;
+        padding: 0;
+        font-size: 1.25rem;
+        line-height: 1;
         color: black;
-        background-color: variables.$info;
+        background-color: transparent;
+        border: solid black 2px;
+        border-radius: 0.5em;
+        box-shadow: none;
+        transition: background-color 0.2s ease;
+
+        // SVG bars (symmetric in the viewBox) sit dead-centre — unlike the old
+        // ☰ glyph, whose ink rode high within its line box.
+        .hamburger-icon {
+            display: block;
+            width: 1.25rem;
+            height: 1.25rem;
+        }
+
+        // Our display override outranks Bootstrap's `.navbar-expand-lg
+        // .navbar-toggler { display: none }`, so re-hide it on desktop (≥lg) to
+        // keep it mobile/tablet-only.
+        @media (min-width: 992px) {
+            display: none;
+        }
+
+        &:hover,
+        &:focus-visible {
+            background-color: variables.$primary;
+        }
+
+        &:focus {
+            box-shadow: none;
+            outline: none;
+        }
     }
 
     .navbar-options {
@@ -64,39 +103,27 @@
         cursor: pointer;
     }
 
-    li>a {
-        position: relative;
+    // Main nav = neo-brutalist switch: the current route is a raised #f2eaff
+    // ($active-purple) pill (black border + offset shadow); hovering another shows
+    // a flat white outlined pill. Transparent border at rest avoids layout shift.
+    .nav-link {
+        border: solid transparent 2px;
+        border-radius: 9px;
+        transition: background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+        padding-inline: 1em;
     }
 
-    /* Fade in */
-    li>a::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 0.2em;
-        border-radius: 3px;
-        background-color: variables.$danger;
-        transition: opacity 300ms, transform 300ms;
+    .nav-link:not(.active):hover,
+    .nav-link:not(.active):focus-visible {
+        background-color: variables.$primary;
+        border-color: black;
     }
 
-    a:hover::after,
-    a:focus::after {
-        opacity: 1;
-        transform: translate3d(0, 0.2em, 0);
-    }
-
-    /* Scale from center */
-    a::after {
-        opacity: 1;
-        transform: scale(0);
-        transform-origin: center;
-    }
-
-    a:hover::after,
-    a:focus::after {
-        transform: scale(1);
+    .nav-link.active {
+        background-color: variables.$active-purple;
+        border-color: black;
+        box-shadow: black 2px 2px;
+        color: black;
     }
 
 }

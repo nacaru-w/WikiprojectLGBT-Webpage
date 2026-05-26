@@ -3,13 +3,13 @@
 .lang-switcher {
     display: inline-block;
 
+    // Icon-only toggle: just the Wikipedia language glyph, so it takes minimal
+    // space in the header. The language list lives in the dropdown.
     .lang-toggle {
         display: inline-flex;
         align-items: center;
-        gap: 0.4em;
-        padding: 0.25em 0.6em;
-        font-family: variables.$font-family-sans-serif;
-        font-weight: bold;
+        justify-content: center;
+        padding: 0.3em 0.45em;
         color: black;
         background-color: transparent;
         border: solid black 2px;
@@ -17,20 +17,20 @@
         cursor: pointer;
         transition: background-color 0.2s ease, transform 0.2s ease;
 
-        .lang-globe {
-            font-size: 1.1em;
-            line-height: 1;
+        .lang-icon {
+            display: block;
+            width: 1.35em;
+            height: 1.35em;
         }
 
         &:hover,
         &:focus-visible {
-            background-color: variables.$info;
+            background-color: variables.$primary;
         }
 
-        // ng-bootstrap renders the caret via the .dropdown-toggle::after it adds;
-        // nudge it so it sits comfortably next to the label.
+        // Hide the ng-bootstrap dropdown caret so the button is icon-only.
         &::after {
-            margin-left: 0.1em;
+            display: none;
         }
     }
 
@@ -40,13 +40,13 @@
         cursor: pointer;
 
         &.active {
-            background-color: variables.$secondary;
+            background-color: variables.$active-purple;
             color: black;
         }
 
         &:hover:not(.active),
         &:focus {
-            background-color: variables.$light;
+            background-color: variables.$primary;
         }
     }
 }
