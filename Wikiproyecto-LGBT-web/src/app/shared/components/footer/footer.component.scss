@@ -1,6 +1,7 @@
 @use '_variables';
 
 .footer {
+    position: relative;
     background-image: linear-gradient(135deg, transparent 50%, #ffe3ea 50%), linear-gradient(225deg, transparent 50%, #ffe3ea 50%), linear-gradient(45deg, transparent 50%, transparent 50%), linear-gradient(-45deg, transparent 50%, #f5f5f5 50%);
     background-size: 2rem 2rem;
     background-repeat: repeat-x;
@@ -8,6 +9,23 @@
     padding-bottom: 2.5rem;
     background-color: variables.$light;
     color: black;
+
+    .footer-credit {
+        position: absolute;
+        bottom: 0.5rem;
+        right: 0.75rem;
+        max-width: 18rem;
+        font-family: variables.$body-font;
+        font-size: 0.65rem;
+        line-height: 1.2;
+        text-align: right;
+        color: black;
+        opacity: 0.6;
+
+        // The credit's "Nacaru" link is rendered via [innerHTML] (translated
+        // string) and styled by the global .text-link class — no ::ng-deep
+        // needed since global styles aren't subject to view encapsulation.
+    }
 
     .footer-container {
 
@@ -38,41 +56,22 @@
                 .list-item {
                     font-family: variables.$body-font;
                     width: fit-content;
-                    position: relative;
-
+                    // Pill on hover: cyan-blue fill + black border while hovered
+                    // (footer links have no persistent "active" state).
                     a {
+                        display: inline-block;
+                        padding: 0.1em 0.55em;
                         text-decoration: none;
+                        border: solid transparent 2px;
+                        border-radius: 7px;
+                        transition: background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
                     }
 
-                    /* Fade in */
-                    a::after {
-                        content: '';
-                        position: absolute;
-                        bottom: 0;
-                        left: 0;
-                        width: 100%;
-                        height: 0.15em;
-                        background-color: variables.$danger;
-                        opacity: 0;
-                        transition: opacity 300ms, transform 300ms;
-                    }
-
-                    a:hover::after,
-                    a:focus::after {
-                        opacity: 1;
-                        transform: translate3d(0, 0.2em, 0);
-                    }
-
-                    /* Scale from center */
-                    a::after {
-                        opacity: 1;
-                        transform: scale(0);
-                        transform-origin: center;
-                    }
-
-                    a:hover::after,
-                    a:focus::after {
-                        transform: scale(1);
+                    a:hover,
+                    a:focus-visible {
+                        background-color: variables.$primary;
+                        border-color: black;
+                        box-shadow: black 2px 2px;
                     }
                 }
 
