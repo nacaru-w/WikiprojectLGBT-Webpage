@@ -17,6 +17,21 @@ body {
     font-family: $font-family-sans-serif;
 }
 
+// Standard text-link style used app-wide for prose/inline links. Apply this
+// class to any <a> that should look like a body link (black, wavy underline,
+// deep-blue on hover) — including links injected via [innerHTML], since global
+// styles aren't subject to component view encapsulation.
+.text-link {
+    color: black;
+    text-decoration: wavy underline;
+    transition: color 0.3s ease-in-out;
+
+    &:hover,
+    &:focus-visible {
+        color: $deep-dark-primary;
+    }
+}
+
 .btn.disabled,
 .btn:disabled {
     border-color: black;
@@ -177,12 +192,13 @@ body {
     }
 
     a:hover {
-        background-color: $light;
+        background-color: $primary;
     }
 
+    // Active section = purple (the app-wide "current" marker); stays purple on hover.
+    a.active,
     a.active:hover {
-        background-color: $light;
-        box-shadow: black 2px;
+        background-color: $active-purple;
         box-shadow: none;
     }
 
@@ -192,58 +208,55 @@ body {
 
 }
 
-// Subpage section nav (statistics + event-of-the-month). Mirrors the header
-// nav: pale-pink surface, bold black text, red scale-in underline indicator.
+// Subpage section nav (statistics + event-of-the-month): a neo-brutalist
+// segmented switch. Options sit flat in the pink track; the active one becomes a
+// raised #f2eaff ($active-purple) pill with a black border + offset shadow, so
+// the current section clearly stands out.
 .subpage-nav {
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     flex-wrap: wrap;
-    gap: 1em;
+    gap: 0.5em;
     width: min(900px, 95%);
     margin: 0.5em auto 1em auto;
-    padding: 0.5em;
+    padding: 0.45em;
     background-color: $light;
-    border-radius: 10px;
+    border-radius: 12px;
     border: solid black 2px;
     box-shadow: black 4px 4px;
     font-size: 0.9em;
     letter-spacing: -0.1em;
     font-weight: bold;
 
-    a {
-        color: black;
-        cursor: pointer;
-        text-decoration: none;
-    }
-
     li {
         list-style-type: none;
     }
 
-    li>a {
-        position: relative;
+    // Each segment is a pill. The transparent border at rest reserves the space
+    // the black border occupies when hovered/active, so nothing shifts.
+    a {
+        display: block;
+        padding: 0.35em 1.1em;
+        color: black;
+        cursor: pointer;
+        text-decoration: none;
+        border: solid transparent 2px;
+        border-radius: 9px;
+        transition: background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
     }
 
-    // Red underline indicator that scales in from the center on hover/focus and
-    // stays shown for the active section.
-    li>a::after {
-        content: '';
-        position: absolute;
-        bottom: -3px;
-        left: 0;
-        width: 100%;
-        height: 0.16em;
-        background-color: $danger;
-        border-radius: 2px;
-        transform: scale(0);
-        transform-origin: center;
-        transition: transform 300ms;
+    // Hover/focus on a non-active segment: cyan-blue fill + black border ("pressable").
+    .subpage-nav-option:not(.active)>a:hover,
+    .subpage-nav-option:not(.active)>a:focus-visible {
+        background-color: $primary;
+        border-color: black;
     }
 
-    a:hover::after,
-    a:focus::after,
-    .subpage-nav-option.active>a::after {
-        transform: scale(1);
+    // Active segment: the raised #f2eaff pill that marks the current section.
+    .subpage-nav-option.active>a {
+        background-color: $active-purple;
+        border-color: black;
+        box-shadow: black 2px 2px;
     }
 }
 
@@ -307,7 +320,7 @@ body {
         cursor: pointer;
 
         &.active {
-            background-color: $primary;
+            background-color: $active-purple;
         }
     }
 
@@ -354,7 +367,7 @@ body {
         transition: background-color 0.2s ease-in-out;
 
         &.expanded {
-            background-color: $light;
+            background-color: $active-purple;
         }
     }
 
@@ -845,7 +858,7 @@ figure {
         --bs-accordion-border-width: 0;
         --bs-accordion-border-color: transparent;
         --bs-accordion-active-color: #000;
-        --bs-accordion-active-bg: #{$primary};
+        --bs-accordion-active-bg: #{$active-purple};
         --bs-accordion-btn-focus-box-shadow: none;
         width: auto;
         margin: 0;
@@ -878,7 +891,7 @@ figure {
 
         // Expanded: solid accent fill, square off the bottom to meet the body.
         &:not(.collapsed) {
-            background-color: $primary;
+            background-color: $active-purple;
             border-radius: 10px 10px 0 0;
             box-shadow: none;
         }
@@ -937,7 +950,7 @@ figure {
                 border: solid black 1.5px;
 
                 &:checked {
-                    background-color: $dark-primary;
+                    background-color: $active-purple;
                     border-color: black;
                 }
 

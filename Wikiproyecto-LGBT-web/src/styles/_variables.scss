@@ -14,6 +14,7 @@ $warning: #fff574;
 $danger: #fa7c7c;
 
 $purple: #ccacfd;
+$active-purple: #f2eaff; // Active/current marker — the pale barba purple (same value as the form's $lighter-purple)
 
 $gray-lightest: #f5f5f5;
 $gray-lighter: #e0e0e0;
@@ -28,6 +29,7 @@ $body-background: #f5f5f5;
 $lighter-primary: color.scale($primary, $lightness: 75%); // Lighter shade of blue
 $lighter-purple: color.scale($purple, $lightness: 75%);
 $lighter-orange: color.scale($info, $lightness: 75%);
+$pastel-green: color.scale(#bcf987, $lightness: 50%, $saturation: -10%); // Soft pastel of barba's green (#bcf987) — the "good / success" light green
 
 $dark-primary: color.adjust($primary, $lightness: -35%); // Darker shade of blue
 $dark-secondary: color.adjust($secondary, $lightness: -35%); // Darker shade of pink
