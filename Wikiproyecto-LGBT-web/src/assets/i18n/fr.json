@@ -6,7 +6,36 @@
   "header": {
     "blog": "Blog",
     "contact": "Contact",
-    "ourWork": "Notre travail"
+    "ourWork": "Notre travail",
+    "eventOfMonth": "Événement du mois"
+  },
+  "event": {
+    "intro": "L'<a href=\"https://es.wikipedia.org/wiki/Wikiproyecto:LGBT/Evento_del_mes\">Événement du mois</a> choisit chaque mois un pays, un continent ou un thème pour créer et améliorer le contenu LGBT+ sur Wikipédia. Survole ou touche un pays sur la carte pour voir ses éditions, ou parcours les événements thématiques dans la liste.",
+    "nav": {
+      "map": "Carte par pays",
+      "list": "Événements thématiques"
+    },
+    "mapAria": "Carte du monde des pays de l'Événement du mois",
+    "prompt": "Survole ou touche un pays en surbrillance pour voir ses données.",
+    "participants": "participant·es",
+    "totalArticles": "articles au total",
+    "articles": "articles",
+    "legend": "Total d'articles par pays",
+    "created": "créés",
+    "translated": "traduits",
+    "expanded": "enrichis",
+    "viewChallenge": "Voir le défi",
+    "upcoming": "À venir",
+    "ongoing": "En cours",
+    "prizeArticles": "Prix pour avoir créé le plus d'articles",
+    "prizeLesbian": "Prix pour avoir créé le plus de biographies de lesbiennes",
+    "seeMore": "Voir plus",
+    "modalParticipants": "Participant·es",
+    "modalArticles": "Articles",
+    "bytes": "octets",
+    "noParticipants": "Aucun·e participant·e pour l'instant",
+    "noArticles": "Aucun article pour l'instant",
+    "noEvents": "Aucun événement disponible."
   },
   "footer": {
     "meta": "Meta",

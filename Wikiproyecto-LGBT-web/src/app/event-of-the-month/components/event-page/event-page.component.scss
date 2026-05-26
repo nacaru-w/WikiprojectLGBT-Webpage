@@ -1,0 +1,36 @@
+@use 'variables';
+
+// Fill .main (which vertically centers routed content on desktop) so the nav
+// stays pinned to the top instead of drifting between the two subsections.
+:host {
+    align-self: stretch;
+    width: 100%;
+}
+
+.event-intro {
+    width: min(900px, 95%);
+    margin: 0 auto 1.25em;
+    padding: 1em 1.25em;
+    border: solid black 2px;
+    border-radius: 10px;
+    box-shadow: black 4px 4px;
+    background-color: variables.$lighter-orange;
+    font-family: variables.$body-font;
+
+    p {
+        margin: 0;
+    }
+
+    // The intro text is rendered via [innerHTML] (it may carry a translated
+    // link), so reach into its <a> with ::ng-deep, scoped here.
+    ::ng-deep a {
+        color: black;
+        text-decoration: wavy underline;
+        font-weight: bold;
+        transition: color 0.3s ease-in-out;
+    }
+
+    ::ng-deep a:hover {
+        color: variables.$deep-dark-primary;
+    }
+}

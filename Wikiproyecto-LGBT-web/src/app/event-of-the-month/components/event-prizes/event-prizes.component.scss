@@ -1,0 +1,29 @@
+@use 'variables';
+
+.event-prizes {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.25em 1.1em;
+    font-family: variables.$body-font;
+    font-size: 0.9em;
+}
+
+.event-prize {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35em;
+}
+
+// The award icon carries the explanatory tooltip (title) on hover.
+.event-prize-icon {
+    flex: 0 0 auto;
+    width: 1.7em;
+    height: 1.7em;
+    cursor: help;
+}
+
+.event-prize-winner {
+    font-weight: bold;
+    overflow-wrap: anywhere;
+}

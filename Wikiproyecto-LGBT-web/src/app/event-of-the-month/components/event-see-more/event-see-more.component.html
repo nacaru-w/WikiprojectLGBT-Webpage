@@ -1,0 +1,100 @@
+<button type="button" class="btn btn-primary event-see-more-btn" (click)="open(modal)" [disabled]="!page()">
+  {{ 'event.seeMore' | translate }}
+</button>
+
+<ng-template #modal let-modal>
+  <div class="modal-header">
+    <h2 class="modal-title fs-5">{{ title() }} · {{ monthKey() | translate }} {{ year() }}</h2>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+  </div>
+
+  <div class="modal-body">
+    <nav class="modal-tabs">
+      <button type="button" class="modal-tab" [class.active]="tab() === 'participants'" (click)="show('participants')">
+        {{ 'event.modalParticipants' | translate }}
+      </button>
+      <button type="button" class="modal-tab" [class.active]="tab() === 'articles'" (click)="show('articles')">
+        {{ 'event.modalArticles' | translate }}
+      </button>
+    </nav>
+
+    @if (loading()) {
+    <div class="barba-loader">
+      <img class="barba-loader-img" src="./../../../../assets/imgs/Barba-wikiproyecto-lgbt.svg" alt="" aria-hidden="true">
+      <span class="barba-loader-label">{{ 'common.loading' | translate }}</span>
+    </div>
+    } @else {
+
+    @if (tab() === 'participants') {
+    <div class="tab-panel">
+    @if (data().participants.length) {
+    <ol class="rank-list">
+      @for (p of data().participants; track p.user) {
+      <li class="rank-item">
+        <button type="button" class="rank-row rank-toggle" [class.expanded]="expandedUser() === p.user"
+          [attr.aria-expanded]="expandedUser() === p.user" (click)="toggleUser(p.user)">
+          <span class="rank-pos">{{ $index + 1 }}</span>
+          <span class="rank-name">
+            {{ p.user }}
+            @if (wonLesbian(p.user)) {
+            <img class="rank-award" [src]="lesbianIcon" [alt]="'event.prizeLesbian' | translate"
+              [title]="'event.prizeLesbian' | translate">
+            }
+          </span>
+          <span class="rank-stats">
+            <b>{{ p.articleCount }}</b> {{ 'event.articles' | translate }} ·
+            @if (p.bytes) { <b>{{ p.bytes | number }}</b> {{ 'event.bytes' | translate }} } @else { — }
+          </span>
+          <span class="rank-caret" aria-hidden="true">▾</span>
+        </button>
+        <div class="rank-sub" [class.expanded]="expandedUser() === p.user"
+          [attr.inert]="expandedUser() === p.user ? null : ''">
+          <div class="rank-sub-inner">
+            <ul class="rank-sublist">
+              @for (a of p.articles; track a.url) {
+              <li>
+                <a [href]="a.url" target="_blank" rel="noopener">{{ a.title }}</a>
+                <span class="rank-sublist-size">
+                  @if (a.size === null) { — } @else { {{ a.size | number }} {{ 'event.bytes' | translate }} }
+                </span>
+              </li>
+              }
+            </ul>
+          </div>
+        </div>
+      </li>
+      }
+    </ol>
+    } @else {
+    <p class="modal-empty">{{ 'event.noParticipants' | translate }}</p>
+    }
+    </div>
+    } @else {
+    <div class="tab-panel">
+    @if (data().articles.length) {
+    <ol class="rank-list">
+      @for (a of data().articles; track a.title) {
+      <li class="rank-row">
+        <span class="rank-pos">{{ $index + 1 }}</span>
+        <a class="rank-name" [href]="a.url" target="_blank" rel="noopener">{{ a.title }}</a>
+        <span class="rank-stats">
+          @if (a.size === null) { — } @else { <b>{{ a.size | number }}</b> {{ 'event.bytes' | translate }} }
+        </span>
+      </li>
+      }
+    </ol>
+    } @else {
+    <p class="modal-empty">{{ 'event.noArticles' | translate }}</p>
+    }
+    </div>
+    }
+
+    }
+  </div>
+
+  @if (challengeUrl()) {
+  <div class="modal-footer">
+    <a class="modal-page-link" [href]="challengeUrl()" target="_blank" rel="noopener">{{ 'event.viewChallenge' | translate }}</a>
+  </div>
+  }
+</ng-template>

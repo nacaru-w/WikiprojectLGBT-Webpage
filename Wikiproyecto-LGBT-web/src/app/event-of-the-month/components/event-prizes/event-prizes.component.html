@@ -1,0 +1,18 @@
+@if (articles().length || lesbian().length) {
+<div class="event-prizes">
+  @if (articles().length) {
+  <span class="event-prize">
+    <img class="event-prize-icon" [src]="articlesIcon" [title]="'event.prizeArticles' | translate"
+      [alt]="'event.prizeArticles' | translate">
+    <span class="event-prize-winner">{{ articles().join(', ') }}</span>
+  </span>
+  }
+  @if (lesbian().length) {
+  <span class="event-prize">
+    <img class="event-prize-icon" [src]="lesbianIcon" [title]="'event.prizeLesbian' | translate"
+      [alt]="'event.prizeLesbian' | translate">
+    <span class="event-prize-winner">{{ lesbian().join(', ') }}</span>
+  </span>
+  }
+</div>
+}

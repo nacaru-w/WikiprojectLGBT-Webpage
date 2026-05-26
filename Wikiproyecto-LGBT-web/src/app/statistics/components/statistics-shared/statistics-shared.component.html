@@ -1,17 +1,17 @@
-<nav class="stats-navbar">
-    <li class="stats-navbar-option" [class.active]="activeSection === 'yearly-articles'">
+<nav class="subpage-nav">
+    <li class="subpage-nav-option" [class.active]="activeSection === 'yearly-articles'">
         <a href="#yearly-articles" (click)="selectSection($event, 'yearly-articles')">{{ 'stats.nav.yearlyArticles' | translate }}</a>
     </li>
-    <li class="stats-navbar-option" [class.active]="activeSection === 'monthly-articles'">
+    <li class="subpage-nav-option" [class.active]="activeSection === 'monthly-articles'">
         <a href="#monthly-articles" (click)="selectSection($event, 'monthly-articles')">{{ 'stats.nav.monthlyArticles' | translate }}</a>
     </li>
-    <li class="stats-navbar-option" [class.active]="activeSection === 'notable'">
+    <li class="subpage-nav-option" [class.active]="activeSection === 'notable'">
         <a href="#notable" (click)="selectSection($event, 'notable')">{{ 'stats.nav.notable' | translate }}</a>
     </li>
-    <li class="stats-navbar-option" [class.active]="activeSection === 'participants'">
+    <li class="subpage-nav-option" [class.active]="activeSection === 'participants'">
         <a href="#participants" (click)="selectSection($event, 'participants')">{{ 'stats.nav.participants' | translate }}</a>
     </li>
-    <li class="stats-navbar-option" [class.active]="activeSection === 'last-articles'">
+    <li class="subpage-nav-option" [class.active]="activeSection === 'last-articles'">
         <a href="#last-articles" (click)="selectSection($event, 'last-articles')">{{ 'stats.nav.lastArticles' | translate }}</a>
     </li>
 </nav>

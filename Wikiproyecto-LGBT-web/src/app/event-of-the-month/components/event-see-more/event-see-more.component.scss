@@ -1,0 +1,10 @@
+// Pale-blue (btn-primary) "See more" button; tighter than the global .btn so it
+// sits neatly in the compact edition/instance footers. The modal's own content
+// is themed globally (styles.scss → .event-details-modal) since NgbModal renders
+// it at <body>.
+.event-see-more-btn {
+    align-self: flex-start;
+    margin: 0.3em 0 0;
+    padding: 0.3em 1em;
+    font-size: 0.82em;
+}

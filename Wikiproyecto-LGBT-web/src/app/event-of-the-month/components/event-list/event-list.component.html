@@ -1,0 +1,47 @@
+<ul class="event-list">
+  @for (group of groups(); track group.label) {
+  <li class="event-row" [class.upcoming]="group.total === 0">
+    <div class="event-row-figure">
+      @if (group.total > 0) {
+      <span class="event-row-num">{{ group.total }}</span>
+      <span class="event-row-num-label">{{ 'event.totalArticles' | translate }}</span>
+      } @else {
+      <span class="event-badge">{{ (isGroupOngoing(group) ? 'event.ongoing' : 'event.upcoming') | translate }}</span>
+      }
+    </div>
+
+    <div class="event-row-body">
+      <h3 class="event-row-title">{{ group.label }}</h3>
+
+      @for (ev of group.instances; track ev.year + '-' + ev.monthIdx) {
+      <div class="event-instance">
+        <div class="event-instance-when">
+          {{ monthKey(ev.monthIdx) | translate }} {{ ev.year }}
+          @if (ev.upcoming) {
+          <span class="event-badge-inline">{{ (isOngoing(ev) ? 'event.ongoing' : 'event.upcoming') | translate }}</span>
+          } @else {
+          <span class="event-instance-total">· {{ ev.total ?? '—' }} {{ 'event.articles' | translate }}</span>
+          }
+        </div>
+
+        @if (!ev.upcoming) {
+        <div class="event-row-stats">
+          <span><b>{{ ev.participants ?? '—' }}</b> {{ 'event.participants' | translate }}</span>
+          <span><b>{{ ev.created ?? '—' }}</b> {{ 'event.created' | translate }}</span>
+          <span><b>{{ ev.translated ?? '—' }}</b> {{ 'event.translated' | translate }}</span>
+          <span><b>{{ ev.expanded ?? '—' }}</b> {{ 'event.expanded' | translate }}</span>
+        </div>
+        <app-event-prizes [articles]="ev.articlesPrize" [lesbian]="ev.lesbianPrize"></app-event-prizes>
+        }
+
+        <app-event-see-more [page]="ev.challengePage" [challengeUrl]="ev.challengeUrl"
+          [title]="group.label" [monthKey]="monthKey(ev.monthIdx)" [year]="ev.year"
+          [lesbianPrize]="ev.lesbianPrize"></app-event-see-more>
+      </div>
+      }
+    </div>
+  </li>
+  } @empty {
+  <li class="event-list-empty">{{ 'event.noEvents' | translate }}</li>
+  }
+</ul>

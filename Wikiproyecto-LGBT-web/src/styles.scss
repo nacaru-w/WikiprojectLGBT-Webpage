@@ -192,6 +192,297 @@ body {
 
 }
 
+// Subpage section nav (statistics + event-of-the-month). Mirrors the header
+// nav: pale-pink surface, bold black text, red scale-in underline indicator.
+.subpage-nav {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 1em;
+    width: min(900px, 95%);
+    margin: 0.5em auto 1em auto;
+    padding: 0.5em;
+    background-color: $light;
+    border-radius: 10px;
+    border: solid black 2px;
+    box-shadow: black 4px 4px;
+    font-size: 0.9em;
+    letter-spacing: -0.1em;
+    font-weight: bold;
+
+    a {
+        color: black;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    li {
+        list-style-type: none;
+    }
+
+    li>a {
+        position: relative;
+    }
+
+    // Red underline indicator that scales in from the center on hover/focus and
+    // stays shown for the active section.
+    li>a::after {
+        content: '';
+        position: absolute;
+        bottom: -3px;
+        left: 0;
+        width: 100%;
+        height: 0.16em;
+        background-color: $danger;
+        border-radius: 2px;
+        transform: scale(0);
+        transform-origin: center;
+        transition: transform 300ms;
+    }
+
+    a:hover::after,
+    a:focus::after,
+    .subpage-nav-option.active>a::after {
+        transform: scale(1);
+    }
+}
+
+// Pop-in for the event details modal card: a quick scale + fade as it opens.
+@keyframes modal-pop-in {
+    from {
+        opacity: 0;
+        transform: scale(0.92) translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+// Fade + slight rise for a modal tab panel when it's switched in. (CSS, not an
+// Angular trigger, because the modal renders outside this component's view, so
+// [@fadeIn] wouldn't fire here.)
+@keyframes tab-fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+// Event details modal (NgbModal, rendered at <body>, scoped by its windowClass).
+.event-details-modal {
+    // The card scales/fades in on open (runs whenever ng-bootstrap inserts it).
+    .modal-content {
+        animation: modal-pop-in 0.25s ease-out;
+    }
+
+    // Each tab's panel fades in when it's inserted (i.e. on every tab switch).
+    .tab-panel {
+        animation: tab-fade-in 0.3s ease-out;
+    }
+
+    .modal-tabs {
+        display: flex;
+        gap: 0.5em;
+        margin-bottom: 1em;
+    }
+
+    .modal-tab {
+        flex: 1;
+        padding: 0.4em 0.6em;
+        background-color: $light;
+        border: solid black 2px;
+        border-radius: 10px;
+        box-shadow: black 2px 2px;
+        font-family: $font-family-sans-serif;
+        font-weight: bold;
+        font-size: 0.85em;
+        letter-spacing: -0.05em;
+        cursor: pointer;
+
+        &.active {
+            background-color: $primary;
+        }
+    }
+
+    .rank-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 0.4em;
+    }
+
+    .rank-row {
+        display: flex;
+        align-items: baseline;
+        gap: 0.5em;
+        padding: 0.4em 0.6em;
+        background-color: $white;
+        border: solid black 2px;
+        border-radius: 8px;
+    }
+
+    // A participant row plus its expandable article list, wrapped as a single
+    // bordered, rounded box. The border/radius live here (with overflow: hidden)
+    // so the toggle and sublist sit flush inside, with no mismatched corners at
+    // their seam (which otherwise looked dented when expanded).
+    .rank-item {
+        display: flex;
+        flex-direction: column;
+        background-color: $white;
+        border: solid black 2px;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    .rank-toggle {
+        width: 100%;
+        font: inherit;
+        color: inherit;
+        text-align: left;
+        cursor: pointer;
+        border: none; // the border + radius live on .rank-item now
+        border-radius: 0;
+        transition: background-color 0.2s ease-in-out;
+
+        &.expanded {
+            background-color: $light;
+        }
+    }
+
+    .rank-caret {
+        flex: 0 0 auto;
+        align-self: center;
+        transition: transform 0.2s ease-in-out;
+    }
+
+    .rank-toggle.expanded .rank-caret {
+        transform: rotate(180deg);
+    }
+
+    // Animates the article list open/closed with the grid-rows trick (0fr → 1fr
+    // transitions smoothly even though the list's height is dynamic).
+    .rank-sub {
+        display: grid;
+        grid-template-rows: 0fr;
+        transition: grid-template-rows 0.3s ease-in-out;
+
+        &.expanded {
+            grid-template-rows: 1fr;
+        }
+    }
+
+    // The grid's animating child: a plain clipping box with no border/padding of
+    // its own, so it collapses fully to 0. (A bordered child would leave a 2px
+    // sliver — the "tray" peeking out under each collapsed row.)
+    .rank-sub-inner {
+        overflow: hidden;
+        min-height: 0;
+    }
+
+    // The participant's articles, revealed below the toggle. Just a top divider
+    // line separates them — the surrounding .rank-item supplies border + corners.
+    .rank-sublist {
+        list-style: none;
+        margin: 0;
+        padding: 0.4em 0.6em;
+        background-color: $white;
+        border-top: solid black 2px;
+        display: flex;
+        flex-direction: column;
+        gap: 0.3em;
+        font-size: 0.85em;
+
+        li {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 0.6em;
+        }
+
+        a {
+            color: black;
+            text-decoration: wavy underline;
+            transition: color 0.3s ease-in-out;
+            overflow-wrap: anywhere;
+
+            &:hover {
+                color: $deep-dark-primary;
+            }
+        }
+
+        .rank-sublist-size {
+            flex: 0 0 auto;
+            color: $gray-dark;
+            white-space: nowrap;
+        }
+    }
+
+    .rank-pos {
+        flex: 0 0 auto;
+        min-width: 1.4em;
+        font-family: $font-family-sans-serif;
+        font-weight: bold;
+        color: $deep-dark-primary;
+    }
+
+    .rank-name {
+        flex: 1 1 auto;
+        min-width: 0;
+        font-weight: bold;
+        overflow-wrap: anywhere;
+    }
+
+    // Tiny award icon shown inline next to a prize-winning participant's name.
+    .rank-award {
+        height: 1.1em;
+        width: auto;
+        margin-left: 0.35em;
+        vertical-align: -0.18em;
+    }
+
+    a.rank-name {
+        color: black;
+        text-decoration: wavy underline;
+        transition: color 0.3s ease-in-out;
+
+        &:hover {
+            color: $deep-dark-primary;
+        }
+    }
+
+    .rank-stats {
+        flex: 0 0 auto;
+        font-size: 0.82em;
+        text-align: right;
+    }
+
+    .modal-empty {
+        text-align: center;
+        font-style: italic;
+        color: $gray-dark;
+    }
+
+    .modal-page-link {
+        font-weight: bold;
+        color: black;
+        text-decoration: wavy underline;
+        transition: color 0.3s ease-in-out;
+
+        &:hover {
+            color: $deep-dark-primary;
+        }
+    }
+}
+
 .modal-content {
     border: solid black 3px;
     box-shadow: black 4px 4px;
@@ -473,8 +764,17 @@ figure {
 // Gentle bobbing for the barba mascot in loading states. Global (not component
 // @keyframes) so it also applies inside the body-appended notable popover.
 @keyframes barba-float {
-    0%, 100% { transform: translateY(0); opacity: 0.85; }
-    50% { transform: translateY(-6px); opacity: 1; }
+
+    0%,
+    100% {
+        transform: translateY(0);
+        opacity: 0.85;
+    }
+
+    50% {
+        transform: translateY(-6px);
+        opacity: 1;
+    }
 }
 
 // Page-level loading indicator: the barba mascot bobbing above a "Loading…"
@@ -509,11 +809,11 @@ figure {
 // globally; Bootstrap 5's --bs-popover-* variables also restyle the arrow.
 .notable-popover {
     --bs-popover-max-width: 270px;
-    --bs-popover-bg: #ffffff; // $white
+    --bs-popover-bg: #{$white};
     --bs-popover-border-color: #000;
     --bs-popover-border-width: 2px;
     --bs-popover-border-radius: 12px;
-    --bs-popover-header-bg: #ffe3ea; // $light
+    --bs-popover-header-bg: #{$light};
     --bs-popover-header-color: #000;
     --bs-popover-header-font-size: 0.95rem;
     --bs-popover-body-color: #000;
@@ -536,6 +836,7 @@ figure {
 // <body> (outside any component view), so its content is themed globally and
 // scoped by the windowClass set in StatisticsNotableComponent.openFilterModal().
 .notable-filter-modal {
+
     // Borderless but still neo-brutalist: the modal box and its body already
     // supply the heavy black framing, so we drop every internal accordion border
     // and give the sections character instead with flat colour fills, bold
@@ -544,7 +845,7 @@ figure {
         --bs-accordion-border-width: 0;
         --bs-accordion-border-color: transparent;
         --bs-accordion-active-color: #000;
-        --bs-accordion-active-bg: #b3efff; // $primary
+        --bs-accordion-active-bg: #{$primary};
         --bs-accordion-btn-focus-box-shadow: none;
         width: auto;
         margin: 0;

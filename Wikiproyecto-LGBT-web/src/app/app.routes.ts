@@ -18,6 +18,9 @@ export const routes: Routes = [
     { path: 'blog', component: BlogMainComponent, data: { animation: ['BlogPage', 'footerAnimation'] } },
     { path: 'form', component: FormMainComponent, data: { animation: ['FormPage', 'footerAnimation'] } },
     { path: 'stats', component: StatisticsSharedComponent, data: { animation: ['StatisticsPage', 'footerAnimation'] } },
+    // Lazy-loaded: the inline world-map SVG data is large (~1 MB), so it ships
+    // in its own chunk only when this page is visited, not in the initial bundle.
+    { path: 'event-of-the-month', loadComponent: () => import('./event-of-the-month/components/event-page/event-page.component').then(m => m.EventPageComponent), data: { animation: ['EventPage', 'footerAnimation'] } },
     { path: 'login', component: LoginComponent },
     { path: 'blog-admin', component: BlogAdminComponent, resolve: [authGuard], data: { animation: ['BlogAdminPage', 'footerAnimation'] } },
     { path: 'blog-edit', component: BlogEditComponent, resolve: [authGuard], data: { animation: ['BlogEditPage', 'footerAnimation'] } },

@@ -1,0 +1,27 @@
+@if (!loaded()) {
+<div class="barba-loader">
+  <img class="barba-loader-img" src="./../../../../assets/imgs/Barba-wikiproyecto-lgbt.svg" alt="" aria-hidden="true">
+  <span class="barba-loader-label">{{ 'common.loading' | translate }}</span>
+</div>
+} @else {
+<div [@fadeIn]>
+  <nav class="subpage-nav">
+    <li class="subpage-nav-option" [class.active]="section() === 'map'">
+      <a href="#map" (click)="show($event, 'map')">{{ 'event.nav.map' | translate }}</a>
+    </li>
+    <li class="subpage-nav-option" [class.active]="section() === 'list'">
+      <a href="#list" (click)="show($event, 'list')">{{ 'event.nav.list' | translate }}</a>
+    </li>
+  </nav>
+
+  <div class="event-intro">
+    <p [innerHTML]="'event.intro' | translate"></p>
+  </div>
+
+  @if (section() === 'map') {
+  <app-event-map [@fadeIn] [countries]="data().countries"></app-event-map>
+  } @else {
+  <app-event-list [@fadeIn] [events]="data().events"></app-event-list>
+  }
+</div>
+}

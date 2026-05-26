@@ -1,0 +1,62 @@
+<div class="event-map-layout">
+  <div class="event-map-box">
+    <svg class="world-map" [attr.viewBox]="viewBox" preserveAspectRatio="xMidYMid meet" role="img"
+      [attr.aria-label]="'event.mapAria' | translate">
+      @for (loc of locations; track loc.id) {
+      <path class="country" [class.active]="isActive(loc.id)" [class.selected]="loc.id === selectedIso()"
+        [class.locked]="loc.id === lockedIso()"
+        [attr.d]="loc.path" [style.fill]="isActive(loc.id) ? fillFor(loc.id) : null"
+        [attr.role]="isActive(loc.id) ? 'button' : null" [attr.tabindex]="isActive(loc.id) ? 0 : null"
+        [attr.aria-label]="isActive(loc.id) ? countryName(loc.id) : null"
+        (mouseenter)="select(loc.id)" (click)="toggleLock(loc.id)" (focus)="select(loc.id)"></path>
+      }
+    </svg>
+
+    <!-- Legend: explains that colour encodes total articles per country. -->
+    <div class="map-legend">
+      <span class="legend-caption">{{ 'event.legend' | translate }}</span>
+      <div class="legend-scale">
+        <span class="legend-end">
+          <img class="legend-flag" [src]="flagUrl(legendRange().minIso)" alt="" aria-hidden="true">
+          {{ legendRange().min }}
+        </span>
+        <span class="legend-bar" [style.background]="legendGradient"></span>
+        <span class="legend-end">
+          {{ legendRange().max }}
+          <img class="legend-flag" [src]="flagUrl(legendRange().maxIso)" alt="" aria-hidden="true">
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <aside class="event-panel" aria-live="polite">
+    @if (selected(); as country) {
+    <div class="event-panel-head">
+      <img class="event-flag" [src]="flagUrl(country.iso2)" alt="" aria-hidden="true">
+      <h3 class="event-panel-title">{{ countryName(country.iso2) }}</h3>
+    </div>
+    <!-- Headline figure: total articles across all of this country's editions. -->
+    <p class="edition-total">
+      <span class="edition-total-num">{{ countryTotal(country.iso2) }}</span>
+      <span class="edition-total-label">{{ 'event.totalArticles' | translate }}</span>
+    </p>
+    @for (ed of country.editions; track ed.year + '-' + ed.monthIdx) {
+    <div class="edition">
+      <div class="edition-when">{{ monthKey(ed.monthIdx) | translate }} {{ ed.year }}</div>
+      <ul class="edition-stats">
+        <li><span class="stat-num">{{ ed.participants ?? '—' }}</span> {{ 'event.participants' | translate }}</li>
+        <li><span class="stat-num">{{ ed.created ?? '—' }}</span> {{ 'event.created' | translate }}</li>
+        <li><span class="stat-num">{{ ed.translated ?? '—' }}</span> {{ 'event.translated' | translate }}</li>
+        <li><span class="stat-num">{{ ed.expanded ?? '—' }}</span> {{ 'event.expanded' | translate }}</li>
+      </ul>
+      <app-event-prizes [articles]="ed.articlesPrize" [lesbian]="ed.lesbianPrize"></app-event-prizes>
+      <app-event-see-more [page]="ed.challengePage" [challengeUrl]="ed.challengeUrl"
+        [title]="countryName(country.iso2)" [monthKey]="monthKey(ed.monthIdx)" [year]="ed.year"
+        [lesbianPrize]="ed.lesbianPrize"></app-event-see-more>
+    </div>
+    }
+    } @else {
+    <p class="event-panel-prompt">{{ 'event.prompt' | translate }}</p>
+    }
+  </aside>
+</div>

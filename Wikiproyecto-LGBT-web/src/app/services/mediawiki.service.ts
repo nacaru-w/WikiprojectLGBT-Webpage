@@ -26,6 +26,9 @@ export class MediawikiService {
       rvprop: "content",
       rvslots: "main",
       formatversion: "2",
+      // Follow redirects (e.g. "País del mes/…" pages that redirect to
+      // "Evento del mes/…") so we get the target page's content.
+      redirects: "1",
       format: "json"
     };
 

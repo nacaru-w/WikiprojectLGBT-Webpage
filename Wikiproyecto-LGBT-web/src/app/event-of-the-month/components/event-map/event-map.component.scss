@@ -1,0 +1,200 @@
+@use 'variables';
+
+.event-map-layout {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+    align-items: flex-start;
+    justify-content: center;
+    width: min(1100px, 96%);
+    margin: 0 auto;
+}
+
+.event-map-box {
+    flex: 1 1 520px;
+    min-width: 0;
+    padding: 0.75em;
+    background-color: variables.$white;
+    border: solid black 3px;
+    border-radius: 12px;
+    box-shadow: black 4px 4px;
+}
+
+.world-map {
+    display: block;
+    width: 100%;
+    height: auto;
+
+    .country {
+        fill: variables.$gray-lighter;
+        stroke: variables.$gray;
+        stroke-width: 0.4;
+        transition: stroke-width 0.15s ease;
+
+        // Active countries' fill is data-driven (darker = more articles) and set
+        // inline by fillFor(); here we only draw the black outline, and a thicker
+        // outline for the hovered/selected one.
+        &.active {
+            stroke: #000;
+            stroke-width: 0.7;
+            cursor: pointer;
+        }
+
+        &.active:hover,
+        &.active:focus-visible,
+        &.selected {
+            stroke-width: 1.6;
+            outline: none;
+        }
+
+        // A locked (clicked) country stays pinned with a thicker outline, winning
+        // even while another country is hovered, so the user can move to the panel
+        // and click "See more" without a hovered country replacing the selection.
+        &.active.locked {
+            stroke-width: 2.6;
+        }
+    }
+}
+
+// Colour-scale legend under the map.
+.map-legend {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3em;
+    margin-top: 0.7em;
+    font-family: variables.$body-font;
+}
+
+.legend-caption {
+    font-weight: bold;
+    font-size: 0.85em;
+    letter-spacing: -0.04em;
+}
+
+.legend-scale {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+}
+
+.legend-end {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3em;
+    font-weight: bold;
+    font-size: 0.85em;
+}
+
+.legend-flag {
+    width: 1.5em;
+    height: auto;
+    border: solid black 1px;
+    border-radius: 2px;
+}
+
+.legend-bar {
+    flex: 1;
+    height: 0.9em;
+    border: solid black 1.5px;
+    border-radius: 5px;
+}
+
+// Data panel — a neo-brutalist card mirroring the project's chart boxes.
+.event-panel {
+    flex: 1 1 270px;
+    align-self: stretch;
+    padding: 1em 1.25em;
+    background-color: variables.$light;
+    border: solid black 3px;
+    border-radius: 12px;
+    box-shadow: black 4px 4px;
+    font-family: variables.$body-font;
+}
+
+// Country name + flag.
+.event-panel-head {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    margin-bottom: 0.6em;
+}
+
+.event-flag {
+    flex: 0 0 auto;
+    width: 2.1em;
+    height: auto;
+    border: solid black 1.5px;
+    border-radius: 3px;
+}
+
+.event-panel-title {
+    margin: 0;
+    font-family: variables.$font-family-sans-serif;
+    font-weight: bold;
+    letter-spacing: -0.06em;
+}
+
+// Total articles — the headline figure of each edition.
+.edition-total {
+    display: flex;
+    align-items: baseline;
+    gap: 0.35em;
+    margin: 0.1em 0 0.4em;
+
+    .edition-total-num {
+        font-family: variables.$font-family-sans-serif;
+        font-weight: bold;
+        font-size: 2em;
+        line-height: 1;
+        letter-spacing: -0.06em;
+        color: variables.$deep-dark-primary;
+    }
+
+    .edition-total-label {
+        font-weight: bold;
+        font-size: 0.9em;
+    }
+}
+
+.event-panel-prompt {
+    margin: 0;
+    font-style: italic;
+    color: variables.$gray-dark;
+}
+
+.edition {
+    padding: 0.6em 0;
+
+    &+.edition {
+        border-top: dashed variables.$gray-light 2px;
+    }
+}
+
+.edition-when {
+    font-weight: bold;
+    letter-spacing: -0.05em;
+    margin-bottom: 0.3em;
+}
+
+.edition-stats {
+    margin: 0 0 0.4em;
+    padding: 0;
+    list-style: none;
+    font-size: 0.92em;
+
+    .stat-num {
+        font-weight: bold;
+    }
+}
+
+// Same look as content links elsewhere in the app: black, wavy underline,
+// turning deep blue on hover.
+.edition-link {
+    color: black;
+    text-decoration: wavy underline;
+    transition: color 0.3s ease-in-out;
+
+    &:hover {
+        color: variables.$deep-dark-primary;
+    }
+}
