@@ -10,8 +10,14 @@
     box-shadow: black 4px 4px;
     padding: 1em 1.5em;
     border-radius: 40px;
-    background-color: variables.$primary;
+    // Faint gray notebook/graph-paper grid over a white card.
+    background-color: variables.$white;
+    background-image:
+        linear-gradient(to right, rgba(0, 0, 0, 0.08) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(0, 0, 0, 0.08) 1px, transparent 1px);
+    background-size: 1.5rem 1.5rem;
     margin-block: 0.5em;
+    transition: background-color 0.15s ease;
 
     @media screen and (max-width: 990px) {
         margin-inline: 0.5em;
@@ -49,6 +55,8 @@ a.fill-link {
     color: black;
 }
 
-a.fill-link:hover {
-    color: variables.$deep-dark-primary;
+// The whole card is a link; on hover it fills cyan-blue ($primary), matching the
+// site-wide "hovering = cyan" interaction cue.
+a.fill-link:hover .blog-post {
+    background-color: variables.$primary;
 }

@@ -34,14 +34,43 @@
 }
 
 form {
+    position: relative;
+    overflow: hidden; // contain the barba "stamp" within the rounded card
     width: min(95%, 800px);
     margin: 0.5em auto;
     border: solid black 3px;
     box-shadow: black 4px 4px;
     border-radius: 20px;
     padding: 1.5em;
-    background-color: variables.$lighter-purple;
+    // Notebook page: white paper, faint blue horizontal rules, and a faint red
+    // vertical margin line ~2.5em in from the left.
+    background-color: variables.$white;
+    background-image:
+        linear-gradient(to right,
+            transparent calc(2.5em - 1px),
+            rgba(250, 124, 124, 0.4) calc(2.5em - 1px),
+            rgba(250, 124, 124, 0.4) calc(2.5em + 1px),
+            transparent calc(2.5em + 1px)),
+        repeating-linear-gradient(to bottom,
+            transparent 0,
+            transparent calc(1.7rem - 1px),
+            rgba(64, 105, 174, 0.13) calc(1.7rem - 1px),
+            rgba(64, 105, 174, 0.13) 1.7rem);
     font-family: variables.$body-font;
+
+    // A faint, slightly-tilted barba "stamp" pressed into the bottom-right corner.
+    &::after {
+        content: '';
+        position: absolute;
+        right: 1.25rem;
+        bottom: 1.25rem;
+        width: 9rem;
+        height: 9rem;
+        background: url('../../../../assets/imgs/Barba-wikiproyecto-lgbt.svg') center / contain no-repeat;
+        opacity: 0.08;
+        transform: rotate(-12deg);
+        pointer-events: none;
+    }
 
     select {
         .dropdown-item {

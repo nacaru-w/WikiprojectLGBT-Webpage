@@ -23,12 +23,12 @@
     font-family: variables.$body-font;
 
     a {
-        color: variables.$deep-dark-primary;
+        color: black;
         text-decoration: wavy underline;
         font-weight: bold;
 
         &:hover {
-            color: variables.$dark-primary;
+            color: variables.$deep-dark-primary;
         }
     }
 }

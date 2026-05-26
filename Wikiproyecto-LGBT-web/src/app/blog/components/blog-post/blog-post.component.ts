@@ -1,5 +1,5 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ApiService } from '../../../services/api.service';
 import { BlogPostInfoModel } from '../../models/blog-post-info-model';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
@@ -13,7 +13,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 @Component({
   selector: 'app-blog-post',
   standalone: true,
-  imports: [DateFormatPipe, CommonModule, TranslatePipe],
+  imports: [DateFormatPipe, CommonModule, TranslatePipe, RouterLink],
   templateUrl: './blog-post.component.html',
   styleUrl: './blog-post.component.scss',
   animations: [popAnimation]
