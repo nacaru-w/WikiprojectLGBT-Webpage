@@ -14,7 +14,7 @@ import passport from 'passport';
 import passportMediawiki from 'passport-mediawiki-oauth';
 
 const MediaWikiStrategy = passportMediawiki.OAuthStrategy;
-import { credentials, oauthCredentials } from './credentials';
+import { credentials, oauthCredentials, buildUserAgent } from './credentials';
 
 import session from 'express-session';
 // Declare type of Mediawiki session object so that it works with TypeScript
@@ -123,6 +123,119 @@ async function checkAdminStatus(username: string) {
     throw error;
   } finally {
     await connection.end();
+  }
+}
+
+/**
+ * Canonical match key for a MediaWiki title. MUST stay byte-for-byte identical
+ * to normaliseTitle() in scripts/sync-lgbt-articles.mjs, otherwise the
+ * IN (...) lookup against lgbt_tracked_articles won't match.
+ */
+function normaliseTitle(title: string): string {
+  const t = title.replace(/_/g, ' ').replace(/\s+/g, ' ').trim();
+  if (t.length === 0) return t;
+  return t.charAt(0).toUpperCase() + t.slice(1);
+}
+
+const XTOOLS_PROJECT = 'es.wikipedia.org';
+const REQUEST_USER_AGENT = buildUserAgent();
+
+function xtoolsTimestampToIso(ts: any): string | null {
+  const m = /^(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})$/.exec(String(ts));
+  return m ? `${m[1]}-${m[2]}-${m[3]}T${m[4]}:${m[5]}:${m[6]}Z` : null;
+}
+
+/**
+ * Ask XTools for the article-namespace (ns 0) pages created by `username`,
+ * returning a map of normalised title -> creation metadata. The XTools `pages`
+ * field is a list wrapping the array of page objects, so we flatten it.
+ */
+async function fetchUserCreatedArticles(
+  username: string,
+): Promise<Map<string, { title: string; creationDate: string | null; sizeBytes: number | null }>> {
+  const encoded = encodeURIComponent(username.replace(/ /g, '_'));
+  const url = `https://xtools.wmcloud.org/api/user/pages/${XTOOLS_PROJECT}/${encoded}/0/noredirects/live`;
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 30000);
+  try {
+    const res = await fetch(url, {
+      signal: controller.signal,
+      headers: { 'User-Agent': REQUEST_USER_AGENT },
+    });
+    if (!res.ok) throw new Error(`XTools API returned HTTP ${res.status}`);
+    const json: any = await res.json();
+    const groups = Array.isArray(json?.pages) ? json.pages : Object.values(json?.pages ?? {});
+    const entries: any[] = groups.flat().filter((e: any) => e && typeof e === 'object' && e.page_title);
+    const map = new Map<string, { title: string; creationDate: string | null; sizeBytes: number | null }>();
+    for (const e of entries) {
+      const norm = normaliseTitle(e.page_title);
+      if (!norm || map.has(norm)) continue;
+      map.set(norm, {
+        title: String(e.full_page_title ?? e.page_title).replace(/_/g, ' '),
+        creationDate: xtoolsTimestampToIso(e.timestamp),
+        // Current article byte size, straight from this same XTools response
+        // (`length`). We deliberately don't use the DB's size_bytes — that's
+        // the talk-page size (the tracked list is ns-1 talk pages).
+        sizeBytes: typeof e.length === 'number' ? e.length : null,
+      });
+    }
+    return map;
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+/** Look up which of the given normalised titles are LGBT-tracked articles. */
+async function getTrackedArticlesByNormTitles(normTitles: string[]) {
+  if (normTitles.length === 0) return [];
+  const connection = await mysql.createConnection(credentials);
+
+  try {
+    const placeholders = normTitles.map(() => '?').join(',');
+    const [rows]: [any[], mysql.FieldPacket[]] = await connection.execute(
+      `SELECT norm_title, display_title FROM lgbt_tracked_articles WHERE norm_title IN (${placeholders})`,
+      normTitles,
+    );
+    return rows;
+  } catch (error) {
+    console.error('Error querying lgbt_tracked_articles:', error);
+    throw error;
+  } finally {
+    await connection.end();
+  }
+}
+
+/**
+ * Content-authorship of an article (who wrote how much of the current text),
+ * scraped from XTools' authorship table. We proxy it here because that XTools
+ * route sends no CORS headers, so the browser can't call it directly. The
+ * `?format=wikitext` output is a stable wikitable: rank | [[User:Name]] | links
+ * | characters | percentage.
+ */
+async function fetchArticleAuthorship(
+  title: string,
+): Promise<{ title: string; authors: { username: string; chars: number; percentage: number }[] }> {
+  const page = encodeURIComponent(title); // XTools authorship route uses spaces (%20)
+  const url = `https://xtools.wmcloud.org/authorship/${XTOOLS_PROJECT}/${page}/?format=wikitext`;
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 60000);
+  try {
+    const res = await fetch(url, { signal: controller.signal, headers: { 'User-Agent': REQUEST_USER_AGENT } });
+    if (!res.ok) throw new Error(`XTools authorship returned HTTP ${res.status}`);
+    const wikitext = await res.text();
+    const rowRe = /\|\s*\d+\s*\n\|\s*\[\[\s*User:([^|\]]+?)\s*(?:\|[^\]]*)?\]\][^\n]*\n\|[^\n]*\n\|\s*([\d,]+)\s*\n\|\s*([\d.]+)%/g;
+    const authors: { username: string; chars: number; percentage: number }[] = [];
+    let m: RegExpExecArray | null;
+    while ((m = rowRe.exec(wikitext)) !== null) {
+      authors.push({
+        username: m[1].replace(/_/g, ' ').trim(),
+        chars: Number.parseInt(m[2].replace(/,/g, ''), 10),
+        percentage: Number.parseFloat(m[3]),
+      });
+    }
+    return { title: title.replace(/_/g, ' '), authors };
+  } finally {
+    clearTimeout(timeout);
   }
 }
 
@@ -238,6 +351,59 @@ app.get(`/api/blog/:id`, (req, res) => {
   getRow(id).then((rows) => {
     res.send(rows)
   })
+});
+
+/**
+ * Public lookup: the LGBT-tracked articles a given user created. Combines a
+ * live XTools "pages created" call with the cached lgbt_tracked_articles list
+ * (refreshed by scripts/sync-lgbt-articles.mjs).
+ */
+app.get('/api/member-creations/:username', (req, res) => {
+  const username = (req.params.username || '').trim();
+  if (!username || username.length > 255) {
+    res.status(400).json({ reason: 'A valid username is required' });
+    return;
+  }
+  fetchUserCreatedArticles(username)
+    .then(async (createdMap) => {
+      const trackedRows = await getTrackedArticlesByNormTitles([...createdMap.keys()]);
+      const articles = trackedRows.map((row: any) => {
+        const displayTitle = row.display_title as string;
+        const created = createdMap.get(row.norm_title);
+        return {
+          title: displayTitle,
+          url: `https://es.wikipedia.org/wiki/${encodeURIComponent(displayTitle.replace(/ /g, '_'))}`,
+          creationDate: created?.creationDate ?? null,
+          sizeBytes: created?.sizeBytes ?? null,
+        };
+      });
+      // Most recently created first; entries without a date sort last.
+      articles.sort((a, b) => (b.creationDate ?? '').localeCompare(a.creationDate ?? ''));
+      res.json({ username, project: XTOOLS_PROJECT, count: articles.length, articles });
+    })
+    .catch((error) => {
+      console.error('Error in /api/member-creations:', error);
+      res.status(502).json({ reason: 'Could not retrieve contributions from XTools' });
+    });
+});
+
+/**
+ * Public lookup: content-authorship breakdown for an article, proxied from
+ * XTools (whose authorship route has no CORS). The browser computes the
+ * member-focused split from the returned per-author list.
+ */
+app.get('/api/article-authorship/:title', (req, res) => {
+  const title = (req.params.title || '').trim();
+  if (!title || title.length > 255) {
+    res.status(400).json({ reason: 'A valid article title is required' });
+    return;
+  }
+  fetchArticleAuthorship(title)
+    .then((result) => res.json(result))
+    .catch((error) => {
+      console.error('Error in /api/article-authorship:', error);
+      res.status(502).json({ reason: 'Could not retrieve authorship from XTools' });
+    });
 });
 
 app.post('/api/blog', (req, res) => {
