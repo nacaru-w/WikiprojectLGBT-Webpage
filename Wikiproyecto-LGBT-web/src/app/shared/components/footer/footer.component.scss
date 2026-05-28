@@ -56,6 +56,7 @@
                 .list-item {
                     font-family: variables.$body-font;
                     width: fit-content;
+
                     // Pill on hover: cyan-blue fill + black border while hovered
                     // (footer links have no persistent "active" state).
                     a {
@@ -89,9 +90,10 @@
                 flex-wrap: wrap;
                 justify-content: center;
                 align-items: center;
-                gap: 0.5em;
+                gap: 0;
 
                 .icon-container {
+
                     // Pill on hover, matching the footer text links: cyan-blue
                     // fill + black border + shadow. The transparent border at
                     // rest reserves the space so nothing shifts on hover.
@@ -99,7 +101,9 @@
                         display: inline-flex;
                         align-items: center;
                         justify-content: center;
-                        padding: 0.35em;
+                        // Slightly wider pill (horizontal padding); the gap
+                        // between icons is set on .social-media-icons.
+                        padding: 0.35em 0.4em;
                         border: solid transparent 2px;
                         border-radius: 7px;
                         transition: background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
