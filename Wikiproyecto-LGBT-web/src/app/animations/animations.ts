@@ -65,6 +65,21 @@ export const fadeInAnimation =
         ])
     ])
 
+// Opacity-only enter/leave. Mirrors the *effective* animation of the other stats
+// sections: they use slideInOut, but their component hosts are inline so the
+// translateX is ignored and only the opacity (300ms ease-in) actually runs. Used
+// on the participants wrapper (a block <div>, where slideInOut would slide).
+export const fadeInOutAnimation =
+    trigger('fadeInOut', [
+        transition(':enter', [
+            style({ opacity: 0 }),
+            animate('300ms ease-in', style({ opacity: 1 }))
+        ]),
+        transition(':leave', [
+            animate('300ms ease-in', style({ opacity: 0 }))
+        ])
+    ])
+
 export const popAnimation =
     trigger('popAnimation', [
         transition('* => *', [

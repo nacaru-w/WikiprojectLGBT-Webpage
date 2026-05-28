@@ -2,6 +2,8 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Injectable, inject } from '@angular/core';
 import { Observable, catchError, map, of, tap } from 'rxjs';
 import { BlogPostInfoModel } from '../blog/models/blog-post-info-model';
+import { MemberCreationsResponse } from './models/member-creations';
+import { ArticleAuthorshipResponse } from './models/article-authorship';
 import { REQUEST } from '../../express.tokens';
 
 @Injectable({
@@ -135,6 +137,28 @@ export class ApiService {
     return this.getLoginStatus().pipe(
       map(response => response?.isAdmin || false)
     )
+  }
+
+  /**
+   * Look up the LGBT-tracked articles a given Wikipedia user created.
+   * Errors are left to propagate so the caller can drive its own loading/error
+   * UI state.
+   */
+  getMemberLgbtCreations(username: string): Observable<MemberCreationsResponse> {
+    return this.http.get<MemberCreationsResponse>(
+      this.endpoint + 'member-creations/' + encodeURIComponent(username)
+    );
+  }
+
+  /**
+   * Content-authorship breakdown for an article (who wrote how much of the
+   * current text). Proxies XTools' authorship table server-side because that
+   * route sends no CORS headers. Errors propagate to the caller.
+   */
+  getArticleAuthorship(title: string): Observable<ArticleAuthorshipResponse> {
+    return this.http.get<ArticleAuthorshipResponse>(
+      this.endpoint + 'article-authorship/' + encodeURIComponent(title)
+    );
   }
 
 }

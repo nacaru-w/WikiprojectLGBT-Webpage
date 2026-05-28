@@ -1,0 +1,153 @@
+<div class="member-creations">
+  <div class="member-search">
+    <label class="member-search__label" for="memberSearchInput">
+      {{ 'stats.memberCreations.searchLabel' | translate }}
+    </label>
+
+    <div class="member-search__bar">
+      <input
+        id="memberSearchInput"
+        type="search"
+        class="form-control member-search__input"
+        [(ngModel)]="query"
+        [ngbTypeahead]="search"
+        (selectItem)="onSelect($event)"
+        [placeholder]="'stats.memberCreations.placeholder' | translate"
+        autocomplete="off"
+        spellcheck="false" />
+
+      <button
+        type="button"
+        class="member-search__button cyan-action-button"
+        (click)="submit()"
+        [attr.aria-label]="'stats.memberCreations.searchButton' | translate">
+        <svg class="member-search__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <circle cx="11" cy="11" r="7"></circle>
+          <line x1="16.5" y1="16.5" x2="21" y2="21"></line>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  @if (loading()) {
+    <p class="member-creations__status">{{ 'stats.memberCreations.loading' | translate }}</p>
+  } @else if (results(); as list) {
+    @if (list.length === 0) {
+      <p class="member-creations__status">{{ 'stats.memberCreations.empty' | translate }}</p>
+    } @else {
+      <div class="member-creations__results">
+        <div class="member-creations__results-head">
+          <p class="member-creations__summary">
+            <strong>{{ selectedMember() }}</strong>
+            — {{ 'stats.memberCreations.count' | translate:{ count: list.length } }}
+            <span class="member-creations__mock">{{ 'stats.memberCreations.mock' | translate }}</span>
+          </p>
+
+          @if (list.length > pageSize) {
+            <div class="creations-filter">
+              <svg class="creations-filter__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <circle cx="11" cy="11" r="7"></circle>
+                <line x1="16.5" y1="16.5" x2="21" y2="21"></line>
+              </svg>
+              <input
+                type="search"
+                class="creations-filter__input"
+                [ngModel]="filterQuery()"
+                (ngModelChange)="onFilter($event)"
+                [placeholder]="'stats.memberCreations.filterPlaceholder' | translate"
+                [attr.aria-label]="'stats.memberCreations.filterPlaceholder' | translate"
+                autocomplete="off" />
+            </div>
+          }
+        </div>
+
+        @if (filteredSortedResults().length === 0) {
+          <p class="member-creations__status">{{ 'stats.memberCreations.noMatches' | translate }}</p>
+        } @else {
+          <div class="creations-table-wrap">
+            <table class="creations-table">
+              <thead>
+                <tr>
+                  <th scope="col" [attr.aria-sort]="ariaSort('title')">
+                    <button type="button" class="creations-table__sort" (click)="sortBy('title')">
+                      {{ 'stats.memberCreations.colArticle' | translate }}
+                      <svg class="creations-table__sorticon" [attr.data-sort]="sortState('title')"
+                        viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                        <path class="creations-table__sorticon-up" d="M8 2.5l3 4H5z"></path>
+                        <path class="creations-table__sorticon-down" d="M8 13.5l-3-4h6z"></path>
+                      </svg>
+                    </button>
+                  </th>
+                  <th scope="col" class="creations-table__num" [attr.aria-sort]="ariaSort('size')">
+                    <button type="button" class="creations-table__sort" (click)="sortBy('size')">
+                      {{ 'stats.memberCreations.colSize' | translate }}
+                      <svg class="creations-table__sorticon" [attr.data-sort]="sortState('size')"
+                        viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                        <path class="creations-table__sorticon-up" d="M8 2.5l3 4H5z"></path>
+                        <path class="creations-table__sorticon-down" d="M8 13.5l-3-4h6z"></path>
+                      </svg>
+                    </button>
+                  </th>
+                  <th scope="col" [attr.aria-sort]="ariaSort('created')">
+                    <button type="button" class="creations-table__sort" (click)="sortBy('created')">
+                      {{ 'stats.memberCreations.colCreated' | translate }}
+                      <svg class="creations-table__sorticon" [attr.data-sort]="sortState('created')"
+                        viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                        <path class="creations-table__sorticon-up" d="M8 2.5l3 4H5z"></path>
+                        <path class="creations-table__sorticon-down" d="M8 13.5l-3-4h6z"></path>
+                      </svg>
+                    </button>
+                  </th>
+                  <th scope="col" class="creations-table__info-col">
+                    <span class="creations-table__sr">{{ 'stats.memberCreations.modal.facts' | translate }}</span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (article of pagedResults(); track article.url) {
+                  <tr>
+                    <td>
+                      <a [href]="article.url" target="_blank" rel="noopener noreferrer">{{ article.title }}</a>
+                    </td>
+                    <td class="creations-table__num">
+                      @if (article.sizeBytes != null) {
+                        {{ article.sizeBytes | number }} B
+                      } @else {
+                        —
+                      }
+                    </td>
+                    <td>{{ (article.creationDate | date:'yyyy-MM-dd') || '—' }}</td>
+                    <td class="creations-table__info-col">
+                      <button type="button" class="creations-table__info cyan-action-button" (click)="openInfo(article)"
+                        [attr.aria-label]="'stats.memberCreations.openFor' | translate:{ title: article.title }">
+                        <svg class="creations-table__info-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                          <rect x="4" y="12" width="4" height="8" rx="0.8" fill="currentColor"></rect>
+                          <rect x="10" y="8" width="4" height="12" rx="0.8" fill="currentColor"></rect>
+                          <rect x="16" y="4" width="4" height="16" rx="0.8" fill="currentColor"></rect>
+                          <line x1="3" y1="20" x2="21" y2="20" stroke="currentColor" stroke-width="2" stroke-linecap="round"></line>
+                        </svg>
+                      </button>
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+
+          @if (filteredSortedResults().length > pageSize) {
+            <div class="creations-pagination">
+              <ngb-pagination
+                [collectionSize]="filteredSortedResults().length"
+                [pageSize]="pageSize"
+                [page]="page()"
+                (pageChange)="page.set($event)"
+                [maxSize]="5"
+                [rotate]="true"
+                [ellipses]="true" />
+            </div>
+          }
+        }
+      </div>
+    }
+  }
+</div>

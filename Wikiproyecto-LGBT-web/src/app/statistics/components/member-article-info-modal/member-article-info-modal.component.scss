@@ -1,0 +1,214 @@
+@use 'variables';
+
+.article-info {
+  &__header {
+    align-items: center;
+  }
+
+  &__title {
+    margin: 0;
+    font-family: variables.$font-family-sans-serif;
+    font-weight: bold;
+    letter-spacing: -0.05em;
+    font-size: 1.3rem;
+  }
+
+  &__body {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5em;
+    font-family: variables.$body-font;
+  }
+
+  // Size the loader close to the loaded content (overriding the shared loader's
+  // 60vh) so the modal barely changes height when the XTools data arrives.
+  &__body .barba-loader {
+    width: 100%;
+    min-height: 350px;
+  }
+
+  &__status {
+    margin: 1em auto;
+    text-align: center;
+  }
+
+  // Two columns on wide modals: chart on the left, facts on the right.
+  &__authorship,
+  &__facts {
+    flex: 1 1 260px;
+    min-width: 0;
+  }
+
+  &__subtitle {
+    margin: 0 0 0.6em;
+    font-family: variables.$font-family-sans-serif;
+    font-weight: bold;
+    letter-spacing: -0.05em;
+    font-size: 1rem;
+  }
+
+  // "sample data" badge next to the authorship heading (mocked until deploy).
+  &__sample {
+    margin-left: 0.4em;
+    font-family: variables.$body-font;
+    font-weight: normal;
+    font-size: 0.72em;
+    opacity: 0.6;
+  }
+
+  &__canvas {
+    position: relative;
+    height: 220px;
+  }
+
+  &__legend {
+    list-style: none;
+    margin: 0.8em 0 0;
+    padding: 0;
+  }
+
+  &__legend-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    padding: 0.15em 0;
+  }
+
+  // "Other members" toggle: looks like the bold legend label + a caret.
+  &__legend-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3em;
+    padding: 0;
+    background: none;
+    border: none;
+    font: inherit;
+    font-weight: bold;
+    color: black;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    &:focus-visible {
+      outline: 2px solid black;
+      outline-offset: 2px;
+    }
+  }
+
+  &__legend-caret {
+    font-size: 0.7em;
+  }
+
+  // Collapsible breakdown of the pooled small-contributor members.
+  &__pooled {
+    list-style: none;
+    margin: 0.1em 0 0.4em 1.65em; // indent under the dot
+    padding: 0;
+    font-size: 0.9em;
+
+    li {
+      display: flex;
+      align-items: baseline;
+      gap: 0.5em;
+      padding: 0.08em 0;
+    }
+
+    a {
+      color: black;
+      text-decoration: wavy underline;
+
+      &:hover {
+        color: variables.$deep-dark-primary;
+      }
+    }
+  }
+
+  &__pooled-val {
+    margin-left: auto;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+    opacity: 0.8;
+  }
+
+  &__dot {
+    flex: 0 0 auto;
+    width: 0.9em;
+    height: 0.9em;
+    border: solid black 1.5px;
+    border-radius: 3px;
+  }
+
+  &__legend-name {
+    font-weight: bold;
+  }
+
+  &__legend-val {
+    margin-left: auto;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  &__note {
+    margin: 0.8em 0 0;
+    font-size: 0.8em;
+    opacity: 0.7;
+  }
+
+  // Legend rows can hold a link (member slices); keep them readable.
+  &__legend-name a {
+    color: black;
+    text-decoration: wavy underline;
+
+    &:hover {
+      color: variables.$deep-dark-primary;
+    }
+  }
+
+  // Facts as a definition grid: label above value.
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.7em 1.2em;
+    margin: 0;
+
+    dt {
+      font-size: 0.8em;
+      opacity: 0.7;
+    }
+
+    dd {
+      margin: 0;
+      font-weight: bold;
+      font-variant-numeric: tabular-nums;
+    }
+  }
+
+  &__footer {
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__wiki-link {
+    color: black;
+    text-decoration: wavy underline;
+
+    &:hover {
+      color: variables.$deep-dark-primary;
+    }
+  }
+
+  // Pressable close button in the site style.
+  // Look comes from the global .cyan-action-button; this adds only geometry.
+  &__close-btn {
+    padding: 0.4em 1.1em;
+    border-radius: 10px;
+    box-shadow: black 3px 3px;
+
+    &:active {
+      box-shadow: black 1px 1px;
+      transform: translate(2px, 2px);
+    }
+  }
+}

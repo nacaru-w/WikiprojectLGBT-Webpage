@@ -1,0 +1,91 @@
+<div class="modal-header article-info__header">
+  <h2 class="article-info__title">{{ article.title }}</h2>
+  <button type="button" class="btn-close" (click)="activeModal.dismiss()"
+    [attr.aria-label]="'stats.memberCreations.modal.close' | translate"></button>
+</div>
+
+<div class="modal-body article-info__body">
+  @if (loading()) {
+    <div class="barba-loader">
+      <img class="barba-loader-img" src="./../../../../assets/imgs/Barba-wikiproyecto-lgbt.svg" alt="" aria-hidden="true">
+      <span class="barba-loader-label">{{ 'stats.memberCreations.modal.loading' | translate }}</span>
+    </div>
+  } @else if (error()) {
+    <p class="article-info__status">{{ 'stats.memberCreations.modal.error' | translate }}</p>
+  } @else if (info(); as i) {
+    <section class="article-info__authorship">
+      <h3 class="article-info__subtitle">
+        {{ 'stats.memberCreations.modal.authorship' | translate }}
+        <span class="article-info__sample">{{ 'stats.memberCreations.mock' | translate }}</span>
+      </h3>
+
+      <div class="article-info__canvas">
+        <canvas #pieCanvas></canvas>
+      </div>
+
+      @if (slices(); as list) {
+        <ul class="article-info__legend">
+          @for (slice of list; track slice.label) {
+            <li>
+              <div class="article-info__legend-row">
+                <span class="article-info__dot" [style.background-color]="slice.color"></span>
+                @if (slice.members) {
+                  <button type="button" class="article-info__legend-toggle"
+                    (click)="pooledExpanded.set(!pooledExpanded())" [attr.aria-expanded]="pooledExpanded()">
+                    {{ slice.label }}
+                    <span class="article-info__legend-caret">{{ pooledExpanded() ? '▾' : '▸' }}</span>
+                  </button>
+                } @else if (slice.username) {
+                  <span class="article-info__legend-name">
+                    <a [href]="userUrl(slice.username)" target="_blank" rel="noopener noreferrer">{{ slice.label }}</a>
+                  </span>
+                } @else {
+                  <span class="article-info__legend-name">{{ slice.label }}</span>
+                }
+                <span class="article-info__legend-val">
+                  {{ slice.pct }}%@if (slice.chars !== null) {&nbsp;({{ slice.chars | number }})}
+                </span>
+              </div>
+
+              @if (slice.members) {
+                <ul class="article-info__pooled" [ngbCollapse]="!pooledExpanded()">
+                  @for (m of slice.members; track m.username) {
+                    <li>
+                      <a [href]="userUrl(m.username)" target="_blank" rel="noopener noreferrer">{{ m.username }}</a>
+                      <span class="article-info__pooled-val">{{ m.pct }}%&nbsp;({{ m.chars | number }})</span>
+                    </li>
+                  }
+                </ul>
+              }
+            </li>
+          }
+        </ul>
+      }
+
+      <p class="article-info__note">{{ 'stats.memberCreations.modal.byContent' | translate }}</p>
+    </section>
+
+    <section class="article-info__facts">
+      <h3 class="article-info__subtitle">{{ 'stats.memberCreations.modal.facts' | translate }}</h3>
+      <dl class="article-info__grid">
+        <div><dt>{{ 'stats.memberCreations.modal.edits' | translate }}</dt><dd>{{ i.revisions | number }}</dd></div>
+        <div><dt>{{ 'stats.memberCreations.modal.editors' | translate }}</dt><dd>{{ i.editors | number }}</dd></div>
+        <div><dt>{{ 'stats.memberCreations.modal.anonEdits' | translate }}</dt><dd>{{ i.anon_edits | number }}</dd></div>
+        <div><dt>{{ 'stats.memberCreations.modal.minorEdits' | translate }}</dt><dd>{{ i.minor_edits | number }}</dd></div>
+        <div><dt>{{ 'stats.memberCreations.modal.pageviews' | translate:{ days: i.pageviews_offset } }}</dt><dd>{{ i.pageviews | number }}</dd></div>
+        <div><dt>{{ 'stats.memberCreations.modal.creator' | translate }}</dt><dd>{{ i.creator }}</dd></div>
+        <div><dt>{{ 'stats.memberCreations.modal.created' | translate }}</dt><dd>{{ i.created_at | date:'yyyy-MM-dd' }}</dd></div>
+        <div><dt>{{ 'stats.memberCreations.modal.lastEdit' | translate }}</dt><dd>{{ i.modified_at | date:'yyyy-MM-dd' }}</dd></div>
+      </dl>
+    </section>
+  }
+</div>
+
+<div class="modal-footer article-info__footer">
+  <a class="article-info__wiki-link" [href]="article.url" target="_blank" rel="noopener noreferrer">
+    {{ 'stats.memberCreations.modal.viewOnWiki' | translate }}
+  </a>
+  <button type="button" class="article-info__close-btn cyan-action-button" (click)="activeModal.close()">
+    {{ 'stats.memberCreations.modal.close' | translate }}
+  </button>
+</div>

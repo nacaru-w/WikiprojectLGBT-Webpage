@@ -1,0 +1,138 @@
+@use 'variables';
+
+.member-creations {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2em;
+  font-family: variables.$body-font;
+
+  &__status {
+    margin: 0;
+    text-align: center;
+  }
+
+  &__results {
+    width: 100%;
+  }
+
+  // Summary on the left, title filter on the right; wraps on narrow screens.
+  &__results-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5em 1.2em;
+    margin-bottom: 0.7em;
+  }
+
+  &__summary {
+    margin: 0;
+    font-family: variables.$font-family-sans-serif;
+    letter-spacing: -0.05em;
+  }
+
+  &__mock {
+    margin-left: 0.3em;
+    font-family: variables.$body-font;
+    font-weight: normal;
+    font-size: 0.85em;
+    opacity: 0.7;
+  }
+}
+
+.member-search {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6em;
+  width: min(560px, 100%);
+  margin: 0 auto;
+  font-family: variables.$body-font;
+
+  &__label {
+    font-family: variables.$font-family-sans-serif;
+    font-weight: bold;
+    letter-spacing: -0.05em;
+    text-align: center;
+  }
+
+  // Input + search button on one row. The typeahead dropdown is absolutely
+  // positioned (out of flow), so it doesn't become a flex item here.
+  &__bar {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    gap: 0.5em;
+    width: 100%;
+  }
+
+  // Search field, styled to match the site's bordered/hard-shadow controls.
+  &__input.form-control {
+    flex: 1 1 auto;
+    min-width: 0;
+    padding: 0.55em 1em;
+    border: solid black 2px;
+    border-radius: 12px;
+    box-shadow: black 3px 3px;
+    font-family: variables.$body-font;
+    transition: box-shadow 0.15s ease, border-color 0.15s ease;
+
+    &:focus {
+      border-color: black;
+      box-shadow: black 4px 4px;
+      outline: none;
+    }
+  }
+
+  // Interactive-blue search button — click it instead of pressing Enter.
+  // Look comes from the global .cyan-action-button; this adds only geometry.
+  &__button {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 0.9em;
+    border-radius: 12px;
+    box-shadow: black 3px 3px;
+
+    &:focus-visible {
+      outline: none;
+      box-shadow: black 4px 4px;
+    }
+
+    &:active {
+      box-shadow: black 1px 1px;
+      transform: translate(2px, 2px);
+    }
+  }
+
+  &__icon {
+    width: 1.25em;
+    height: 1.25em;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+  }
+
+  // NgbTypeahead dropdown renders inline inside .member-search; give it the same
+  // bordered-card look and a blue active-row highlight (matches the view switch).
+  ::ng-deep ngb-typeahead-window.dropdown-menu {
+    border: solid black 2px;
+    border-radius: 12px;
+    box-shadow: black 3px 3px;
+    overflow: hidden;
+    font-family: variables.$body-font;
+
+    .dropdown-item {
+      padding: 0.4em 1em;
+      cursor: pointer;
+
+      &.active,
+      &:hover {
+        background-color: variables.$primary;
+        color: black;
+      }
+    }
+  }
+}
