@@ -45,7 +45,7 @@
     "privacyPolicy": "Privacy policy",
     "attribution": "Attribution",
     "codeOfConduct": "Universal Code of Conduct",
-    "credit": "Made with ❤️ by <a class=\"text-link\" target=\"_blank\" href=\"https://es.wikipedia.org/wiki/Usuario:Nacaru\">Nacaru</a> with the contribution of the Wikiproyecto LGBT+ members"
+    "credit": "Made with ❤️ by <a class=\"text-link\" target=\"_blank\" href=\"https://es.wikipedia.org/wiki/Usuario:Nacaru\">Nacaru</a> with the contribution of the rest of the Wikiproyecto LGBT+"
   },
   "home": {
     "carousel": {
@@ -167,6 +167,45 @@
       "participants": "Participants",
       "lastArticles": "Latest articles"
     },
+    "participantsNav": {
+      "lookup": "Contributions",
+      "stats": "Statistics"
+    },
+    "memberCreations": {
+      "searchLabel": "Search for a Wikiproyecto member",
+      "placeholder": "Type a username…",
+      "searchButton": "Search",
+      "loading": "Searching contributions…",
+      "empty": "No LGBT articles created by this user.",
+      "count": "{{count}} LGBT articles",
+      "mock": "· sample data",
+      "colArticle": "Article",
+      "colSize": "Size",
+      "colCreated": "Created",
+      "filterPlaceholder": "Filter articles…",
+      "noMatches": "No articles match the filter.",
+      "openFor": "View details for {{title}}",
+      "modal": {
+        "close": "Close",
+        "loading": "Loading XTools data…",
+        "error": "Couldn't load XTools data.",
+        "authorship": "Content authorship",
+        "otherMembers": "Other Wikiproyecto members",
+        "others": "Other people",
+        "contributingMembers": "Other contributing members",
+        "byContent": "Share of the article's current content, by characters (XTools · WikiWho data).",
+        "facts": "Article facts",
+        "edits": "Total edits",
+        "editors": "Editors",
+        "anonEdits": "Anonymous edits",
+        "minorEdits": "Minor edits",
+        "pageviews": "Pageviews ({{days}}d)",
+        "creator": "Created by",
+        "created": "Creation date",
+        "lastEdit": "Last edit",
+        "viewOnWiki": "View on Wikipedia"
+      }
+    },
     "articles": {
       "text1": "Although there are many different ways to contribute as part of WMLGBT+, articles are the most recognizable feature of Wikipedia. In total, our community has created:",
       "text2": "In the chart you can see how well we've done over the last few years"
@@ -200,7 +239,9 @@
     },
     "lastArticles": {
       "noImage": "This article does not have an image, you can add one",
-      "here": "here"
+      "here": "here",
+      "loadMore": "Load more",
+      "createdOn": "Created on {{date}}"
     },
     "chart": {
       "currentYear": "Current year",
