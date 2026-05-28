@@ -5,6 +5,8 @@ import { MediawikiService } from '../../../services/mediawiki.service';
 import { CommonModule } from '@angular/common';
 
 import { ChangeDetectorRef } from '@angular/core';
+import { Observable, forkJoin, of } from 'rxjs';
+import { catchError, map, switchMap } from 'rxjs/operators';
 
 import { popAnimation } from '../../../animations/animations';
 import { BarbaService } from '../../../services/barba.service';
@@ -27,6 +29,15 @@ export class StatisticsLastArticlesComponent implements OnInit {
 
   cardDict: CardPreview = {};
   showSpinner = signal(true);
+
+  /** "Load more" pulls BATCH older articles per click, fetching each one's data. */
+  private readonly BATCH = 3;
+  private allArticles: { title: string; date: string | null }[] = [];
+  private nextEnd = 0; // exclusive index in allArticles for the next (older) batch
+  readonly loadingMore = signal(false);
+
+  /** keyvalue compareFn that preserves insertion order (newest → older). */
+  readonly keepOrder = (): number => 0;
 
   barba: string = this.barbaService.getCurrentBarba();
 
@@ -74,49 +85,118 @@ export class StatisticsLastArticlesComponent implements OnInit {
   }
 
   getLastArticlesInfo(): void {
-    this.mediawikiService.getLGBTArticleList().subscribe(res => {
-      this.buildDict(res.slice(-3));
-      for (let article in this.cardDict) {
-        this.assignExtracts(article);
-        this.assignImages(article);
+    this.mediawikiService.getLgbtArticlesWithDates().pipe(
+      catchError(() => of<{ title: string; date: string | null }[]>([])),
+    ).subscribe(res => {
+      this.allArticles = res;
+      this.nextEnd = res.length;
+      const batch = this.takeNextBatch();
+      // Keep the loader up until the batch's extracts AND images have resolved,
+      // so the cards are on screen the instant the loader leaves (no blank gap).
+      if (batch.length === 0) {
+        this.showSpinner.set(false);
+        return;
       }
-      this.showSpinner.set(false);
-    })
+      this.loadBatch(batch).subscribe(() => this.showSpinner.set(false));
+    });
   }
 
-  buildDict(array: string[]) {
-    for (let title of array) {
+  /** Load the next BATCH of older articles on demand (the "load more" button). */
+  loadMore(): void {
+    if (this.loadingMore() || !this.hasMore) {
+      return;
+    }
+    const batch = this.takeNextBatch();
+    if (batch.length === 0) {
+      return;
+    }
+    this.loadingMore.set(true);
+    this.loadBatch(batch).subscribe(() => this.loadingMore.set(false));
+  }
+
+  /** Whether older articles remain to load. */
+  get hasMore(): boolean {
+    return this.nextEnd > 0;
+  }
+
+  /** Cards whose extract AND image have resolved — drives rendering + the pop animation. */
+  readyCount(): number {
+    return Object.values(this.cardDict).filter(card => card.extractLoaded && !!card.image).length;
+  }
+
+  /** Take the next (older) batch of up to BATCH articles, newest-first. */
+  private takeNextBatch(): { title: string; date: string | null }[] {
+    const end = this.nextEnd;
+    const start = Math.max(0, end - this.BATCH);
+    this.nextEnd = start;
+    return this.allArticles.slice(start, end).reverse();
+  }
+
+  /** Add a batch to the dict and load each new card's extract + image. */
+  private loadBatch(batch: { title: string; date: string | null }[]): Observable<unknown> {
+    const keys = this.buildDict(batch);
+    const tasks = keys.flatMap(key => [this.loadExtract(key), this.loadImage(key)]);
+    return tasks.length ? forkJoin(tasks) : of(null);
+  }
+
+  /** Add cards for the given articles to the dict; returns the keys it added. */
+  buildDict(batch: { title: string; date: string | null }[]): string[] {
+    const keys: string[] = [];
+    for (const { title, date } of batch) {
       const escapedTitle = unescapeInvalidCharacters(title);
       this.cardDict[escapedTitle] = {
         extract: '',
-        image: ''
-      }
+        image: '',
+        creationDate: date ?? undefined,
+      };
+      keys.push(escapedTitle);
     }
+    return keys;
   }
 
-  assignExtracts(title: string): void {
-    this.mediawikiService.getPageExtract(title).subscribe(res => {
-      const croppedExtract = this.cropString(res, 35);
-      this.cardDict[title].extract = this.removeRefnumbers(croppedExtract);
-      // Mark as loaded even when the page has no extract (e.g. a missing page),
-      // so an empty preview doesn't keep the cards from ever rendering.
-      this.cardDict[title].extractLoaded = true;
-    })
+  /**
+   * Load + crop one card's extract. Resolves (with an empty extract) even on
+   * error, so a failed request can't keep the loader spinning forever. Marks
+   * extractLoaded even when there's no extract, so empty previews still render.
+   */
+  private loadExtract(title: string): Observable<void> {
+    return this.mediawikiService.getPageExtract(title).pipe(
+      catchError(() => of('')),
+      map(res => {
+        const croppedExtract = this.cropString(res, 35);
+        this.cardDict[title].extract = this.removeRefnumbers(croppedExtract);
+        this.cardDict[title].extractLoaded = true;
+      }),
+    );
   }
 
-  assignImages(title: string): void {
-    this.mediawikiService.getWikidataEntity(title).subscribe(res => {
-      this.cardDict[title].wikidataId = res;
-      this.mediawikiService.getImageUrlFromWdEntity(res).subscribe(wdimage => {
-        if (wdimage) {
-          this.cardDict[title].image = `https://commons.wikimedia.org/w/index.php?title=Special:Redirect/file&wpvalue=${wdimage}`;
-          this.cardDict[title].hasImage = true;
-        } else {
-          this.cardDict[title].image = `assets/imgs/Barbas/shrug/barba_shrug_${this.barba}.svg`;
-          this.cardDict[title].hasImage = false;
-        }
-      })
-    })
+  /**
+   * Resolve one card's Wikidata id then its image (or a shrug fallback).
+   * Completes even on error so it never blocks the loader.
+   */
+  private loadImage(title: string): Observable<void> {
+    return this.mediawikiService.getWikidataEntity(title).pipe(
+      catchError(() => of('')),
+      switchMap(wikidataId => {
+        this.cardDict[title].wikidataId = wikidataId;
+        return this.mediawikiService.getImageUrlFromWdEntity(wikidataId).pipe(
+          catchError(() => of(undefined)),
+          map(wdimage => {
+            if (wdimage) {
+              // Request a width-capped thumbnail (Special:FilePath redirects to a
+              // scaled image) instead of the full-resolution original — the cards
+              // are ~18rem wide, so a ~500px thumb is plenty and far lighter
+              // (e.g. ~70 KB vs several MB).
+              this.cardDict[title].image = `https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(wdimage)}?width=500`;
+              this.cardDict[title].hasImage = true;
+            } else {
+              this.cardDict[title].image = `assets/imgs/Barbas/shrug/barba_shrug_${this.barba}.svg`;
+              this.cardDict[title].hasImage = false;
+            }
+          }),
+        );
+      }),
+    );
   }
 
   cropString(input: string, maxLength: number): string {
@@ -140,12 +220,4 @@ export class StatisticsLastArticlesComponent implements OnInit {
     return cleanedText
   }
 
-  isDictFull(dict: CardPreview): boolean {
-    for (const item in dict) {
-      // Check the extract's load flag, not its content: a page can legitimately
-      // have an empty extract, which must not block the cards from rendering.
-      if (!dict[item].extractLoaded || !dict[item].image) return false
-    }
-    return true
-  }
 }

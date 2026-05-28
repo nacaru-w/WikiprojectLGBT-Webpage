@@ -77,8 +77,10 @@ export class StatisticsMainComponent implements OnInit, AfterViewInit {
   assignImages(title: string): void {
     this.mediawikiService.getWikidataEntity(title).subscribe(res => {
       this.mediawikiService.getImageUrlFromWdEntity(res).subscribe(wdimage => {
+        // Width-capped thumbnail (Special:FilePath redirects to a scaled image)
+        // instead of the full-resolution original — the cards are ~18rem wide.
         this.cardDict[title].image = wdimage ?
-          `https://commons.wikimedia.org/w/index.php?title=Special:Redirect/file&wpvalue=${wdimage}`
+          `https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(wdimage)}?width=500`
           : "./../assets/imgs/Barba-wikiproyecto-lgbt.svg";
       })
     })

@@ -2,6 +2,52 @@
 
 // The loading state uses the shared global .barba-loader (see styles.scss).
 
+// Cards laid out in a grid of up to three columns (on desktop); "load more"
+// appends the next batch into new rows below. A grid (not flex-wrap) so the row
+// always holds three and shrinks the cards to fit rather than dropping to two.
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 18rem));
+    justify-content: center;
+    gap: 1.5rem;
+    margin: 0 auto;
+
+    @media (max-width: 860px) {
+        grid-template-columns: repeat(2, minmax(0, 18rem));
+    }
+
+    @media (max-width: 560px) {
+        grid-template-columns: minmax(0, 18rem);
+    }
+
+    // Neutralize the global `.card { margin-inline: 2%; max-width: 20em }` that
+    // would otherwise add stray spacing and break the three-up grid.
+    .card {
+        margin: 0;
+        max-width: none;
+    }
+}
+
+// "Load more" button — centered under the cards, in the site's pressable style.
+// Bottom margin keeps it clear of the footer.
+.last-articles-more {
+    display: flex;
+    justify-content: center;
+    margin: 1.5em 0 2.5em;
+
+    // Look comes from the global .cyan-action-button; this adds only geometry.
+    &__btn {
+        padding: 0.5em 1.4em;
+        border-radius: 12px;
+        box-shadow: black 3px 3px;
+
+        &:active:not(:disabled) {
+            box-shadow: black 1px 1px;
+            transform: translate(2px, 2px);
+        }
+    }
+}
+
 // Pin the "See on Wikipedia" button to the bottom of every card, whatever the
 // preview length. Cards stretch to equal height in the flex row; the button is
 // pushed down with margin-top: auto inside the column-flex card body.
@@ -14,6 +60,13 @@
             margin-top: auto;
         }
     }
+}
+
+// Muted "Created on …" subtitle under the card title.
+.card-created {
+    margin: -0.2em 0 0.6em;
+    font-size: 0.82em;
+    color: #6c757d;
 }
 
 // "No image" popover content. Declared in this component (so these styles apply

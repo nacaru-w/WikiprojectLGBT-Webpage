@@ -5,10 +5,10 @@
     <span class="barba-loader-label">{{ 'common.loading' | translate }}</span>
   </div>
 }
-@if (isDictFull(cardDict)) {
-  <div class="card-container" style="display:flex;" [@popAnimation]="isDictFull(cardDict)">
-    @for (item of cardDict | keyvalue; track item; let i = $index) {
-      <div class="card" style="width: 18rem;">
+<div class="card-container" [@popAnimation]="readyCount()">
+  @for (item of cardDict | keyvalue: keepOrder; track item.key) {
+    @if (item.value.extractLoaded && item.value.image) {
+      <div class="card">
         <div class="card-img-container">
           @if (item.value.hasImage) {
             <img src="{{item.value.image}}" class="card-img-top" alt="">
@@ -20,6 +20,11 @@
         </div>
         <div class="card-body">
           <h5 class="card-title">{{ item.key }}</h5>
+          @if (item.value.creationDate) {
+            <p class="card-created text-muted">
+              {{ 'stats.lastArticles.createdOn' | translate:{ date: item.value.creationDate } }}
+            </p>
+          }
           <p class="card-text">
             {{ item.value.extract }}
           </p>
@@ -29,6 +34,14 @@
         </div>
       </div>
     }
+  }
+</div>
+
+@if (!showSpinner() && hasMore) {
+  <div class="last-articles-more">
+    <button type="button" class="last-articles-more__btn cyan-action-button" (click)="loadMore()" [disabled]="loadingMore()">
+      {{ (loadingMore() ? 'common.loading' : 'stats.lastArticles.loadMore') | translate }}
+    </button>
   </div>
 }
 

@@ -90,7 +90,10 @@ export class MainPageComponent implements OnInit {
 
     let archivoMatch = str.match(archivoRegex);
     if (archivoMatch) {
-      const url = `https://commons.wikimedia.org/w/index.php?title=Special:Redirect/file&wpvalue=${archivoMatch[1]}`
+      // Width-capped thumbnail instead of the full-resolution original (the
+      // evento del mes image shows in a small card) — far lighter for large
+      // raster files like the world-map fallback.
+      const url = `https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(archivoMatch[1])}?width=600`
       return url
     }
     return null;
