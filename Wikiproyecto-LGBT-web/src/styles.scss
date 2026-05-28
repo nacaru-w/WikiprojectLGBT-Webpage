@@ -42,6 +42,40 @@ body {
     border: solid black 3px;
 }
 
+// App-wide button standard: cyan-blue (Bootstrap primary, --bs-primary = $primary)
+// buttons turn white on hover. The extra .btn specificity beats Bootstrap's own
+// .btn-primary:hover darken.
+.btn.btn-primary:hover {
+    background-color: $white;
+    color: black;
+}
+
+// Single source of truth for the app's cyan action buttons: cyan-blue by
+// default, white on hover, black border + bold text. Add this class to a button;
+// the component supplies only its geometry (size/padding), border-radius and
+// box-shadow. (The Bootstrap .btn-primary buttons follow the same look via the
+// rule above.)
+.cyan-action-button {
+    background-color: $primary;
+    color: black;
+    border: solid black 2px;
+    font-family: $font-family-sans-serif;
+    font-weight: bold;
+    letter-spacing: -0.05em;
+    cursor: pointer;
+    transition: background-color 0.15s ease, box-shadow 0.1s ease, transform 0.1s ease;
+
+    &:hover:not(:disabled),
+    &:focus-visible {
+        background-color: $white;
+    }
+
+    &:disabled {
+        opacity: 0.6;
+        cursor: default;
+    }
+}
+
 .btn:disabled:hover,
 .btn.disabled:hover {
     cursor: not-allowed !important;
@@ -590,6 +624,256 @@ body {
     min-height: 60vh;
 }
 
+// Article-info modal (NgbModal, rendered at <body>, scoped by its windowClass):
+// give the window the site's bordered/hard-shadow card look.
+.article-info-modal .modal-content {
+    border: solid black 2px;
+    border-radius: 14px;
+    box-shadow: black 5px 5px;
+}
+
+// Member-creations results table (statistics-member-creations). Kept global,
+// like .chart-container, so the component stylesheet stays under its budget.
+.creations-table-wrap {
+    width: 100%;
+    overflow-x: auto; // keep the table from overflowing the card on small screens
+}
+
+.creations-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    border: solid black 2px;
+    font-family: $body-font;
+
+    th,
+    td {
+        padding: 0.5em 0.85em;
+        border-bottom: solid black 1px;
+        text-align: left;
+    }
+
+    thead th {
+        background-color: $primary;
+        border-bottom: solid black 2px;
+        white-space: nowrap;
+    }
+
+    // Active sort column: tint the header with the selected violet (the same cue
+    // the nav/switch use for "current"); the directional arrow stays black on top.
+    thead th[aria-sort="ascending"],
+    thead th[aria-sort="descending"] {
+        background-color: $active-purple;
+    }
+
+    tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+    tbody tr:hover {
+        background-color: $active-purple;
+    }
+
+    // Numeric (size) column: right-aligned with tabular figures so digits align.
+    &__num {
+        text-align: right;
+        font-variant-numeric: tabular-nums;
+    }
+
+    // Sortable header button (label + sort icon).
+    &__sort {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35em;
+        padding: 0;
+        background: none;
+        border: none;
+        font: inherit;
+        font-family: $font-family-sans-serif;
+        font-weight: bold;
+        letter-spacing: -0.05em;
+        color: black;
+        cursor: pointer;
+
+        &:hover {
+            text-decoration: underline;
+        }
+
+        &:focus-visible {
+            outline: 2px solid black;
+            outline-offset: 2px;
+        }
+    }
+
+    // Always-visible sort affordance: arrows faint by default, the active
+    // direction turns solid black on the violet-tinted header.
+    &__sorticon {
+        flex: 0 0 auto;
+        width: 1.25em;
+        height: 1.25em;
+    }
+
+    &__sorticon-up,
+    &__sorticon-down {
+        fill: rgba(0, 0, 0, 0.3);
+        transition: fill 0.15s ease;
+    }
+
+    &__sorticon[data-sort="asc"] &__sorticon-up,
+    &__sorticon[data-sort="desc"] &__sorticon-down {
+        fill: #000;
+    }
+
+    // Info column: shrink-to-content, centered icon button.
+    &__info-col {
+        width: 1%;
+        text-align: center;
+        white-space: nowrap;
+    }
+
+    // Interactive-blue icon button: prominent enough to invite clicks, but
+    // compact — no resting shadow (would clutter every row); it pops on hover.
+    // Look comes from the global .cyan-action-button; this adds only geometry.
+    &__info {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.3em;
+        border-radius: 8px;
+
+        &:focus-visible {
+            outline: 2px solid black;
+            outline-offset: 2px;
+        }
+    }
+
+    &__info-icon {
+        width: 1.3em;
+        height: 1.3em;
+    }
+
+    // Screen-reader-only header label for the info column.
+    &__sr {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+
+    a {
+        color: black;
+        text-decoration: wavy underline;
+        transition: color 0.2s ease;
+
+        &:hover {
+            color: $deep-dark-primary;
+        }
+    }
+}
+
+// Title filter for the member-creations results (members with many articles).
+.creations-filter {
+    position: relative;
+    flex: 0 1 240px;
+    display: flex;
+    align-items: center;
+}
+
+.creations-filter__icon {
+    position: absolute;
+    left: 0.6em;
+    width: 1.05em;
+    height: 1.05em;
+    pointer-events: none;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    opacity: 0.55;
+}
+
+.creations-filter__input {
+    width: 100%;
+    padding: 0.4em 0.7em 0.4em 2.2em; // room for the leading icon
+    border: solid black 2px;
+    border-radius: 10px;
+    box-shadow: black 2px 2px;
+    font-family: $body-font;
+
+    &:focus {
+        outline: none;
+        box-shadow: black 3px 3px;
+    }
+}
+
+// Pagination for the results table — neo-brutalist pills (black border, blue
+// hover, violet active), overriding Bootstrap's connected defaults.
+.creations-pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.2em;
+
+    // Fully self-styled: Bootstrap's pagination CSS isn't bundled, so we can't
+    // rely on its list reset/padding. Each page is a separate bordered pill.
+    .pagination {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.35em;
+        margin: 0;
+        padding-left: 0;
+        list-style: none;
+    }
+
+    .page-item {
+        list-style: none;
+    }
+
+    .page-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 2.3em;
+        padding: 0.35em 0.6em;
+        border: solid black 2px;
+        border-radius: 8px;
+        color: black;
+        background-color: #fff;
+        font-family: $font-family-sans-serif;
+        font-weight: bold;
+        line-height: 1;
+        text-decoration: none;
+        cursor: pointer;
+        transition: background-color 0.12s ease;
+
+        &:hover {
+            background-color: $primary;
+            color: black;
+        }
+
+        &:focus-visible {
+            outline: 2px solid black;
+            outline-offset: 1px;
+        }
+    }
+
+    .page-item.active .page-link {
+        background-color: $active-purple;
+        border-color: black;
+        color: black;
+    }
+
+    .page-item.disabled .page-link {
+        opacity: 0.45;
+        pointer-events: none;
+    }
+}
+
 .chart-container {
     display: flex;
     flex-wrap: wrap;
@@ -850,10 +1134,10 @@ figure {
 // scoped by the windowClass set in StatisticsNotableComponent.openFilterModal().
 .notable-filter-modal {
 
-    // Borderless but still neo-brutalist: the modal box and its body already
-    // supply the heavy black framing, so we drop every internal accordion border
-    // and give the sections character instead with flat colour fills, bold
-    // condensed type, rounded corners and a single offset shadow per section.
+    // Each section mirrors the expandable rows in the event "see more" modal
+    // (.rank-item): a white card framed by a black 2px border with 8px corners
+    // and clipped overflow, so the header and body sit flush inside. The black
+    // frame replaces the previous borderless + offset-shadow treatment.
     .accordion {
         --bs-accordion-border-width: 0;
         --bs-accordion-border-color: transparent;
@@ -866,33 +1150,33 @@ figure {
         box-shadow: none;
     }
 
-    // Each section is a flat card: white body, rounded corners, offset shadow,
-    // no border anywhere inside.
     .accordion-item {
-        border: none;
-        border-radius: 10px;
+        border: solid black 2px;
+        border-radius: 8px;
         background-color: $white;
-        box-shadow: black 3px 3px;
+        overflow: hidden;
 
         &+.accordion-item {
-            margin-top: 0.8em;
+            margin-top: 0.6em;
         }
     }
 
     .accordion-button {
         border: none;
-        border-radius: 10px;
-        background-color: $lighter-primary;
+        border-radius: 0; // corners are clipped by .accordion-item's overflow
+        background-color: $white;
         color: #000;
         font-family: $font-family-sans-serif;
         font-weight: bold;
         letter-spacing: -0.08em;
         box-shadow: none;
+        transition: background-color 0.2s ease-in-out;
 
-        // Expanded: solid accent fill, square off the bottom to meet the body.
+        // Expanded: solid accent fill + black divider down to the body, mirroring
+        // the event modal's expanded .rank-toggle.
         &:not(.collapsed) {
             background-color: $active-purple;
-            border-radius: 10px 10px 0 0;
+            border-bottom: solid black 2px;
             box-shadow: none;
         }
 
@@ -903,7 +1187,6 @@ figure {
 
     .accordion-body {
         border: none;
-        border-radius: 0 0 10px 10px;
         font-family: $body-font;
     }
 
