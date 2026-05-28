@@ -7,6 +7,8 @@ interface CardDetails {
     hasImage?: boolean;
     /** Wikidata item id (Q…), used to link to the element page for adding an image. */
     wikidataId?: string;
+    /** Creation date (day-month string from the wiki list, e.g. "24 de mayo"). */
+    creationDate?: string;
 }
 export interface CardPreview {
     [key: string]: CardDetails;

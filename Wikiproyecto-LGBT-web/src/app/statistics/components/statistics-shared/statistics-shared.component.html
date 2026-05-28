@@ -8,7 +8,7 @@
     <li class="subpage-nav-option" [class.active]="activeSection === 'notable'">
         <a href="#notable" (click)="selectSection($event, 'notable')">{{ 'stats.nav.notable' | translate }}</a>
     </li>
-    <li class="subpage-nav-option" [class.active]="activeSection === 'participants'">
+    <li class="subpage-nav-option" [class.active]="activeSection === 'participants' || activeSection === 'participants-stats'">
         <a href="#participants" (click)="selectSection($event, 'participants')">{{ 'stats.nav.participants' | translate }}</a>
     </li>
     <li class="subpage-nav-option" [class.active]="activeSection === 'last-articles'">
@@ -16,11 +16,15 @@
     </li>
 </nav>
 <div class="chart-box">
-    <div class="stats-introduction">
-        <p [innerHTML]="'stats.intro1' | translate"></p>
-        <p>{{ 'stats.intro2' | translate }}</p>
-    </div>
+    <!-- Intro + empty-state are the landing content: shown only once hydrated and
+         no section is active. Gating on showEmptyState (browser-only) instead of
+         !activeSection keeps the intro from server-rendering on a deep link like
+         /stats#participants and then being removed — which caused a flash. -->
     @if (showEmptyState) {
+        <div class="stats-introduction">
+            <p [innerHTML]="'stats.intro1' | translate"></p>
+            <p>{{ 'stats.intro2' | translate }}</p>
+        </div>
         <div class="stats-placeholder">
             <img class="placeholder-barba" src="assets/imgs/Barbas/editor/barba_editor_{{barba}}.svg" alt="">
             <p class="placeholder-label">{{ 'stats.pickSection' | translate }}</p>
@@ -36,7 +40,23 @@
         <app-statistics-notable [@slideInOut]="showNotable"></app-statistics-notable>
     }
     @if (showParticipants) {
-        <app-statistics-participants [@slideInOut]="showParticipants"></app-statistics-participants>
+        <div class="participants-results" [@fadeInOut]="showParticipants">
+            <div class="view-switch" role="tablist" [attr.aria-label]="'stats.nav.participants' | translate"
+                [class.view-switch--stats]="participantsView === 'stats'">
+                <span class="view-switch__thumb" aria-hidden="true"></span>
+                <a class="view-switch__option" href="#participants" role="tab"
+                    [attr.aria-selected]="participantsView === 'lookup'"
+                    (click)="selectSection($event, 'participants')">{{ 'stats.participantsNav.lookup' | translate }}</a>
+                <a class="view-switch__option" href="#participants-stats" role="tab"
+                    [attr.aria-selected]="participantsView === 'stats'"
+                    (click)="selectSection($event, 'participants-stats')">{{ 'stats.participantsNav.stats' | translate }}</a>
+            </div>
+            @if (participantsView === 'lookup') {
+                <app-statistics-member-creations [@fadeIn] [@.disabled]="!viewFadeEnabled"></app-statistics-member-creations>
+            } @else {
+                <app-statistics-participants [@fadeIn] [@.disabled]="!viewFadeEnabled"></app-statistics-participants>
+            }
+        </div>
     }
     @if (showLastArticles) {
         <app-statistics-last-articles [@slideInOut]="showLastArticles"></app-statistics-last-articles>

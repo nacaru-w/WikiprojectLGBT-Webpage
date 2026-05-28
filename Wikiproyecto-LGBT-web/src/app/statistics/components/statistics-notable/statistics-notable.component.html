@@ -1,11 +1,11 @@
-<div class="chart-container">
+@if (isAPIDone()) {
+<div class="chart-container" [@fadeIn]>
     <div class="chart-text">
         <p [innerHTML]="'stats.notable.text1' | translate"></p>
         <p>{{ 'stats.notable.text2' | translate }}</p>
     </div>
-    @if (isAPIDone()) {
-    <div class="chart notable-showcase" [@fadeIn]>
-        <button type="button" class="notable-filter-btn" [class.active]="hasActiveFilters()"
+    <div class="chart notable-showcase">
+        <button type="button" class="notable-filter-btn cyan-action-button" [class.active]="hasActiveFilters()"
             (click)="openFilterModal(filterModal)" [title]="'stats.notable.filter.button' | translate"
             [attr.aria-label]="'stats.notable.filter.button' | translate">
             <svg class="filter-icon" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"
@@ -51,8 +51,13 @@
             </div>
         </div>
     </div>
-    }
 </div>
+} @else {
+<div class="barba-loader">
+    <img class="barba-loader-img" src="./../../../../assets/imgs/Barba-wikiproyecto-lgbt.svg" alt="" aria-hidden="true">
+    <span class="barba-loader-label">{{ 'common.loading' | translate }}</span>
+</div>
+}
 
 <!-- Shared popover body. It reads the active article's lazily-loaded summary;
      declared here, so component styles still apply even with container="body". -->

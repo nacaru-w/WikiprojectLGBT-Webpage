@@ -6,13 +6,16 @@ import { StatisticsNotableComponent } from '../statistics-notable/statistics-not
 import { StatisticsYearlyArticlesComponent } from '../statistics-yearly-articles/statistics-yearly-articles.component';
 import { StatisticsParticipantsComponent } from '../statistics-participants/statistics-participants.component';
 import { StatisticsLastArticlesComponent } from '../statistics-last-articles/statistics-last-articles.component';
+import { StatisticsMemberCreationsComponent } from '../statistics-member-creations/statistics-member-creations.component';
 
-import { chartsSlideInOutAnimation } from '../../../animations/animations';
+import { chartsSlideInOutAnimation, fadeInAnimation, fadeInOutAnimation } from '../../../animations/animations';
 import { TranslatePipe } from '@ngx-translate/core';
 import { BarbaService } from '../../../services/barba.service';
 
 // URL fragments that map to each section, e.g. /stats#monthly-articles.
-const SECTIONS = ['yearly-articles', 'monthly-articles', 'notable', 'participants', 'last-articles'] as const;
+// `participants` and `participants-stats` are two sub-subpages of the same
+// "Participants" nav item (the member-creations lookup and the stats charts).
+const SECTIONS = ['yearly-articles', 'monthly-articles', 'notable', 'participants', 'participants-stats', 'last-articles'] as const;
 type Section = (typeof SECTIONS)[number];
 
 @Component({
@@ -24,12 +27,15 @@ type Section = (typeof SECTIONS)[number];
     StatisticsYearlyArticlesComponent,
     StatisticsParticipantsComponent,
     StatisticsLastArticlesComponent,
+    StatisticsMemberCreationsComponent,
     TranslatePipe,
   ],
   templateUrl: './statistics-shared.component.html',
   styleUrl: './statistics-shared.component.scss',
   animations: [
-    chartsSlideInOutAnimation
+    chartsSlideInOutAnimation,
+    fadeInAnimation,
+    fadeInOutAnimation
   ]
 })
 export class StatisticsSharedComponent implements OnInit {
@@ -60,6 +66,16 @@ export class StatisticsSharedComponent implements OnInit {
   showParticipants: boolean = false;
   showNotable: boolean = false;
   showLastArticles: boolean = false;
+
+  /** Which participants sub-subpage to show: the user lookup (default) or the stats charts. */
+  participantsView: 'lookup' | 'stats' = 'lookup';
+
+  /**
+   * Enables the lookup/stats fade only for in-section toggles, NOT when the
+   * section first opens — so opening participants slides in exactly like the
+   * other sections (slide only) instead of slide + fade.
+   */
+  viewFadeEnabled = false;
 
   constructor() {
     afterNextRender(() => {
@@ -92,10 +108,24 @@ export class StatisticsSharedComponent implements OnInit {
   }
 
   showChart(chart: string | null) {
-    this.hideAllCharts();
     const section = this.isSection(chart) ? chart : null;
+
+    // Toggling between the two participants sub-subpages keeps the section
+    // mounted and just swaps the inner view (which fades via [@fadeIn] in the
+    // template), so the sub-nav doesn't re-mount — same feel as the Evento del
+    // mes subsections, rather than the full slide the top-level sections use.
+    const inParticipants = section === 'participants' || section === 'participants-stats';
+    const wasInParticipants =
+      this.activeSection === 'participants' || this.activeSection === 'participants-stats';
     this.activeSection = section;
     this.refreshEmptyState();
+    if (inParticipants && wasInParticipants) {
+      this.viewFadeEnabled = true; // a toggle within the open section: fade the swap
+      this.participantsView = section === 'participants-stats' ? 'stats' : 'lookup';
+      return;
+    }
+
+    this.hideAllCharts();
     if (!section) {
       return;
     }
@@ -109,6 +139,11 @@ export class StatisticsSharedComponent implements OnInit {
           this.showMonthlyArticles = true;
           break;
         case "participants":
+          this.participantsView = 'lookup';
+          this.showParticipants = true;
+          break;
+        case "participants-stats":
+          this.participantsView = 'stats';
           this.showParticipants = true;
           break;
         case "notable":
@@ -131,6 +166,8 @@ export class StatisticsSharedComponent implements OnInit {
     this.showParticipants = false;
     this.showNotable = false;
     this.showLastArticles = false;
+    // Next participants open should slide only (fade re-enables on a toggle).
+    this.viewFadeEnabled = false;
   }
 
   private isSection(value: string | null): value is Section {

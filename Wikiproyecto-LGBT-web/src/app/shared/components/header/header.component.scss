@@ -54,7 +54,7 @@
         font-size: 1.25rem;
         line-height: 1;
         color: black;
-        background-color: transparent;
+        background-color: variables.$primary;
         border: solid black 2px;
         border-radius: 0.5em;
         box-shadow: none;
@@ -77,7 +77,7 @@
 
         &:hover,
         &:focus-visible {
-            background-color: variables.$primary;
+            background-color: variables.$white;
         }
 
         &:focus {

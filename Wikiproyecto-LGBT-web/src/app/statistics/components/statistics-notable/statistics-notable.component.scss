@@ -21,23 +21,12 @@
         width: 2.4em;
         height: 2.4em;
         padding: 0;
-        color: black;
-        background-color: variables.$white;
-        border: solid black 2px;
         border-radius: 0.6em;
         box-shadow: black 2px 2px;
-        cursor: pointer;
-        transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
 
         .filter-icon {
             width: 1.2em;
             height: 1.2em;
-        }
-
-        &:hover,
-        &:focus-visible {
-            transform: translateY(-2px);
-            box-shadow: black 3px 4px;
         }
 
         &.active {

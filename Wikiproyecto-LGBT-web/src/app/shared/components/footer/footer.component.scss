@@ -92,28 +92,31 @@
                 gap: 0.5em;
 
                 .icon-container {
-                    width: 2em;
-                    height: auto;
-
+                    // Pill on hover, matching the footer text links: cyan-blue
+                    // fill + black border + shadow. The transparent border at
+                    // rest reserves the space so nothing shifts on hover.
                     a {
-                        width: 90%;
-                        height: 90%;
+                        display: inline-flex;
+                        align-items: center;
+                        justify-content: center;
+                        padding: 0.35em;
+                        border: solid transparent 2px;
+                        border-radius: 7px;
+                        transition: background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
 
                         img {
-                            cursor: pointer;
-                            margin: 0 0.5em;
-                            width: 90%;
-                            height: 90%;
-                            opacity: 1;
-                            transition: opacity 0.3s ease;
-                        }
-
-                        img:hover {
-                            opacity: 50%;
+                            display: block;
+                            width: 1.5em;
+                            height: 1.5em;
                         }
                     }
 
-
+                    a:hover,
+                    a:focus-visible {
+                        background-color: variables.$primary;
+                        border-color: black;
+                        box-shadow: black 2px 2px;
+                    }
                 }
 
 
