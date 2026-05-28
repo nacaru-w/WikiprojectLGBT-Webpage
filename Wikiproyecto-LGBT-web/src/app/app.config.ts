@@ -8,6 +8,7 @@ import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 import { provideQuillConfig } from 'ngx-quill';
 import { withCredentialsInterceptor } from './interceptors/with-credentials.interceptor';
+import { wikimediaUserAgentInterceptor } from './interceptors/wikimedia-user-agent.interceptor';
 import { provideTranslateLoader, provideTranslateService } from '@ngx-translate/core';
 import { TranslateBrowserLoader } from './services/i18n/translate-browser.loader';
 import { DEFAULT_LANG } from './services/i18n/i18n.config';
@@ -21,7 +22,7 @@ export const appConfig: ApplicationConfig = {
       filter: (_) => false,
     })),
     provideAnimationsAsync(),
-    provideHttpClient(withFetch(), withInterceptors([withCredentialsInterceptor])),
+    provideHttpClient(withFetch(), withInterceptors([withCredentialsInterceptor, wikimediaUserAgentInterceptor])),
     provideCharts(withDefaultRegisterables()),
     // Sanitize HTML bound into/out of the editor so stored post content can't inject scripts.
     provideQuillConfig({ sanitize: true }),
