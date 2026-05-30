@@ -4,7 +4,7 @@
     text-align: center;
     margin-block: 0.25em;
     padding: 0.5em;
-    border: solid var(--ink) 2px;
+    border: solid var(--edge) 2px;
     background-color: var(--gray-lighter);
     border-radius: 10px;
     box-shadow: var(--shadow) 2px 2px;
@@ -12,7 +12,7 @@
 }
 
 .blog-list-container {
-    border: solid var(--ink) 2px;
+    border: solid var(--edge) 2px;
     border-radius: 10px;
     box-shadow: var(--shadow) 4px 4px;
     background-color: var(--gray-lightest);

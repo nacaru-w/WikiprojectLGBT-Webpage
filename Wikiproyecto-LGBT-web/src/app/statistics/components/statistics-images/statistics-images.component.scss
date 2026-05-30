@@ -15,7 +15,7 @@
     margin-bottom: 1.25em;
     padding: 1em 1.25em;
     background-color: var(--lighter-orange);
-    border: solid var(--ink) 2px;
+    border: solid var(--edge) 2px;
     border-radius: 15px;
     box-shadow: var(--shadow) 4px 4px;
     text-align: center;
@@ -67,7 +67,7 @@
     flex-direction: column;
     margin: 0;
     background-color: var(--paper);
-    border: solid var(--ink) 2px;
+    border: solid var(--edge) 2px;
     border-radius: 12px;
     box-shadow: var(--shadow) 3px 3px;
     overflow: hidden;
@@ -84,7 +84,7 @@
     display: block;
     aspect-ratio: 4 / 3;
     background-color: var(--surface);
-    border-bottom: solid var(--ink) 2px;
+    border-bottom: solid var(--edge) 2px;
 
     .gallery-img {
         display: block;

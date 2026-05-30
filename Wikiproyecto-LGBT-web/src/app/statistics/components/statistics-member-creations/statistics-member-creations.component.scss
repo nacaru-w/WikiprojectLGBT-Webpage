@@ -63,14 +63,14 @@
     flex: 1 1 auto;
     min-width: 0;
     padding: 0.55em 1em;
-    border: solid var(--ink) 2px;
+    border: solid var(--edge) 2px;
     border-radius: 12px;
     box-shadow: var(--shadow) 3px 3px;
     font-family: variables.$body-font;
     transition: box-shadow 0.15s ease, border-color 0.15s ease;
 
     &:focus {
-      border-color: var(--ink);
+      border-color: var(--edge);
       box-shadow: var(--shadow) 4px 4px;
       outline: none;
     }
@@ -110,7 +110,7 @@
   // NgbTypeahead dropdown renders inline inside .member-search; give it the same
   // bordered-card look and a blue active-row highlight (matches the view switch).
   ::ng-deep ngb-typeahead-window.dropdown-menu {
-    border: solid var(--ink) 2px;
+    border: solid var(--edge) 2px;
     border-radius: 12px;
     box-shadow: var(--shadow) 3px 3px;
     overflow: hidden;

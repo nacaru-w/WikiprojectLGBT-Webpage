@@ -2,6 +2,7 @@ import { AfterViewInit, Component, OnInit, computed, inject, signal } from '@ang
 import { NgbCarouselConfig, NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 import { MediawikiService } from '../../../services/mediawiki.service';
 import { LoadingService } from '../../../services/loading.service';
+import { ThemeService } from '../../../services/theme/theme.service';
 import { popAnimation } from '../../../animations/animations';
 import { TranslatePipe } from '@ngx-translate/core';
 
@@ -18,6 +19,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 export class MainPageComponent implements OnInit {
   private mediaWikiService = inject(MediawikiService);
   private loading = inject(LoadingService);
+  private theme = inject(ThemeService);
 
   // True once the "Evento del mes" data has been fetched.
   isAllLoaded = signal(false);
@@ -26,11 +28,25 @@ export class MainPageComponent implements OnInit {
   // finished fading out, so the loader and the blocks' intro never overlap.
   blocksReady = computed(() => this.isAllLoaded() && this.loading.loaderGone());
 
-  images: string[] = [
+  // The star (slide 1) is transparent — its background is the themed
+  // .img-wrapper — so it needs no dark variant. The tucan and aktenzeichen SVGs
+  // bake their own background colour in, so dark mode swaps in *-dark.svg copies
+  // whose only change is a darkened background (see styles.scss --slide-*).
+  private readonly lightImages: string[] = [
     './../assets/imgs/Wikipedia_20_pink_star.svg',
     './../assets/imgs/Wikipedia_tucan.svg',
     './../assets/imgs/WP20Symbols_2004_aktenzeichen_rectangle.svg',
   ];
+  private readonly darkImages: string[] = [
+    './../assets/imgs/Wikipedia_20_pink_star.svg',
+    './../assets/imgs/Wikipedia_tucan-dark.svg',
+    './../assets/imgs/WP20Symbols_2004_aktenzeichen_rectangle-dark.svg',
+  ];
+
+  // Carousel sources for the active theme; swaps reactively when it's toggled.
+  images = computed(() =>
+    this.theme.theme() === 'dark' ? this.darkImages : this.lightImages
+  );
 
   eventoDelMes: string = '';
   eventoDelMesImage: string = '';

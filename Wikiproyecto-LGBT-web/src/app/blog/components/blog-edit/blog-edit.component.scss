@@ -42,7 +42,7 @@
         .form-control {
             display: flex;
             flex-direction: column;
-            border: solid var(--ink) 2px;
+            border: solid var(--edge) 2px;
             box-shadow: var(--shadow) 3px 3px;
             background-color: var(--gray-lightest);
             padding-top: 1.75em;
@@ -58,7 +58,7 @@
 
                     .ql-toolbar.ql-snow,
                     .ql-container.ql-snow {
-                        border-color: var(--ink);
+                        border-color: var(--edge);
                     }
 
                     .ql-toolbar.ql-snow {
@@ -100,7 +100,7 @@
 
                     .ql-snow .ql-picker-options {
                         background-color: var(--paper);
-                        border-color: var(--ink);
+                        border-color: var(--edge);
                     }
                 }
             }

@@ -18,7 +18,7 @@
     gap: 1em;
     padding: 0.85em 1.1em;
     background-color: var(--surface);
-    border: solid var(--ink) 3px;
+    border: solid var(--edge) 3px;
     border-radius: 12px;
     box-shadow: var(--shadow) 4px 4px;
 
@@ -56,7 +56,7 @@
 .event-badge {
     padding: 0.15em 0.5em;
     background-color: var(--paper);
-    border: solid var(--ink) 2px;
+    border: solid var(--edge) 2px;
     border-radius: 10px;
     font-weight: bold;
     font-size: 0.72em;
@@ -107,7 +107,7 @@
     margin-left: 0.4em;
     padding: 0.05em 0.45em;
     background-color: var(--paper);
-    border: solid var(--ink) 1.5px;
+    border: solid var(--edge) 1.5px;
     border-radius: 8px;
     font-size: 0.78em;
     font-weight: bold;

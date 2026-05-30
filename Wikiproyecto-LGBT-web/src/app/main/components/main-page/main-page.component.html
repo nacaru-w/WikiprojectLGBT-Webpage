@@ -1,14 +1,14 @@
 <div class="carousel-and-boxes">
   @if (blocksReady()) {
     <div class="carousel-wrapper" [@popAnimation]="blocksReady()">
-      @if (images) {
+      @if (images(); as slides) {
         <ngb-carousel>
-          @for (image of images; track image) {
+          @for (image of slides; track $index) {
             <ng-template ngbSlide>
               <div class="img-wrapper">
                 <img [src]="image" alt="Random slide" />
               </div>
-              @switch (images.indexOf(image)) {
+              @switch ($index) {
                 @case (0) {
                   <div class="carousel-caption image-1">
                     <h3>{{ 'home.carousel.visibilize.title' | translate }}</h3>

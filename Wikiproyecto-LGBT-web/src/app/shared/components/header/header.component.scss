@@ -1,7 +1,7 @@
 @use "_variables";
 
 .navbar {
-    border-bottom: solid var(--ink) 3px;
+    border-bottom: solid var(--edge) 3px;
     background-color: var(--surface) !important;
 
     .brand-icon-and-title {

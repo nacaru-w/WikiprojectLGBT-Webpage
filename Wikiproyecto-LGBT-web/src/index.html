@@ -60,8 +60,10 @@
        so the splash matches the dark page instead of flashing light. */
     html.dark #app-loading {
       background-color: #2a2734;
+      /* Near-opaque wash so the grey dots barely show — matches the body rule
+         in styles.scss; a brighter dot grid here read as dizzying. */
       background-image:
-        linear-gradient(rgba(42, 39, 52, 0.55), rgba(42, 39, 52, 0.55)),
+        linear-gradient(rgba(42, 39, 52, 0.9), rgba(42, 39, 52, 0.9)),
         url('assets/imgs/background_dot.svg');
     }
 

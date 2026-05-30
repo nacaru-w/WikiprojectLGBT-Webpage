@@ -34,13 +34,11 @@
      inkscape:current-layer="svg24"
      width="800px"
      height="550.89001px" />
-  <path
-     fill="#e9e7c4"
-     d="M -11.093764,-3.3990132 -11.135374,505.74771 804.8176,506.60099 804.15193,-2.5880086 Z"
-     class="cls-1"
-     id="path2"
-     sodipodi:nodetypes="ccccc"
-     style="fill:#ffe3ea;fill-opacity:1;stroke-width:1.02658" />
+  <!-- Background rect removed so the slide background is supplied by the page
+       (.img-wrapper background-color set to the themed surface colour). This
+       lets the whole carousel slide share one theme-aware colour: light pink in
+       light mode, dark surface in dark mode, instead of a baked-in pink that
+       ignored the dark theme. -->
   <g
      fill="#ffcc00"
      stroke-width="0.730432"

@@ -15,7 +15,7 @@
     min-width: 0;
     padding: 0.75em;
     background-color: var(--paper);
-    border: solid var(--ink) 3px;
+    border: solid var(--edge) 3px;
     border-radius: 12px;
     box-shadow: var(--shadow) 4px 4px;
 }
@@ -88,14 +88,14 @@
 .legend-flag {
     width: 1.5em;
     height: auto;
-    border: solid var(--ink) 1px;
+    border: solid var(--edge) 1px;
     border-radius: 2px;
 }
 
 .legend-bar {
     flex: 1;
     height: 0.9em;
-    border: solid var(--ink) 1.5px;
+    border: solid var(--edge) 1.5px;
     border-radius: 5px;
 }
 
@@ -105,7 +105,7 @@
     align-self: stretch;
     padding: 1em 1.25em;
     background-color: var(--surface);
-    border: solid var(--ink) 3px;
+    border: solid var(--edge) 3px;
     border-radius: 12px;
     box-shadow: var(--shadow) 4px 4px;
     font-family: variables.$body-font;
@@ -123,7 +123,7 @@
     flex: 0 0 auto;
     width: 2.1em;
     height: auto;
-    border: solid var(--ink) 1.5px;
+    border: solid var(--edge) 1.5px;
     border-radius: 3px;
 }
 

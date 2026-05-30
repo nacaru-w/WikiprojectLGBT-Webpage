@@ -38,7 +38,7 @@ form {
     overflow: hidden; // contain the barba "stamp" within the rounded card
     width: min(95%, 800px);
     margin: 0.5em auto;
-    border: solid var(--ink) 3px;
+    border: solid var(--edge) 3px;
     box-shadow: var(--shadow) 4px 4px;
     border-radius: 20px;
     padding: 1.5em;
@@ -81,13 +81,13 @@ form {
     .form-check-input,
     .form-check-input:checked,
     .form-check-input:focus {
-        border: solid var(--ink) 2px;
+        border: solid var(--edge) 2px;
         box-shadow: var(--shadow) 1px 1px;
     }
 
     .form-box,
     .form-box:focus {
-        border: solid var(--ink) 2px;
+        border: solid var(--edge) 2px;
         box-shadow: var(--shadow) 1px 1px;
     }
 
@@ -115,12 +115,12 @@ form {
 
     .input-group {
         border-radius: 0.375rem;
-        border: solid var(--ink) 2px;
+        border: solid var(--edge) 2px;
         box-shadow: var(--shadow) 1px 1px;
 
         .input-group-text {
             font-size: 0.9em;
-            border-right: solid var(--ink) 3px;
+            border-right: solid var(--edge) 3px;
             max-width: 30%;
             text-wrap: wrap;
         }
@@ -133,7 +133,7 @@ form {
     }
 
     .text-area {
-        border: solid var(--ink) 2px;
+        border: solid var(--edge) 2px;
         box-shadow: var(--shadow) 1px 1px;
         min-height: 7em;
     }

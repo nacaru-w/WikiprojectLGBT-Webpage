@@ -11,6 +11,11 @@
 // `.dark` on <html> (see ThemeService + the no-flash script in index.html).
 :root {
     --ink: #000000;
+    // Edge/border colour. Same as --ink in light mode (crisp black outlines),
+    // but a softer, dimmed version in dark mode (see :root.dark) — the
+    // near-white borders were too glaring against the dark surfaces. Kept
+    // separate from --ink so body text, icons and focus outlines stay crisp.
+    --edge: var(--ink);
     // Ink that sits ON a bright accent fill (button/pill/chip). Stays dark in
     // BOTH themes because the accent colours themselves stay bright in both —
     // so e.g. a cyan button always has dark text/border, while its shadow uses
@@ -46,10 +51,19 @@
     --dark-danger: #{$dark-danger};
     --deep-dark-primary: #{$deep-dark-primary};
     --almost-black-primary: #{$almost-black-primary};
+
+    // Carousel slide caption fills — the bright LGBT accent tints in light mode.
+    --slide-pink: #{$light};
+    --slide-cyan: #{$primary};
+    --slide-gold: #{$warning};
 }
 
 :root.dark {
-    --ink: #f1edf6;          // light ink: borders + text on dark surfaces
+    --ink: #f1edf6;          // light ink: text + icons on dark surfaces
+    // Borders use this instead of the full-bright --ink: a muted light-grey so
+    // the neo-brutalist outlines read as defined edges without glaring. The
+    // black --shadow offset still supplies the depth/punch.
+    --edge: #b3aec0;
     // Surfaces are only MODERATELY dark (not near-black) so the black --shadow
     // offset shadows stay visible against them, keeping the brutalist depth.
     --paper: #37323f;        // was white — card / inner surface
@@ -85,6 +99,14 @@
     --dark-danger: #ff9d9d;       // error text → light red
     --deep-dark-primary: #82d4ee; // link-hover / emphasis → light cyan
     --almost-black-primary: #1c3c46;
+
+    // The full-bleed accent fills are too glaring on a dark page, so each slide
+    // caption drops to a moderately-dark version that keeps its own hue (rose /
+    // teal / gold) — the slides stay distinct, just no longer eye-searing. Text
+    // on them uses --ink (light here) instead of --accent-ink so it stays legible.
+    --slide-pink: #5e3a48;
+    --slide-cyan: #2d4b56;
+    --slide-gold: #57502c;
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -95,11 +117,14 @@ body {
     background-repeat: repeat;
 }
 
-// The dot pattern is light grey (#ccc), glaring on a dark page. Lay a translucent
-// wash of the page colour over it so the dots stay as a subtle dark texture.
+// The dot pattern is light grey (#ccc), glaring on a dark page — bright enough
+// to make the texture swim/feel dizzying. Lay a near-opaque wash of the page
+// colour over it so the dots barely whisper through as a faint texture rather
+// than a high-contrast pattern. (0.55 still read as a busy dot grid; 0.9 leaves
+// them just-perceptible.)
 :root.dark body {
     background-image:
-        linear-gradient(rgba(42, 39, 52, 0.55), rgba(42, 39, 52, 0.55)),
+        linear-gradient(rgba(42, 39, 52, 0.9), rgba(42, 39, 52, 0.9)),
         url('./assets/imgs/background_dot.svg');
 }
 
@@ -192,10 +217,16 @@ body {
     width: min(95%, 900px);
     margin: 0 auto;
     border-radius: 40px;
-    border: solid var(--ink) 4px;
+    border: solid var(--edge) 4px;
     box-shadow: var(--shadow) 6px 6px;
 
     .img-wrapper {
+        // Only slide 1's star SVG is transparent, so this colour shows as its
+        // background; slides 2 & 3 bake their own (themed via *-dark.svg). Uses
+        // the same --slide-pink as .carousel-caption.image-1 so slide 1 stays
+        // one uniform colour — pink in light mode, dark rose in dark mode.
+        background-color: var(--slide-pink);
+
         img {
             width: 100%;
             height: 100%;
@@ -222,19 +253,25 @@ body {
 
     }
 
+    // Each caption keeps its own hue (pink / cyan / gold), bright in light mode
+    // and a moderately-dark equivalent in dark mode (see --slide-* in styles).
+    // Text uses var(--ink): dark on the bright light-mode fills, light on the
+    // dark dark-mode fills — readable on both. The illustration area above stays
+    // bright pink in both themes (its line-art needs a light backdrop), so in
+    // dark mode slide 1's caption no longer perfectly matches the artwork.
     .carousel-caption.image-1 {
-        background-color: var(--surface);
+        background-color: var(--slide-pink);
+        color: var(--ink);
     }
 
-    // Captions 2 & 3 sit on bright accent fills → dark accent-ink text.
     .carousel-caption.image-2 {
-        background-color: var(--primary);
-        color: var(--accent-ink);
+        background-color: var(--slide-cyan);
+        color: var(--ink);
     }
 
     .carousel-caption.image-3 {
-        background-color: var(--warning);
-        color: var(--accent-ink);
+        background-color: var(--slide-gold);
+        color: var(--ink);
     }
 
 }
@@ -246,7 +283,7 @@ body {
 .accordion {
     width: min(95%, 700px);
     margin: 0 auto;
-    border: solid var(--ink) 3px;
+    border: solid var(--edge) 3px;
     border-radius: 10px;
     box-shadow: var(--shadow) 4px 4px;
 }
@@ -254,7 +291,7 @@ body {
 .accordion-button {
     font-weight: bold;
     letter-spacing: -0.1rem;
-    border: solid var(--ink) 3px;
+    border: solid var(--edge) 3px;
     border-radius: 10px;
 }
 
@@ -274,7 +311,7 @@ body {
     width: min(500px, 95%);
     font-family: $body-font;
     margin: 1em auto;
-    border: solid var(--ink) 3px;
+    border: solid var(--edge) 3px;
     border-radius: 10px;
     color: var(--ink);
     box-shadow: var(--shadow) 4px 4px;
@@ -282,7 +319,7 @@ body {
 
 .dropdown {
     .dropdown-menu {
-        border: solid var(--ink) 3px;
+        border: solid var(--edge) 3px;
         box-shadow: var(--shadow) 4px 4px;
 
         .dropdown-item {
@@ -293,7 +330,7 @@ body {
     }
 
     .dropdown-toggle.show {
-        border-color: var(--ink);
+        border-color: var(--edge);
     }
 
     .dropdown-toggle.btn-outline-primary {
@@ -330,7 +367,7 @@ body {
     a,
     a.active {
         color: var(--ink);
-        border: solid var(--ink) 3px;
+        border: solid var(--edge) 3px;
     }
 
     a:hover {
@@ -364,7 +401,7 @@ body {
     padding: 0.45em;
     background-color: var(--surface);
     border-radius: 12px;
-    border: solid var(--ink) 2px;
+    border: solid var(--edge) 2px;
     box-shadow: var(--shadow) 4px 4px;
     font-size: 0.9em;
     letter-spacing: -0.1em;
@@ -456,7 +493,7 @@ body {
         flex: 1;
         padding: 0.4em 0.6em;
         background-color: var(--surface);
-        border: solid var(--ink) 2px;
+        border: solid var(--edge) 2px;
         border-radius: 10px;
         box-shadow: var(--shadow) 2px 2px;
         font-family: $font-family-sans-serif;
@@ -488,7 +525,7 @@ body {
         gap: 0.5em;
         padding: 0.4em 0.6em;
         background-color: var(--paper);
-        border: solid var(--ink) 2px;
+        border: solid var(--edge) 2px;
         border-radius: 8px;
     }
 
@@ -500,7 +537,7 @@ body {
         display: flex;
         flex-direction: column;
         background-color: var(--paper);
-        border: solid var(--ink) 2px;
+        border: solid var(--edge) 2px;
         border-radius: 8px;
         overflow: hidden;
     }
@@ -567,7 +604,7 @@ body {
         margin: 0;
         padding: 0.4em 0.6em;
         background-color: var(--paper);
-        border-top: solid var(--ink) 2px;
+        border-top: solid var(--edge) 2px;
         display: flex;
         flex-direction: column;
         gap: 0.3em;
@@ -656,16 +693,17 @@ body {
 }
 
 .modal-content {
-    border: solid var(--ink) 3px;
+    border: solid var(--edge) 3px;
     box-shadow: var(--shadow) 4px 4px;
     background-image: url('./assets/imgs/background_dot.svg');
     background-color: var(--surface);
     background-repeat: repeat;
 
-    // The light-grey dots glare on a dark modal; wash them down like the body.
+    // The light-grey dots glare on a dark modal; wash them down like the body
+    // (near-opaque, so they're a faint texture rather than a busy dot grid).
     :root.dark & {
         background-image:
-            linear-gradient(rgba(66, 58, 77, 0.58), rgba(66, 58, 77, 0.58)),
+            linear-gradient(rgba(66, 58, 77, 0.9), rgba(66, 58, 77, 0.9)),
             url('./assets/imgs/background_dot.svg');
     }
 
@@ -675,7 +713,7 @@ body {
 
     .modal-body {
         font-family: $body-font;
-        border-block: solid var(--ink) 3px;
+        border-block: solid var(--edge) 3px;
         background-image: none;
         background-color: var(--body-bg);
     }
@@ -684,7 +722,7 @@ body {
 
 .btn-close {
     opacity: 1;
-    border: solid var(--ink) 2px;
+    border: solid var(--edge) 2px;
     padding: 0;
     background-color: var(--gray-lighter);
     box-shadow: var(--shadow) 2px 2px;
@@ -707,7 +745,7 @@ body {
 // glyph must be dark (Bootstrap's white check/knob would vanish). `:root` prefix
 // keeps these ahead of Bootstrap's own checked rules.
 .form-check-input {
-    border-color: var(--ink);
+    border-color: var(--edge);
 }
 
 :root .form-check-input:checked {
@@ -725,7 +763,7 @@ body {
 }
 
 .card {
-    border: solid var(--ink) 2px;
+    border: solid var(--edge) 2px;
     box-shadow: var(--shadow) 4px 4px;
     border-radius: 10px;
     margin: 2em auto;
@@ -733,7 +771,7 @@ body {
 
     .card-img-container {
         margin: 2em;
-        border: dashed var(--ink) 4px;
+        border: dashed var(--edge) 4px;
         border-radius: 20px;
 
     }
@@ -792,7 +830,7 @@ body {
 // Article-info modal (NgbModal, rendered at <body>, scoped by its windowClass):
 // give the window the site's bordered/hard-shadow card look.
 .article-info-modal .modal-content {
-    border: solid var(--ink) 2px;
+    border: solid var(--edge) 2px;
     border-radius: 14px;
     box-shadow: var(--shadow) 5px 5px;
 }
@@ -809,19 +847,19 @@ body {
     border-collapse: collapse;
     background-color: var(--paper);
     color: var(--ink);
-    border: solid var(--ink) 2px;
+    border: solid var(--edge) 2px;
     font-family: $body-font;
 
     th,
     td {
         padding: 0.5em 0.85em;
-        border-bottom: solid var(--ink) 1px;
+        border-bottom: solid var(--edge) 1px;
         text-align: left;
     }
 
     thead th {
         background-color: var(--primary);
-        border-bottom: solid var(--ink) 2px;
+        border-bottom: solid var(--edge) 2px;
         white-space: nowrap;
     }
 
@@ -973,7 +1011,7 @@ body {
 .creations-filter__input {
     width: 100%;
     padding: 0.4em 0.7em 0.4em 2.2em; // room for the leading icon
-    border: solid var(--ink) 2px;
+    border: solid var(--edge) 2px;
     border-radius: 10px;
     box-shadow: var(--shadow) 2px 2px;
     font-family: $body-font;
@@ -1013,7 +1051,7 @@ body {
         justify-content: center;
         min-width: 2.3em;
         padding: 0.35em 0.6em;
-        border: solid var(--ink) 2px;
+        border: solid var(--edge) 2px;
         border-radius: 8px;
         color: var(--ink);
         background-color: var(--paper);
@@ -1057,7 +1095,7 @@ body {
     position: relative;
     width: min(900px, 95%);
     margin: 1em auto;
-    border: solid var(--ink) 2px;
+    border: solid var(--edge) 2px;
     border-radius: 15px;
     box-shadow: var(--shadow) 3px 3px;
     padding: 2em;
@@ -1115,7 +1153,7 @@ body {
 .chart-title {
     letter-spacing: -0.125em;
     text-align: center;
-    border: solid var(--ink) 3px;
+    border: solid var(--edge) 3px;
     border-radius: 15px;
     box-shadow: var(--shadow) 2px 2px;
     width: fit-content;
@@ -1172,7 +1210,7 @@ body {
 
 figure {
     div.post-img-container {
-        border: dashed var(--ink) 3px;
+        border: dashed var(--edge) 3px;
         border-radius: 20px;
         height: auto;
         width: fit-content;
@@ -1283,7 +1321,7 @@ figure {
 .notable-popover {
     --bs-popover-max-width: 270px;
     --bs-popover-bg: #{var(--paper)};
-    --bs-popover-border-color: var(--ink);
+    --bs-popover-border-color: var(--edge);
     --bs-popover-border-width: 2px;
     --bs-popover-border-radius: 12px;
     --bs-popover-header-bg: #{var(--surface)};
@@ -1327,7 +1365,7 @@ figure {
     }
 
     .accordion-item {
-        border: solid var(--ink) 2px;
+        border: solid var(--edge) 2px;
         border-radius: 8px;
         background-color: var(--paper);
         overflow: hidden;
@@ -1370,12 +1408,12 @@ figure {
     // Per-section search box.
     .filter-search {
         margin-bottom: 0.6em;
-        border: solid var(--ink) 1.5px;
+        border: solid var(--edge) 1.5px;
         border-radius: 8px;
         font-family: $body-font;
 
         &:focus {
-            border-color: var(--ink);
+            border-color: var(--edge);
             box-shadow: 0 0 0 0.2rem var(--lighter-primary);
         }
     }
@@ -1407,15 +1445,15 @@ figure {
                 float: none;
                 margin: 0.2em 0 0;
                 cursor: pointer;
-                border: solid var(--ink) 1.5px;
+                border: solid var(--edge) 1.5px;
 
                 &:checked {
                     background-color: var(--active-purple);
-                    border-color: var(--ink);
+                    border-color: var(--edge);
                 }
 
                 &:focus {
-                    border-color: var(--ink);
+                    border-color: var(--edge);
                     box-shadow: 0 0 0 0.2rem var(--lighter-primary);
                 }
             }
