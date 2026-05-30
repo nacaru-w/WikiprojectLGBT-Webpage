@@ -1,6 +1,6 @@
 # WikiproyectoLGBTWeb
 
-Current version: **2.0.1** (defined in `package.json` and `src/version.ts`, shown in the site footer).
+Current version: **2.1.0** (defined in `package.json` and `src/version.ts`, shown in the site footer).
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) and is currently built with Angular CLI version 21.2.
 
