@@ -72,9 +72,9 @@
     "notFound": "No hemos encontrado esa página"
   },
   "login": {
-    "oauthInfo": "El login de administradores se lleva a cabo a través de MediaWiki Oauth",
+    "oauthInfo": "El login de las personas administradoras se lleva a cabo a través de MediaWiki Oauth",
     "signIn": "Iniciar sesión",
-    "notAdmin": "Lo siento, pero parece que no perteneces al grupo de administradores."
+    "notAdmin": "Lo siento, pero parece que no perteneces al grupo de personas administradoras."
   },
   "blog": {
     "loadError": "Oops, se ha producido un error",
@@ -85,7 +85,7 @@
     "admin": {
       "id": "ID",
       "date": "Fecha",
-      "author": "Autor",
+      "author": "Autore",
       "title": "Título",
       "content": "Contenido",
       "actions": "Acciones",
@@ -100,7 +100,7 @@
     },
     "edit": {
       "idLabel": "ID:",
-      "authorLabel": "Autor:",
+      "authorLabel": "Autore:",
       "dateLabel": "Fecha:",
       "titleLabel": "Título:",
       "contentLabel": "Contenido:",
@@ -161,7 +161,7 @@
   "validation": {
     "required": "Este campo es obligatorio",
     "maxlength": "El campo no puede ser mayor a {{max}} caracteres",
-    "pattern": "Nombre de usuario no válido",
+    "pattern": "Nombre de usuarie no válido",
     "email": "No es un tipo de email correcto"
   },
   "stats": {
@@ -184,7 +184,7 @@
     },
     "memberCreations": {
       "searchLabel": "Busca a una persona del Wikiproyecto",
-      "placeholder": "Escribe un nombre de usuario…",
+      "placeholder": "Escribe un nombre de usuarie…",
       "searchButton": "Buscar",
       "loading": "Buscando contribuciones…",
       "empty": "No hay artículos LGBT creados por esta persona.",
@@ -202,11 +202,11 @@
         "authorship": "Autoría del contenido",
         "otherMembers": "Resto del Wikiproyecto",
         "others": "Otras personas",
-        "contributingMembers": "Otros miembros que han contribuido",
+        "contributingMembers": "Otras personas que han contribuido",
         "byContent": "Proporción del contenido actual del artículo, en caracteres (datos de XTools · WikiWho).",
         "facts": "Datos del artículo",
         "edits": "Ediciones totales",
-        "editors": "Editores",
+        "editors": "Personas editoras",
         "anonEdits": "Ediciones anónimas",
         "minorEdits": "Ediciones menores",
         "pageviews": "Visitas ({{days}} días)",
@@ -239,7 +239,7 @@
         "button": "Filtrar",
         "title": "Filtrar artículos",
         "year": "Año",
-        "author": "Autor",
+        "author": "Autore",
         "clear": "Limpiar filtros",
         "done": "Listo",
         "showing": "Mostrando {{count}} artículos",

@@ -72,9 +72,9 @@
     "notFound": "Nous n'avons pas trouvé cette page"
   },
   "login": {
-    "oauthInfo": "La connexion des administrateurs se fait via MediaWiki OAuth",
+    "oauthInfo": "La connexion des administrateur·ice·s se fait via MediaWiki OAuth",
     "signIn": "Se connecter",
-    "notAdmin": "Désolé, mais il semble que tu n'appartiennes pas au groupe des administrateurs."
+    "notAdmin": "Désolé, mais il semble que tu n'appartiennes pas au groupe des administrateur·ice·s."
   },
   "blog": {
     "loadError": "Oups, une erreur s'est produite",
@@ -85,7 +85,7 @@
     "admin": {
       "id": "ID",
       "date": "Date",
-      "author": "Auteur",
+      "author": "Auteur·ice",
       "title": "Titre",
       "content": "Contenu",
       "actions": "Actions",
@@ -100,7 +100,7 @@
     },
     "edit": {
       "idLabel": "ID :",
-      "authorLabel": "Auteur :",
+      "authorLabel": "Auteur·ice :",
       "dateLabel": "Date :",
       "titleLabel": "Titre :",
       "contentLabel": "Contenu :",
@@ -161,7 +161,7 @@
   "validation": {
     "required": "Ce champ est obligatoire",
     "maxlength": "Ce champ ne peut pas dépasser {{max}} caractères",
-    "pattern": "Nom d'utilisateur non valide",
+    "pattern": "Nom d'utilisateur·ice non valide",
     "email": "Ce n'est pas une adresse e-mail valide"
   },
   "stats": {
@@ -184,7 +184,7 @@
     },
     "memberCreations": {
       "searchLabel": "Recherche un·e membre du Wikiprojet",
-      "placeholder": "Saisis un nom d'utilisateur…",
+      "placeholder": "Saisis un nom d'utilisateur·ice…",
       "searchButton": "Rechercher",
       "loading": "Recherche des contributions…",
       "empty": "Aucun article LGBT créé par cette personne.",
@@ -206,7 +206,7 @@
         "byContent": "Part du contenu actuel de l'article, en caractères (données XTools · WikiWho).",
         "facts": "Informations sur l'article",
         "edits": "Modifications totales",
-        "editors": "Contributeurs",
+        "editors": "Contributeur·ice·s",
         "anonEdits": "Modifications anonymes",
         "minorEdits": "Modifications mineures",
         "pageviews": "Vues ({{days}} j)",
@@ -239,7 +239,7 @@
         "button": "Filtrer",
         "title": "Filtrer les articles",
         "year": "Année",
-        "author": "Auteur",
+        "author": "Auteur·ice",
         "clear": "Effacer les filtres",
         "done": "Terminé",
         "showing": "{{count}} articles affichés",
