@@ -23,7 +23,6 @@ export class HeaderComponent {
   isMenuCollapsed = signal(true);
 
   constructor() {
-    console.log(this.barbaService.getCurrentBarba())
     this.barba = this.barbaService.getCurrentBarba();
   }
 

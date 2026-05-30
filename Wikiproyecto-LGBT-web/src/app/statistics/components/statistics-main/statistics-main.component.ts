@@ -59,7 +59,7 @@ export class StatisticsMainComponent implements OnInit, AfterViewInit {
       this.getInfo();
       this.getNotableArticlesinfo();
     } catch (error) {
-      console.log(error)
+      console.error(error)
     }
 
   }

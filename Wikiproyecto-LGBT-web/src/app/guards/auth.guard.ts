@@ -13,10 +13,8 @@ export const authGuard: ResolveFn<boolean> = (route, state) => {
   return apiService.isAdmin().pipe(
     map((res) => {
       if (res) {
-        console.log('Allowing access to admin panel: ', res)
         return true; // Allow navigation
       } else {
-        console.log('Forbidden access to admin panel. Current user is not an admin or is not logged in')
         router.navigate(['/login']); // Redirect to login
         return false; // Deny navigation
       }

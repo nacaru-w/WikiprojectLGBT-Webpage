@@ -26,9 +26,7 @@ export class BlogAdminComponent implements OnInit {
 
   getBlogPosts(): void {
     this.apiService.getPosts().subscribe((res) => {
-      if (typeof res == 'string') {
-        console.log('Error: ', res);
-      } else {
+      if (typeof res != 'string') {
         this.infoArray = res;
       }
     })
