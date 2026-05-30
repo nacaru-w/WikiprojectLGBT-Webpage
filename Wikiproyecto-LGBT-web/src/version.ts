@@ -2,4 +2,4 @@
 // "version" field in package.json. Defined as a small constant rather than
 // importing package.json so the client bundle doesn't ship the full manifest
 // (dependency list, scripts, …).
-export const APP_VERSION = '2.1.0';
+export const APP_VERSION = '2.1.1';
