@@ -53,10 +53,7 @@
     </div>
 </div>
 } @else {
-<div class="barba-loader">
-    <img class="barba-loader-img" src="./../../../../assets/imgs/Barba-wikiproyecto-lgbt.svg" alt="" aria-hidden="true">
-    <span class="barba-loader-label">{{ 'common.loading' | translate }}</span>
-</div>
+<app-loading-barba />
 }
 
 <!-- Shared popover body. It reads the active article's lazily-loaded summary;
@@ -69,11 +66,7 @@
     @if (extracts()[title] !== undefined) {
     <p class="article-popover-extract">{{ extracts()[title] || ('stats.notable.noPreview' | translate) }}</p>
     } @else {
-    <div class="popover-loading">
-        <img class="popover-loading-barba" src="./../../../../assets/imgs/Barba-wikiproyecto-lgbt.svg" alt=""
-            aria-hidden="true">
-        <span class="popover-loading-label">{{ 'common.loading' | translate }}</span>
-    </div>
+    <app-loading-barba [compact]="true" [fill]="false" />
     }
     }
 </ng-template>

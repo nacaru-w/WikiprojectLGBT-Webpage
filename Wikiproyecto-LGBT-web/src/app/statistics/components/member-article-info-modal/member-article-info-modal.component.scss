@@ -20,10 +20,10 @@
     font-family: variables.$body-font;
   }
 
-  // Size the loader close to the loaded content (overriding the shared loader's
-  // 60vh) so the modal barely changes height when the XTools data arrives.
-  &__body .barba-loader {
-    width: 100%;
+  // Size the shared loader ([fill]="false", so no min-height of its own) close
+  // to the loaded content, so the modal barely changes height when the XTools
+  // data arrives.
+  &__body app-loading-barba {
     min-height: 350px;
   }
 

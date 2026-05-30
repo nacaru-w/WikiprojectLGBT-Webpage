@@ -187,25 +187,4 @@
     }
 }
 
-// Loading state: a bobbing barba (barba-float keyframes live in global styles).
-.barba-loader {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5em;
-    margin: 2em auto;
-    font-family: variables.$body-font;
-    font-weight: bold;
-
-    .barba-loader-img {
-        width: min(120px, 40vw);
-        height: auto;
-        animation: barba-float 2.4s ease-in-out infinite;
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .barba-loader .barba-loader-img {
-        animation: none;
-    }
-}
+// The loading state is the shared <app-loading-barba> component.

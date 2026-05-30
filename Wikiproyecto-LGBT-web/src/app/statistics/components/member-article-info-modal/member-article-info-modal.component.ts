@@ -10,6 +10,7 @@ import { XtoolsService } from '../../../services/xtools.service';
 import { XtoolsPageInfo } from '../../../services/models/xtools';
 import { ArticleAuthor } from '../../../services/models/article-authorship';
 import { MemberCreatedArticle } from '../../../services/models/member-creations';
+import { LoadingBarbaComponent } from '../../../shared/components/loading-barba/loading-barba.component';
 
 /** One slice of the authorship pie. */
 interface PieSlice {
@@ -44,7 +45,7 @@ const MEMBER_PALETTE = ['#3ac78f', '#b1efff', '#fff574', '#ffad5c', '#fa7c7c', '
 @Component({
   selector: 'app-member-article-info-modal',
   standalone: true,
-  imports: [DecimalPipe, DatePipe, TranslatePipe, NgbCollapse],
+  imports: [DecimalPipe, DatePipe, TranslatePipe, NgbCollapse, LoadingBarbaComponent],
   templateUrl: './member-article-info-modal.component.html',
   styleUrl: './member-article-info-modal.component.scss',
 })

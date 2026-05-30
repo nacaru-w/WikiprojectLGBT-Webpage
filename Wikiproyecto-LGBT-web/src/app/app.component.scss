@@ -7,6 +7,10 @@
 
 .main {
     flex: 1;
+    // Always keep routed content clear of the footer's zig-zag top edge. Lives
+    // here (the wrapper around every <router-outlet> page) so no page can butt
+    // its content right up against the footer, regardless of its own styles.
+    padding-bottom: 1rem;
 
     @media screen and (min-width: 992px) {
         display: flex;

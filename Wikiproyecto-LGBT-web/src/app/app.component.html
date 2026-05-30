@@ -7,3 +7,10 @@
         <app-footer></app-footer>
     </div>
 </div>
+
+<!-- Barba overlay shown while a route navigation is in flight (mainly the lazy
+     chunk download). Always in the DOM so the show/hide is a CSS transition; the
+     show is delayed so fast/cached navigations don't flash it. -->
+<div class="route-loading" [class.is-navigating]="navigating()" aria-hidden="true">
+    <app-loading-barba [fill]="false" />
+</div>

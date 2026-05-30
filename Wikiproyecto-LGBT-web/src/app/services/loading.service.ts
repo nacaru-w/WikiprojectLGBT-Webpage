@@ -11,6 +11,11 @@ import { Injectable, signal } from '@angular/core';
  *     `markLoaderGone()`.
  *  4. The page waits for `loaderGone()` before playing its intro animation, so
  *     the loader and the appearing content never overlap.
+ *
+ * Separately, `navigating` tracks in-app route changes *after* that first load:
+ * it's true between NavigationStart and the navigation settling. AppComponent
+ * uses it to show a Barba overlay while a lazy route chunk downloads (e.g. the
+ * heavy event-of-the-month page), so a slow navigation never looks frozen.
  */
 @Injectable({
   providedIn: 'root'
@@ -22,11 +27,22 @@ export class LoadingService {
   // Set once the loader has fully faded out and been removed from the DOM.
   readonly loaderGone = signal(false);
 
+  // True while a route navigation is in flight (chunk download + activation).
+  readonly navigating = signal(false);
+
   markReady(): void {
     this.ready.set(true);
   }
 
   markLoaderGone(): void {
     this.loaderGone.set(true);
+  }
+
+  startNavigation(): void {
+    this.navigating.set(true);
+  }
+
+  endNavigation(): void {
+    this.navigating.set(false);
   }
 }

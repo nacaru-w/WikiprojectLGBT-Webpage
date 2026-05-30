@@ -10,11 +10,12 @@ import { chartsSlideInOutAnimation, fadeInAnimation } from '../../../animations/
 import { NotableArticles } from '../../models/notable-articles';
 import { TranslatePipe } from '@ngx-translate/core';
 import { NgbAccordionModule, NgbModal, NgbPopover } from '@ng-bootstrap/ng-bootstrap';
+import { LoadingBarbaComponent } from '../../../shared/components/loading-barba/loading-barba.component';
 
 @Component({
   selector: 'app-statistics-notable',
   standalone: true,
-  imports: [TranslatePipe, NgbPopover, NgbAccordionModule],
+  imports: [TranslatePipe, NgbPopover, NgbAccordionModule, LoadingBarbaComponent],
   templateUrl: './statistics-notable.component.html',
   styleUrl: './statistics-notable.component.scss',
   animations: [chartsSlideInOutAnimation, fadeInAnimation]

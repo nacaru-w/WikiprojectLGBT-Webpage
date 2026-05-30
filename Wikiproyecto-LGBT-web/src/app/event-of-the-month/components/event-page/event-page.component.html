@@ -1,8 +1,5 @@
 @if (!loaded()) {
-<div class="barba-loader">
-  <img class="barba-loader-img" src="./../../../../assets/imgs/Barba-wikiproyecto-lgbt.svg" alt="" aria-hidden="true">
-  <span class="barba-loader-label">{{ 'common.loading' | translate }}</span>
-</div>
+<app-loading-barba />
 } @else {
 <div [@fadeIn]>
   <nav class="subpage-nav">

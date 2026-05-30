@@ -2,10 +2,7 @@
   @if (loading() || totalCount() === null) {
     <!-- Show nothing but the loading barba until BOTH the upload count and the
          first images are in, so the heading never renders without its number. -->
-    <div class="barba-loader">
-      <img class="barba-loader-img" src="assets/imgs/Barba-wikiproyecto-lgbt.svg" alt="" aria-hidden="true">
-      <span class="barba-loader-label">{{ 'common.loading' | translate }}</span>
-    </div>
+    <app-loading-barba />
   } @else {
     <!-- Intro: the date-themed "barba with a camera" + "<count> imágenes en Commons". -->
     <div class="gallery-intro">

@@ -6,6 +6,7 @@ import { MediawikiService } from '../../../services/mediawiki.service';
 import { parseChallengeArticles } from '../../utils/challenge-parser';
 import { ChallengeData } from '../../models/event-data';
 import { PRIZE_LESBIAN_ICON } from '../../data/prizes';
+import { LoadingBarbaComponent } from '../../../shared/components/loading-barba/loading-barba.component';
 
 type Tab = 'participants' | 'articles';
 
@@ -16,7 +17,7 @@ type Tab = 'participants' | 'articles';
 @Component({
   selector: 'app-event-see-more',
   standalone: true,
-  imports: [TranslatePipe, DecimalPipe],
+  imports: [TranslatePipe, DecimalPipe, LoadingBarbaComponent],
   templateUrl: './event-see-more.component.html',
   styleUrl: './event-see-more.component.scss',
 })

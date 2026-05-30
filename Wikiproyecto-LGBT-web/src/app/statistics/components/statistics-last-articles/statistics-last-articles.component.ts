@@ -13,11 +13,12 @@ import { BarbaService } from '../../../services/barba.service';
 import { unescapeInvalidCharacters } from '../../../utils/utils';
 import { TranslatePipe } from '@ngx-translate/core';
 import { NgbPopover } from '@ng-bootstrap/ng-bootstrap';
+import { LoadingBarbaComponent } from '../../../shared/components/loading-barba/loading-barba.component';
 
 @Component({
   selector: 'app-statistics-last-articles',
   standalone: true,
-  imports: [CommonModule, TranslatePipe, NgbPopover],
+  imports: [CommonModule, TranslatePipe, NgbPopover, LoadingBarbaComponent],
   templateUrl: './statistics-last-articles.component.html',
   styleUrl: './statistics-last-articles.component.scss',
   animations: [popAnimation]

@@ -5,6 +5,7 @@ import { CommonsService } from '../../../services/commons.service';
 import { CommonsImage } from '../../models/commons-image';
 import { BarbaService } from '../../../services/barba.service';
 import { popAnimation } from '../../../animations/animations';
+import { LoadingBarbaComponent } from '../../../shared/components/loading-barba/loading-barba.component';
 
 /**
  * Gallery of the latest images from the Wikiproyecto's permanent Commons
@@ -15,7 +16,7 @@ import { popAnimation } from '../../../animations/animations';
 @Component({
   selector: 'app-statistics-images',
   standalone: true,
-  imports: [TranslatePipe],
+  imports: [TranslatePipe, LoadingBarbaComponent],
   templateUrl: './statistics-images.component.html',
   styleUrl: './statistics-images.component.scss',
   animations: [popAnimation],

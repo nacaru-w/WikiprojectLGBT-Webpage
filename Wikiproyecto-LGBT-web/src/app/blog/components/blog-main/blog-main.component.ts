@@ -9,11 +9,12 @@ import { RouterModule } from '@angular/router';
 
 import { popAnimation } from '../../../animations/animations';
 import { TranslatePipe } from '@ngx-translate/core';
+import { LoadingBarbaComponent } from '../../../shared/components/loading-barba/loading-barba.component';
 
 @Component({
   selector: 'app-blog-main',
   standalone: true,
-  imports: [CommonModule, DateFormatPipe, RouterModule, TranslatePipe],
+  imports: [CommonModule, DateFormatPipe, RouterModule, TranslatePipe, LoadingBarbaComponent],
   templateUrl: './blog-main.component.html',
   styleUrl: './blog-main.component.scss',
   animations: [popAnimation]

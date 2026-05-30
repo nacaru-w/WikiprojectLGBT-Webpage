@@ -160,28 +160,7 @@
     color: var(--gray-dark);
 }
 
-// Loading state: a mini barba bobbing above the label, matching the main loader.
-.popover-loading {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.3em;
-    font-family: variables.$body-font;
-
-    .popover-loading-barba {
-        width: 2.4em;
-        height: auto;
-        // Keyframes live in global styles (barba-float) so the animation also
-        // applies to the body-appended popover window.
-        animation: barba-float 2.2s ease-in-out infinite;
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .popover-loading .popover-loading-barba {
-        animation: none;
-    }
-}
+// The popover loading state is the shared <app-loading-barba [compact]> component.
 
 // NOTE: the filter modal's content styles (accordion, search box, option list,
 // footer count) live in global styles.scss under .notable-filter-modal, because

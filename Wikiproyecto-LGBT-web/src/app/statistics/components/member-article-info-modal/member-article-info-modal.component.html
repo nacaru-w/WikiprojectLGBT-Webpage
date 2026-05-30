@@ -6,10 +6,7 @@
 
 <div class="modal-body article-info__body">
   @if (loading()) {
-    <div class="barba-loader">
-      <img class="barba-loader-img" src="./../../../../assets/imgs/Barba-wikiproyecto-lgbt.svg" alt="" aria-hidden="true">
-      <span class="barba-loader-label">{{ 'stats.memberCreations.modal.loading' | translate }}</span>
-    </div>
+    <app-loading-barba label="stats.memberCreations.modal.loading" [fill]="false" />
   } @else if (error()) {
     <p class="article-info__status">{{ 'stats.memberCreations.modal.error' | translate }}</p>
   } @else if (info(); as i) {

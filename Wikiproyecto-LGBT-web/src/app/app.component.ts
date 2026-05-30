@@ -1,9 +1,10 @@
 
 import { Component, InjectionToken, NgZone, OnInit, PLATFORM_ID, effect, inject, signal } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { RouterOutlet, Router, NavigationStart, NavigationEnd } from '@angular/router';
+import { RouterOutlet, Router, NavigationStart, NavigationEnd, NavigationCancel, NavigationError } from '@angular/router';
 import { FooterComponent } from './shared/components/footer/footer.component';
 import { HeaderComponent } from './shared/components/header/header.component';
+import { LoadingBarbaComponent } from './shared/components/loading-barba/loading-barba.component';
 import { footerAnimations, slideInAnimation } from './animations/animations';
 import { LoadingService } from './services/loading.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -17,7 +18,8 @@ import { ChildrenOutletContexts } from '@angular/router';
   imports: [
     HeaderComponent,
     FooterComponent,
-    RouterOutlet
+    RouterOutlet,
+    LoadingBarbaComponent
 ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
@@ -36,6 +38,10 @@ export class AppComponent implements OnInit {
 
   title: string = 'Wikiproyecto-LGBT-web';
   footerAnimationState = signal<string>('visible');
+
+  // Drives the Barba navigation overlay (see app.component.html). Exposed from
+  // the service so the template can read it.
+  readonly navigating = this.loading.navigating;
 
   private loaderDismissed = false;
 
@@ -72,13 +78,22 @@ export class AppComponent implements OnInit {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationStart) {
         this.hideFooter();
+        // Show the Barba overlay for the whole navigation — chiefly the gap
+        // while a lazy route chunk (e.g. the heavy event-of-the-month page)
+        // downloads, which otherwise leaves the app looking frozen.
+        this.loading.startNavigation();
       } else if (event instanceof NavigationEnd) {
+        this.loading.endNavigation();
         setTimeout(() => this.showFooter(), 500);  // Adjust the timeout if needed
         // Pages that don't defer the loader (everything but the home page) are
         // ready as soon as they render, so dismiss the loader straight away.
         if (!this.routeDefersLoader()) {
           this.loading.markReady();
         }
+      } else if (event instanceof NavigationCancel || event instanceof NavigationError) {
+        // Aborted/failed navigation: clear the overlay so it can't get stuck on.
+        this.loading.endNavigation();
+        this.showFooter();
       }
     });
   }

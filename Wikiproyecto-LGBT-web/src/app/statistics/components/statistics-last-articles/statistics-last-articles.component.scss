@@ -1,6 +1,6 @@
 @use 'variables';
 
-// The loading state uses the shared global .barba-loader (see styles.scss).
+// The loading state is the shared <app-loading-barba> component.
 
 // Cards laid out in a grid of up to three columns (on desktop); "load more"
 // appends the next batch into new rows below. A grid (not flex-wrap) so the row

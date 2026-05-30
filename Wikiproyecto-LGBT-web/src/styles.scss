@@ -128,6 +128,50 @@ body {
         url('./assets/imgs/background_dot.svg');
 }
 
+// Full-screen Barba overlay shown while a route navigation is in flight — mainly
+// the gap where a lazy route chunk (e.g. the heavy event-of-the-month page)
+// downloads. Without it the app looks frozen for a second or two. Driven by
+// LoadingService.navigating via AppComponent (.is-navigating). It mirrors the
+// page background (opaque, same dot texture) so the wait reads as a clean
+// loading state. Sits under the first-load splash (#app-loading, z-index 9999).
+.route-loading {
+    position: fixed;
+    inset: 0;
+    z-index: 9000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--body-bg);
+    background-image: url('./assets/imgs/background_dot.svg');
+    background-repeat: repeat;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+
+    &.is-navigating {
+        opacity: 1;
+        pointer-events: auto;
+        // Delay the fade-in so quick/cached navigations finish before the overlay
+        // is ever visible — only a genuinely slow chunk download surfaces it.
+        transition-delay: 0.15s;
+    }
+}
+
+:root.dark .route-loading {
+    background-image:
+        linear-gradient(rgba(42, 39, 52, 0.9), rgba(42, 39, 52, 0.9)),
+        url('./assets/imgs/background_dot.svg');
+}
+
+// The mascot itself is the shared <app-loading-barba> (standard size); only the
+// overlay's fade is motion-sensitive here.
+@media (prefers-reduced-motion: reduce) {
+    .route-loading,
+    .route-loading.is-navigating {
+        transition: none;
+    }
+}
+
 .btn {
     font-weight: bold;
     font-size: 90%;
@@ -1288,32 +1332,10 @@ figure {
     }
 }
 
-// Page-level loading indicator: the barba mascot bobbing above a "Loading…"
-// label. Shared by the blog and last-articles pages. (The notable component's
-// hover popover uses its own smaller variant but the same barba-float.)
-.barba-loader {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    // Fill most of the viewport and center vertically, so the barba sits in the
-    // middle of the content area rather than hugging the top.
-    justify-content: center;
-    min-height: 60vh;
-    gap: 0.5em;
-    font-family: $body-font;
-
-    .barba-loader-img {
-        width: 4.5em;
-        height: auto;
-        animation: barba-float 2.2s ease-in-out infinite;
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .barba-loader .barba-loader-img {
-        animation: none;
-    }
-}
+// The page/section/modal/popover loading indicator now lives in the reusable
+// <app-loading-barba> component (src/app/shared/components/loading-barba). Only
+// the barba-float keyframes stay global here, because that component references
+// them and they must also reach the body-appended notable popover.
 
 // Article info popover for the notable-articles showcase. The popover window is
 // an ng-bootstrap component rendered outside any component view, so it's themed

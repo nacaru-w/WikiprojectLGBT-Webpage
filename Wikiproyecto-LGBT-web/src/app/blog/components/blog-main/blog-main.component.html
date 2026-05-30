@@ -1,10 +1,6 @@
 <div class="blog-posts-container" [@popAnimation]="loaded() || error">
     @if (!loaded() && !error) {
-    <div class="barba-loader">
-        <img class="barba-loader-img" src="./../../../../assets/imgs/Barba-wikiproyecto-lgbt.svg" alt=""
-            aria-hidden="true">
-        <span class="barba-loader-label">{{ 'common.loading' | translate }}</span>
-    </div>
+    <app-loading-barba />
     }
     @if (error) {
     <div class="blog-post">

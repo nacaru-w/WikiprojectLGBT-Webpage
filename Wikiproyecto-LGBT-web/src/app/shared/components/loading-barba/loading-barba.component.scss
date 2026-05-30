@@ -1,0 +1,36 @@
+@use 'variables';
+
+:host {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5em;
+    font-family: variables.$body-font;
+}
+
+// Page-level loaders fill most of the viewport and center vertically, so the
+// barba sits mid-content rather than hugging the top. Modals/overlays size
+// themselves, so they opt out with [fill]="false".
+:host(.fill) {
+    min-height: 60vh;
+}
+
+.barba-loader-img {
+    width: 4.5em;
+    height: auto;
+    // barba-float keyframes are global (styles.scss) so they also reach the
+    // body-appended popover; referenced here by name.
+    animation: barba-float 2.2s ease-in-out infinite;
+}
+
+// Smaller mascot for tight contexts (e.g. the notable-articles hover popover).
+:host(.compact) .barba-loader-img {
+    width: 2.4em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .barba-loader-img {
+        animation: none;
+    }
+}
