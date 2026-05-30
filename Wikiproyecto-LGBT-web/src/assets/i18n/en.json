@@ -7,7 +7,8 @@
     "blog": "Blog",
     "contact": "Contact",
     "ourWork": "Our work",
-    "eventOfMonth": "Event of the month"
+    "eventOfMonth": "Event of the month",
+    "themeToggle": "Toggle light and dark mode"
   },
   "event": {
     "intro": "The <a href=\"https://es.wikipedia.org/wiki/Wikiproyecto:LGBT/Evento_del_mes\">Event of the Month</a> picks a country, continent or theme each month to create and improve LGBT+ content on Wikipedia. Hover or tap a country on the map to see its editions, or browse the themed events in the list.",
@@ -123,6 +124,7 @@
     "signUp": "Sign up",
     "pronounsLabel": "How would you like us to refer to you?",
     "pronounsAria": "Gender markers",
+    "pronounsPlaceholder": "Select…",
     "pronouns": {
       "he": "He",
       "she": "She",
@@ -135,13 +137,21 @@
     "emailHelp": "We will never share your address with anyone",
     "whyLabel": "Tell us why you want to be part of WMLGBT+",
     "hasWikimediaAccount": "I have an account on the Wikimedia projects",
-    "attendedEvent": "I have taken part in a WMLGBT+ event organized by the Wikimedia Foundation",
+    "attendedEvent": "I have taken part in an event organized by the Wikimedia Foundation or Wikiproyecto LGBT+ (WMLGBT+)",
     "eventLabel": "Event",
     "eventNamePlaceholder": "Event name",
     "agreeConduct": "I agree to the Wikimedia Foundation's <a target=\"_blank\" href=\"https://foundation.wikimedia.org/wiki/Policy:Universal_Code_of_Conduct\">Universal Code of Conduct</a> and <a target=\"_blank\" href=\"https://meta.wikimedia.org/wiki/Friendly_space_policies\">Friendly Space Policy</a>*",
     "agreePrivacy": "I have read and accept the <a target=\"_blank\" href=\"/privacy\">privacy policy</a>*",
     "submit": "Submit",
     "sending": "Sending form...",
+    "sendingBody": "We're sending your message. One moment, please.",
+    "success": "Message sent!",
+    "successBody": "Thanks for reaching out. We've received your message and will get back to you as soon as possible.",
+    "error": "Couldn't send",
+    "errorBody": "Something went wrong while sending the form. Please try again later.",
+    "close": "Close",
+    "verify": "Verification",
+    "captchaPrompt": "Please confirm you're not a robot to send your message.",
     "username": {
       "he": "Username",
       "she": "Username",
@@ -165,7 +175,8 @@
       "monthlyArticles": "Articles per month",
       "notable": "Notable content",
       "participants": "Participants",
-      "lastArticles": "Latest articles"
+      "lastArticles": "Latest articles",
+      "images": "Images"
     },
     "participantsNav": {
       "lookup": "Contributions",
@@ -178,7 +189,6 @@
       "loading": "Searching contributions…",
       "empty": "No LGBT articles created by this user.",
       "count": "{{count}} LGBT articles",
-      "mock": "· sample data",
       "colArticle": "Article",
       "colSize": "Size",
       "colCreated": "Created",
@@ -242,6 +252,16 @@
       "here": "here",
       "loadMore": "Load more",
       "createdOn": "Created on {{date}}"
+    },
+    "images": {
+      "title": "images on Commons",
+      "intro": "A sample of the latest images the Wikiproyecto has uploaded to Wikimedia Commons.",
+      "count": "{{count}} images in the campaign",
+      "taken": "Taken on {{date}}",
+      "by": "by",
+      "viewOnCommons": "View on Wikimedia Commons",
+      "loadMore": "Load more",
+      "error": "The images couldn't be loaded right now."
     },
     "chart": {
       "currentYear": "Current year",

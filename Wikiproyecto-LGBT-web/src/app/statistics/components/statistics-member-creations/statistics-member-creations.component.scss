@@ -30,14 +30,6 @@
     font-family: variables.$font-family-sans-serif;
     letter-spacing: -0.05em;
   }
-
-  &__mock {
-    margin-left: 0.3em;
-    font-family: variables.$body-font;
-    font-weight: normal;
-    font-size: 0.85em;
-    opacity: 0.7;
-  }
 }
 
 .member-search {
@@ -71,15 +63,15 @@
     flex: 1 1 auto;
     min-width: 0;
     padding: 0.55em 1em;
-    border: solid black 2px;
+    border: solid var(--ink) 2px;
     border-radius: 12px;
-    box-shadow: black 3px 3px;
+    box-shadow: var(--shadow) 3px 3px;
     font-family: variables.$body-font;
     transition: box-shadow 0.15s ease, border-color 0.15s ease;
 
     &:focus {
-      border-color: black;
-      box-shadow: black 4px 4px;
+      border-color: var(--ink);
+      box-shadow: var(--shadow) 4px 4px;
       outline: none;
     }
   }
@@ -93,15 +85,15 @@
     justify-content: center;
     padding: 0 0.9em;
     border-radius: 12px;
-    box-shadow: black 3px 3px;
+    box-shadow: var(--shadow) 3px 3px;
 
     &:focus-visible {
       outline: none;
-      box-shadow: black 4px 4px;
+      box-shadow: var(--shadow) 4px 4px;
     }
 
     &:active {
-      box-shadow: black 1px 1px;
+      box-shadow: var(--shadow) 1px 1px;
       transform: translate(2px, 2px);
     }
   }
@@ -118,9 +110,9 @@
   // NgbTypeahead dropdown renders inline inside .member-search; give it the same
   // bordered-card look and a blue active-row highlight (matches the view switch).
   ::ng-deep ngb-typeahead-window.dropdown-menu {
-    border: solid black 2px;
+    border: solid var(--ink) 2px;
     border-radius: 12px;
-    box-shadow: black 3px 3px;
+    box-shadow: var(--shadow) 3px 3px;
     overflow: hidden;
     font-family: variables.$body-font;
 
@@ -130,8 +122,8 @@
 
       &.active,
       &:hover {
-        background-color: variables.$primary;
-        color: black;
+        background-color: var(--primary);
+        color: var(--accent-ink);
       }
     }
   }

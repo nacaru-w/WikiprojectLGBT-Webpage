@@ -6,6 +6,7 @@ import { Chart } from 'chart.js/auto';
 import { MediawikiService } from '../../../services/mediawiki.service';
 
 import { lastYear, monthlyCountData, monthlyCountOptions, thisYear, threeYearsAgo, twoYearsAgo } from '../../chart_data/monthly-count-data';
+import { applyChartTheme } from '../../chart_data/chart-theme';
 
 import { MonthlyOccurencesModel } from '../../models/monthly-occurences-model';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
@@ -137,7 +138,7 @@ export class StatisticsMonthlyArticlesComponent implements OnInit {
     this.monthlyArticlesChart = new Chart(ctx, {
       type: 'line',
       data: monthlyCountData,
-      options: monthlyCountOptions
+      options: applyChartTheme(monthlyCountOptions)
     })
 
     this.applyChartLabels();

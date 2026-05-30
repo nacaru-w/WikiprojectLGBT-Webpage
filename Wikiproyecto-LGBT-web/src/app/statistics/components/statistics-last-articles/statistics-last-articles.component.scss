@@ -39,10 +39,10 @@
     &__btn {
         padding: 0.5em 1.4em;
         border-radius: 12px;
-        box-shadow: black 3px 3px;
+        box-shadow: var(--shadow) 3px 3px;
 
         &:active:not(:disabled) {
-            box-shadow: black 1px 1px;
+            box-shadow: var(--shadow) 1px 1px;
             transform: translate(2px, 2px);
         }
     }
@@ -66,7 +66,7 @@
 .card-created {
     margin: -0.2em 0 0.6em;
     font-size: 0.82em;
-    color: #6c757d;
+    color: var(--gray-dark);
 }
 
 // "No image" popover content. Declared in this component (so these styles apply
@@ -76,12 +76,12 @@
     font-family: variables.$body-font;
 
     a {
-        color: black;
+        color: var(--ink);
         text-decoration: wavy underline;
         font-weight: bold;
 
         &:hover {
-            color: variables.$deep-dark-primary;
+            color: var(--deep-dark-primary);
         }
     }
 }

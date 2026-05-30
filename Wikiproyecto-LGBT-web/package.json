@@ -1,6 +1,6 @@
 {
   "name": "wikiproyecto-lgbt-web",
-  "version": "0.0.0",
+  "version": "2.0.1",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -37,6 +37,7 @@
     "mysql2": "^3.10.0",
     "ng2-charts": "^10.0.0",
     "ngx-quill": "^30.1.3",
+    "nodemailer": "^8.0.9",
     "passport": "0.5.0",
     "passport-mediawiki-oauth": "^0.1.0",
     "quill": "^2.0.3",
@@ -60,6 +61,7 @@
     "@types/express-session": "^1.18.0",
     "@types/jasmine": "~5.1.0",
     "@types/node": "^20.19.0",
+    "@types/nodemailer": "^8.0.0",
     "@types/passport": "^1.0.16",
     "@typescript-eslint/eslint-plugin": "^8.0.0",
     "@typescript-eslint/parser": "^8.0.0",

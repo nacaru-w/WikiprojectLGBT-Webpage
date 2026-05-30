@@ -4,18 +4,18 @@
     text-align: center;
     margin-block: 0.25em;
     padding: 0.5em;
-    border: solid black 2px;
-    background-color: variables.$gray-lighter;
+    border: solid var(--ink) 2px;
+    background-color: var(--gray-lighter);
     border-radius: 10px;
-    box-shadow: #000 2px 2px;
+    box-shadow: var(--shadow) 2px 2px;
     letter-spacing: -0.1em;
 }
 
 .blog-list-container {
-    border: solid black 2px;
+    border: solid var(--ink) 2px;
     border-radius: 10px;
-    box-shadow: black 4px 4px;
-    background-color: variables.$gray-lightest;
+    box-shadow: var(--shadow) 4px 4px;
+    background-color: var(--gray-lightest);
 
     table {
         width: 100%;
@@ -27,7 +27,7 @@
         }
 
         th {
-            background-color: variables.$gray-lighter;
+            background-color: var(--gray-lighter);
             border-radius: 5px;
             font-weight: bold;
             text-align: center !important;
@@ -43,11 +43,11 @@
 
         button {
             margin-right: 0.25em;
-            border: solid #e0e0e0 2px;
+            border: solid var(--gray-lighter) 2px;
             border-radius: 10px;
             padding-inline: 0.5em;
             font-size: 0.85em;
-            box-shadow: #e0e0e0 1px 1px;
+            box-shadow: var(--gray-lighter) 1px 1px;
         }
     }
 
@@ -60,15 +60,15 @@
         font-size: 0.9em;
         padding: 10px 20px;
         border-radius: 10px;
-        box-shadow: black 4px 4px;
-        background-color: variables.$gray-darker;
-        color: white;
+        box-shadow: var(--shadow) 4px 4px;
+        background-color: var(--gray-darker);
+        color: var(--paper);
         border: none;
         cursor: pointer;
     }
 
     .new-entry-button:hover {
-        background-color: variables.$gray-dark;
+        background-color: var(--gray-dark);
     }
 
 }
@@ -80,19 +80,19 @@
         font-size: .9em;
         padding: 10px 20px;
         border-radius: 10px;
-        box-shadow: #000 4px 4px;
-        background-color: variables.$gray-lighter;
-        color: black;
+        box-shadow: var(--shadow) 4px 4px;
+        background-color: var(--gray-lighter);
+        color: var(--ink);
         border: none;
         cursor: pointer;
     }
 
     .logout-button:hover {
-        background-color: variables.$gray-light;
+        background-color: var(--gray-light);
     }
 
 }
 
 a {
-    color: black;
+    color: var(--ink);
 }

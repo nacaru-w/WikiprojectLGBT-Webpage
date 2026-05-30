@@ -17,14 +17,14 @@
     align-items: flex-start;
     gap: 1em;
     padding: 0.85em 1.1em;
-    background-color: variables.$light;
-    border: solid black 3px;
+    background-color: var(--surface);
+    border: solid var(--ink) 3px;
     border-radius: 12px;
-    box-shadow: black 4px 4px;
+    box-shadow: var(--shadow) 4px 4px;
 
     // Events that have only ever been scheduled (no results yet) are muted.
     &.upcoming {
-        background-color: variables.$gray-lighter;
+        background-color: var(--gray-lighter);
     }
 }
 
@@ -43,7 +43,7 @@
     font-size: 2.1em;
     line-height: 1;
     letter-spacing: -0.06em;
-    color: variables.$deep-dark-primary;
+    color: var(--deep-dark-primary);
 }
 
 .event-row-num-label {
@@ -55,8 +55,8 @@
 
 .event-badge {
     padding: 0.15em 0.5em;
-    background-color: variables.$white;
-    border: solid black 2px;
+    background-color: var(--paper);
+    border: solid var(--ink) 2px;
     border-radius: 10px;
     font-weight: bold;
     font-size: 0.72em;
@@ -89,7 +89,7 @@
     &+.event-instance {
         margin-top: 0.4em;
         padding-top: 0.4em;
-        border-top: dashed variables.$gray-light 2px;
+        border-top: dashed var(--gray-light) 2px;
     }
 }
 
@@ -100,14 +100,14 @@
 }
 
 .event-instance-total {
-    color: variables.$deep-dark-primary;
+    color: var(--deep-dark-primary);
 }
 
 .event-badge-inline {
     margin-left: 0.4em;
     padding: 0.05em 0.45em;
-    background-color: variables.$white;
-    border: solid black 1.5px;
+    background-color: var(--paper);
+    border: solid var(--ink) 1.5px;
     border-radius: 8px;
     font-size: 0.78em;
     font-weight: bold;
@@ -124,12 +124,12 @@
 // Same look as content links elsewhere in the app.
 .event-row-link {
     align-self: flex-start;
-    color: black;
+    color: var(--ink);
     text-decoration: wavy underline;
     transition: color 0.3s ease-in-out;
 
     &:hover {
-        color: variables.$deep-dark-primary;
+        color: var(--deep-dark-primary);
     }
 }
 
@@ -137,5 +137,5 @@
     list-style: none;
     text-align: center;
     font-style: italic;
-    color: variables.$gray-dark;
+    color: var(--gray-dark);
 }

@@ -2,14 +2,14 @@
 
 .blog-post {
     position: relative; // anchor the absolutely-positioned back button
-    border: solid black 3px;
-    box-shadow: black 4px 4px;
+    border: solid var(--ink) 3px;
+    box-shadow: var(--shadow) 4px 4px;
     width: min(95%, 900px);
     padding: 1em 7vw;
     margin: 1em auto;
     border-radius: 40px;
     // Faint gray notebook/graph-paper grid over a white card.
-    background-color: variables.$white;
+    background-color: var(--paper);
     background-image:
         linear-gradient(to right, rgba(0, 0, 0, 0.08) 1px, transparent 1px),
         linear-gradient(to bottom, rgba(0, 0, 0, 0.08) 1px, transparent 1px);
@@ -25,12 +25,12 @@
         justify-content: center;
         width: 2.6rem;
         height: 2.6rem;
-        color: black;
+        color: var(--ink);
         text-decoration: none;
-        background-color: variables.$white;
-        border: solid black 2px;
+        background-color: var(--paper);
+        border: solid var(--ink) 2px;
         border-radius: 0.6em;
-        box-shadow: black 2px 2px;
+        box-shadow: var(--shadow) 2px 2px;
         cursor: pointer;
         transition: background-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
 
@@ -42,22 +42,24 @@
         // Interactive cue: cyan-blue fill + slight lift on hover/focus.
         &:hover,
         &:focus-visible {
-            background-color: variables.$primary;
+            background-color: var(--primary);
             transform: translateY(-2px);
-            box-shadow: black 3px 4px;
+            box-shadow: var(--shadow) 3px 4px;
         }
     }
 
     h2 {
         letter-spacing: -0.125em;
         text-align: center;
-        border: solid black 3px;
+        // Title chip fills with the yellow accent → dark accent-ink text/border.
+        border: solid var(--accent-ink) 3px;
+        color: var(--accent-ink);
         border-radius: 15px;
-        box-shadow: black 2px 2px;
+        box-shadow: var(--shadow) 2px 2px;
         width: fit-content;
         padding: 0.4em 1.25em;
         margin: 1em auto;
-        background-color: variables.$warning;
+        background-color: var(--warning);
         font-size: 1.4rem;
     }
 
@@ -81,7 +83,7 @@
             }
 
             .date {
-                color: #515151;
+                color: var(--gray-dark);
             }
 
         }
@@ -89,10 +91,10 @@
         .thumb-img-container {
             min-width: 2.75em;
             height: 2.75em;
-            border: solid black 2px;
-            box-shadow: black 1px 1px;
+            border: solid var(--ink) 2px;
+            box-shadow: var(--shadow) 1px 1px;
             border-radius: 50%;
-            background-color: variables.$light;
+            background-color: var(--surface);
             justify-self: center;
 
             img {

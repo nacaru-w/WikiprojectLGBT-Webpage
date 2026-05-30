@@ -4,6 +4,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Chart } from 'chart.js/auto';
 
 import { participantCountData, participantCountOptions } from '../../chart_data/participant-count-chat-data';
+import { applyChartTheme } from '../../chart_data/chart-theme';
 import { newParticipants2021, newParticipants2022, newParticipants2023, newParticipants2024, newParticipants2025 } from '../../chart_data/utils';
 
 import { MediawikiService } from '../../../services/mediawiki.service';
@@ -65,7 +66,7 @@ export class StatisticsParticipantsComponent implements OnInit {
     this.participantCountChart = new Chart(ctx, {
       type: 'doughnut',
       data: participantCountData,
-      options: participantCountOptions,
+      options: applyChartTheme(participantCountOptions),
     })
 
     this.applyChartLabels();

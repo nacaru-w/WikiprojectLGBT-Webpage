@@ -1,0 +1,34 @@
+// Icon-only toggle matching the language switcher's button: look comes from the
+// global .cyan-action-button; this adds only geometry, so it sits flush beside
+// the language icon in the header.
+.theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.3em 0.45em;
+    border-radius: 0.5em;
+
+    .theme-icon {
+        display: block;
+        width: 1.35em;
+        height: 1.35em;
+    }
+
+    // Light theme (default): offer the moon (→ switch to dark), hide the sun.
+    .theme-icon--sun {
+        display: none;
+    }
+}
+
+// Dark theme active: offer the sun (→ back to light), hide the moon. Keyed off
+// the `.dark` class on an ancestor (<html>) via :host-context, so it's driven by
+// the same class the no-flash script sets — no JS toggle of the DOM needed.
+:host-context(.dark) .theme-toggle {
+    .theme-icon--moon {
+        display: none;
+    }
+
+    .theme-icon--sun {
+        display: block;
+    }
+}

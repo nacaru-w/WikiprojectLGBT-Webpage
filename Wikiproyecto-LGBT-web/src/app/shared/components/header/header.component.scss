@@ -1,8 +1,8 @@
 @use "_variables";
 
 .navbar {
-    border-bottom: solid black 3px;
-    background-color: variables.$light !important;
+    border-bottom: solid var(--ink) 3px;
+    background-color: var(--surface) !important;
 
     .brand-icon-and-title {
         cursor: pointer;
@@ -26,9 +26,31 @@
             transform: scale(1.1);
         }
 
-        .navbar-title {
-            display: flex;
-            flex-direction: column;
+        // On the smallest screens drop the barba mascot so the wordmark + controls
+        // have room; the logo alone still identifies the brand.
+        @media (max-width: 480px) {
+            .navbar-brand {
+                display: none;
+            }
+        }
+
+        // The site title wordmark (PD logo from Commons). Sized to the navbar and
+        // eased down on narrow screens so it doesn't crowd the controls.
+        .navbar-logo {
+            height: 3.6em;
+            width: auto;
+            margin-left: 0.35em;
+            transition: transform 0.3s ease;
+
+            @media (max-width: 480px) {
+                height: 2.9em;
+            }
+        }
+
+        // Hovering the brand (it's the /home link) gives the logo the same subtle
+        // lift as the barba icon beside it.
+        &:hover .navbar-logo {
+            transform: scale(1.04);
         }
     }
 
@@ -39,6 +61,22 @@
         display: flex;
         align-items: center;
         gap: 0.5em;
+    }
+
+    // Below lg the top bar holds just the brand and the controls (the menu is
+    // collapsed into the hamburger). Center the row so that once the controls
+    // wrap onto their own line — no longer fitting beside the wide logo — the
+    // brand is the sole item left on the top row and lands centered. While they
+    // still share the row, margin-left:auto on the controls keeps the brand
+    // flush-left and the controls right, exactly as before.
+    @media (max-width: 991.98px) {
+        .container-fluid {
+            justify-content: center;
+        }
+
+        .header-controls {
+            margin-left: auto;
+        }
     }
 
     // Mobile menu button: matches the language toggle beside it — a square,
@@ -53,9 +91,9 @@
         padding: 0;
         font-size: 1.25rem;
         line-height: 1;
-        color: black;
-        background-color: variables.$primary;
-        border: solid black 2px;
+        color: var(--accent-ink);
+        background-color: var(--primary);
+        border: solid var(--accent-ink) 2px;
         border-radius: 0.5em;
         box-shadow: none;
         transition: background-color 0.2s ease;
@@ -77,7 +115,8 @@
 
         &:hover,
         &:focus-visible {
-            background-color: variables.$white;
+            background-color: var(--paper);
+            color: var(--ink);
         }
 
         &:focus {
@@ -99,7 +138,7 @@
     }
 
     a {
-        color: black;
+        color: var(--ink);
         cursor: pointer;
     }
 
@@ -115,15 +154,18 @@
 
     .nav-link:not(.active):hover,
     .nav-link:not(.active):focus-visible {
-        background-color: variables.$primary;
-        border-color: black;
+        background-color: var(--primary);
+        border-color: var(--accent-ink);
+        color: var(--accent-ink);
     }
 
+    // Active pill: bright accent fill → dark accent-ink text/border; offset shadow
+    // stays --ink (light on dark) so the raised look survives.
     .nav-link.active {
-        background-color: variables.$active-purple;
-        border-color: black;
-        box-shadow: black 2px 2px;
-        color: black;
+        background-color: var(--active-purple);
+        border-color: var(--accent-ink);
+        box-shadow: var(--shadow) 2px 2px;
+        color: var(--accent-ink);
     }
 
 }

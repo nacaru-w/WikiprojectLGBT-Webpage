@@ -47,15 +47,6 @@
     font-size: 1rem;
   }
 
-  // "sample data" badge next to the authorship heading (mocked until deploy).
-  &__sample {
-    margin-left: 0.4em;
-    font-family: variables.$body-font;
-    font-weight: normal;
-    font-size: 0.72em;
-    opacity: 0.6;
-  }
-
   &__canvas {
     position: relative;
     height: 220px;
@@ -84,7 +75,7 @@
     border: none;
     font: inherit;
     font-weight: bold;
-    color: black;
+    color: var(--ink);
     cursor: pointer;
 
     &:hover {
@@ -92,7 +83,7 @@
     }
 
     &:focus-visible {
-      outline: 2px solid black;
+      outline: 2px solid var(--ink);
       outline-offset: 2px;
     }
   }
@@ -116,11 +107,11 @@
     }
 
     a {
-      color: black;
+      color: var(--ink);
       text-decoration: wavy underline;
 
       &:hover {
-        color: variables.$deep-dark-primary;
+        color: var(--deep-dark-primary);
       }
     }
   }
@@ -136,7 +127,7 @@
     flex: 0 0 auto;
     width: 0.9em;
     height: 0.9em;
-    border: solid black 1.5px;
+    border: solid var(--ink) 1.5px;
     border-radius: 3px;
   }
 
@@ -158,11 +149,11 @@
 
   // Legend rows can hold a link (member slices); keep them readable.
   &__legend-name a {
-    color: black;
+    color: var(--ink);
     text-decoration: wavy underline;
 
     &:hover {
-      color: variables.$deep-dark-primary;
+      color: var(--deep-dark-primary);
     }
   }
 
@@ -191,11 +182,11 @@
   }
 
   &__wiki-link {
-    color: black;
+    color: var(--ink);
     text-decoration: wavy underline;
 
     &:hover {
-      color: variables.$deep-dark-primary;
+      color: var(--deep-dark-primary);
     }
   }
 
@@ -204,10 +195,10 @@
   &__close-btn {
     padding: 0.4em 1.1em;
     border-radius: 10px;
-    box-shadow: black 3px 3px;
+    box-shadow: var(--shadow) 3px 3px;
 
     &:active {
-      box-shadow: black 1px 1px;
+      box-shadow: var(--shadow) 1px 1px;
       transform: translate(2px, 2px);
     }
   }

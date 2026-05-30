@@ -3,10 +3,12 @@
 .error-container {
     margin: 2em;
     padding: 2.5em;
-    border: solid black 3px;
+    // Fills with the orange accent → dark accent-ink text + border.
+    border: solid var(--accent-ink) 3px;
+    color: var(--accent-ink);
     border-radius: 30px;
-    background-color: variables.$info;
-    box-shadow: black 4px 4px;
+    background-color: var(--info);
+    box-shadow: var(--shadow) 4px 4px;
     text-align: center;
 
     .barba-question {

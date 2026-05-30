@@ -7,6 +7,7 @@ import { StatisticsYearlyArticlesComponent } from '../statistics-yearly-articles
 import { StatisticsParticipantsComponent } from '../statistics-participants/statistics-participants.component';
 import { StatisticsLastArticlesComponent } from '../statistics-last-articles/statistics-last-articles.component';
 import { StatisticsMemberCreationsComponent } from '../statistics-member-creations/statistics-member-creations.component';
+import { StatisticsImagesComponent } from '../statistics-images/statistics-images.component';
 
 import { chartsSlideInOutAnimation, fadeInAnimation, fadeInOutAnimation } from '../../../animations/animations';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -15,7 +16,7 @@ import { BarbaService } from '../../../services/barba.service';
 // URL fragments that map to each section, e.g. /stats#monthly-articles.
 // `participants` and `participants-stats` are two sub-subpages of the same
 // "Participants" nav item (the member-creations lookup and the stats charts).
-const SECTIONS = ['yearly-articles', 'monthly-articles', 'notable', 'participants', 'participants-stats', 'last-articles'] as const;
+const SECTIONS = ['yearly-articles', 'monthly-articles', 'notable', 'participants', 'participants-stats', 'last-articles', 'images'] as const;
 type Section = (typeof SECTIONS)[number];
 
 @Component({
@@ -28,6 +29,7 @@ type Section = (typeof SECTIONS)[number];
     StatisticsParticipantsComponent,
     StatisticsLastArticlesComponent,
     StatisticsMemberCreationsComponent,
+    StatisticsImagesComponent,
     TranslatePipe,
   ],
   templateUrl: './statistics-shared.component.html',
@@ -66,6 +68,7 @@ export class StatisticsSharedComponent implements OnInit {
   showParticipants: boolean = false;
   showNotable: boolean = false;
   showLastArticles: boolean = false;
+  showImages: boolean = false;
 
   /** Which participants sub-subpage to show: the user lookup (default) or the stats charts. */
   participantsView: 'lookup' | 'stats' = 'lookup';
@@ -151,6 +154,9 @@ export class StatisticsSharedComponent implements OnInit {
           break;
         case "last-articles":
           this.showLastArticles = true;
+          break;
+        case "images":
+          this.showImages = true;
       }
     }, 300);
   }
@@ -166,6 +172,7 @@ export class StatisticsSharedComponent implements OnInit {
     this.showParticipants = false;
     this.showNotable = false;
     this.showLastArticles = false;
+    this.showImages = false;
     // Next participants open should slide only (fade re-enables on a toggle).
     this.viewFadeEnabled = false;
   }

@@ -5,6 +5,7 @@ import { Chart } from 'chart.js/auto';
 import { MediawikiService } from '../../../services/mediawiki.service';
 
 import { articlesPerYearData, articlesPerYearOptions } from '../../chart_data/article-count-chart-data';
+import { applyChartTheme } from '../../chart_data/chart-theme';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -38,7 +39,7 @@ export class StatisticsYearlyArticlesComponent implements OnInit {
     this.yearlyArticlesChart = new Chart(ctx, {
       type: 'bar',
       data: articlesPerYearData,
-      options: articlesPerYearOptions
+      options: applyChartTheme(articlesPerYearOptions)
     })
 
     this.applyChartLabels();

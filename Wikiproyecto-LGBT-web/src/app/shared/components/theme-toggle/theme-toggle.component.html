@@ -1,0 +1,15 @@
+<!-- Both glyphs are always rendered; CSS keyed off the `.dark` class on <html>
+     (set before paint by the index.html script) shows the right one. This keeps
+     the SSR and client DOM identical — no hydration mismatch — and the correct
+     icon is visible on first paint. Moon = "switch to dark", sun = "back to light". -->
+<button type="button" class="theme-toggle cyan-action-button" (click)="toggle()"
+    [attr.aria-label]="'header.themeToggle' | translate" [attr.aria-pressed]="isDark()">
+    <svg class="theme-icon theme-icon--moon" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">
+        <path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a6.6 6.6 0 0 0 9.8 9.8z" />
+    </svg>
+    <svg class="theme-icon theme-icon--sun" viewBox="0 0 24 24" aria-hidden="true" fill="none"
+        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="4.2" />
+        <path d="M12 2.5v2.6M12 18.9v2.6M2.5 12h2.6M18.9 12h2.6M5.2 5.2l1.9 1.9M16.9 16.9l1.9 1.9M18.8 5.2l-1.9 1.9M7.1 16.9l-1.9 1.9" />
+    </svg>
+</button>

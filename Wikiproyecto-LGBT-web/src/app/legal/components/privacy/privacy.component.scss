@@ -9,20 +9,28 @@
     .scrollspy {
         width: min(1000px, 95%);
         margin: 2em auto;
-        border: solid black 3px;
+        border: solid var(--ink) 3px;
         border-radius: 20px;
-        box-shadow: black 4px 4px;
+        box-shadow: var(--shadow) 4px 4px;
         padding: 3em;
-        background-color: variables.$light;
+        background-color: var(--surface);
 
         a.nav-link {
             letter-spacing: -0.1em;
-            color: black;
+            color: var(--ink);
             margin: 0.25em;
         }
 
+        // Active scrollspy item is a cyan Bootstrap pill → dark accent-ink text.
         a.nav-link.active {
-            color: black;
+            color: var(--accent-ink);
+        }
+
+        // The text panel previously used Bootstrap's `bg-light` utility (a fixed
+        // light colour that ignores the theme). Use a themed surface instead.
+        .scrollspy-textbox {
+            background-color: var(--paper);
+            color: var(--ink);
         }
 
         h3 {
@@ -40,7 +48,7 @@
         }
 
         a {
-            color: black;
+            color: var(--ink);
             text-decoration: wavy underline;
         }
 

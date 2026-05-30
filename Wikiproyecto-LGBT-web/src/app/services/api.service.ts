@@ -161,4 +161,14 @@ export class ApiService {
     );
   }
 
+  /**
+   * Submit the contact form. The payload carries the form fields plus the
+   * Cloudflare Turnstile token, which the server verifies before sending the
+   * email. Errors propagate so the component can show its own error state.
+   */
+  sendContactForm(payload: Record<string, unknown>): Observable<{ success: boolean }> {
+    const options = { headers: this.getHeaders() };
+    return this.http.post<{ success: boolean }>(this.endpoint + 'contact', payload, options);
+  }
+
 }

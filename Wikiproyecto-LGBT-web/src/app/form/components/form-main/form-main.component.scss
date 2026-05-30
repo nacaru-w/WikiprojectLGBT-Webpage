@@ -38,13 +38,13 @@ form {
     overflow: hidden; // contain the barba "stamp" within the rounded card
     width: min(95%, 800px);
     margin: 0.5em auto;
-    border: solid black 3px;
-    box-shadow: black 4px 4px;
+    border: solid var(--ink) 3px;
+    box-shadow: var(--shadow) 4px 4px;
     border-radius: 20px;
     padding: 1.5em;
     // Notebook page: white paper, faint blue horizontal rules, and a faint red
     // vertical margin line ~2.5em in from the left.
-    background-color: variables.$white;
+    background-color: var(--paper);
     background-image:
         linear-gradient(to right,
             transparent calc(2.5em - 1px),
@@ -81,18 +81,19 @@ form {
     .form-check-input,
     .form-check-input:checked,
     .form-check-input:focus {
-        border: solid black 2px;
-        box-shadow: black 1px 1px;
+        border: solid var(--ink) 2px;
+        box-shadow: var(--shadow) 1px 1px;
     }
 
     .form-box,
     .form-box:focus {
-        border: solid black 2px;
-        box-shadow: black 1px 1px;
+        border: solid var(--ink) 2px;
+        box-shadow: var(--shadow) 1px 1px;
     }
 
     .form-box:focus {
-        background-color: variables.$primary;
+        background-color: var(--primary);
+        color: var(--accent-ink);
     }
 
     .form-text {
@@ -108,18 +109,18 @@ form {
 
     .formError {
         position: absolute;
-        color: variables.$dark-danger;
+        color: var(--dark-danger);
         font-size: 0.9em;
     }
 
     .input-group {
         border-radius: 0.375rem;
-        border: solid black 2px;
-        box-shadow: black 1px 1px;
+        border: solid var(--ink) 2px;
+        box-shadow: var(--shadow) 1px 1px;
 
         .input-group-text {
             font-size: 0.9em;
-            border-right: solid black 3px;
+            border-right: solid var(--ink) 3px;
             max-width: 30%;
             text-wrap: wrap;
         }
@@ -127,17 +128,62 @@ form {
     }
 
     .input-group-box:focus {
-        background-color: variables.$primary;
+        background-color: var(--primary);
+        color: var(--accent-ink);
     }
 
     .text-area {
-        border: solid black 2px;
-        box-shadow: black 1px 1px;
+        border: solid var(--ink) 2px;
+        box-shadow: var(--shadow) 1px 1px;
         min-height: 7em;
     }
 
-    .pronouns {
+    // Pronoun picker: an ngb dropdown styled like the header language switcher.
+    // The bordered menu chrome comes from the global `.dropdown .dropdown-menu`
+    // rule; here we size the toggle and theme the items (purple = selected).
+    .pronoun-dropdown {
         width: min(100%, 300px);
+
+        .pronoun-toggle {
+            display: inline-flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.5em;
+            width: 100%;
+            padding: 0.45em 0.9em;
+            border-radius: 0.5em;
+            text-align: left;
+
+            // Empty = cyan (interactive: "choose"); once a pronoun is selected the
+            // toggle shows the app's "current/selected" purple, with dark ink kept
+            // (incl. hover) so the label stays readable on the pale purple fill.
+            &.is-selected,
+            &.is-selected:hover,
+            &.is-selected:focus-visible {
+                background-color: var(--active-purple);
+                color: var(--accent-ink);
+            }
+        }
+
+        .pronoun-item {
+            font-family: variables.$font-family-sans-serif;
+            font-weight: bold;
+            cursor: pointer;
+
+            // Selected = the app's "current" purple (matches the nav/header). The
+            // :not(.active) on hover/focus keeps the selected item purple even when
+            // ngb focuses it on open (otherwise the cyan focus state would win).
+            &.active {
+                background-color: var(--active-purple);
+                color: var(--accent-ink);
+            }
+
+            &:hover:not(.active),
+            &:focus:not(.active) {
+                background-color: var(--primary);
+                color: var(--accent-ink);
+            }
+        }
     }
 
     .account-section {
@@ -148,7 +194,7 @@ form {
     // translated links), so their <a> elements aren't tagged for view
     // encapsulation — reach into them with ::ng-deep, kept scoped under form.
     ::ng-deep a {
-        color: black;
+        color: var(--ink);
         text-decoration: wavy underline;
         /* Add underline */
         transition: color 0.3s ease-in-out;
@@ -157,7 +203,7 @@ form {
     }
 
     ::ng-deep a:hover {
-        color: variables.$deep-dark-primary;
+        color: var(--deep-dark-primary);
     }
 
     #userNameError {
@@ -169,10 +215,13 @@ form {
     }
 
     .text-area {
-        background: linear-gradient(to right, whitesmoke, whitesmoke), variables.$rainbow;
+        // Paper fill with the barba's PASTEL rainbow strip peeking along the right
+        // edge; themed so the fill follows light/dark while the rainbow stays put.
+        background: linear-gradient(to right, var(--paper), var(--paper)), variables.$barba-rainbow;
         background-size: max(98%, 10px) 100%, auto;
         background-repeat: no-repeat; // Ensure the gradient doesn't repeat
         background-position: left; // Start the gradient from the right side
+        color: var(--ink);
     }
 
     .submit-button-container {

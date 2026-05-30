@@ -14,6 +14,9 @@
     <li class="subpage-nav-option" [class.active]="activeSection === 'last-articles'">
         <a href="#last-articles" (click)="selectSection($event, 'last-articles')">{{ 'stats.nav.lastArticles' | translate }}</a>
     </li>
+    <li class="subpage-nav-option" [class.active]="activeSection === 'images'">
+        <a href="#images" (click)="selectSection($event, 'images')">{{ 'stats.nav.images' | translate }}</a>
+    </li>
 </nav>
 <div class="chart-box">
     <!-- Intro + empty-state are the landing content: shown only once hydrated and
@@ -60,5 +63,8 @@
     }
     @if (showLastArticles) {
         <app-statistics-last-articles [@slideInOut]="showLastArticles"></app-statistics-last-articles>
+    }
+    @if (showImages) {
+        <app-statistics-images [@slideInOut]="showImages"></app-statistics-images>
     }
 </div>

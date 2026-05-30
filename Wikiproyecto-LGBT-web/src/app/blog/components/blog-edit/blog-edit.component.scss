@@ -14,8 +14,8 @@
         gap: 0.4em;
 
         .post-id {
-            color: variables.$gray-lightest;
-            background-color: variables.$gray-darkest;
+            color: var(--gray-lightest);
+            background-color: var(--gray-darkest);
             padding: 0.5em;
             margin-block: 0.25em;
             border-radius: 10px;
@@ -42,9 +42,9 @@
         .form-control {
             display: flex;
             flex-direction: column;
-            border: solid black 2px;
-            box-shadow: black 3px 3px;
-            background-color: variables.$gray-lightest;
+            border: solid var(--ink) 2px;
+            box-shadow: var(--shadow) 3px 3px;
+            background-color: var(--gray-lightest);
             padding-top: 1.75em;
             padding-bottom: 1.25em;
 
@@ -58,31 +58,56 @@
 
                     .ql-toolbar.ql-snow,
                     .ql-container.ql-snow {
-                        border-color: black;
+                        border-color: var(--ink);
                     }
 
                     .ql-toolbar.ql-snow {
                         border-top-left-radius: 10px;
                         border-top-right-radius: 10px;
-                        background-color: white;
+                        background-color: var(--paper);
                     }
 
                     .ql-container.ql-snow {
                         border-bottom-left-radius: 10px;
                         border-bottom-right-radius: 10px;
-                        background-color: variables.$gray-lighter;
+                        background-color: var(--gray-lighter);
                         font-family: inherit;
                     }
 
                     .ql-editor {
                         min-height: 15em;
+                        color: var(--ink);
+                    }
+
+                    // quill.snow.css hardcodes black text/icons; point them at
+                    // --ink so they invert with the theme (black in light, light
+                    // in dark) and stay visible on the dark toolbar/container.
+                    .ql-editor.ql-blank::before {
+                        color: var(--gray-dark);
+                    }
+
+                    .ql-snow .ql-stroke {
+                        stroke: var(--ink);
+                    }
+
+                    .ql-snow .ql-fill {
+                        fill: var(--ink);
+                    }
+
+                    .ql-snow .ql-picker {
+                        color: var(--ink);
+                    }
+
+                    .ql-snow .ql-picker-options {
+                        background-color: var(--paper);
+                        border-color: var(--ink);
                     }
                 }
             }
 
             input,
             textarea {
-                background-color: variables.$gray-lighter;
+                background-color: var(--gray-lighter);
                 border: none;
                 margin-bottom: 0.25em;
                 border-radius: 10px;
@@ -93,7 +118,7 @@
             .form-error {
                 position: absolute;
                 font-size: 0.85em;
-                color: variables.$dark-danger;
+                color: var(--dark-danger);
                 margin-top: -1.75em;
             }
 
@@ -109,9 +134,9 @@
             .new-entry-button {
                 padding: 0.5em 0.75em;
                 border-radius: 10px;
-                box-shadow: black 4px 4px;
-                background-color: variables.$gray-darker;
-                color: white;
+                box-shadow: var(--shadow) 4px 4px;
+                background-color: var(--gray-darker);
+                color: var(--paper);
                 border: none;
                 cursor: pointer;
             }
@@ -119,18 +144,18 @@
             .return-button {
                 padding: 0.5em 0.75em;
                 border-radius: 10px;
-                box-shadow: black 4px 4px;
-                background-color: variables.$gray-lighter;
-                color: black;
+                box-shadow: var(--shadow) 4px 4px;
+                background-color: var(--gray-lighter);
+                color: var(--ink);
                 border: none;
             }
 
             .new-entry-button:hover {
-                background-color: variables.$gray-dark;
+                background-color: var(--gray-dark);
             }
 
             .return-button:hover {
-                background-color: variables.$gray;
+                background-color: var(--gray);
             }
 
         }
@@ -145,5 +170,5 @@
 }
 
 a {
-    color: black;
+    color: var(--ink);
 }

@@ -2,14 +2,14 @@ import { Component, DestroyRef, OnInit, computed, inject, signal } from '@angula
 import { DatePipe, DecimalPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { Observable, OperatorFunction, of } from 'rxjs';
-import { debounceTime, delay, distinctUntilChanged, map } from 'rxjs/operators';
+import { Observable, OperatorFunction } from 'rxjs';
+import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { NgbModal, NgbPagination, NgbTypeahead, NgbTypeaheadSelectItemEvent } from '@ng-bootstrap/ng-bootstrap';
 import { TranslatePipe } from '@ngx-translate/core';
 
+import { ApiService } from '../../../services/api.service';
 import { MediawikiService } from '../../../services/mediawiki.service';
 import { MemberCreatedArticle } from '../../../services/models/member-creations';
-import { mockMemberCreations } from './member-creations.mock';
 import { MemberArticleInfoModalComponent } from '../member-article-info-modal/member-article-info-modal.component';
 
 type SortColumn = 'title' | 'size' | 'created';
@@ -21,7 +21,6 @@ type SortDirection = 'asc' | 'desc';
  * members, then lists the LGBT articles they created (newest first by default;
  * sortable by name and size). Prolific members can have hundreds of articles, so
  * the list is filterable by title and paginated — only the current page renders.
- * Results are MOCKED until the endpoint is deployed — see member-creations.mock.
  */
 @Component({
   selector: 'app-statistics-member-creations',
@@ -31,6 +30,7 @@ type SortDirection = 'asc' | 'desc';
   styleUrl: './statistics-member-creations.component.scss',
 })
 export class StatisticsMemberCreationsComponent implements OnInit {
+  private api = inject(ApiService);
   private mediawikiService = inject(MediawikiService);
   private destroyRef = inject(DestroyRef);
   private modal = inject(NgbModal);
@@ -174,14 +174,19 @@ export class StatisticsMemberCreationsComponent implements OnInit {
     this.filterQuery.set('');
     this.page.set(1);
 
-    // MOCK: the real call is `this.api.getMemberLgbtCreations(username)`, but the
-    // /api/member-creations endpoint isn't deployed yet — serve a canned sample
-    // list with a small delay to mimic the request. Swap this once deployed.
-    of(mockMemberCreations(username))
-      .pipe(delay(450), takeUntilDestroyed(this.destroyRef))
-      .subscribe(res => {
-        this.results.set(res.articles);
-        this.loading.set(false);
+    this.api.getMemberLgbtCreations(username)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: res => {
+          this.results.set(res.articles);
+          this.loading.set(false);
+        },
+        error: () => {
+          // Surface the lookup as "no results" rather than a spinner that never
+          // resolves; the XTools-backed endpoint can occasionally fail/time out.
+          this.results.set([]);
+          this.loading.set(false);
+        },
       });
   }
 }

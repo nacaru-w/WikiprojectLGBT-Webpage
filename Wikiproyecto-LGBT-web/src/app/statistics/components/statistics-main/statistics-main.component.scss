@@ -3,18 +3,18 @@
 .chart-container {
     display: flex;
     flex-wrap: wrap;
-    background-color: variables.$lighter-orange;
+    background-color: var(--lighter-orange);
     position: relative;
     width: min(1000px, 95%);
     height: auto;
     margin: 0 auto;
-    border: solid black 2px;
+    border: solid var(--ink) 2px;
     border-radius: 15px;
-    box-shadow: black 3px 3px;
+    box-shadow: var(--shadow) 3px 3px;
     padding: 2em;
 
     a {
-        color: black;
+        color: var(--ink);
         text-decoration: wavy underline;
         /* Add underline */
         transition: color 0.3s ease-in-out;
@@ -23,7 +23,7 @@
     }
 
     a:hover {
-        color: variables.$deep-dark-primary;
+        color: var(--deep-dark-primary);
     }
 
 
@@ -67,13 +67,15 @@
 .chart-title {
     letter-spacing: -0.125em;
     text-align: center;
-    border: solid black 3px;
+    // Title chip fills with the yellow accent → dark accent-ink text + border.
+    border: solid var(--accent-ink) 3px;
+    color: var(--accent-ink);
     border-radius: 15px;
-    box-shadow: black 2px 2px;
+    box-shadow: var(--shadow) 2px 2px;
     width: fit-content;
     padding: 0.4em 1.25em;
     margin: 1em auto;
-    background-color: variables.$warning;
+    background-color: var(--warning);
     font-size: 1.4rem;
 }
 

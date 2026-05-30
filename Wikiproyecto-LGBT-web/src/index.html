@@ -6,6 +6,24 @@
   <title>WikiproyectoLGBTWeb</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Apply the saved (or OS-preferred) theme BEFORE first paint so dark mode
+       doesn't flash light while the JS bundle loads. Mirrors ThemeService: same
+       namespaced localStorage key, same .dark class + data-bs-theme attribute. -->
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem('wmlgbt-es-web:preferred-theme');
+        var dark = saved
+          ? saved === 'dark'
+          : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        var root = document.documentElement;
+        root.classList.toggle('dark', !!dark);
+        root.setAttribute('data-bs-theme', dark ? 'dark' : 'light');
+      } catch (e) { /* storage blocked — fall back to the light default */ }
+    })();
+  </script>
+
   <link rel="icon" type="image/x-icon" href="favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -36,6 +54,15 @@
          the fade-out transition below can take over on dismiss. */
       animation: app-loading-fade-in 0.35s ease backwards;
       transition: opacity 0.5s ease;
+    }
+
+    /* Dark theme is set on <html> by the head script above, before this paints,
+       so the splash matches the dark page instead of flashing light. */
+    html.dark #app-loading {
+      background-color: #2a2734;
+      background-image:
+        linear-gradient(rgba(42, 39, 52, 0.55), rgba(42, 39, 52, 0.55)),
+        url('assets/imgs/background_dot.svg');
     }
 
     #app-loading.app-loading--hidden {

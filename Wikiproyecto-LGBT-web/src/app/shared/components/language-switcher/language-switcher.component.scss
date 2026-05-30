@@ -25,19 +25,28 @@
         }
     }
 
+    // The Wikipedia glyph is a black <img>, so (unlike the theme toggle's inline
+    // SVG) it can't follow `color`. In dark mode the button fill darkens on hover,
+    // so invert the glyph to white there to match the neighbouring toggle.
+    :host-context(.dark) .lang-toggle:hover .lang-icon,
+    :host-context(.dark) .lang-toggle:focus-visible .lang-icon {
+        filter: invert(1);
+    }
+
     .lang-item {
         font-family: variables.$font-family-sans-serif;
         font-weight: bold;
         cursor: pointer;
 
         &.active {
-            background-color: variables.$active-purple;
-            color: black;
+            background-color: var(--active-purple);
+            color: var(--accent-ink);
         }
 
         &:hover:not(.active),
-        &:focus {
-            background-color: variables.$primary;
+        &:focus:not(.active) {
+            background-color: var(--primary);
+            color: var(--accent-ink);
         }
     }
 }

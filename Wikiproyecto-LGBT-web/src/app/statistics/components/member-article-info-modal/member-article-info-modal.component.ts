@@ -2,15 +2,14 @@ import { Component, ElementRef, OnDestroy, OnInit, ViewChild, inject, signal } f
 import { DatePipe, DecimalPipe } from '@angular/common';
 import { NgbActiveModal, NgbCollapse } from '@ng-bootstrap/ng-bootstrap';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { forkJoin, of } from 'rxjs';
-import { delay } from 'rxjs/operators';
+import { forkJoin } from 'rxjs';
 import { Chart } from 'chart.js/auto';
 
+import { ApiService } from '../../../services/api.service';
 import { XtoolsService } from '../../../services/xtools.service';
 import { XtoolsPageInfo } from '../../../services/models/xtools';
 import { ArticleAuthor } from '../../../services/models/article-authorship';
 import { MemberCreatedArticle } from '../../../services/models/member-creations';
-import { mockArticleAuthorship } from './member-article-authorship.mock';
 
 /** One slice of the authorship pie. */
 interface PieSlice {
@@ -39,8 +38,8 @@ const MEMBER_PALETTE = ['#3ac78f', '#b1efff', '#fff574', '#ffad5c', '#fa7c7c', '
  * members — the looked-up member, each other member above the threshold as its
  * own slice, the rest of the members pooled, and everyone else ("others") gray.
  *
- * Authorship is MOCKED for now (XTools' authorship route has no CORS, so it must
- * be proxied by our not-yet-deployed backend); the page facts are live.
+ * Authorship is proxied by our backend (XTools' authorship route has no CORS);
+ * the page facts come straight from XTools.
  */
 @Component({
   selector: 'app-member-article-info-modal',
@@ -56,6 +55,7 @@ export class MemberArticleInfoModalComponent implements OnInit, OnDestroy {
   members: string[] = [];
 
   readonly activeModal = inject(NgbActiveModal);
+  private api = inject(ApiService);
   private xtools = inject(XtoolsService);
   private translate = inject(TranslateService);
 
@@ -71,10 +71,7 @@ export class MemberArticleInfoModalComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     forkJoin({
       info: this.xtools.getPageInfo(this.article.title),
-      // MOCK: the real call is `api.getArticleAuthorship(this.article.title)`;
-      // XTools authorship has no CORS, so it goes through our backend, which
-      // isn't deployed yet. Swap once deployed.
-      authorship: of(mockArticleAuthorship(this.article.title)).pipe(delay(400)),
+      authorship: this.api.getArticleAuthorship(this.article.title),
     }).subscribe({
       next: ({ info, authorship }) => {
         this.info.set(info);

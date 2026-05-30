@@ -6,12 +6,12 @@
 }
 
 .blog-post {
-    border: solid black 3px;
-    box-shadow: black 4px 4px;
+    border: solid var(--ink) 3px;
+    box-shadow: var(--shadow) 4px 4px;
     padding: 1em 1.5em;
     border-radius: 40px;
     // Faint gray notebook/graph-paper grid over a white card.
-    background-color: variables.$white;
+    background-color: var(--paper);
     background-image:
         linear-gradient(to right, rgba(0, 0, 0, 0.08) 1px, transparent 1px),
         linear-gradient(to bottom, rgba(0, 0, 0, 0.08) 1px, transparent 1px);
@@ -26,12 +26,14 @@
     h2 {
         letter-spacing: -0.125em;
         text-align: center;
-        border: solid black 3px;
+        // Title chip fills with the yellow accent → dark accent-ink text/border.
+        border: solid var(--accent-ink) 3px;
+        color: var(--accent-ink);
         border-radius: 15px;
-        box-shadow: black 2px 2px;
+        box-shadow: var(--shadow) 2px 2px;
         padding: 0.4em 1.25em;
         margin-block: 1em;
-        background-color: variables.$warning;
+        background-color: var(--warning);
         font-size: 1.3rem;
         width: fit-content;
         margin-inline: auto;
@@ -52,11 +54,13 @@
 
 a.fill-link {
     text-decoration: none;
-    color: black;
+    color: var(--ink);
 }
 
 // The whole card is a link; on hover it fills cyan-blue ($primary), matching the
-// site-wide "hovering = cyan" interaction cue.
+// site-wide "hovering = cyan" interaction cue. The fill is bright, so flip the
+// card's text to dark accent-ink (the title chip keeps its own yellow + dark ink).
 a.fill-link:hover .blog-post {
-    background-color: variables.$primary;
+    background-color: var(--primary);
+    color: var(--accent-ink);
 }

@@ -14,10 +14,10 @@
     flex: 1 1 520px;
     min-width: 0;
     padding: 0.75em;
-    background-color: variables.$white;
-    border: solid black 3px;
+    background-color: var(--paper);
+    border: solid var(--ink) 3px;
     border-radius: 12px;
-    box-shadow: black 4px 4px;
+    box-shadow: var(--shadow) 4px 4px;
 }
 
 .world-map {
@@ -26,8 +26,8 @@
     height: auto;
 
     .country {
-        fill: variables.$gray-lighter;
-        stroke: variables.$gray;
+        fill: var(--gray-lighter);
+        stroke: var(--gray);
         stroke-width: 0.4;
         transition: stroke-width 0.15s ease;
 
@@ -35,7 +35,7 @@
         // inline by fillFor(); here we only draw the black outline, and a thicker
         // outline for the hovered/selected one.
         &.active {
-            stroke: #000;
+            stroke: var(--ink);
             stroke-width: 0.7;
             cursor: pointer;
         }
@@ -88,14 +88,14 @@
 .legend-flag {
     width: 1.5em;
     height: auto;
-    border: solid black 1px;
+    border: solid var(--ink) 1px;
     border-radius: 2px;
 }
 
 .legend-bar {
     flex: 1;
     height: 0.9em;
-    border: solid black 1.5px;
+    border: solid var(--ink) 1.5px;
     border-radius: 5px;
 }
 
@@ -104,10 +104,10 @@
     flex: 1 1 270px;
     align-self: stretch;
     padding: 1em 1.25em;
-    background-color: variables.$light;
-    border: solid black 3px;
+    background-color: var(--surface);
+    border: solid var(--ink) 3px;
     border-radius: 12px;
-    box-shadow: black 4px 4px;
+    box-shadow: var(--shadow) 4px 4px;
     font-family: variables.$body-font;
 }
 
@@ -123,7 +123,7 @@
     flex: 0 0 auto;
     width: 2.1em;
     height: auto;
-    border: solid black 1.5px;
+    border: solid var(--ink) 1.5px;
     border-radius: 3px;
 }
 
@@ -147,7 +147,7 @@
         font-size: 2em;
         line-height: 1;
         letter-spacing: -0.06em;
-        color: variables.$deep-dark-primary;
+        color: var(--deep-dark-primary);
     }
 
     .edition-total-label {
@@ -159,14 +159,14 @@
 .event-panel-prompt {
     margin: 0;
     font-style: italic;
-    color: variables.$gray-dark;
+    color: var(--gray-dark);
 }
 
 .edition {
     padding: 0.6em 0;
 
     &+.edition {
-        border-top: dashed variables.$gray-light 2px;
+        border-top: dashed var(--gray-light) 2px;
     }
 }
 
@@ -190,11 +190,11 @@
 // Same look as content links elsewhere in the app: black, wavy underline,
 // turning deep blue on hover.
 .edition-link {
-    color: black;
+    color: var(--ink);
     text-decoration: wavy underline;
     transition: color 0.3s ease-in-out;
 
     &:hover {
-        color: variables.$deep-dark-primary;
+        color: var(--deep-dark-primary);
     }
 }

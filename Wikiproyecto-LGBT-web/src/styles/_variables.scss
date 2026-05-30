@@ -3,6 +3,10 @@
 
 $rainbow: linear-gradient(hotpink 12.5%, red 0 25%, orange 0 37.5%, yellow 0 50%, green 0 62.5%, darkturquoise 0 75%, blue 0 87.5%, indigo 0);
 
+// Pastel rainbow using the barba mascot's own colours (from
+// Barba-wikiproyecto-lgbt.svg) — softer than $rainbow, for decorative motifs.
+$barba-rainbow: linear-gradient(#f47a6c 16.66%, #f4a16a 0 33.33%, #ffe974 0 50%, #bcf987 0 66.66%, #99d3f6 0 83.33%, #ccacfd 0);
+
 $white: #ffffff;
 $light: #ffe3ea;
 $dark: #e0e0e0;

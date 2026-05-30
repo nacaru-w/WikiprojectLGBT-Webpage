@@ -7,7 +7,8 @@
     "blog": "Blog",
     "contact": "Contacto",
     "ourWork": "Nuestro trabajo",
-    "eventOfMonth": "Evento del mes"
+    "eventOfMonth": "Evento del mes",
+    "themeToggle": "Cambiar entre modo claro y oscuro"
   },
   "event": {
     "intro": "El <a href=\"https://es.wikipedia.org/wiki/Wikiproyecto:LGBT/Evento_del_mes\">Evento del mes</a> propone cada mes un país, continente o tema para crear y mejorar contenido LGBT+ en Wikipedia. Pasa el ratón o toca un país del mapa para ver sus ediciones, o consulta los eventos temáticos en la lista.",
@@ -123,6 +124,7 @@
     "signUp": "Inscríbete",
     "pronounsLabel": "¿Cómo quieres que nos refiramos a ti?",
     "pronounsAria": "Determinantes de género",
+    "pronounsPlaceholder": "Selecciona…",
     "pronouns": {
       "he": "Él",
       "she": "Ella",
@@ -135,13 +137,21 @@
     "emailHelp": "Nunca compartiremos tu dirección con otras personas",
     "whyLabel": "Cuéntanos por qué quieres formar parte de WMLGBT+",
     "hasWikimediaAccount": "Tengo cuenta en los proyectos Wikimedia",
-    "attendedEvent": "He participado en algún evento WMLGBT+ organizado por la Fundación Wikimedia",
+    "attendedEvent": "He participado en algún evento organizado por la Fundación Wikimedia o el Wikiproyecto LGBT+",
     "eventLabel": "Evento",
     "eventNamePlaceholder": "Nombre del evento",
     "agreeConduct": "Estoy de acuerdo con el <a target=\"_blank\" href=\"https://foundation.wikimedia.org/wiki/Policy:Universal_Code_of_Conduct/es\">Código Universal de Conducta</a> y la <a target=\"_blank\" href=\"https://meta.wikimedia.org/wiki/Friendly_space_policies/es\">Política de Espacios Amigables</a> de la Fundación Wikimedia*",
     "agreePrivacy": "He leído y acepto la <a target=\"_blank\" href=\"/privacy\">política de privacidad</a>*",
     "submit": "Enviar",
     "sending": "Enviando formulario...",
+    "sendingBody": "Estamos enviando tu mensaje. Un momento, por favor.",
+    "success": "¡Mensaje enviado!",
+    "successBody": "Gracias por escribirnos. Hemos recibido tu mensaje y te responderemos lo antes posible.",
+    "error": "No se ha podido enviar",
+    "errorBody": "Ha ocurrido un error al enviar el formulario. Por favor, inténtalo de nuevo más tarde.",
+    "close": "Cerrar",
+    "verify": "Verificación",
+    "captchaPrompt": "Por favor, confirma que no eres un robot para enviar tu mensaje.",
     "username": {
       "he": "Nombre de usuario",
       "she": "Nombre de usuaria",
@@ -165,7 +175,8 @@
       "monthlyArticles": "Artículos por mes",
       "notable": "Contenido notable",
       "participants": "Participantes",
-      "lastArticles": "Últimos artículos"
+      "lastArticles": "Últimos artículos",
+      "images": "Imágenes"
     },
     "participantsNav": {
       "lookup": "Contribuciones",
@@ -178,7 +189,6 @@
       "loading": "Buscando contribuciones…",
       "empty": "No hay artículos LGBT creados por esta persona.",
       "count": "{{count}} artículos LGBT",
-      "mock": "· datos de ejemplo",
       "colArticle": "Artículo",
       "colSize": "Tamaño",
       "colCreated": "Creado",
@@ -242,6 +252,16 @@
       "here": "aquí",
       "loadMore": "Cargar más",
       "createdOn": "Creado el {{date}}"
+    },
+    "images": {
+      "title": "imágenes en Commons",
+      "intro": "Una muestra de las imágenes más recientes que el Wikiproyecto ha subido a Wikimedia Commons.",
+      "count": "{{count}} imágenes en la campaña",
+      "taken": "Tomada el {{date}}",
+      "by": "por",
+      "viewOnCommons": "Ver en Wikimedia Commons",
+      "loadMore": "Cargar más",
+      "error": "No se pudieron cargar las imágenes en este momento."
     },
     "chart": {
       "currentYear": "Año actual",

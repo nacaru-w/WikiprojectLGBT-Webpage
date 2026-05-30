@@ -1,19 +1,121 @@
 /* You can add global styles to this file, and also import other style files */
 @import "./custom";
 
+// ── Theme palette ────────────────────────────────────────────────────────────
+// All app styling reads these custom properties (see the migration in component
+// SCSS: black→var(--ink), white→var(--paper), $light→var(--surface), accents →
+// var(--<name>)). Light = the original palette (interpolated from the SCSS vars
+// that still feed Bootstrap). Dark = the same hues taken darker, with the
+// neo-brutalist "ink" (borders/text/shadows) inverted to light so the bordered,
+// shadowed look stays crisp on dark surfaces. The theme is switched by toggling
+// `.dark` on <html> (see ThemeService + the no-flash script in index.html).
+:root {
+    --ink: #000000;
+    // Ink that sits ON a bright accent fill (button/pill/chip). Stays dark in
+    // BOTH themes because the accent colours themselves stay bright in both —
+    // so e.g. a cyan button always has dark text/border, while its shadow uses
+    // --ink (which flips light in dark mode, keeping the offset shadow visible).
+    --accent-ink: #000000;
+    // Offset "drop" shadows stay BLACK in both themes (the neo-brutalist look).
+    // In dark mode the surfaces are only moderately dark (see :root.dark) so the
+    // black shadows still read against them.
+    --shadow: #000000;
+    --paper: #{$white};
+    --surface: #{$light};
+    --body-bg: #{$body-background};
+
+    --primary: #{$primary};
+    --secondary: #{$secondary};
+    --info: #{$info};
+    --success: #{$success};
+    --warning: #{$warning};
+    --active-purple: #{$active-purple};
+
+    --gray-lightest: #{$gray-lightest};
+    --gray-lighter: #{$gray-lighter};
+    --gray-light: #{$gray-light};
+    --gray: #{$gray};
+    --gray-dark: #{$gray-dark};
+    --gray-darker: #{$gray-darker};
+    --gray-darkest: #{$gray-darkest};
+
+    --lighter-primary: #{$lighter-primary};
+    --lighter-orange: #{$lighter-orange};
+    --pastel-green: #{$pastel-green};
+    --dark-primary: #{$dark-primary};
+    --dark-danger: #{$dark-danger};
+    --deep-dark-primary: #{$deep-dark-primary};
+    --almost-black-primary: #{$almost-black-primary};
+}
+
+:root.dark {
+    --ink: #f1edf6;          // light ink: borders + text on dark surfaces
+    // Surfaces are only MODERATELY dark (not near-black) so the black --shadow
+    // offset shadows stay visible against them, keeping the brutalist depth.
+    --paper: #37323f;        // was white — card / inner surface
+    --surface: #423a4d;      // was $light pink — nav / card / footer surface
+    --body-bg: #2a2734;      // page background
+
+    // Accents stay at their FULL bright values (not darkened) so the LGBT palette
+    // keeps its vibrancy on dark — cyan buttons, pink/yellow/green chips, the
+    // purple "current" pill. Text/borders on them use --accent-ink (dark); their
+    // offset shadows use --ink (light) so they still read on the dark page.
+    --primary: #{$primary};
+    --secondary: #{$secondary};
+    --info: #{$info};
+    --success: #{$success};
+    --warning: #{$warning};
+    --active-purple: #{$active-purple};
+
+    // Grays flip role: light backgrounds become (moderately) dark, dark (muted
+    // text) becomes light.
+    --gray-lightest: #322e3a;
+    --gray-lighter: #433d4c;  // inputs / dividers
+    --gray-light: #585264;
+    --gray: #8f8a99;
+    --gray-dark: #b3adbe;    // muted text → readable light gray
+    --gray-darker: #d0cbd8;
+    --gray-darkest: #ece8f1;
+
+    // Surface-role derived colours go (moderately) dark; accent-text-role ones go light/bright.
+    --lighter-primary: #2c4049;   // pale cyan surface → dark cyan-tinted
+    --lighter-orange: #463c4f;    // pale orange card surface → dark (matches --surface family)
+    --pastel-green: #355f43;      // soft green hover bg
+    --dark-primary: #5fb4d2;      // cyan accent text → light cyan
+    --dark-danger: #ff9d9d;       // error text → light red
+    --deep-dark-primary: #82d4ee; // link-hover / emphasis → light cyan
+    --almost-black-primary: #1c3c46;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+
 body {
     background-image: url('./assets/imgs/background_dot.svg');
-    background-color: $body-background;
+    background-color: var(--body-bg);
     background-repeat: repeat;
+}
+
+// The dot pattern is light grey (#ccc), glaring on a dark page. Lay a translucent
+// wash of the page colour over it so the dots stay as a subtle dark texture.
+:root.dark body {
+    background-image:
+        linear-gradient(rgba(42, 39, 52, 0.55), rgba(42, 39, 52, 0.55)),
+        url('./assets/imgs/background_dot.svg');
 }
 
 .btn {
     font-weight: bold;
     font-size: 90%;
-    box-shadow: black 4px 4px;
+    // Match the rest of the app's buttons/chips (e.g. .cyan-action-button,
+    // .notable-filter-btn), which use a 2px offset. A 4px shadow here made the
+    // Bootstrap .btn buttons (modal Clear/Done, form submit) stand out too hard.
+    box-shadow: var(--shadow) 2px 2px;
     letter-spacing: -0.1rem;
     margin: 0.5em;
-    border: solid black 3px;
+    // Border/text sit on the (light-pastel) button fill → accent-ink (stays dark
+    // in both themes). The offset shadow above uses --ink so it stays visible on
+    // the dark page.
+    border: solid var(--accent-ink) 2px;
     font-family: $font-family-sans-serif;
 }
 
@@ -22,32 +124,32 @@ body {
 // deep-blue on hover) — including links injected via [innerHTML], since global
 // styles aren't subject to component view encapsulation.
 .text-link {
-    color: black;
+    color: var(--ink);
     text-decoration: wavy underline;
     transition: color 0.3s ease-in-out;
 
     &:hover,
     &:focus-visible {
-        color: $deep-dark-primary;
+        color: var(--deep-dark-primary);
     }
 }
 
 .btn.disabled,
 .btn:disabled {
-    border-color: black;
+    border-color: var(--accent-ink);
 }
 
 .btn:hover {
     box-shadow: inset;
-    border: solid black 3px;
+    border: solid var(--accent-ink) 2px;
 }
 
 // App-wide button standard: cyan-blue (Bootstrap primary, --bs-primary = $primary)
 // buttons turn white on hover. The extra .btn specificity beats Bootstrap's own
 // .btn-primary:hover darken.
 .btn.btn-primary:hover {
-    background-color: $white;
-    color: black;
+    background-color: var(--paper);
+    color: var(--ink);
 }
 
 // Single source of truth for the app's cyan action buttons: cyan-blue by
@@ -56,18 +158,21 @@ body {
 // box-shadow. (The Bootstrap .btn-primary buttons follow the same look via the
 // rule above.)
 .cyan-action-button {
-    background-color: $primary;
-    color: black;
-    border: solid black 2px;
+    background-color: var(--primary);
+    color: var(--accent-ink);
+    border: solid var(--accent-ink) 2px;
     font-family: $font-family-sans-serif;
     font-weight: bold;
     letter-spacing: -0.05em;
     cursor: pointer;
     transition: background-color 0.15s ease, box-shadow 0.1s ease, transform 0.1s ease;
 
+    // On hover the fill flips to --paper (white in light, dark in dark), so the
+    // glyph/text follows with --ink (dark on white, light on dark).
     &:hover:not(:disabled),
     &:focus-visible {
-        background-color: $white;
+        background-color: var(--paper);
+        color: var(--ink);
     }
 
     &:disabled {
@@ -87,8 +192,8 @@ body {
     width: min(95%, 900px);
     margin: 0 auto;
     border-radius: 40px;
-    border: solid black 4px;
-    box-shadow: black 6px 6px;
+    border: solid var(--ink) 4px;
+    box-shadow: var(--shadow) 6px 6px;
 
     .img-wrapper {
         img {
@@ -107,7 +212,7 @@ body {
         right: unset;
         bottom: unset;
         min-height: 10em;
-        color: black;
+        color: var(--ink);
         font-weight: bold;
 
         @media (screen) and (max-width: 480px) {
@@ -118,15 +223,18 @@ body {
     }
 
     .carousel-caption.image-1 {
-        background-color: $light;
+        background-color: var(--surface);
     }
 
+    // Captions 2 & 3 sit on bright accent fills → dark accent-ink text.
     .carousel-caption.image-2 {
-        background-color: $primary;
+        background-color: var(--primary);
+        color: var(--accent-ink);
     }
 
     .carousel-caption.image-3 {
-        background-color: $warning;
+        background-color: var(--warning);
+        color: var(--accent-ink);
     }
 
 }
@@ -138,15 +246,15 @@ body {
 .accordion {
     width: min(95%, 700px);
     margin: 0 auto;
-    border: solid black 3px;
+    border: solid var(--ink) 3px;
     border-radius: 10px;
-    box-shadow: black 4px 4px;
+    box-shadow: var(--shadow) 4px 4px;
 }
 
 .accordion-button {
     font-weight: bold;
     letter-spacing: -0.1rem;
-    border: solid black 3px;
+    border: solid var(--ink) 3px;
     border-radius: 10px;
 }
 
@@ -166,16 +274,16 @@ body {
     width: min(500px, 95%);
     font-family: $body-font;
     margin: 1em auto;
-    border: solid black 3px;
+    border: solid var(--ink) 3px;
     border-radius: 10px;
-    color: black;
-    box-shadow: black 4px 4px;
+    color: var(--ink);
+    box-shadow: var(--shadow) 4px 4px;
 }
 
 .dropdown {
     .dropdown-menu {
-        border: solid black 3px;
-        box-shadow: black 4px 4px;
+        border: solid var(--ink) 3px;
+        box-shadow: var(--shadow) 4px 4px;
 
         .dropdown-item {
             letter-spacing: -0.1rem;
@@ -185,26 +293,26 @@ body {
     }
 
     .dropdown-toggle.show {
-        border-color: black;
+        border-color: var(--ink);
     }
 
     .dropdown-toggle.btn-outline-primary {
-        background-color: $almost-black-primary;
+        background-color: var(--almost-black-primary);
     }
 
     .dropdown-toggle.btn-outline-primary:hover,
     .dropdown-toggle.btn-outline-primary.show {
-        color: $dark-primary;
+        color: var(--dark-primary);
     }
 
     .dropdown-toggle.btn-outline-secondary {
-        color: black;
-        background-color: $light;
+        color: var(--ink);
+        background-color: var(--surface);
     }
 
     .dropdown-toggle.btn-outline-secondary:hover,
     .dropdown-toggle.btn-outline-secondary.show {
-        background-color: $secondary;
+        background-color: var(--secondary);
     }
 
 }
@@ -214,30 +322,30 @@ body {
 .list-group {
     width: min(95%, 300px);
     margin: 2em auto;
-    box-shadow: black 4px 4px;
+    box-shadow: var(--shadow) 4px 4px;
     border-radius: 20px;
     letter-spacing: -0.1em;
-    background-color: black;
+    background-color: var(--paper);
 
     a,
     a.active {
-        color: black;
-        border: solid black 3px;
+        color: var(--ink);
+        border: solid var(--ink) 3px;
     }
 
     a:hover {
-        background-color: $primary;
+        background-color: var(--primary);
     }
 
     // Active section = purple (the app-wide "current" marker); stays purple on hover.
     a.active,
     a.active:hover {
-        background-color: $active-purple;
+        background-color: var(--active-purple);
         box-shadow: none;
     }
 
     a.disabled {
-        background-color: $gray-lighter;
+        background-color: var(--gray-lighter);
     }
 
 }
@@ -254,10 +362,10 @@ body {
     width: min(900px, 95%);
     margin: 0.5em auto 1em auto;
     padding: 0.45em;
-    background-color: $light;
+    background-color: var(--surface);
     border-radius: 12px;
-    border: solid black 2px;
-    box-shadow: black 4px 4px;
+    border: solid var(--ink) 2px;
+    box-shadow: var(--shadow) 4px 4px;
     font-size: 0.9em;
     letter-spacing: -0.1em;
     font-weight: bold;
@@ -271,7 +379,7 @@ body {
     a {
         display: block;
         padding: 0.35em 1.1em;
-        color: black;
+        color: var(--ink);
         cursor: pointer;
         text-decoration: none;
         border: solid transparent 2px;
@@ -282,15 +390,19 @@ body {
     // Hover/focus on a non-active segment: cyan-blue fill + black border ("pressable").
     .subpage-nav-option:not(.active)>a:hover,
     .subpage-nav-option:not(.active)>a:focus-visible {
-        background-color: $primary;
-        border-color: black;
+        background-color: var(--primary);
+        border-color: var(--accent-ink);
+        color: var(--accent-ink);
     }
 
-    // Active segment: the raised #f2eaff pill that marks the current section.
+    // Active segment: the raised #f2eaff pill that marks the current section. Pill
+    // fill is a bright accent → dark accent-ink text/border; the offset shadow
+    // uses --ink so it pops on the dark page.
     .subpage-nav-option.active>a {
-        background-color: $active-purple;
-        border-color: black;
-        box-shadow: black 2px 2px;
+        background-color: var(--active-purple);
+        border-color: var(--accent-ink);
+        color: var(--accent-ink);
+        box-shadow: var(--shadow) 2px 2px;
     }
 }
 
@@ -343,18 +455,21 @@ body {
     .modal-tab {
         flex: 1;
         padding: 0.4em 0.6em;
-        background-color: $light;
-        border: solid black 2px;
+        background-color: var(--surface);
+        border: solid var(--ink) 2px;
         border-radius: 10px;
-        box-shadow: black 2px 2px;
+        box-shadow: var(--shadow) 2px 2px;
         font-family: $font-family-sans-serif;
         font-weight: bold;
         font-size: 0.85em;
         letter-spacing: -0.05em;
         cursor: pointer;
 
+        // Active tab fills with the pale purple → dark accent-ink text/border.
         &.active {
-            background-color: $active-purple;
+            background-color: var(--active-purple);
+            color: var(--accent-ink);
+            border-color: var(--accent-ink);
         }
     }
 
@@ -372,8 +487,8 @@ body {
         align-items: baseline;
         gap: 0.5em;
         padding: 0.4em 0.6em;
-        background-color: $white;
-        border: solid black 2px;
+        background-color: var(--paper);
+        border: solid var(--ink) 2px;
         border-radius: 8px;
     }
 
@@ -384,8 +499,8 @@ body {
     .rank-item {
         display: flex;
         flex-direction: column;
-        background-color: $white;
-        border: solid black 2px;
+        background-color: var(--paper);
+        border: solid var(--ink) 2px;
         border-radius: 8px;
         overflow: hidden;
     }
@@ -400,8 +515,18 @@ body {
         border-radius: 0;
         transition: background-color 0.2s ease-in-out;
 
+        // Expanded row fills with the pale purple → force its (otherwise light
+        // cyan / light) position, name and stats text to dark accent-ink so the
+        // whole row stays readable on the purple.
         &.expanded {
-            background-color: $active-purple;
+            background-color: var(--active-purple);
+            color: var(--accent-ink);
+
+            .rank-pos,
+            a.rank-name,
+            .rank-stats {
+                color: var(--accent-ink);
+            }
         }
     }
 
@@ -441,8 +566,8 @@ body {
         list-style: none;
         margin: 0;
         padding: 0.4em 0.6em;
-        background-color: $white;
-        border-top: solid black 2px;
+        background-color: var(--paper);
+        border-top: solid var(--ink) 2px;
         display: flex;
         flex-direction: column;
         gap: 0.3em;
@@ -456,19 +581,19 @@ body {
         }
 
         a {
-            color: black;
+            color: var(--ink);
             text-decoration: wavy underline;
             transition: color 0.3s ease-in-out;
             overflow-wrap: anywhere;
 
             &:hover {
-                color: $deep-dark-primary;
+                color: var(--deep-dark-primary);
             }
         }
 
         .rank-sublist-size {
             flex: 0 0 auto;
-            color: $gray-dark;
+            color: var(--gray-dark);
             white-space: nowrap;
         }
     }
@@ -478,7 +603,7 @@ body {
         min-width: 1.4em;
         font-family: $font-family-sans-serif;
         font-weight: bold;
-        color: $deep-dark-primary;
+        color: var(--deep-dark-primary);
     }
 
     .rank-name {
@@ -497,12 +622,12 @@ body {
     }
 
     a.rank-name {
-        color: black;
+        color: var(--ink);
         text-decoration: wavy underline;
         transition: color 0.3s ease-in-out;
 
         &:hover {
-            color: $deep-dark-primary;
+            color: var(--deep-dark-primary);
         }
     }
 
@@ -515,27 +640,34 @@ body {
     .modal-empty {
         text-align: center;
         font-style: italic;
-        color: $gray-dark;
+        color: var(--gray-dark);
     }
 
     .modal-page-link {
         font-weight: bold;
-        color: black;
+        color: var(--ink);
         text-decoration: wavy underline;
         transition: color 0.3s ease-in-out;
 
         &:hover {
-            color: $deep-dark-primary;
+            color: var(--deep-dark-primary);
         }
     }
 }
 
 .modal-content {
-    border: solid black 3px;
-    box-shadow: black 4px 4px;
+    border: solid var(--ink) 3px;
+    box-shadow: var(--shadow) 4px 4px;
     background-image: url('./assets/imgs/background_dot.svg');
-    background-color: $light;
+    background-color: var(--surface);
     background-repeat: repeat;
+
+    // The light-grey dots glare on a dark modal; wash them down like the body.
+    :root.dark & {
+        background-image:
+            linear-gradient(rgba(66, 58, 77, 0.58), rgba(66, 58, 77, 0.58)),
+            url('./assets/imgs/background_dot.svg');
+    }
 
     .modal-header {
         letter-spacing: -0.1em;
@@ -543,32 +675,65 @@ body {
 
     .modal-body {
         font-family: $body-font;
-        border-block: solid black 3px;
+        border-block: solid var(--ink) 3px;
         background-image: none;
-        background-color: $body-background;
+        background-color: var(--body-bg);
     }
 
 }
 
 .btn-close {
-    fill: black;
     opacity: 1;
-    border: solid black 2px;
-    padding: none;
-    background-color: $gray-lighter;
-    box-shadow: black 2px 2px;
+    border: solid var(--ink) 2px;
+    padding: 0;
+    background-color: var(--gray-lighter);
+    box-shadow: var(--shadow) 2px 2px;
+    // Bootstrap whitens the X in dark mode with `filter: invert(...)`, which also
+    // inverts our (dark) button background into a white square. Cancel that here.
+    filter: none;
+}
+
+// Dark mode: keep the filter off (so the button stays dark) and supply a light
+// "X" glyph ourselves, since without Bootstrap's invert the default X is black.
+:root.dark .btn-close {
+    filter: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%23f1edf6' d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414z'/%3E%3C/svg%3E");
+}
+
+// ── Checkboxes & switches ────────────────────────────────────────────────────
+// Selected/checked/activated controls use the app's "current" PURPLE
+// (--active-purple) — the same marker as the active header section — in BOTH
+// themes (Bootstrap defaults them to cyan). The fill is a pale purple, so the
+// glyph must be dark (Bootstrap's white check/knob would vanish). `:root` prefix
+// keeps these ahead of Bootstrap's own checked rules.
+.form-check-input {
+    border-color: var(--ink);
+}
+
+:root .form-check-input:checked {
+    background-color: var(--active-purple);
+    border-color: var(--accent-ink);
+}
+
+.form-check-input:checked[type="checkbox"] {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath fill='none' stroke='%23000' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m6 10 3 3 6-6'/%3E%3C/svg%3E");
+}
+
+// Switch knob is dark when ON (the checked track is the light cyan in both themes).
+.form-switch .form-check-input:checked {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3E%3Ccircle r='3' fill='%23000'/%3E%3C/svg%3E");
 }
 
 .card {
-    border: solid black 2px;
-    box-shadow: black 4px 4px;
+    border: solid var(--ink) 2px;
+    box-shadow: var(--shadow) 4px 4px;
     border-radius: 10px;
     margin: 2em auto;
-    background-color: $light;
+    background-color: var(--surface);
 
     .card-img-container {
         margin: 2em;
-        border: dashed black 4px;
+        border: dashed var(--ink) 4px;
         border-radius: 20px;
 
     }
@@ -627,9 +792,9 @@ body {
 // Article-info modal (NgbModal, rendered at <body>, scoped by its windowClass):
 // give the window the site's bordered/hard-shadow card look.
 .article-info-modal .modal-content {
-    border: solid black 2px;
+    border: solid var(--ink) 2px;
     border-radius: 14px;
-    box-shadow: black 5px 5px;
+    box-shadow: var(--shadow) 5px 5px;
 }
 
 // Member-creations results table (statistics-member-creations). Kept global,
@@ -642,20 +807,21 @@ body {
 .creations-table {
     width: 100%;
     border-collapse: collapse;
-    background-color: #fff;
-    border: solid black 2px;
+    background-color: var(--paper);
+    color: var(--ink);
+    border: solid var(--ink) 2px;
     font-family: $body-font;
 
     th,
     td {
         padding: 0.5em 0.85em;
-        border-bottom: solid black 1px;
+        border-bottom: solid var(--ink) 1px;
         text-align: left;
     }
 
     thead th {
-        background-color: $primary;
-        border-bottom: solid black 2px;
+        background-color: var(--primary);
+        border-bottom: solid var(--ink) 2px;
         white-space: nowrap;
     }
 
@@ -663,15 +829,22 @@ body {
     // the nav/switch use for "current"); the directional arrow stays black on top.
     thead th[aria-sort="ascending"],
     thead th[aria-sort="descending"] {
-        background-color: $active-purple;
+        background-color: var(--active-purple);
     }
 
     tbody tr:last-child td {
         border-bottom: none;
     }
 
+    // Hovered/selected row is a bright accent fill → force dark ink on the row
+    // and its article link so the text stays readable in dark mode.
     tbody tr:hover {
-        background-color: $active-purple;
+        background-color: var(--active-purple);
+        color: var(--accent-ink);
+
+        a {
+            color: var(--accent-ink);
+        }
     }
 
     // Numeric (size) column: right-aligned with tabular figures so digits align.
@@ -692,7 +865,7 @@ body {
         font-family: $font-family-sans-serif;
         font-weight: bold;
         letter-spacing: -0.05em;
-        color: black;
+        color: var(--accent-ink);
         cursor: pointer;
 
         &:hover {
@@ -700,7 +873,7 @@ body {
         }
 
         &:focus-visible {
-            outline: 2px solid black;
+            outline: 2px solid var(--ink);
             outline-offset: 2px;
         }
     }
@@ -721,7 +894,7 @@ body {
 
     &__sorticon[data-sort="asc"] &__sorticon-up,
     &__sorticon[data-sort="desc"] &__sorticon-down {
-        fill: #000;
+        fill: var(--accent-ink);
     }
 
     // Info column: shrink-to-content, centered icon button.
@@ -742,7 +915,7 @@ body {
         border-radius: 8px;
 
         &:focus-visible {
-            outline: 2px solid black;
+            outline: 2px solid var(--ink);
             outline-offset: 2px;
         }
     }
@@ -766,12 +939,12 @@ body {
     }
 
     a {
-        color: black;
+        color: var(--ink);
         text-decoration: wavy underline;
         transition: color 0.2s ease;
 
         &:hover {
-            color: $deep-dark-primary;
+            color: var(--deep-dark-primary);
         }
     }
 }
@@ -800,14 +973,14 @@ body {
 .creations-filter__input {
     width: 100%;
     padding: 0.4em 0.7em 0.4em 2.2em; // room for the leading icon
-    border: solid black 2px;
+    border: solid var(--ink) 2px;
     border-radius: 10px;
-    box-shadow: black 2px 2px;
+    box-shadow: var(--shadow) 2px 2px;
     font-family: $body-font;
 
     &:focus {
         outline: none;
-        box-shadow: black 3px 3px;
+        box-shadow: var(--shadow) 3px 3px;
     }
 }
 
@@ -840,10 +1013,10 @@ body {
         justify-content: center;
         min-width: 2.3em;
         padding: 0.35em 0.6em;
-        border: solid black 2px;
+        border: solid var(--ink) 2px;
         border-radius: 8px;
-        color: black;
-        background-color: #fff;
+        color: var(--ink);
+        background-color: var(--paper);
         font-family: $font-family-sans-serif;
         font-weight: bold;
         line-height: 1;
@@ -851,21 +1024,24 @@ body {
         cursor: pointer;
         transition: background-color 0.12s ease;
 
+        // Hover = cyan fill; active = purple fill. Both are bright accents → dark
+        // accent-ink digit + border so the number stays readable in dark mode.
         &:hover {
-            background-color: $primary;
-            color: black;
+            background-color: var(--primary);
+            color: var(--accent-ink);
+            border-color: var(--accent-ink);
         }
 
         &:focus-visible {
-            outline: 2px solid black;
+            outline: 2px solid var(--ink);
             outline-offset: 1px;
         }
     }
 
     .page-item.active .page-link {
-        background-color: $active-purple;
-        border-color: black;
-        color: black;
+        background-color: var(--active-purple);
+        border-color: var(--accent-ink);
+        color: var(--accent-ink);
     }
 
     .page-item.disabled .page-link {
@@ -877,24 +1053,24 @@ body {
 .chart-container {
     display: flex;
     flex-wrap: wrap;
-    background-color: $lighter-orange;
+    background-color: var(--lighter-orange);
     position: relative;
     width: min(900px, 95%);
     margin: 1em auto;
-    border: solid black 2px;
+    border: solid var(--ink) 2px;
     border-radius: 15px;
-    box-shadow: black 3px 3px;
+    box-shadow: var(--shadow) 3px 3px;
     padding: 2em;
 
     a {
-        color: black;
+        color: var(--ink);
         text-decoration: wavy underline;
         transition: color 0.3s ease-in-out;
         font-weight: normal;
     }
 
     a:hover {
-        color: $deep-dark-primary;
+        color: var(--deep-dark-primary);
     }
 
 
@@ -939,13 +1115,13 @@ body {
 .chart-title {
     letter-spacing: -0.125em;
     text-align: center;
-    border: solid black 3px;
+    border: solid var(--ink) 3px;
     border-radius: 15px;
-    box-shadow: black 2px 2px;
+    box-shadow: var(--shadow) 2px 2px;
     width: fit-content;
     padding: 0.4em 1.25em;
     margin: 1em auto;
-    background-color: $warning;
+    background-color: var(--warning);
     font-size: 1.4rem;
 }
 
@@ -996,7 +1172,7 @@ body {
 
 figure {
     div.post-img-container {
-        border: dashed black 3px;
+        border: dashed var(--ink) 3px;
         border-radius: 20px;
         height: auto;
         width: fit-content;
@@ -1026,7 +1202,7 @@ figure {
         }
 
         a:hover {
-            color: $deep-dark-primary;
+            color: var(--deep-dark-primary);
         }
 
     }
@@ -1042,7 +1218,7 @@ figure {
     li {
 
         a {
-            color: black;
+            color: var(--ink);
             text-decoration: wavy underline;
             /* Add underline */
             transition: color 0.3s ease-in-out;
@@ -1051,7 +1227,7 @@ figure {
         }
 
         a:hover {
-            color: $deep-dark-primary;
+            color: var(--deep-dark-primary);
         }
 
     }
@@ -1106,16 +1282,16 @@ figure {
 // globally; Bootstrap 5's --bs-popover-* variables also restyle the arrow.
 .notable-popover {
     --bs-popover-max-width: 270px;
-    --bs-popover-bg: #{$white};
-    --bs-popover-border-color: #000;
+    --bs-popover-bg: #{var(--paper)};
+    --bs-popover-border-color: var(--ink);
     --bs-popover-border-width: 2px;
     --bs-popover-border-radius: 12px;
-    --bs-popover-header-bg: #{$light};
-    --bs-popover-header-color: #000;
+    --bs-popover-header-bg: #{var(--surface)};
+    --bs-popover-header-color: var(--ink);
     --bs-popover-header-font-size: 0.95rem;
-    --bs-popover-body-color: #000;
+    --bs-popover-body-color: var(--ink);
     --bs-popover-font-size: 0.85rem;
-    box-shadow: #000 3px 3px;
+    box-shadow: var(--shadow) 3px 3px;
     font-family: $body-font;
     // Show/hide instantly (overrides Bootstrap's .fade) so the loading state is
     // visible the moment the popover appears, and a closing popover can't briefly
@@ -1141,8 +1317,8 @@ figure {
     .accordion {
         --bs-accordion-border-width: 0;
         --bs-accordion-border-color: transparent;
-        --bs-accordion-active-color: #000;
-        --bs-accordion-active-bg: #{$active-purple};
+        --bs-accordion-active-color: var(--accent-ink);
+        --bs-accordion-active-bg: #{var(--active-purple)};
         --bs-accordion-btn-focus-box-shadow: none;
         width: auto;
         margin: 0;
@@ -1151,9 +1327,9 @@ figure {
     }
 
     .accordion-item {
-        border: solid black 2px;
+        border: solid var(--ink) 2px;
         border-radius: 8px;
-        background-color: $white;
+        background-color: var(--paper);
         overflow: hidden;
 
         &+.accordion-item {
@@ -1164,8 +1340,8 @@ figure {
     .accordion-button {
         border: none;
         border-radius: 0; // corners are clipped by .accordion-item's overflow
-        background-color: $white;
-        color: #000;
+        background-color: var(--paper);
+        color: var(--ink);
         font-family: $font-family-sans-serif;
         font-weight: bold;
         letter-spacing: -0.08em;
@@ -1175,8 +1351,9 @@ figure {
         // Expanded: solid accent fill + black divider down to the body, mirroring
         // the event modal's expanded .rank-toggle.
         &:not(.collapsed) {
-            background-color: $active-purple;
-            border-bottom: solid black 2px;
+            background-color: var(--active-purple);
+            color: var(--accent-ink);
+            border-bottom: solid var(--accent-ink) 2px;
             box-shadow: none;
         }
 
@@ -1193,13 +1370,13 @@ figure {
     // Per-section search box.
     .filter-search {
         margin-bottom: 0.6em;
-        border: solid black 1.5px;
+        border: solid var(--ink) 1.5px;
         border-radius: 8px;
         font-family: $body-font;
 
         &:focus {
-            border-color: black;
-            box-shadow: 0 0 0 0.2rem $lighter-primary;
+            border-color: var(--ink);
+            box-shadow: 0 0 0 0.2rem var(--lighter-primary);
         }
     }
 
@@ -1207,7 +1384,7 @@ figure {
         margin: 0;
         font-family: $body-font;
         font-style: italic;
-        color: $gray-dark;
+        color: var(--gray-dark);
     }
 
     .filter-options {
@@ -1230,16 +1407,16 @@ figure {
                 float: none;
                 margin: 0.2em 0 0;
                 cursor: pointer;
-                border: solid black 1.5px;
+                border: solid var(--ink) 1.5px;
 
                 &:checked {
-                    background-color: $active-purple;
-                    border-color: black;
+                    background-color: var(--active-purple);
+                    border-color: var(--ink);
                 }
 
                 &:focus {
-                    border-color: black;
-                    box-shadow: 0 0 0 0.2rem $lighter-primary;
+                    border-color: var(--ink);
+                    box-shadow: 0 0 0 0.2rem var(--lighter-primary);
                 }
             }
 

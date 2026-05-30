@@ -11,10 +11,10 @@
     width: min(900px, 95%);
     margin: 0 auto 1.25em;
     padding: 1em 1.25em;
-    border: solid black 2px;
+    border: solid var(--ink) 2px;
     border-radius: 10px;
-    box-shadow: black 4px 4px;
-    background-color: variables.$lighter-orange;
+    box-shadow: var(--shadow) 4px 4px;
+    background-color: var(--lighter-orange);
     font-family: variables.$body-font;
 
     p {
@@ -24,13 +24,13 @@
     // The intro text is rendered via [innerHTML] (it may carry a translated
     // link), so reach into its <a> with ::ng-deep, scoped here.
     ::ng-deep a {
-        color: black;
+        color: var(--ink);
         text-decoration: wavy underline;
         font-weight: bold;
         transition: color 0.3s ease-in-out;
     }
 
     ::ng-deep a:hover {
-        color: variables.$deep-dark-primary;
+        color: var(--deep-dark-primary);
     }
 }

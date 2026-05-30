@@ -27,7 +27,7 @@
         margin: unset;
         flex: auto;
         max-width: 20em;
-        background-color: variables.$lighter-orange;
+        background-color: var(--lighter-orange);
 
         .img-container {
             width: 100%;

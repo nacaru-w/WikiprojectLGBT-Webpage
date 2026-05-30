@@ -2,6 +2,7 @@ import { Component, OnInit, SimpleChanges, inject, signal } from '@angular/core'
 import { ApiService } from '../../../services/api.service';
 import { RouterLink } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
+import { APP_VERSION } from '../../../../version';
 
 @Component({
   selector: 'app-footer',
@@ -16,6 +17,7 @@ export class FooterComponent implements OnInit {
 
   animationState = signal('visible');
   isAuth = signal(false);
+  readonly appVersion = APP_VERSION;
 
   hideFooter() {
     this.animationState.set('hidden');

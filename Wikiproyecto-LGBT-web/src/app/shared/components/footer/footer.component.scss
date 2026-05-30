@@ -2,13 +2,15 @@
 
 .footer {
     position: relative;
-    background-image: linear-gradient(135deg, transparent 50%, #ffe3ea 50%), linear-gradient(225deg, transparent 50%, #ffe3ea 50%), linear-gradient(45deg, transparent 50%, transparent 50%), linear-gradient(-45deg, transparent 50%, #f5f5f5 50%);
+    // Zig-zag spikes along the top: triangles of the footer surface against the
+    // page background. Themed so they follow light/dark like everything else.
+    background-image: linear-gradient(135deg, transparent 50%, var(--surface) 50%), linear-gradient(225deg, transparent 50%, var(--surface) 50%), linear-gradient(45deg, transparent 50%, transparent 50%), linear-gradient(-45deg, transparent 50%, var(--body-bg) 50%);
     background-size: 2rem 2rem;
     background-repeat: repeat-x;
     padding-top: 4rem;
     padding-bottom: 2.5rem;
-    background-color: variables.$light;
-    color: black;
+    background-color: var(--surface);
+    color: var(--ink);
 
     .footer-credit {
         position: absolute;
@@ -19,12 +21,23 @@
         font-size: 0.65rem;
         line-height: 1.2;
         text-align: right;
-        color: black;
+        color: var(--ink);
         opacity: 0.6;
 
         // The credit's "Nacaru" link is rendered via [innerHTML] (translated
         // string) and styled by the global .text-link class — no ::ng-deep
         // needed since global styles aren't subject to view encapsulation.
+    }
+
+    .footer-version {
+        position: absolute;
+        bottom: 0.5rem;
+        left: 0.75rem;
+        font-family: variables.$body-font;
+        font-size: 0.65rem;
+        line-height: 1.2;
+        color: var(--ink);
+        opacity: 0.6;
     }
 
     .footer-container {
@@ -50,7 +63,7 @@
                 padding-left: 0;
 
                 a {
-                    color: black;
+                    color: var(--ink);
                 }
 
                 .list-item {
@@ -70,9 +83,10 @@
 
                     a:hover,
                     a:focus-visible {
-                        background-color: variables.$primary;
-                        border-color: black;
-                        box-shadow: black 2px 2px;
+                        background-color: var(--primary);
+                        border-color: var(--accent-ink);
+                        color: var(--accent-ink);
+                        box-shadow: var(--shadow) 2px 2px;
                     }
                 }
 
@@ -117,9 +131,10 @@
 
                     a:hover,
                     a:focus-visible {
-                        background-color: variables.$primary;
-                        border-color: black;
-                        box-shadow: black 2px 2px;
+                        background-color: var(--primary);
+                        border-color: var(--accent-ink);
+                        color: var(--accent-ink);
+                        box-shadow: var(--shadow) 2px 2px;
                     }
                 }
 
@@ -130,5 +145,19 @@
 
         }
 
+    }
+}
+
+// The social-media glyphs are solid-black SVGs (loaded as <img>), invisible on
+// the dark footer — invert them to light. On hover the pill turns bright cyan,
+// so drop the invert there to keep the glyph dark on the light fill.
+:host-context(.dark) .footer .social-media-icons .icon-container {
+    a img {
+        filter: invert(1);
+    }
+
+    a:hover img,
+    a:focus-visible img {
+        filter: none;
     }
 }

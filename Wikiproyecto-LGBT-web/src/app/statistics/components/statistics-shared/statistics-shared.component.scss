@@ -21,22 +21,22 @@
     margin-inline: auto;
     padding: 1em;
     border-radius: 10px;
-    border: solid black 2px;
-    box-shadow: black 4px 4px;
-    background-color: variables.$lighter-orange;
+    border: solid var(--ink) 2px;
+    box-shadow: var(--shadow) 4px 4px;
+    background-color: var(--lighter-orange);
 
     // The intro paragraph is rendered via [innerHTML] (it carries a translated
     // link), so its <a> isn't tagged for view encapsulation — reach into it
     // with ::ng-deep, kept scoped under .stats-introduction.
     ::ng-deep a {
-        color: black;
+        color: var(--ink);
         text-decoration: wavy underline;
         transition: color 0.3s ease-in-out;
         font-weight: normal;
     }
 
     ::ng-deep a:hover {
-        color: variables.$deep-dark-primary;
+        color: var(--deep-dark-primary);
     }
 
 }
@@ -64,7 +64,7 @@
         font-family: variables.$font-family-sans-serif;
         font-weight: bold;
         letter-spacing: -0.05em;
-        color: black;
+        color: var(--ink);
     }
 }
 
@@ -75,10 +75,16 @@
     width: min(900px, 95%);
     margin: 1em auto;
     padding: 0.75em 2em 2em;
-    background-color: variables.$lighter-orange;
-    border: solid black 2px;
+    background-color: var(--lighter-orange);
+    border: solid var(--ink) 2px;
     border-radius: 15px;
-    box-shadow: black 3px 3px;
+    box-shadow: var(--shadow) 3px 3px;
+
+    // On narrow screens the 2em side padding eats too much of the row, cramping
+    // the view switch and the content below it. Trim it down on small devices.
+    @media (max-width: 576px) {
+        padding: 0.75em 0.75em 1.5em;
+    }
 
     // The stats view (app-statistics-participants) renders its own
     // .chart-container card; inside this box, strip its chrome so we don't get a
@@ -100,32 +106,39 @@
 .view-switch {
     position: relative;
     display: grid;
+    // Two equal columns: under a fit-content width, equal fr tracks both size to
+    // the widest label's content, so the longer option (e.g. "Contribuciones")
+    // never overflows its half — and the 50%-width sliding thumb stays aligned.
     grid-template-columns: 1fr 1fr;
-    width: min(300px, 82%);
+    width: fit-content;
+    max-width: 95%;
     margin: 0 auto 1em auto;
-    padding: 0.25em;
-    background-color: variables.$primary;
-    border: solid black 2px;
+    padding: 0.5em;
+    background-color: var(--primary);
+    border: solid var(--accent-ink) 2px;
     border-radius: 999px;
-    box-shadow: black 3px 3px;
+    box-shadow: var(--shadow) 3px 3px;
     font-family: variables.$font-family-sans-serif;
     font-size: 0.8em;
     font-weight: bold;
     letter-spacing: -0.05em;
     user-select: none;
 
-    // Sliding thumb: covers one half of the content box (calc accounts for the
-    // 0.25em track padding) and slides to the other on toggle.
+    // Sliding thumb: covers one half of the content box (the 0.4em inset on every
+    // side keeps an even gap to the container border — incl. room for its drop
+    // shadow at the bottom) and slides to the other on toggle.
     &__thumb {
         position: absolute;
-        top: 0.25em;
-        left: 0.25em;
-        width: calc(50% - 0.25em);
-        height: calc(100% - 0.5em);
-        background-color: variables.$active-purple;
-        border: solid black 2px;
+        top: 0.4em;
+        left: 0.4em;
+        width: calc(50% - 0.4em);
+        height: calc(100% - 0.8em);
+        background-color: var(--active-purple);
+        border: solid var(--accent-ink) 2px;
         border-radius: 999px;
-        box-shadow: black 2px 2px;
+        // No drop shadow: a hard 2px offset shadow tapers to a thin, antialiased
+        // (grey-looking) crescent along the tight pill curve. The thumb reads fine
+        // as a clean bordered pill inside the already-shadowed container.
         transition: transform 0.25s ease;
     }
 
@@ -137,9 +150,10 @@
         position: relative; // stack above the thumb
         z-index: 1;
         padding: 0.4em 0.7em;
+        margin: 0.1em;
         text-align: center;
         white-space: nowrap;
-        color: black;
+        color: var(--accent-ink);
         text-decoration: none;
         cursor: pointer;
         border-radius: 999px;
@@ -148,7 +162,7 @@
 
     &__option[aria-selected="false"]:hover,
     &__option[aria-selected="false"]:focus-visible {
-        color: variables.$deep-dark-primary;
+        color: var(--deep-dark-primary);
     }
 }
 

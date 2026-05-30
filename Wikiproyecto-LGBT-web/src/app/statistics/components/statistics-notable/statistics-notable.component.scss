@@ -22,7 +22,7 @@
         height: 2.4em;
         padding: 0;
         border-radius: 0.6em;
-        box-shadow: black 2px 2px;
+        box-shadow: var(--shadow) 2px 2px;
 
         .filter-icon {
             width: 1.2em;
@@ -30,7 +30,7 @@
         }
 
         &.active {
-            background-color: variables.$active-purple;
+            background-color: var(--active-purple);
         }
 
         // Count chip on the corner when filters are active.
@@ -44,10 +44,10 @@
             min-width: 1.4em;
             height: 1.4em;
             padding: 0 0.25em;
-            border: solid black 1.5px;
+            border: solid var(--accent-ink) 1.5px;
             border-radius: 0.7em;
-            background-color: variables.$active-purple;
-            color: black;
+            background-color: var(--active-purple);
+            color: var(--accent-ink);
             font-family: variables.$font-family-sans-serif;
             font-size: 0.7em;
             font-weight: bold;
@@ -66,19 +66,22 @@
         gap: 0.4em;
         margin-bottom: 0.7em;
         padding: 0.25em 0.9em;
-        border: solid black 2px;
+        // Chip fills with a bright accent (warning/success) → dark accent-ink
+        // text + border; the offset shadow stays --ink so it pops on dark.
+        border: solid var(--accent-ink) 2px;
+        color: var(--accent-ink);
         border-radius: 12px;
-        box-shadow: black 2px 2px;
+        box-shadow: var(--shadow) 2px 2px;
         font-family: variables.$font-family-sans-serif;
         font-weight: bold;
         letter-spacing: -0.08em;
 
         &.featured {
-            background-color: variables.$warning;
+            background-color: var(--warning);
         }
 
         &.good {
-            background-color: variables.$success;
+            background-color: var(--success);
         }
     }
 
@@ -106,10 +109,10 @@
         justify-content: center;
         width: 2.7em;
         height: 2.7em;
-        background-color: variables.$white;
-        border: solid black 2px;
+        background-color: var(--paper);
+        border: solid var(--ink) 2px;
         border-radius: 0.7em;
-        box-shadow: black 2px 2px;
+        box-shadow: var(--shadow) 2px 2px;
         cursor: pointer;
         transition: transform 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
 
@@ -122,7 +125,7 @@
         &:hover,
         &:focus-visible {
             transform: translateY(-3px);
-            box-shadow: black 4px 5px;
+            box-shadow: var(--shadow) 4px 5px;
 
             .notable-badge-icon {
                 transform: scale(1.12);
@@ -131,12 +134,12 @@
 
         &.featured:hover,
         &.featured:focus-visible {
-            background-color: variables.$lighter-orange;
+            background-color: var(--lighter-orange);
         }
 
         &.good:hover,
         &.good:focus-visible {
-            background-color: variables.$pastel-green;
+            background-color: var(--pastel-green);
         }
     }
 }
@@ -154,7 +157,7 @@
     font-family: variables.$body-font;
     font-size: 0.92em;
     font-style: italic;
-    color: variables.$gray-dark;
+    color: var(--gray-dark);
 }
 
 // Loading state: a mini barba bobbing above the label, matching the main loader.

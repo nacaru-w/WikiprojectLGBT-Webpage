@@ -9,16 +9,25 @@
     </a>
   </div>
 </div>
-<form [formGroup]="webForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="webForm">
   <div class="mb-2">
     <label for="pronouns" class="form-label">{{ 'form.pronounsLabel' | translate }}</label>
-    <select class="form-box form-select pronouns" [attr.aria-label]="'form.pronounsAria' | translate" id="pronouns"
-      formControlName="pronouns" (change)="otherPronounsChosen()">
-      <option class="dropdown-item" value="he">{{ 'form.pronouns.he' | translate }}</option>
-      <option class="dropdown-item" value="she" selected>{{ 'form.pronouns.she' | translate }}</option>
-      <option class="dropdown-item" value="they">{{ 'form.pronouns.they' | translate }}</option>
-      <option class="dropdown-item" value="other">{{ 'form.pronouns.other' | translate }}</option>
-    </select>
+    <!-- ngb dropdown (matches the language switcher): a cyan toggle + a bordered
+         menu whose active item is the app's purple. Backs the reactive control. -->
+    <div ngbDropdown class="pronoun-dropdown" display="dynamic">
+      <button type="button" class="pronoun-toggle cyan-action-button" ngbDropdownToggle id="pronouns"
+        [class.is-selected]="!!showValue('pronouns')" [attr.aria-label]="'form.pronounsAria' | translate">
+        {{ showValue('pronouns') ? ('form.pronouns.' + showValue('pronouns') | translate) : ('form.pronounsPlaceholder' | translate) }}
+      </button>
+      <div ngbDropdownMenu aria-labelledby="pronouns">
+        @for (opt of pronounOptions; track opt) {
+          <button ngbDropdownItem type="button" class="pronoun-item" [class.active]="opt === showValue('pronouns')"
+            [attr.aria-current]="opt === showValue('pronouns') ? 'true' : null" (click)="selectPronoun(opt)">
+            {{ 'form.pronouns.' + opt | translate }}
+          </button>
+        }
+      </div>
+    </div>
   </div>
   @if (showOtherPronounsField()) {
     <div class="mb-2">
@@ -88,36 +97,51 @@
   <label class="form-check-label" for="readPrivacy" [innerHTML]="'form.agreePrivacy' | translate"></label>
 </div>
 <div class="submit-button-container d-grid col-6 mx-auto">
-  <button type="submit" class="btn btn-primary mx-auto" data-bs-toggle="modal" data-bs-target="#formConfirm"
-    [ngClass]="{'disabled' : !isFormValid()}" [@buttonState]="isFormValid() ? 'enabled' : 'disabled'">
+  <button type="button" class="btn btn-primary mx-auto" data-bs-toggle="modal" data-bs-target="#formConfirm"
+    (click)="onVerifyClick()" [disabled]="!isFormValid()" [ngClass]="{'disabled' : !isFormValid()}"
+    [@buttonState]="isFormValid() ? 'enabled' : 'disabled'">
     {{ 'form.submit' | translate }}
   </button>
 </div>
 
 </form>
 
-<div class="modal fade" id="formConfirm" tabindex="-1" aria-labelledby="formConfirm" aria-hidden="true">
+<div class="modal fade" id="formConfirm" tabindex="-1" aria-labelledby="formConfirmLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">
-          @if (showSubmitSpinner()) {
-            <div class="spinner-border" role="status"></div>
+        <h1 class="modal-title fs-5" id="formConfirmLabel">
+          @if (sendStatus() === 'sending') {
+            <div class="spinner-border spinner-border-sm" role="status"></div>
           }
-          {{ formSendDataStatus | translate }}
+          @switch (sendStatus()) {
+            @case ('sending') { {{ 'form.sending' | translate }} }
+            @case ('success') { {{ 'form.success' | translate }} }
+            @case ('error') { {{ 'form.error' | translate }} }
+            @default { {{ 'form.verify' | translate }} }
+          }
         </h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" (click)="onModalClose()" [attr.aria-label]="'form.close' | translate"></button>
       </div>
       <div class="modal-body">
-        Example of text within the body of a modal. Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-        Corrupti
-        eaque, neque architecto, sunt optio ullam quas explicabo minima eveniet cupiditate officiis a tenetur
-        ipsa
-        tempora suscipit, aperiam libero incidunt in.
+        @switch (sendStatus()) {
+          @case ('sending') { <p class="mb-0">{{ 'form.sendingBody' | translate }}</p> }
+          @case ('success') { <p class="mb-0">{{ 'form.successBody' | translate }}</p> }
+          @case ('error') { <p class="mb-0">{{ 'form.errorBody' | translate }}</p> }
+          @default { <p class="mb-3">{{ 'form.captchaPrompt' | translate }}</p> }
+        }
+        <!-- Kept in the DOM (just hidden) so the rendered widget survives the
+             status transitions and can be reset on reopen. [hidden] lives on a
+             plain wrapper: Bootstrap's .d-flex is display:flex !important, which
+             would otherwise override the hidden attribute and keep it visible. -->
+        <div [hidden]="sendStatus() !== 'captcha'">
+          <div class="d-flex justify-content-center">
+            <div #turnstileContainer></div>
+          </div>
+        </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-dark" data-bs-dismiss="modal" (click)="onModalClose()">{{ 'form.close' | translate }}</button>
       </div>
     </div>
   </div>

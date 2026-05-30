@@ -1,0 +1,64 @@
+<div class="image-gallery">
+  @if (loading() || totalCount() === null) {
+    <!-- Show nothing but the loading barba until BOTH the upload count and the
+         first images are in, so the heading never renders without its number. -->
+    <div class="barba-loader">
+      <img class="barba-loader-img" src="assets/imgs/Barba-wikiproyecto-lgbt.svg" alt="" aria-hidden="true">
+      <span class="barba-loader-label">{{ 'common.loading' | translate }}</span>
+    </div>
+  } @else {
+    <!-- Intro: the date-themed "barba with a camera" + "<count> imágenes en Commons". -->
+    <div class="gallery-intro">
+      <img class="gallery-barba" src="assets/imgs/Barbas/camera/barba_camera_{{barba}}.svg" alt=""
+        aria-hidden="true" (error)="onBarbaError($event)">
+      <div class="gallery-intro-text">
+        <p class="gallery-title">
+          <span class="gallery-title-num">{{ totalCount() }}</span>
+          {{ 'stats.images.title' | translate }}
+        </p>
+        <p class="gallery-lead">{{ 'stats.images.intro' | translate }}</p>
+      </div>
+    </div>
+
+    @if (failed()) {
+      <div class="gallery-empty">
+        <img class="gallery-empty-barba" src="assets/imgs/Barbas/shrug/barba_shrug_{{barba}}.svg" alt="" aria-hidden="true">
+        <p>{{ 'stats.images.error' | translate }}</p>
+      </div>
+    } @else {
+      <div class="gallery-grid" [@popAnimation]="images().length">
+        @for (img of images(); track img.title) {
+          <figure class="gallery-item">
+            <a class="gallery-link" [href]="img.descriptionUrl" target="_blank" rel="noopener"
+              [attr.title]="'stats.images.viewOnCommons' | translate">
+              <img class="gallery-img" [src]="img.thumbUrl" [alt]="img.title" loading="lazy">
+            </a>
+            <figcaption class="gallery-caption">
+              <a class="gallery-name" [href]="img.descriptionUrl" target="_blank" rel="noopener">{{ img.caption }}</a>
+              @if (img.dateTaken) {
+                <span class="gallery-date">{{ 'stats.images.taken' | translate: { date: img.dateTaken } }}</span>
+              }
+              <div class="gallery-credit">
+                <a class="gallery-author" [href]="img.uploaderUrl" target="_blank" rel="noopener">
+                  {{ 'stats.images.by' | translate }} {{ img.uploader }}
+                </a>
+                @if (img.license) {
+                  <span class="gallery-license">{{ img.license }}</span>
+                }
+              </div>
+            </figcaption>
+          </figure>
+        }
+      </div>
+
+      @if (hasMore) {
+        <div class="gallery-more">
+          <button type="button" class="gallery-more__btn cyan-action-button" (click)="loadMore()"
+            [disabled]="loadingMore()">
+            {{ (loadingMore() ? 'common.loading' : 'stats.images.loadMore') | translate }}
+          </button>
+        </div>
+      }
+    }
+  }
+</div>

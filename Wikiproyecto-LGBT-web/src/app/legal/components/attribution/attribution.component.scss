@@ -3,16 +3,16 @@
 .attribution-container {
     width: min(1000px, 95%);
     margin-inline: auto;
-    border: solid black 3px;
-    box-shadow: black 4px 4px;
+    border: solid var(--ink) 3px;
+    box-shadow: var(--shadow) 4px 4px;
     border-radius: 20px;
     padding: 1.5em;
     margin-block: 1em;
-    background-color: variables.$light;
+    background-color: var(--surface);
     font-family: variables.$body-font;
 
     a {
-        color: black;
+        color: var(--ink);
     }
 
 }
