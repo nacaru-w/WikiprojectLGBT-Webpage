@@ -22,8 +22,10 @@
 
   // Size the shared loader ([fill]="false", so no min-height of its own) close
   // to the loaded content, so the modal barely changes height when the XTools
-  // data arrives.
+  // data arrives. Span the full width of the flex body so the loader's own
+  // centering lands it in the middle instead of hugging the left edge.
   &__body app-loading-barba {
+    flex: 1 1 100%;
     min-height: 350px;
   }
 
@@ -33,10 +35,32 @@
   }
 
   // Two columns on wide modals: chart on the left, facts on the right.
+  // Fade the content in once the XTools data arrives.
   &__authorship,
   &__facts {
     flex: 1 1 260px;
     min-width: 0;
+    animation: article-info-fade-in 0.35s ease both;
+  }
+
+  @keyframes article-info-fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+
+    &__authorship,
+    &__facts {
+      animation: none;
+    }
   }
 
   &__subtitle {
