@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Observable, catchError, map, throwError } from 'rxjs';
+import { Observable, catchError, forkJoin, map, of, throwError } from 'rxjs';
 
 import { MediawikiParams } from './models/mediawiki-params';
 import { Participants } from './models/participants';
@@ -44,6 +44,58 @@ export class MediawikiService {
         console.error('An error occurred:', error.message);
         return error.message
       })
+    );
+  }
+
+  /**
+   * Current byte size of each given page title, as a `titleKey → length` map.
+   * Uses `prop=info` (one cheap query per up-to-50 titles), so even a long
+   * worked-articles list is just one or two requests. Used to backfill sizes the
+   * wikitext didn't carry (see challenge-parser's applyArticleSizes). Missing
+   * pages and failed batches are simply omitted, never throwing.
+   */
+  getPageSizes(titles: string[]): Observable<Map<string, number>> {
+    const unique = [...new Set(titles.map(t => t.trim()).filter(Boolean))];
+    if (!unique.length) return of(new Map<string, number>());
+
+    const batches: string[][] = [];
+    for (let i = 0; i < unique.length; i += 50) batches.push(unique.slice(i, i + 50));
+
+    return forkJoin(batches.map(batch => this.fetchPageSizeBatch(batch))).pipe(
+      map(maps => maps.reduce((acc, m) => {
+        m.forEach((v, k) => acc.set(k, v));
+        return acc;
+      }, new Map<string, number>())),
+    );
+  }
+
+  private fetchPageSizeBatch(titles: string[]): Observable<Map<string, number>> {
+    const escapedTitles = titles.map(t => escapeInvalidCharacters(t)).join('|');
+    let callUrl = this.url + "?origin=*";
+
+    const params: MediawikiParams = {
+      action: "query",
+      prop: "info",
+      titles: escapedTitles,
+      formatversion: "2",
+      format: "json",
+    };
+
+    for (const param in params) {
+      callUrl += `&${param}=${params[param]}`;
+    }
+
+    type InfoResponse = { query?: { pages?: { title?: string; length?: number; missing?: boolean }[] } };
+    return this.http.get<InfoResponse>(callUrl).pipe(
+      map(response => {
+        const sizes = new Map<string, number>();
+        for (const page of response?.query?.pages ?? []) {
+          if (page.missing || typeof page.length !== 'number' || !page.title) continue;
+          sizes.set(page.title, page.length);
+        }
+        return sizes;
+      }),
+      catchError(() => of(new Map<string, number>())),
     );
   }
 

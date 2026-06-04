@@ -2,8 +2,9 @@ import { Component, TemplateRef, inject, input, signal } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { map, of, switchMap } from 'rxjs';
 import { MediawikiService } from '../../../services/mediawiki.service';
-import { parseChallengeArticles } from '../../utils/challenge-parser';
+import { applyArticleSizes, findWorkedArticlesSubpage, parseChallengeArticles } from '../../utils/challenge-parser';
 import { ChallengeData } from '../../models/event-data';
 import { PRIZE_LESBIAN_ICON } from '../../data/prizes';
 import { LoadingBarbaComponent } from '../../../shared/components/loading-barba/loading-barba.component';
@@ -53,8 +54,32 @@ export class EventSeeMoreComponent {
 
     const page = this.page();
     if (!page) { this.loading.set(false); return; }
-    this.mediawiki.getPageContent(page).subscribe({
-      next: content => { this.data.set(parseChallengeArticles(content ?? '')); this.loading.set(false); },
+    this.mediawiki.getPageContent(page).pipe(
+      switchMap(content => {
+        const data = parseChallengeArticles(content ?? '');
+        if (data.articles.length) return of(data);
+        // "Evento:" namespace editions keep the worked-articles table on a
+        // "…/Artículos trabajados" subpage; the challenge page we just fetched is
+        // only intro/rules. Follow that link and parse the subpage instead.
+        const subpage = findWorkedArticlesSubpage(content ?? '');
+        return subpage
+          ? this.mediawiki.getPageContent(subpage).pipe(map(sub => parseChallengeArticles(sub ?? '')))
+          : of(data);
+      }),
+      switchMap(data => {
+        // The newer subpages list edit types (Creado/Traducido/Ampliado) in the
+        // size column, so articles parse with size: null. Backfill each one's
+        // current byte length in a single batched API call, then re-rank. When
+        // the wikitext already carried sizes, there's nothing missing and no
+        // extra request is made.
+        const missing = data.articles.filter(a => a.size == null).map(a => a.title);
+        if (!missing.length) return of(data);
+        return this.mediawiki.getPageSizes(missing).pipe(
+          map(sizes => applyArticleSizes(data, sizes)),
+        );
+      }),
+    ).subscribe({
+      next: data => { this.data.set(data); this.loading.set(false); },
       error: () => this.loading.set(false),
     });
   }

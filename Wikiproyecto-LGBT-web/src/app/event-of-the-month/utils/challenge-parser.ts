@@ -12,6 +12,21 @@ interface ColIndex { article?: number; size?: number; contributor?: number; }
 
 const WIKI = 'https://es.wikipedia.org/wiki/';
 
+/**
+ * Newer editions live in the "Evento:" namespace, where the challenge page is
+ * just an intro/rules landing page and the worked-articles table sits on a
+ * "…/Artículos trabajados" subpage linked from the body (e.g. "Evento:Carnavales
+ * de la Diversidad en Perú/Artículos trabajados"). When the landing page itself
+ * has no parseable table, return that subpage title so it can be fetched and
+ * parsed instead. Returns null for the older inline-table layout.
+ */
+export function findWorkedArticlesSubpage(content: string): string | null {
+  // Match the link TARGET (before any "|label") ending in "/Artículos trabajados",
+  // tolerant of the accent on the í.
+  const m = content.match(/\[\[([^\]|]*?\/Art[ií]culos\s+trabajados)\s*(?:\|[^\]]*)?\]\]/i);
+  return m ? m[1].trim() : null;
+}
+
 function usersIn(cell: string | undefined): string[] {
   const users = new Set<string>();
   const add = (raw: string) => {
@@ -72,7 +87,6 @@ export function parseChallengeArticles(content: string): ChallengeData {
   if (!segments) return empty;
 
   const articles: ChallengeArticle[] = [];
-  const byUser = new Map<string, ChallengeParticipant>();
 
   for (const seg of segments) {
     if (!seg.trim().startsWith('|')) continue; // skip table opener + header
@@ -84,19 +98,64 @@ export function parseChallengeArticles(content: string): ChallengeData {
     const size = idx.size !== undefined ? sizeBytes(cells[idx.size]) : null;
     const contributors = idx.contributor !== undefined ? usersIn(cells[idx.contributor]) : [];
 
-    const article: ChallengeArticle = { title, url: WIKI + encodeURI(title.replace(/ /g, '_')), size, contributors };
-    articles.push(article);
-    for (const user of contributors) {
+    articles.push({ title, url: WIKI + encodeURI(title.replace(/ /g, '_')), size, contributors });
+  }
+
+  return aggregate(articles);
+}
+
+/**
+ * Build the per-contributor tallies from the article rows and sort everything:
+ * articles by size (biggest first), participants by article count then bytes.
+ * Kept separate so size enrichment ([[applyArticleSizes]]) can re-run it after
+ * filling in byte sizes the wikitext didn't carry.
+ */
+function aggregate(articles: ChallengeArticle[]): ChallengeData {
+  const byUser = new Map<string, ChallengeParticipant>();
+  for (const article of articles) {
+    for (const user of article.contributors) {
       const entry = byUser.get(user) ?? { user, articleCount: 0, bytes: 0, articles: [] };
       entry.articleCount += 1;
-      entry.bytes += size ?? 0;
+      entry.bytes += article.size ?? 0;
       entry.articles.push(article);
       byUser.set(user, entry);
     }
   }
 
-  articles.sort((a, b) => (b.size ?? 0) - (a.size ?? 0));
+  const sortedArticles = [...articles].sort((a, b) => (b.size ?? 0) - (a.size ?? 0));
   const participants = [...byUser.values()].sort((a, b) => b.articleCount - a.articleCount || b.bytes - a.bytes);
   for (const p of participants) p.articles.sort((a, b) => (b.size ?? 0) - (a.size ?? 0));
-  return { articles, participants };
+  return { articles: sortedArticles, participants };
+}
+
+/** Normalized title key for matching wiki article titles against API results:
+ * underscores→spaces, collapsed whitespace, first letter upper-cased (MediaWiki
+ * upper-cases the first letter but is case-sensitive after it). */
+export function challengeTitleKey(title: string): string {
+  const s = title.trim().replace(/_/g, ' ').replace(/\s+/g, ' ');
+  return s.charAt(0).toUpperCase() + s.slice(1);
+}
+
+/**
+ * The newer "Evento:" namespace subpages put edit-type words (Creado/Traducido/
+ * Ampliado) in the size column instead of byte counts, so every article parses
+ * with `size: null`. Given a map of title→current byte length (fetched in one
+ * batched API call), fill those gaps and re-aggregate so the article and
+ * participant orderings reflect real sizes. Articles already carrying a size are
+ * left untouched.
+ */
+export function applyArticleSizes(data: ChallengeData, sizes: Map<string, number>): ChallengeData {
+  // Re-key the fetched sizes through challengeTitleKey too, so both sides are
+  // normalized the same way regardless of how the caller keyed the map.
+  const byKey = new Map<string, number>();
+  for (const [title, size] of sizes) byKey.set(challengeTitleKey(title), size);
+
+  let changed = false;
+  for (const article of data.articles) {
+    if (article.size == null) {
+      const size = byKey.get(challengeTitleKey(article.title));
+      if (size != null) { article.size = size; changed = true; }
+    }
+  }
+  return changed ? aggregate(data.articles) : data;
 }
