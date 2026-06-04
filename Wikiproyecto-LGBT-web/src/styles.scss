@@ -1132,6 +1132,27 @@ body {
     }
 }
 
+// Card that wraps a stats section's sub-nav toggle + its routed sub-view, so the
+// view-switch sits inside the box (switch on top, content below). Shared by the
+// Articles and Participants section shells. Mirrors the .chart-container card
+// look; the shells strip their inner .chart-container chrome so there's no
+// card-within-a-card.
+.stats-section-card {
+    width: min(900px, 95%);
+    margin: 1em auto;
+    padding: 0.75em 2em 2em;
+    background-color: var(--lighter-orange);
+    border: solid var(--edge) 2px;
+    border-radius: 15px;
+    box-shadow: var(--shadow) 3px 3px;
+
+    // On narrow screens the 2em side padding eats too much of the row, cramping
+    // the view switch and the content below it. Trim it down on small devices.
+    @media (max-width: 576px) {
+        padding: 0.75em 0.75em 1.5em;
+    }
+}
+
 .chart-container {
     display: flex;
     flex-wrap: wrap;

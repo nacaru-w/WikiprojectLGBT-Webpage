@@ -171,6 +171,7 @@
     "participantsUnit": "personnes",
     "pickSection": "Choisis l'une des sections du menu ci-dessus",
     "nav": {
+      "articles": "Articles",
       "yearlyArticles": "Articles par an",
       "monthlyArticles": "Articles par mois",
       "notable": "Contenu remarquable",
@@ -178,9 +179,16 @@
       "lastArticles": "Derniers articles",
       "images": "Images"
     },
+    "articlesNav": {
+      "search": "Recherche"
+    },
     "participantsNav": {
       "lookup": "Contributions",
       "stats": "Statistiques"
+    },
+    "search": {
+      "title": "Recherche",
+      "comingSoon": "Cette section sera bientôt disponible."
     },
     "memberCreations": {
       "searchLabel": "Recherche un·e membre du Wikiprojet",

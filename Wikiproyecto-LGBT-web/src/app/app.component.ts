@@ -45,6 +45,12 @@ export class AppComponent implements OnInit {
 
   private loaderDismissed = false;
 
+  // Set at NavigationStart when a navigation stays within the same top-level
+  // section (e.g. switching stats sub-views), so the matching NavigationEnd can
+  // also skip the overlay/footer work. Without it, intra-page sub-route switches
+  // would flash the Barba overlay and blink the footer on every toggle.
+  private suppressNavOverlay = false;
+
   constructor() {
     // Register the supported languages and load the default one. Injecting
     // TranslateService here (the root component) triggers its initial load
@@ -77,14 +83,25 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationStart) {
+        // Navigations that stay within the same top-level section (e.g. switching
+        // between stats sub-views) are intra-page: don't hide the footer or flash
+        // the overlay. router.url is still the previous URL at NavigationStart.
+        this.suppressNavOverlay = this.sameSection(event.url, this.router.url);
+        if (this.suppressNavOverlay) {
+          return;
+        }
         this.hideFooter();
         // Show the Barba overlay for the whole navigation — chiefly the gap
         // while a lazy route chunk (e.g. the heavy event-of-the-month page)
         // downloads, which otherwise leaves the app looking frozen.
         this.loading.startNavigation();
       } else if (event instanceof NavigationEnd) {
-        this.loading.endNavigation();
-        setTimeout(() => this.showFooter(), 500);  // Adjust the timeout if needed
+        if (this.suppressNavOverlay) {
+          this.suppressNavOverlay = false;
+        } else {
+          this.loading.endNavigation();
+          setTimeout(() => this.showFooter(), 500);  // Adjust the timeout if needed
+        }
         // Pages that don't defer the loader (everything but the home page) are
         // ready as soon as they render, so dismiss the loader straight away.
         if (!this.routeDefersLoader()) {
@@ -92,10 +109,17 @@ export class AppComponent implements OnInit {
         }
       } else if (event instanceof NavigationCancel || event instanceof NavigationError) {
         // Aborted/failed navigation: clear the overlay so it can't get stuck on.
+        this.suppressNavOverlay = false;
         this.loading.endNavigation();
         this.showFooter();
       }
     });
+  }
+
+  /** True when both URLs share the same first path segment (same top-level page). */
+  private sameSection(a: string, b: string): boolean {
+    const top = (url: string) => url.split(/[?#]/)[0].split('/').filter(Boolean)[0] ?? '';
+    return top(a) === top(b) && top(a) !== '';
   }
 
   private routeDefersLoader(): boolean {

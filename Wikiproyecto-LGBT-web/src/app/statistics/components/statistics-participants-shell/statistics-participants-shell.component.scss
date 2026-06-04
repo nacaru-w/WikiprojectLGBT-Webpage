@@ -1,0 +1,17 @@
+:host {
+    display: block;
+    width: 100%;
+}
+
+// The by-year stats view (app-statistics-participants) renders its own
+// .chart-container card; inside the section card, strip its chrome so we don't
+// get a card within a card. Its flex layout (chart + text) is left untouched.
+:host ::ng-deep app-statistics-participants .chart-container {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    background-color: transparent;
+    box-shadow: none;
+}

@@ -1,0 +1,22 @@
+:host {
+    display: block;
+    width: 100%;
+}
+
+// The chart sub-views (yearly / monthly / notable) render their own
+// .chart-container card; inside the section card, strip its chrome so we don't
+// get a card within a card. The flex layout (chart + text) is left untouched.
+:host ::ng-deep {
+
+    app-statistics-yearly-articles .chart-container,
+    app-statistics-monthly-articles .chart-container,
+    app-statistics-notable .chart-container {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        border: none;
+        border-radius: 0;
+        background-color: transparent;
+        box-shadow: none;
+    }
+}

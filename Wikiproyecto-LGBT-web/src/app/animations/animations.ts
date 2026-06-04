@@ -80,6 +80,33 @@ export const fadeInOutAnimation =
         ])
     ])
 
+// Cross-fade between sub-routes inside a stats section shell. Applied to the
+// <div> wrapping an inner <router-outlet>, keyed off each child route's
+// data.animation: switching sub-view fades the outgoing view out (pulled out of
+// flow so it doesn't double the height) while the incoming one fades in. Mirrors
+// the old participants lookup/stats fade, now that each sub-view is its own route.
+export const subviewFadeAnimation =
+    trigger('subviewFade', [
+        transition('* <=> *', [
+            style({ position: 'relative' }),
+            query(':enter', [style({ opacity: 0 })], { optional: true }),
+            query(':leave', [
+                style({ position: 'absolute', top: 0, left: 0, width: '100%' })
+            ], { optional: true }),
+            group([
+                query(':leave', [
+                    animate('200ms ease-in', style({ opacity: 0 }))
+                ], { optional: true }),
+                query(':enter', [
+                    animate('300ms 100ms ease-out', style({ opacity: 1 }))
+                ], { optional: true }),
+                // Let any nested routed animation (e.g. a sub-view fade inside a
+                // section shell) run too, so fades compose across outlet levels.
+                query('@*', animateChild(), { optional: true }),
+            ]),
+        ])
+    ])
+
 export const popAnimation =
     trigger('popAnimation', [
         transition('* => *', [

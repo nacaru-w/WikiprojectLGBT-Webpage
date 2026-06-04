@@ -1,0 +1,9 @@
+<div #track class="view-switch" role="tablist" [attr.aria-label]="ariaLabel() || null">
+    <span class="view-switch__thumb" aria-hidden="true" [class.view-switch__thumb--ready]="thumbReady()"
+        [style.left.px]="thumb()?.left" [style.top.px]="thumb()?.top"
+        [style.width.px]="thumb()?.width" [style.height.px]="thumb()?.height"></span>
+    @for (option of options(); track option.link) {
+        <a #opt class="view-switch__option" role="tab" [routerLink]="option.link" routerLinkActive
+            #rla="routerLinkActive" [attr.aria-selected]="rla.isActive" [replaceUrl]="true">{{ option.labelKey | translate }}</a>
+    }
+</div>

@@ -1,4 +1,5 @@
-import { Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { Component, DestroyRef, OnInit, PLATFORM_ID, inject } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Chart } from 'chart.js/auto';
 
@@ -19,12 +20,19 @@ export class StatisticsYearlyArticlesComponent implements OnInit {
   private mediawikiService = inject(MediawikiService);
   private translate = inject(TranslateService);
   private destroyRef = inject(DestroyRef);
+  private platformId = inject(PLATFORM_ID);
 
   articlesArray: string[] = [];
   totalArticleCount: number = 0;
   yearlyArticlesChart: any;
 
   ngOnInit(): void {
+    // Chart creation touches the DOM (document.getElementById). The stats outlet
+    // already only renders after hydration, so this never runs on the server, but
+    // guard anyway so the component is self-safe if ever rendered server-side.
+    if (!isPlatformBrowser(this.platformId)) {
+      return;
+    }
     this.createYearlyArticlesChart();
     this.getAllArticles();
     // Re-translate the chart labels whenever the language changes at runtime.

@@ -1,28 +1,19 @@
 <nav class="subpage-nav">
-    <li class="subpage-nav-option" [class.active]="activeSection === 'yearly-articles'">
-        <a href="#yearly-articles" (click)="selectSection($event, 'yearly-articles')">{{ 'stats.nav.yearlyArticles' | translate }}</a>
+    <li class="subpage-nav-option" routerLinkActive="active">
+        <a routerLink="articles" [replaceUrl]="true">{{ 'stats.nav.articles' | translate }}</a>
     </li>
-    <li class="subpage-nav-option" [class.active]="activeSection === 'monthly-articles'">
-        <a href="#monthly-articles" (click)="selectSection($event, 'monthly-articles')">{{ 'stats.nav.monthlyArticles' | translate }}</a>
+    <li class="subpage-nav-option" routerLinkActive="active">
+        <a routerLink="participants" [replaceUrl]="true">{{ 'stats.nav.participants' | translate }}</a>
     </li>
-    <li class="subpage-nav-option" [class.active]="activeSection === 'notable'">
-        <a href="#notable" (click)="selectSection($event, 'notable')">{{ 'stats.nav.notable' | translate }}</a>
-    </li>
-    <li class="subpage-nav-option" [class.active]="activeSection === 'participants' || activeSection === 'participants-stats'">
-        <a href="#participants" (click)="selectSection($event, 'participants')">{{ 'stats.nav.participants' | translate }}</a>
-    </li>
-    <li class="subpage-nav-option" [class.active]="activeSection === 'last-articles'">
-        <a href="#last-articles" (click)="selectSection($event, 'last-articles')">{{ 'stats.nav.lastArticles' | translate }}</a>
-    </li>
-    <li class="subpage-nav-option" [class.active]="activeSection === 'images'">
-        <a href="#images" (click)="selectSection($event, 'images')">{{ 'stats.nav.images' | translate }}</a>
+    <li class="subpage-nav-option" routerLinkActive="active">
+        <a routerLink="images" [replaceUrl]="true">{{ 'stats.nav.images' | translate }}</a>
     </li>
 </nav>
 <div class="chart-box">
     <!-- Intro + empty-state are the landing content: shown only once hydrated and
          no section is active. Gating on showEmptyState (browser-only) instead of
-         !activeSection keeps the intro from server-rendering on a deep link like
-         /stats#participants and then being removed — which caused a flash. -->
+         "no active route" keeps the intro from server-rendering on a deep link
+         like /stats/participants and then being removed — which caused a flash. -->
     @if (showEmptyState) {
         <div class="stats-introduction">
             <p [innerHTML]="'stats.intro1' | translate"></p>
@@ -33,38 +24,12 @@
             <p class="placeholder-label">{{ 'stats.pickSection' | translate }}</p>
         </div>
     }
-    @if (showYearlyArticles) {
-        <app-statistics-yearly-articles [@slideInOut]="showYearlyArticles"></app-statistics-yearly-articles>
-    }
-    @if (showMonthlyArticles) {
-        <app-statistics-monthly-articles [@slideInOut]="showMonthlyArticles"></app-statistics-monthly-articles>
-    }
-    @if (showNotable) {
-        <app-statistics-notable [@slideInOut]="showNotable"></app-statistics-notable>
-    }
-    @if (showParticipants) {
-        <div class="participants-results" [@fadeInOut]="showParticipants">
-            <div class="view-switch" role="tablist" [attr.aria-label]="'stats.nav.participants' | translate"
-                [class.view-switch--stats]="participantsView === 'stats'">
-                <span class="view-switch__thumb" aria-hidden="true"></span>
-                <a class="view-switch__option" href="#participants" role="tab"
-                    [attr.aria-selected]="participantsView === 'lookup'"
-                    (click)="selectSection($event, 'participants')">{{ 'stats.participantsNav.lookup' | translate }}</a>
-                <a class="view-switch__option" href="#participants-stats" role="tab"
-                    [attr.aria-selected]="participantsView === 'stats'"
-                    (click)="selectSection($event, 'participants-stats')">{{ 'stats.participantsNav.stats' | translate }}</a>
-            </div>
-            @if (participantsView === 'lookup') {
-                <app-statistics-member-creations [@fadeIn] [@.disabled]="!viewFadeEnabled"></app-statistics-member-creations>
-            } @else {
-                <app-statistics-participants [@fadeIn] [@.disabled]="!viewFadeEnabled"></app-statistics-participants>
-            }
+    <!-- Gated on hydration so the section's charts never server-render (a hash-free
+         deep link reaches the server; without this gate it would try to render the
+         chart, mismatch on hydration and leave a stuck barba). -->
+    @if (showOutlet) {
+        <div [@subviewFade]="routeData(outlet)">
+            <router-outlet #outlet="outlet" (activate)="onOutletActivate()" (deactivate)="onOutletDeactivate()"></router-outlet>
         </div>
-    }
-    @if (showLastArticles) {
-        <app-statistics-last-articles [@slideInOut]="showLastArticles"></app-statistics-last-articles>
-    }
-    @if (showImages) {
-        <app-statistics-images [@slideInOut]="showImages"></app-statistics-images>
     }
 </div>
