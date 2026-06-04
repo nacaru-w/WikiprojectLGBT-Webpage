@@ -45,6 +45,9 @@ export class StatsViewSwitchComponent implements OnInit {
   @ViewChild('track') private track?: ElementRef<HTMLElement>;
   @ViewChildren('opt') private optionEls?: QueryList<ElementRef<HTMLElement>>;
 
+  /** Current router URL; the active index is derived from this once inputs bind. */
+  private readonly currentUrl = signal('');
+
   /** Index of the option matching the current URL; drives the sliding thumb. */
   readonly activeIndex = signal(0);
 
@@ -53,13 +56,20 @@ export class StatsViewSwitchComponent implements OnInit {
   readonly thumbReady = computed(() => this.thumb() !== null);
 
   constructor() {
-    // Keep the active index in sync as the user navigates between sub-routes.
+    // Track the URL as the user navigates between sub-routes. We only record it
+    // here — deriving the index (which reads the required `options` input) is
+    // deferred to the effect below, so a NavigationEnd arriving before the input
+    // is bound can't read `options()` too early (NG0950).
     this.router.events
       .pipe(
         filter((e): e is NavigationEnd => e instanceof NavigationEnd),
         takeUntilDestroyed(this.destroyRef),
       )
-      .subscribe(e => this.syncActive(e.urlAfterRedirects));
+      .subscribe(e => this.currentUrl.set(e.urlAfterRedirects));
+
+    // Derive the active index from the URL and options. Runs after inputs bind,
+    // so `options()` is always available here.
+    effect(() => this.syncActive(this.currentUrl()));
 
     // The active option's geometry doesn't depend on the index, so re-measuring
     // when it changes is safe (layout is already settled) — just reposition.
@@ -83,11 +93,14 @@ export class StatsViewSwitchComponent implements OnInit {
 
   ngOnInit(): void {
     // Seed from the current URL so a deep link positions the thumb correctly.
-    this.syncActive(this.router.url);
+    this.currentUrl.set(this.router.url);
   }
 
   /** Match the URL's leaf segment against the options to find the active index. */
   private syncActive(url: string): void {
+    if (!url) {
+      return;
+    }
     const segment = url.split(/[?#]/)[0].split('/').filter(Boolean).pop() ?? '';
     const index = this.options().findIndex(o => o.link === segment);
     if (index >= 0) {
