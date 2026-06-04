@@ -1,5 +1,5 @@
 @if (isLoggedIn() !== null && !isLoggedIn()) {
-<div class="login-container" [@popAnimation]="animate()">
+<div class="login-container" animate.enter="pop-in">
     <div class="mb-2">
         {{ 'login.oauthInfo' | translate }}
     </div>
@@ -13,7 +13,7 @@
 </div>
 }
 @if (isLoggedIn() && !isAdmin()) {
-<div class="login-container" [@popAnimation]="animate()">
+<div class="login-container" animate.enter="pop-in">
     <div class="mb-2">
         {{ 'login.notAdmin' | translate }}
     </div>

@@ -28,8 +28,6 @@
          deep link reaches the server; without this gate it would try to render the
          chart, mismatch on hydration and leave a stuck barba). -->
     @if (showOutlet) {
-        <div [@subviewFade]="routeData(outlet)">
-            <router-outlet #outlet="outlet" (activate)="onOutletActivate()" (deactivate)="onOutletDeactivate()"></router-outlet>
-        </div>
+        <router-outlet (activate)="onOutletActivate()" (deactivate)="onOutletDeactivate()"></router-outlet>
     }
 </div>

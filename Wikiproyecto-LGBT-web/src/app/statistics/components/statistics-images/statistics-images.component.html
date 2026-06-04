@@ -23,9 +23,9 @@
         <p>{{ 'stats.images.error' | translate }}</p>
       </div>
     } @else {
-      <div class="gallery-grid" [@popAnimation]="images().length">
-        @for (img of images(); track img.title) {
-          <figure class="gallery-item">
+      <div class="gallery-grid">
+        @for (img of images(); track img.title; let i = $index) {
+          <figure class="gallery-item" animate.enter="pop-in" style="--pop-index: {{ i }}">
             <a class="gallery-link" [href]="img.descriptionUrl" target="_blank" rel="noopener"
               [attr.title]="'stats.images.viewOnCommons' | translate">
               <img class="gallery-img" [src]="img.thumbUrl" [alt]="img.title" loading="lazy">

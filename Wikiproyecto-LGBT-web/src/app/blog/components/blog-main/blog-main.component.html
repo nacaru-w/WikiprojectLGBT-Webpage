@@ -1,16 +1,16 @@
-<div class="blog-posts-container" [@popAnimation]="loaded() || error">
+<div class="blog-posts-container">
     @if (!loaded() && !error) {
     <app-loading-barba />
     }
     @if (error) {
-    <div class="blog-post">
+    <div class="blog-post" animate.enter="pop-in">
         <h1 class="error-title">{{ 'blog.error500Title' | translate }}</h1>
         <span>{{ error | translate }}</span>
     </div>
     }
     @if (loaded() && !error) {
-    @for (item of sortedPosts; track $index) {
-    <a class="fill-link" routerLink="/blog/{{item.id}}">
+    @for (item of sortedPosts; track $index; let i = $index) {
+    <a class="fill-link" routerLink="/blog/{{item.id}}" animate.enter="pop-in" style="--pop-index: {{ i }}">
         <div class="blog-post">
             <h2>{{item.title}}</h2>
             <div class="author">{{item.author}}</div>

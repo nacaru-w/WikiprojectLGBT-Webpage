@@ -232,4 +232,19 @@ form {
         transition: background-color 0.5s, opacity 0.5s;
     }
 
+    // Submit button enabled/disabled states (former @angular/animations
+    // `buttonState`). The `button` rule above already carries the 0.5s ease
+    // transition; here we just toggle fill + opacity by state. Hover still wins
+    // (global .btn.btn-primary:hover has higher specificity), so it stays white.
+    .submit-btn {
+        background-color: #b3efff;
+        opacity: 1;
+
+        &.disabled,
+        &:disabled {
+            background-color: #cccccc;
+            opacity: 0.5;
+        }
+    }
+
 }

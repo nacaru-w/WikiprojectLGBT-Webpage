@@ -2,7 +2,6 @@ import { Component, ElementRef, NgZone, OnDestroy, PLATFORM_ID, ViewChild, injec
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { buttonState } from '../../../animations/animations';
 import { BarbaService } from '../../../services/barba.service';
 import { ApiService } from '../../../services/api.service';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
@@ -27,7 +26,6 @@ type SendStatus = 'idle' | 'captcha' | 'sending' | 'success' | 'error';
   imports: [NgbDropdownModule, ReactiveFormsModule, CommonModule, TranslatePipe],
   templateUrl: './form-main.component.html',
   styleUrl: './form-main.component.scss',
-  animations: [buttonState]
 })
 export class FormMainComponent implements OnDestroy {
   private formBuilder = inject(FormBuilder);

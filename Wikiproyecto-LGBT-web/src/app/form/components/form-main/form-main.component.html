@@ -97,9 +97,8 @@
   <label class="form-check-label" for="readPrivacy" [innerHTML]="'form.agreePrivacy' | translate"></label>
 </div>
 <div class="submit-button-container d-grid col-6 mx-auto">
-  <button type="button" class="btn btn-primary mx-auto" data-bs-toggle="modal" data-bs-target="#formConfirm"
-    (click)="onVerifyClick()" [disabled]="!isFormValid()" [ngClass]="{'disabled' : !isFormValid()}"
-    [@buttonState]="isFormValid() ? 'enabled' : 'disabled'">
+  <button type="button" class="btn btn-primary mx-auto submit-btn" data-bs-toggle="modal" data-bs-target="#formConfirm"
+    (click)="onVerifyClick()" [disabled]="!isFormValid()" [ngClass]="{'disabled' : !isFormValid()}">
     {{ 'form.submit' | translate }}
   </button>
 </div>

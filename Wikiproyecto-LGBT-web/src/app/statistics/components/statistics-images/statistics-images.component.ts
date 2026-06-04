@@ -4,7 +4,6 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { CommonsService } from '../../../services/commons.service';
 import { CommonsImage } from '../../models/commons-image';
 import { BarbaService } from '../../../services/barba.service';
-import { popAnimation } from '../../../animations/animations';
 import { LoadingBarbaComponent } from '../../../shared/components/loading-barba/loading-barba.component';
 
 /**
@@ -19,7 +18,6 @@ import { LoadingBarbaComponent } from '../../../shared/components/loading-barba/
   imports: [TranslatePipe, LoadingBarbaComponent],
   templateUrl: './statistics-images.component.html',
   styleUrl: './statistics-images.component.scss',
-  animations: [popAnimation],
 })
 export class StatisticsImagesComponent implements OnInit {
   private commons = inject(CommonsService);

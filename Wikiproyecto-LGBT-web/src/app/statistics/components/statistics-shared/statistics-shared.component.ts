@@ -3,7 +3,6 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 
 import { BarbaService } from '../../../services/barba.service';
-import { subviewFadeAnimation } from '../../../animations/animations';
 
 /**
  * Stats page shell. Renders the intro, the top-level section nav (Articles /
@@ -17,7 +16,6 @@ import { subviewFadeAnimation } from '../../../animations/animations';
   imports: [RouterOutlet, RouterLink, RouterLinkActive, TranslatePipe],
   templateUrl: './statistics-shared.component.html',
   styleUrl: './statistics-shared.component.scss',
-  animations: [subviewFadeAnimation],
 })
 export class StatisticsSharedComponent {
   private cdr = inject(ChangeDetectorRef);
@@ -61,10 +59,5 @@ export class StatisticsSharedComponent {
 
   onOutletDeactivate(): void {
     this.outletActive = false;
-  }
-
-  /** Per-section animation key, so switching section fades via [@subviewFade]. */
-  routeData(outlet: RouterOutlet): unknown {
-    return outlet?.activatedRouteData?.['animation'];
   }
 }

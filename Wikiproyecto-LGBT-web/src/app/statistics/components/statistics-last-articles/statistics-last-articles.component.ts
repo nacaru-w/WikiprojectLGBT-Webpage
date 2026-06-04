@@ -8,7 +8,6 @@ import { ChangeDetectorRef } from '@angular/core';
 import { Observable, forkJoin, of } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 
-import { popAnimation } from '../../../animations/animations';
 import { BarbaService } from '../../../services/barba.service';
 import { unescapeInvalidCharacters } from '../../../utils/utils';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -21,7 +20,6 @@ import { LoadingBarbaComponent } from '../../../shared/components/loading-barba/
   imports: [CommonModule, TranslatePipe, NgbPopover, LoadingBarbaComponent],
   templateUrl: './statistics-last-articles.component.html',
   styleUrl: './statistics-last-articles.component.scss',
-  animations: [popAnimation]
 })
 export class StatisticsLastArticlesComponent implements OnInit {
   private mediawikiService = inject(MediawikiService);

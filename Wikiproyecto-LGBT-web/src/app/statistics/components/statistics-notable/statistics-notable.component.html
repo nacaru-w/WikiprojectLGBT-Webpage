@@ -1,5 +1,5 @@
 @if (isAPIDone()) {
-<div class="chart-container" [@fadeIn]>
+<div class="chart-container" animate.enter="fade-in">
     <div class="chart-text">
         <p [innerHTML]="'stats.notable.text1' | translate"></p>
         <p>{{ 'stats.notable.text2' | translate }}</p>

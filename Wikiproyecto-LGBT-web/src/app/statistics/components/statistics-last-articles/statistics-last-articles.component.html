@@ -1,10 +1,10 @@
 @if (showSpinner()) {
   <app-loading-barba />
 }
-<div class="card-container" [@popAnimation]="readyCount()">
-  @for (item of cardDict | keyvalue: keepOrder; track item.key) {
+<div class="card-container">
+  @for (item of cardDict | keyvalue: keepOrder; track item.key; let i = $index) {
     @if (item.value.extractLoaded && item.value.image) {
-      <div class="card">
+      <div class="card" animate.enter="pop-in" style="--pop-index: {{ i }}">
         <div class="card-img-container">
           @if (item.value.hasImage) {
             <img src="{{item.value.image}}" class="card-img-top" alt="">

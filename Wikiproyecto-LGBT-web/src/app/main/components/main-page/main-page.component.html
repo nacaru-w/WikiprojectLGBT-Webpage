@@ -1,6 +1,6 @@
 <div class="carousel-and-boxes">
   @if (blocksReady()) {
-    <div class="carousel-wrapper" [@popAnimation]="blocksReady()">
+    <div class="carousel-wrapper" animate.enter="pop-in">
       @if (images(); as slides) {
         <ngb-carousel>
           @for (image of slides; track $index) {
@@ -35,7 +35,7 @@
     </div>
 
     <div class="box-set">
-      <div class="card text-center" [@popAnimation]="blocksReady()">
+      <div class="card text-center" animate.enter="pop-in" style="--pop-index: 1">
         <div class="img-container">
           <img [src]=eventoDelMesImage class="card-img-top" alt="...">
         </div>
@@ -44,7 +44,7 @@
           <a href="https://es.wikipedia.org/wiki/Wikiproyecto:LGBT/Pa%C3%ADs_del_mes" class="btn btn-primary">{{ 'common.viewOnWikipedia' | translate }}</a>
         </div>
       </div>
-      <div class="card text-center" [@popAnimation]="blocksReady()">
+      <div class="card text-center" animate.enter="pop-in" style="--pop-index: 2">
         <div class="img-container">
           <img src="https://commons.wikimedia.org/w/index.php?title=Special:Redirect/file&wpvalue=Wikipedia Logo LGBT version.svg"
             class="card-img-top" alt="...">

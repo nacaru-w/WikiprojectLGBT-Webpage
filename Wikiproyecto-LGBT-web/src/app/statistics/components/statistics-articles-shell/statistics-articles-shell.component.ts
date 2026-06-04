@@ -3,7 +3,6 @@ import { RouterOutlet } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 
 import { StatsViewSwitchComponent, ViewSwitchOption } from '../stats-view-switch/stats-view-switch.component';
-import { subviewFadeAnimation } from '../../../animations/animations';
 
 /**
  * "Artículos" section shell: a sliding view-switch over the article sub-routes
@@ -17,7 +16,6 @@ import { subviewFadeAnimation } from '../../../animations/animations';
   imports: [RouterOutlet, StatsViewSwitchComponent, TranslatePipe],
   templateUrl: './statistics-articles-shell.component.html',
   styleUrl: './statistics-articles-shell.component.scss',
-  animations: [subviewFadeAnimation],
 })
 export class StatisticsArticlesShellComponent {
   readonly options: ViewSwitchOption[] = [
@@ -27,9 +25,4 @@ export class StatisticsArticlesShellComponent {
     { labelKey: 'stats.nav.lastArticles', link: 'latest' },
     { labelKey: 'stats.articlesNav.search', link: 'search' },
   ];
-
-  /** Per-route animation key, so switching sub-view fades via [@subviewFade]. */
-  routeData(outlet: RouterOutlet): unknown {
-    return outlet?.activatedRouteData?.['animation'];
-  }
 }

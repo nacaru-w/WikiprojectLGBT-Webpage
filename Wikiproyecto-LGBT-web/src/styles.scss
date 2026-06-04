@@ -172,6 +172,60 @@ body {
     }
 }
 
+/* ---------------------------------------------------------------------------
+   Enter animations — migrated from @angular/animations (deprecated in v20.2,
+   removed in v23) to native CSS. Applied via Angular's `animate.enter="<class>"`
+   template syntax: Angular adds the class when the element enters the DOM and
+   removes it once the animation ends. No provider/decorator needed.
+     .pop-in  → scale + fade (former `popAnimation`). On staggered lists set
+                `style="--pop-index: {{ $index }}"` per item for a capped cascade.
+     .fade-in → opacity-only (former `fadeIn`).
+--------------------------------------------------------------------------- */
+@keyframes pop-in {
+    from { opacity: 0; transform: scale(0.5); }
+    to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes fade-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+.pop-in {
+    // `both` holds the from-state before the (possibly delayed) start, so
+    // staggered items stay hidden until their turn instead of flashing first.
+    animation: pop-in 300ms ease-out both;
+    // Cap the cascade so long / "load more" lists can't accrue multi-second delays.
+    animation-delay: calc(min(var(--pop-index, 0), 10) * 100ms);
+}
+
+.fade-in {
+    animation: fade-in 450ms ease-out both;
+}
+
+/* Route navigation transition — former `routeAnimations` (page slide) and
+   `subviewFade` (stats sub-route fade), now driven by the router's View
+   Transitions API (see withViewTransitions in app.config). A root cross-fade
+   only *shows* where old/new snapshots differ, so unchanged chrome (header,
+   nav) stays put while the routed / sub-routed region fades. */
+::view-transition-old(root),
+::view-transition-new(root) {
+    animation-duration: 300ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .pop-in,
+    .fade-in {
+        animation: none;
+    }
+
+    ::view-transition-group(*),
+    ::view-transition-old(*),
+    ::view-transition-new(*) {
+        animation: none !important;
+    }
+}
+
 .btn {
     font-weight: bold;
     font-size: 90%;

@@ -3,7 +3,6 @@ import { NgbCarouselConfig, NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap
 import { MediawikiService } from '../../../services/mediawiki.service';
 import { LoadingService } from '../../../services/loading.service';
 import { ThemeService } from '../../../services/theme/theme.service';
-import { popAnimation } from '../../../animations/animations';
 import { TranslatePipe } from '@ngx-translate/core';
 
 
@@ -14,7 +13,6 @@ import { TranslatePipe } from '@ngx-translate/core';
   templateUrl: './main-page.component.html',
   styleUrl: './main-page.component.scss',
   providers: [NgbCarouselConfig],
-  animations: [popAnimation]
 })
 export class MainPageComponent implements OnInit {
   private mediaWikiService = inject(MediawikiService);

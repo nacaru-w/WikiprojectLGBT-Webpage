@@ -1,9 +1,9 @@
 <div class="global-container">
     <app-header></app-header>
-    <div class="main" [@routeAnimations]="getRouteAnimationData()">
+    <div class="main">
         <router-outlet></router-outlet>
     </div>
-    <div class="footer2" [@footerAnimations]="footerAnimationState()">
+    <div class="footer2" [class.footer2--hidden]="footerAnimationState() === 'hidden'">
         <app-footer></app-footer>
     </div>
 </div>

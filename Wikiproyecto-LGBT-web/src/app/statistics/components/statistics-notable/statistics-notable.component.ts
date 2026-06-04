@@ -5,8 +5,6 @@ import { Subject, catchError, debounceTime, filter, map, of, switchMap } from 'r
 
 import { MediawikiService } from '../../../services/mediawiki.service';
 
-import { chartsSlideInOutAnimation, fadeInAnimation } from '../../../animations/animations';
-
 import { NotableArticles } from '../../models/notable-articles';
 import { TranslatePipe } from '@ngx-translate/core';
 import { NgbAccordionModule, NgbModal, NgbPopover } from '@ng-bootstrap/ng-bootstrap';
@@ -18,7 +16,6 @@ import { LoadingBarbaComponent } from '../../../shared/components/loading-barba/
   imports: [TranslatePipe, NgbPopover, NgbAccordionModule, LoadingBarbaComponent],
   templateUrl: './statistics-notable.component.html',
   styleUrl: './statistics-notable.component.scss',
-  animations: [chartsSlideInOutAnimation, fadeInAnimation]
 })
 export class StatisticsNotableComponent implements OnInit {
   private mediawikiService = inject(MediawikiService);

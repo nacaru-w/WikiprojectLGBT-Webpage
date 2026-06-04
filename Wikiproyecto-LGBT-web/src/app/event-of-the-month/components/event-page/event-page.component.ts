@@ -5,7 +5,6 @@ import { parseEventoDelMes } from '../../utils/evento-parser';
 import { EventoData } from '../../models/event-data';
 import { EventMapComponent } from '../event-map/event-map.component';
 import { EventListComponent } from '../event-list/event-list.component';
-import { fadeInAnimation } from '../../../animations/animations';
 import { LoadingBarbaComponent } from '../../../shared/components/loading-barba/loading-barba.component';
 
 type Section = 'map' | 'list';
@@ -16,7 +15,6 @@ type Section = 'map' | 'list';
   imports: [TranslatePipe, EventMapComponent, EventListComponent, LoadingBarbaComponent],
   templateUrl: './event-page.component.html',
   styleUrl: './event-page.component.scss',
-  animations: [fadeInAnimation],
 })
 export class EventPageComponent implements OnInit {
   private mediawiki = inject(MediawikiService);

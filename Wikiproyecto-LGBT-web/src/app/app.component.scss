@@ -5,6 +5,28 @@
     min-height: 100vh;
 }
 
+// Footer slide/fade (former @angular/animations `footerAnimations`). The base
+// rule is the "visible" state and carries the hidden->visible timing (0.5s
+// ease-in); .footer2--hidden carries the faster visible->hidden timing (0.2s
+// ease-out), so each direction keeps its original speed.
+.footer2 {
+    transform: translateY(0%);
+    opacity: 1;
+    transition: transform 0.5s ease-in, opacity 0.5s ease-in;
+}
+
+.footer2--hidden {
+    transform: translateY(100%);
+    opacity: 0;
+    transition: transform 0.2s ease-out, opacity 0.2s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .footer2 {
+        transition: none;
+    }
+}
+
 .main {
     flex: 1;
     // Always keep routed content clear of the footer's zig-zag top edge. Lives

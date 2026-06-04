@@ -56,9 +56,9 @@
         <div class="star-chart-container">
             <span class="star-total">Artículos destacados <span class="star-total-number">{{notableArtDict.AD.length ||
                     ''}}</span></span>
-            <div class="star-chart" [@popAnimation]="notableArtDict.AD">
-                @for (item of notableArtDict.AD; track item) {
-                <a href="https://es.wikipedia.org/wiki/{{item}}"><img class="star"
+            <div class="star-chart">
+                @for (item of notableArtDict.AD; track item; let i = $index) {
+                <a href="https://es.wikipedia.org/wiki/{{item}}" animate.enter="pop-in" style="--pop-index: {{ i }}"><img class="star"
                         src="./../../../../assets/imgs/featured_article_symbol.svg" alt=""></a>
                 }
             </div>
@@ -66,9 +66,9 @@
         <div class="star-chart-container">
             <span class="star-total">Artículos buenos <span class="star-total-number">{{notableArtDict.AB.length ||
                     ''}}</span></span>
-            <div class="star-chart" [@popAnimation]="notableArtDict.AB">
-                @for (item of notableArtDict.AB; track item) {
-                <a href="https://es.wikipedia.org/wiki/{{item}}"><img class="star"
+            <div class="star-chart">
+                @for (item of notableArtDict.AB; track item; let i = $index) {
+                <a href="https://es.wikipedia.org/wiki/{{item}}" animate.enter="pop-in" style="--pop-index: {{ i }}"><img class="star"
                         src="./../../../../assets/imgs/good_article_symbol.svg" alt=""></a>
                 }
             </div>

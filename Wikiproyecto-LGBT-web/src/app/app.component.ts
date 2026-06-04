@@ -5,7 +5,6 @@ import { RouterOutlet, Router, NavigationStart, NavigationEnd, NavigationCancel,
 import { FooterComponent } from './shared/components/footer/footer.component';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { LoadingBarbaComponent } from './shared/components/loading-barba/loading-barba.component';
-import { footerAnimations, slideInAnimation } from './animations/animations';
 import { LoadingService } from './services/loading.service';
 import { TranslateService } from '@ngx-translate/core';
 import { SUPPORTED_LANGS } from './services/i18n/i18n.config';
@@ -23,9 +22,6 @@ import { ChildrenOutletContexts } from '@angular/router';
 ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
-  animations: [
-    slideInAnimation, footerAnimations
-  ],
   providers: [FooterComponent]
 })
 export class AppComponent implements OnInit {
@@ -153,9 +149,5 @@ export class AppComponent implements OnInit {
 
   showFooter() {
     this.footerAnimationState.set('visible');
-  }
-
-  getRouteAnimationData() {
-    return this.contexts.getContext('primary')?.route?.snapshot?.data?.['animation'];
   }
 }

@@ -1,6 +1,4 @@
 <div class="stats-section-card">
     <app-stats-view-switch [options]="options" [ariaLabel]="'stats.nav.articles' | translate"></app-stats-view-switch>
-    <div [@subviewFade]="routeData(outlet)">
-        <router-outlet #outlet="outlet"></router-outlet>
-    </div>
+    <router-outlet></router-outlet>
 </div>

@@ -15,7 +15,6 @@ import { newParticipants2021, newParticipants2022, newParticipants2023 } from '.
 
 import { MonthlyOccurencesModel } from '../../models/monthly-occurences-model';
 import { NotableArticles } from '../../models/notable-articles';
-import { popAnimation } from '../../../animations/animations';
 
 @Component({
   selector: 'app-statistics-main',
@@ -30,9 +29,6 @@ import { popAnimation } from '../../../animations/animations';
   ],
   templateUrl: './statistics-main.component.html',
   styleUrl: './statistics-main.component.scss',
-  animations: [
-    popAnimation
-  ]
 })
 export class StatisticsMainComponent implements OnInit, AfterViewInit {
   private mediawikiService = inject(MediawikiService);

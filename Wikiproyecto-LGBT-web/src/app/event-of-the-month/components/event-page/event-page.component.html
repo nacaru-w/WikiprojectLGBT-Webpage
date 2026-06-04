@@ -1,7 +1,7 @@
 @if (!loaded()) {
 <app-loading-barba />
 } @else {
-<div [@fadeIn]>
+<div animate.enter="fade-in">
   <nav class="subpage-nav">
     <li class="subpage-nav-option" [class.active]="section() === 'map'">
       <a href="#map" (click)="show($event, 'map')">{{ 'event.nav.map' | translate }}</a>
@@ -16,9 +16,9 @@
   </div>
 
   @if (section() === 'map') {
-  <app-event-map [@fadeIn] [countries]="data().countries"></app-event-map>
+  <app-event-map animate.enter="fade-in" [countries]="data().countries"></app-event-map>
   } @else {
-  <app-event-list [@fadeIn] [events]="data().events"></app-event-list>
+  <app-event-list animate.enter="fade-in" [events]="data().events"></app-event-list>
   }
 </div>
 }

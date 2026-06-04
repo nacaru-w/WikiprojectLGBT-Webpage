@@ -3,7 +3,6 @@ import { RouterOutlet } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 
 import { StatsViewSwitchComponent, ViewSwitchOption } from '../stats-view-switch/stats-view-switch.component';
-import { subviewFadeAnimation } from '../../../animations/animations';
 
 /**
  * "Participantes" section shell: a sliding view-switch over the two participant
@@ -16,16 +15,10 @@ import { subviewFadeAnimation } from '../../../animations/animations';
   imports: [RouterOutlet, StatsViewSwitchComponent, TranslatePipe],
   templateUrl: './statistics-participants-shell.component.html',
   styleUrl: './statistics-participants-shell.component.scss',
-  animations: [subviewFadeAnimation],
 })
 export class StatisticsParticipantsShellComponent {
   readonly options: ViewSwitchOption[] = [
     { labelKey: 'stats.participantsNav.lookup', link: 'contributors' },
     { labelKey: 'stats.participantsNav.stats', link: 'by-year' },
   ];
-
-  /** Per-route animation key, so switching sub-view fades via [@subviewFade]. */
-  routeData(outlet: RouterOutlet): unknown {
-    return outlet?.activatedRouteData?.['animation'];
-  }
 }

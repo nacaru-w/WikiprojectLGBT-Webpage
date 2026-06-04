@@ -1,9 +1,8 @@
 import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { provideRouter, withViewTransitions } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideClientHydration, withHttpTransferCacheOptions } from '@angular/platform-browser';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 import { provideQuillConfig } from 'ngx-quill';
@@ -16,12 +15,14 @@ import { DEFAULT_LANG } from './services/i18n/i18n.config';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection(),
-    provideRouter(routes),
+    // withViewTransitions: route navigation animates via the native View
+    // Transitions API (a root cross-fade, tuned in styles.scss), replacing the
+    // old @angular/animations routeAnimations slide and subviewFade.
+    provideRouter(routes, withViewTransitions()),
     provideClientHydration(withHttpTransferCacheOptions({
       // https://angular.dev/guide/ssr#caching-data-when-using-httpclient
       filter: (_) => false,
     })),
-    provideAnimationsAsync(),
     provideHttpClient(withFetch(), withInterceptors([withCredentialsInterceptor, wikimediaUserAgentInterceptor])),
     provideCharts(withDefaultRegisterables()),
     // Sanitize HTML bound into/out of the editor so stored post content can't inject scripts.
