@@ -544,7 +544,7 @@ app.delete('/api/blog/:id', (req, res) => {
 const TURNSTILE_TEST_SECRET = '1x0000000000000000000000000000000AA';
 // Precedence: env override (ops/testing) → credentials.ts → test secret (dev).
 const TURNSTILE_SECRET = process.env['TURNSTILE_SECRET'] || turnstileSecret || TURNSTILE_TEST_SECRET;
-const CONTACT_RECIPIENT = 'vic@wmlgbt.org';
+const CONTACT_RECIPIENT = 'community@wmlgbt.org';
 // From must be a tool-controlled address for SPF alignment; the submitter's
 // address goes in Reply-To so the team can reply directly.
 const CONTACT_FROM = 'Wikiproyecto LGBT <wmlgbt-es-web@toolforge.org>';
