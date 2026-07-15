@@ -1,9 +1,10 @@
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable, catchError, map, of, tap } from 'rxjs';
 import { BlogPostInfoModel } from '../blog/models/blog-post-info-model';
 import { MemberCreationsResponse } from './models/member-creations';
 import { ArticleAuthorshipResponse } from './models/article-authorship';
+import { ArticleSearchResponse } from './models/article-search';
 import { REQUEST } from '../../express.tokens';
 
 @Injectable({
@@ -159,6 +160,19 @@ export class ApiService {
     return this.http.get<ArticleAuthorshipResponse>(
       this.endpoint + 'article-authorship/' + encodeURIComponent(title)
     );
+  }
+
+  /**
+   * Search the LGBT-tracked article list by title (the /stats "Buscador" view).
+   * Paged via offset/limit so the caller can "load more"; the response carries
+   * the total match count. Errors propagate so the component drives its own UI.
+   */
+  searchLgbtArticles(query: string, offset = 0, limit = 20): Observable<ArticleSearchResponse> {
+    const params = new HttpParams()
+      .set('q', query)
+      .set('offset', offset)
+      .set('limit', limit);
+    return this.http.get<ArticleSearchResponse>(this.endpoint + 'articles', { params });
   }
 
   /**

@@ -9,7 +9,6 @@ import { ApiService } from '../../../services/api.service';
 import { XtoolsService } from '../../../services/xtools.service';
 import { XtoolsPageInfo } from '../../../services/models/xtools';
 import { ArticleAuthor } from '../../../services/models/article-authorship';
-import { MemberCreatedArticle } from '../../../services/models/member-creations';
 import { LoadingBarbaComponent } from '../../../shared/components/loading-barba/loading-barba.component';
 
 /** One slice of the authorship pie. */
@@ -50,8 +49,11 @@ const MEMBER_PALETTE = ['#3ac78f', '#b1efff', '#fff574', '#ffad5c', '#fa7c7c', '
   styleUrl: './member-article-info-modal.component.scss',
 })
 export class MemberArticleInfoModalComponent implements OnInit, OnDestroy {
-  // Set by the opener (StatisticsMemberCreationsComponent).
-  article!: MemberCreatedArticle;
+  // Set by the opener (member-creations or the article search). Only the title
+  // and url are read here — the page facts + authorship are fetched live by
+  // title — so any article-like row (MemberCreatedArticle, ArticleSearchResult)
+  // can feed this modal.
+  article!: { title: string; url: string };
   member = '';
   members: string[] = [];
 

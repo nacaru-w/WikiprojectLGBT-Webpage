@@ -1,5 +1,88 @@
-<div class="search-placeholder">
-    <img class="placeholder-barba" src="assets/imgs/Barbas/editor/barba_editor_{{barba}}.svg" alt="">
-    <p class="placeholder-title">{{ 'stats.search.title' | translate }}</p>
-    <p class="placeholder-label">{{ 'stats.search.comingSoon' | translate }}</p>
+<div class="article-search">
+  <div class="article-search__bar-wrap">
+    <label class="article-search__label" for="articleSearchInput">
+      {{ 'stats.search.searchLabel' | translate }}
+    </label>
+
+    <div class="article-search__bar">
+      <input
+        id="articleSearchInput"
+        type="search"
+        class="form-control article-search__input"
+        [(ngModel)]="query"
+        (keyup.enter)="submit()"
+        [placeholder]="'stats.search.placeholder' | translate"
+        autocomplete="off"
+        spellcheck="false" />
+
+      <button
+        type="button"
+        class="article-search__button cyan-action-button"
+        (click)="submit()"
+        [attr.aria-label]="'stats.search.searchButton' | translate">
+        <svg class="article-search__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <circle cx="11" cy="11" r="7"></circle>
+          <line x1="16.5" y1="16.5" x2="21" y2="21"></line>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  @if (loading()) {
+    <p class="article-search__status">{{ 'stats.search.loading' | translate }}</p>
+  } @else if (results(); as list) {
+    @if (list.length === 0) {
+      <p class="article-search__status">{{ 'stats.search.empty' | translate }}</p>
+    } @else {
+      <div class="article-search__results">
+        <p class="article-search__summary">
+          {{ 'stats.search.count' | translate:{ count: total() } }}
+        </p>
+
+        <div class="creations-table-wrap">
+          <table class="creations-table">
+            <thead>
+              <tr>
+                <th scope="col">{{ 'stats.search.colArticle' | translate }}</th>
+                <th scope="col">{{ 'stats.search.colLastChange' | translate }}</th>
+                <th scope="col" class="creations-table__info-col">
+                  <span class="creations-table__sr">{{ 'stats.memberCreations.modal.facts' | translate }}</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (article of list; track article.url) {
+                <tr>
+                  <td>
+                    <a [href]="article.url" target="_blank" rel="noopener noreferrer">{{ article.title }}</a>
+                  </td>
+                  <td>{{ (article.lastChange | date:'yyyy-MM-dd') || '—' }}</td>
+                  <td class="creations-table__info-col">
+                    <button type="button" class="creations-table__info cyan-action-button" (click)="openInfo(article)"
+                      [attr.aria-label]="'stats.search.openFor' | translate:{ title: article.title }">
+                      <svg class="creations-table__info-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                        <rect x="4" y="12" width="4" height="8" rx="0.8" fill="currentColor"></rect>
+                        <rect x="10" y="8" width="4" height="12" rx="0.8" fill="currentColor"></rect>
+                        <rect x="16" y="4" width="4" height="16" rx="0.8" fill="currentColor"></rect>
+                        <line x1="3" y1="20" x2="21" y2="20" stroke="currentColor" stroke-width="2" stroke-linecap="round"></line>
+                      </svg>
+                    </button>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+
+        @if (hasMore()) {
+          <div class="article-search__more">
+            <button type="button" class="article-search__more-btn cyan-action-button"
+              (click)="loadMore()" [disabled]="loadingMore()">
+              {{ (loadingMore() ? 'common.loading' : 'stats.search.loadMore') | translate }}
+            </button>
+          </div>
+        }
+      </div>
+    }
+  }
 </div>

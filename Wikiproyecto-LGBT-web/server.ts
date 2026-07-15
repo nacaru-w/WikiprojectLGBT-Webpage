@@ -208,6 +208,51 @@ async function getTrackedArticlesByNormTitles(normTitles: string[]) {
   }
 }
 
+// "Load more" page size for the article search; capped so a crafted `limit`
+// can't ask for the whole ~11k-row table in one request.
+const ARTICLE_SEARCH_DEFAULT_LIMIT = 20;
+const ARTICLE_SEARCH_MAX_LIMIT = 50;
+
+/**
+ * Escape the LIKE metacharacters (% _ \) so user input is matched literally —
+ * we wrap the term in our own %…% for a substring search. Backslash is MySQL's
+ * default LIKE escape character, so no ESCAPE clause is needed.
+ */
+function escapeLike(value: string): string {
+  return value.replace(/[\\%_]/g, (ch) => '\\' + ch);
+}
+
+/**
+ * Search the tracked-article list by (display) title. Returns one page of
+ * matches ordered by title plus the total match count, so the client can drive
+ * a "load more" button.
+ */
+async function searchTrackedArticles(query: string, limit: number, offset: number) {
+  const connection = await mysql.createConnection(credentials);
+
+  try {
+    const like = `%${escapeLike(query)}%`;
+    const [countRows]: [any[], mysql.FieldPacket[]] = await connection.execute(
+      'SELECT COUNT(*) AS total FROM lgbt_tracked_articles WHERE display_title LIKE ?',
+      [like],
+    );
+    const total = Number(countRows[0]?.total ?? 0);
+    // limit/offset are server-clamped integers (never user strings), so they're
+    // inlined — mysql2's prepared statements reject placeholders there.
+    const [rows]: [any[], mysql.FieldPacket[]] = await connection.execute(
+      `SELECT display_title, last_change FROM lgbt_tracked_articles
+       WHERE display_title LIKE ? ORDER BY display_title LIMIT ${limit} OFFSET ${offset}`,
+      [like],
+    );
+    return { total, rows };
+  } catch (error) {
+    console.error('Error searching lgbt_tracked_articles:', error);
+    throw error;
+  } finally {
+    await connection.end();
+  }
+}
+
 /**
  * Content-authorship of an article (who wrote how much of the current text),
  * scraped from XTools' authorship table. We proxy it here because that XTools
@@ -414,6 +459,41 @@ app.get('/api/article-authorship/:title', (req, res) => {
     .catch((error) => {
       console.error('Error in /api/article-authorship:', error);
       res.status(502).json({ reason: 'Could not retrieve authorship from XTools' });
+    });
+});
+
+/**
+ * Public lookup: search the LGBT-tracked article list by title. Backs the
+ * /stats/articles/search "Buscador" view. Paged (q + offset + limit) so the
+ * client can "load more"; the response carries the total match count.
+ */
+app.get('/api/articles', (req, res) => {
+  const query = (typeof req.query['q'] === 'string' ? req.query['q'] : '').trim();
+  if (!query || query.length > 255) {
+    res.status(400).json({ reason: 'A search query is required' });
+    return;
+  }
+  const limit = Math.min(
+    ARTICLE_SEARCH_MAX_LIMIT,
+    Math.max(1, Number.parseInt(String(req.query['limit']), 10) || ARTICLE_SEARCH_DEFAULT_LIMIT),
+  );
+  const offset = Math.max(0, Number.parseInt(String(req.query['offset']), 10) || 0);
+  searchTrackedArticles(query, limit, offset)
+    .then(({ total, rows }) => {
+      const articles = rows.map((row: any) => {
+        const displayTitle = row.display_title as string;
+        return {
+          title: displayTitle,
+          url: `https://es.wikipedia.org/wiki/${encodeURIComponent(displayTitle.replace(/ /g, '_'))}`,
+          // last_change comes back as a JS Date (mysql2); normalise to ISO.
+          lastChange: row.last_change ? new Date(row.last_change).toISOString() : null,
+        };
+      });
+      res.json({ query, total, offset, limit, articles });
+    })
+    .catch((error) => {
+      console.error('Error in /api/articles:', error);
+      res.status(500).json({ reason: 'Could not search articles' });
     });
 });
 

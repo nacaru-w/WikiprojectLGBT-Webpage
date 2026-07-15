@@ -5,34 +5,113 @@
     width: 100%;
 }
 
-.search-placeholder {
+// The results table reuses the global .creations-table* styles (statistics
+// member-creations), so only the search bar + surrounding chrome live here.
+.article-search {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 0.75em;
-    width: min(900px, 95%);
-    margin: 1.5em auto;
-    padding: 1em;
-    text-align: center;
+    gap: 1.2em;
+    font-family: variables.$body-font;
 
-    .placeholder-barba {
-        width: min(240px, 60vw);
-        height: auto;
-        filter: drop-shadow(0 8px 7px rgba(0, 0, 0, 0.12));
+    // Centered search field + button, mirroring the member-creations lookup.
+    &__bar-wrap {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.6em;
+        width: min(560px, 100%);
+        margin: 0 auto;
     }
 
-    .placeholder-title {
-        margin: 0;
+    &__label {
         font-family: variables.$font-family-sans-serif;
         font-weight: bold;
-        font-size: 1.3em;
         letter-spacing: -0.05em;
-        color: var(--ink);
+        text-align: center;
     }
 
-    .placeholder-label {
-        margin: 0;
+    &__bar {
+        display: flex;
+        align-items: stretch;
+        gap: 0.5em;
+        width: 100%;
+    }
+
+    // Search field, styled to match the site's bordered/hard-shadow controls.
+    &__input.form-control {
+        flex: 1 1 auto;
+        min-width: 0;
+        padding: 0.55em 1em;
+        border: solid var(--edge) 2px;
+        border-radius: 12px;
+        box-shadow: var(--shadow) 3px 3px;
         font-family: variables.$body-font;
-        color: var(--ink);
+        transition: box-shadow 0.15s ease, border-color 0.15s ease;
+
+        &:focus {
+            border-color: var(--edge);
+            box-shadow: var(--shadow) 4px 4px;
+            outline: none;
+        }
+    }
+
+    // Interactive-blue search button — look comes from the global
+    // .cyan-action-button; this adds only geometry.
+    &__button {
+        flex: 0 0 auto;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 0.9em;
+        border-radius: 12px;
+        box-shadow: var(--shadow) 3px 3px;
+
+        &:focus-visible {
+            outline: none;
+            box-shadow: var(--shadow) 4px 4px;
+        }
+
+        &:active {
+            box-shadow: var(--shadow) 1px 1px;
+            transform: translate(2px, 2px);
+        }
+    }
+
+    &__icon {
+        width: 1.25em;
+        height: 1.25em;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2.5;
+        stroke-linecap: round;
+    }
+
+    &__status {
+        margin: 0;
+        text-align: center;
+    }
+
+    &__summary {
+        margin: 0 0 0.7em;
+        font-family: variables.$font-family-sans-serif;
+        letter-spacing: -0.05em;
+    }
+
+    // "Load more" button — centered under the table, in the pressable style.
+    &__more {
+        display: flex;
+        justify-content: center;
+        margin: 1.5em 0 0.5em;
+
+        &-btn {
+            padding: 0.5em 1.4em;
+            border-radius: 12px;
+            box-shadow: var(--shadow) 3px 3px;
+
+            &:active:not(:disabled) {
+                box-shadow: var(--shadow) 1px 1px;
+                transform: translate(2px, 2px);
+            }
+        }
     }
 }
